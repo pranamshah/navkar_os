@@ -49,16 +49,16 @@ export default function Footer() {
   return (
     <footer style={{ background: "#1a1c1c", position: "relative", overflow: "hidden" }}>
       {/* Main content */}
-      <div className="relative max-w-7xl mx-auto px-8 lg:px-16 pt-20 pb-10" style={{ zIndex: 1 }}>
-        <div className="flex flex-col lg:flex-row justify-between gap-16 mb-16">
+      <div className="relative max-w-7xl mx-auto px-8 lg:px-16 pt-14 pb-8" style={{ zIndex: 1 }}>
+        <div className="flex flex-col lg:flex-row justify-between gap-10 mb-10">
 
           {/* Left: brand */}
-          <div className="lg:max-w-xs flex-shrink-0">
-            <Link href="/" className="inline-block mb-5">
+          <div className="flex-shrink-0" style={{ maxWidth: "220px" }}>
+            <Link href="/" className="inline-block mb-4">
               <span
                 style={{
                   fontFamily: "'EB Garamond', Georgia, serif",
-                  fontSize: "30px",
+                  fontSize: "24px",
                   fontWeight: 400,
                   color: "#fff",
                   letterSpacing: "-0.02em",
@@ -69,46 +69,40 @@ export default function Footer() {
             </Link>
 
             <p
-              className="text-sm mb-8 leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.45)", fontWeight: 300, maxWidth: "260px" }}
+              className="text-xs mb-5 leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.38)", fontWeight: 300 }}
             >
-              The Operating System for Indian Logistics. Built for freight forwarders,
-              CHA, C&F agents, and every player in the ecosystem.
+              The OS for Indian Logistics. Built for freight forwarders, CHA, and C&F agents.
             </p>
 
-            <div className="flex flex-col gap-2 mb-8">
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>hello@navkaros.in</p>
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>+91 90807 67398</p>
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>BKC, Mumbai — 400051</p>
+            <div className="flex flex-col gap-1.5">
+              <p className="text-xs" style={{ color: "rgba(255,255,255,0.28)" }}>hello@navkaros.in</p>
+              <p className="text-xs" style={{ color: "rgba(255,255,255,0.28)" }}>BKC, Mumbai — 400051</p>
+              <p className="text-xs italic mt-1" style={{ color: "#D4AF37", opacity: 0.7 }}>
+                Built in Mumbai. Made for the world.
+              </p>
             </div>
-
-            <p
-              className="text-xs italic"
-              style={{ color: "#D4AF37", opacity: 0.8 }}
-            >
-              Built in Mumbai. Made for the world.
-            </p>
           </div>
 
           {/* Right: link columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-14">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
             {cols.map((col) => (
               <div key={col.heading}>
                 <h5
-                  className="text-xs font-semibold uppercase tracking-widest mb-6"
-                  style={{ color: "rgba(255,255,255,0.9)" }}
+                  className="text-xs font-semibold uppercase tracking-widest mb-4"
+                  style={{ color: "rgba(255,255,255,0.85)" }}
                 >
                   {col.heading}
                 </h5>
-                <ul className="flex flex-col gap-3.5">
+                <ul className="flex flex-col gap-2.5">
                   {col.links.map((link) => (
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        className="text-sm transition-colors duration-200"
-                        style={{ color: "rgba(255,255,255,0.4)", fontWeight: 300 }}
+                        className="text-xs transition-colors duration-200"
+                        style={{ color: "rgba(255,255,255,0.38)", fontWeight: 300 }}
                         onMouseEnter={(e) => (e.currentTarget.style.color = "#D4AF37")}
-                        onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.38)")}
                       >
                         {link.label}
                       </a>
@@ -122,23 +116,19 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-8"
-          style={{ borderTop: "0.5px solid rgba(255,255,255,0.08)" }}
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-6"
+          style={{ borderTop: "0.5px solid rgba(255,255,255,0.07)" }}
         >
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
             © {new Date().getFullYear()} NavkarOS Logistics Pvt. Ltd. · GSTIN: 27AAACN1234J1Z5
           </p>
-          <div className="flex items-center gap-6">
-            <span className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
+          <div className="flex items-center gap-5">
+            <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
               GST · ICEGATE · GSTN Compliant
             </span>
             <span
-              className="text-xs px-3 py-1"
-              style={{
-                border: "0.5px solid rgba(212,175,55,0.3)",
-                color: "#D4AF37",
-                opacity: 0.7,
-              }}
+              className="text-xs px-2.5 py-0.5"
+              style={{ border: "0.5px solid rgba(212,175,55,0.25)", color: "#D4AF37", opacity: 0.65 }}
             >
               🇮🇳 Made in India
             </span>
@@ -149,20 +139,19 @@ export default function Footer() {
       {/* Watermark */}
       <div
         aria-hidden
-        className="w-full flex items-end justify-center select-none pointer-events-none"
-        style={{ zIndex: 0 }}
+        className="w-full flex justify-center select-none pointer-events-none overflow-hidden"
+        style={{ zIndex: 0, marginTop: "-8px" }}
       >
         <span
           style={{
             fontFamily: "'EB Garamond', Georgia, serif",
-            fontSize: "clamp(72px, 16vw, 220px)",
+            fontSize: "clamp(60px, 13vw, 180px)",
             fontWeight: 700,
-            color: "rgba(255,255,255,0.04)",
+            color: "rgba(255,255,255,0.035)",
             letterSpacing: "-0.04em",
-            lineHeight: 0.85,
+            lineHeight: 0.88,
             userSelect: "none",
             display: "block",
-            paddingBottom: "0px",
           }}
         >
           NavkarOS
