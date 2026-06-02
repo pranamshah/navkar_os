@@ -7,10 +7,9 @@ import Link from "next/link";
 
 const links = [
   { label: "Platform", href: "#suite" },
-  { label: "Who It's For", href: "#stakeholders" },
-  { label: "Modules", href: "#suite" },
+  { label: "Who It's For", href: "#whoisfor" },
   { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
+  { label: "About", href: "/about" },
 ];
 
 export default function Navbar() {
@@ -44,27 +43,20 @@ export default function Navbar() {
             WebkitBackdropFilter: "blur(24px)",
             border: "0.5px solid rgba(0,0,0,0.1)",
             boxShadow: scrolled
-              ? "0 4px 30px rgba(0,0,0,0.1), 0 1px 0 rgba(255,255,255,0.8) inset"
+              ? "0 4px 30px rgba(0,0,0,0.1)"
               : "0 2px 15px rgba(0,0,0,0.05)",
           }}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
-              style={{ background: "#1a1c1d", color: "#f6be39" }}
-            >
-              N
-            </div>
-            <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1d" }}>
-              NavkarOS
-            </span>
+          <Link href="/" className="flex items-center gap-2 cursor-none">
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1d", color: "#f6be39" }}>N</div>
+            <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1d" }}>NavkarOS</span>
           </Link>
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
                 className="text-sm transition-colors duration-200 cursor-none"
@@ -73,21 +65,23 @@ export default function Navbar() {
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </div>
 
-          {/* CTA */}
+          {/* CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <button
+            <Link
+              href="/login"
               className="text-sm px-4 py-1.5 transition-colors duration-200 cursor-none"
               style={{ color: "#444748" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "#1a1c1d")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
             >
               Login
-            </button>
-            <button
+            </Link>
+            <Link
+              href="/signup"
               className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200 cursor-none"
               style={{ background: "#1a1c1d", color: "#fff" }}
               onMouseEnter={(e) => {
@@ -100,14 +94,11 @@ export default function Navbar() {
               }}
             >
               Start Free
-            </button>
+            </Link>
           </div>
 
           {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2 cursor-none"
-            onClick={() => setMobileOpen(true)}
-          >
+          <button className="md:hidden p-2 cursor-none" onClick={() => setMobileOpen(true)}>
             <Menu className="w-5 h-5" style={{ color: "#1a1c1d" }} />
           </button>
         </div>
@@ -125,42 +116,25 @@ export default function Navbar() {
             style={{ background: "#1a1c1d" }}
           >
             <div className="flex items-center justify-between px-6 h-20">
-              <span className="font-black text-sm uppercase tracking-widest text-white">
-                Navkar<span style={{ color: "#f6be39" }}>OS</span>
-              </span>
-              <button onClick={() => setMobileOpen(false)}>
-                <X className="w-6 h-6 text-white" />
-              </button>
+              <span className="font-black text-sm uppercase tracking-widest text-white">Navkar<span style={{ color: "#f6be39" }}>OS</span></span>
+              <button onClick={() => setMobileOpen(false)}><X className="w-6 h-6 text-white" /></button>
             </div>
             <div className="flex-1 flex flex-col justify-center px-8 gap-5">
               {links.map((l, i) => (
-                <motion.a
-                  key={l.label}
-                  href={l.href}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                  className="text-3xl font-semibold text-white py-2 border-b border-white/10"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {l.label}
-                </motion.a>
+                <motion.div key={l.label} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
+                  <Link href={l.href} className="text-3xl font-semibold text-white py-2 border-b border-white/10 block" onClick={() => setMobileOpen(false)}>
+                    {l.label}
+                  </Link>
+                </motion.div>
               ))}
             </div>
             <div className="px-8 pb-14 flex flex-col gap-3">
-              <button
-                className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white"
-                onClick={() => setMobileOpen(false)}
-              >
+              <Link href="/login" className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block" onClick={() => setMobileOpen(false)}>
                 Login
-              </button>
-              <button
-                className="w-full py-4 rounded-2xl font-semibold text-black"
-                style={{ background: "#f6be39" }}
-                onClick={() => setMobileOpen(false)}
-              >
+              </Link>
+              <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#f6be39" }} onClick={() => setMobileOpen(false)}>
                 Start Free Trial
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}

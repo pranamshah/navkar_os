@@ -41,7 +41,12 @@ export default function SignupPage() {
       email: form.email,
       password: form.password,
       options: {
-        data: { full_name: form.fullName, company: form.company },
+        data: {
+          full_name: form.fullName,
+          company: form.company,
+          user_type: form.userType || "business",
+          modules: form.modules,
+        },
       },
     });
 
@@ -51,7 +56,8 @@ export default function SignupPage() {
       return;
     }
 
-    if (data.user) {
+    if (data.session && data.user) {
+      // Session exists (email confirmation disabled) — save profile directly
       await supabase.from("profiles").upsert({
         id: data.user.id,
         full_name: form.fullName,
@@ -65,10 +71,16 @@ export default function SignupPage() {
           modules: form.modules,
         });
       }
-    }
 
-    router.push("/dashboard");
-    router.refresh();
+      router.push("/dashboard");
+      router.refresh();
+    } else if (data.user && !data.session) {
+      // Email confirmation required — profile will be created by DB trigger on confirm
+      router.push("/signup/confirm");
+    } else {
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+    }
   };
 
   const fadeSlide = {
