@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 const contactDetails = [
   { label: "Email", value: "hello@navkaros.in", Icon: Mail },
-  { label: "Phone", value: "+91 98765 43210", Icon: Phone },
+  { label: "Phone", value: "+91 90807 67398", Icon: Phone },
   { label: "Office", value: "BKC, Bandra East, Mumbai — 400051", Icon: MapPin },
   { label: "Support Hours", value: "Mon–Sat, 9am–7pm IST", Icon: Clock },
 ];
@@ -182,7 +182,7 @@ export default function ContactSection() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {[
                     { key: "email", label: "Email Address", type: "email", placeholder: "rajesh@company.com" },
-                    { key: "phone", label: "Phone Number", type: "tel", placeholder: "+91 98765 43210" },
+                    { key: "phone", label: "Phone Number", type: "tel", placeholder: "+91 90807 67398" },
                   ].map((field) => (
                     <div key={field.key} className="flex flex-col gap-2">
                       <label className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>

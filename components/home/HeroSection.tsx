@@ -68,42 +68,117 @@ function RibbonCanvas() {
   );
 }
 
-const slides = [
+const modules = [
   {
     id: "freightops",
-    badge: "FreightOps · Live",
+    label: "FreightOps",
+    badge: "Live · 4 Active Jobs",
     badgeColor: "#16A34A",
     title: "Active Shipments",
     rows: [
-      { id: "NOS/2026/0142", route: "INNSA → DEHAM", status: "Under Exam", color: "#D4AF37" },
-      { id: "NOS/2026/0141", route: "INMAA → SGSIN", status: "OOC Cleared", color: "#16A34A" },
-      { id: "NOS/2026/0139", route: "INCCU → USLAX", status: "On Vessel", color: "#3B82F6" },
-      { id: "NOS/2026/0137", route: "INMUN → AEJEA", status: "At CFS", color: "#D4AF37" },
+      { a: "NOS/2026/0142", b: "INNSA → DEHAM", c: "Under Exam", color: "#D4AF37" },
+      { a: "NOS/2026/0141", b: "INMAA → SGSIN", c: "OOC Cleared", color: "#16A34A" },
+      { a: "NOS/2026/0139", b: "INCCU → USLAX", c: "On Vessel", color: "#3B82F6" },
+      { a: "NOS/2026/0137", b: "INMUN → AEJEA", c: "At CFS", color: "#D4AF37" },
     ],
-    footer: "4 jobs active · 2 pending customs",
+    colA: "Job No.", colB: "Route", colC: "Status",
+    footer: "12 total jobs this month · 2 pending exam",
+  },
+  {
+    id: "docai",
+    label: "DocAI",
+    badge: "AI · Reading",
+    badgeColor: "#7C3AED",
+    title: "Document Extraction",
+    rows: [
+      { a: "Bill of Lading", b: "Hapag-Lloyd", c: "✓ Extracted", color: "#16A34A" },
+      { a: "Packing List", b: "Uploaded PDF", c: "✓ Extracted", color: "#16A34A" },
+      { a: "Bill of Entry", b: "ICEGATE", c: "● Reading", color: "#D4AF37" },
+      { a: "Commercial Inv.", b: "Exporter PDF", c: "Queued", color: "#7e7576" },
+    ],
+    colA: "Document", colB: "Source", colC: "Status",
+    footer: "98.2% accuracy · 3.1s avg. extraction time",
   },
   {
     id: "billgen",
-    badge: "BillGen · Generated",
+    label: "BillGen",
+    badge: "GST · Invoice Ready",
     badgeColor: "#D4AF37",
     title: "Invoice INV-2026-0892",
     rows: [
-      { id: "Ocean Freight", route: "FCL 20'", status: "₹78,500", color: "#1a1c1c" },
-      { id: "THC Destination", route: "Hamburg Port", status: "₹12,200", color: "#1a1c1c" },
-      { id: "Documentation Fee", route: "BL Charges", status: "₹3,500", color: "#1a1c1c" },
-      { id: "IGST @ 18%", route: "Tax", status: "₹17,136", color: "#D4AF37" },
+      { a: "Ocean Freight", b: "FCL 20'", c: "₹78,500", color: "#1a1c1c" },
+      { a: "THC Destination", b: "Hamburg Port", c: "₹12,200", color: "#1a1c1c" },
+      { a: "Documentation", b: "BL Charges", c: "₹3,500", color: "#1a1c1c" },
+      { a: "IGST @ 18%", b: "Auto-split", c: "₹17,136", color: "#D4AF37" },
     ],
+    colA: "Item", colB: "Detail", colC: "Amount",
     footer: "Total ₹1,11,336 · Sent via WhatsApp",
+  },
+  {
+    id: "clienthub",
+    label: "ClientHub",
+    badge: "Portal · 3 Online",
+    badgeColor: "#0EA5E9",
+    title: "Client Tracker",
+    rows: [
+      { a: "Mehta Exports", b: "NOS/2026/0142", c: "On Vessel", color: "#3B82F6" },
+      { a: "Krishna Textiles", b: "NOS/2026/0141", c: "OOC Cleared", color: "#16A34A" },
+      { a: "Patel Chemicals", b: "NOS/2026/0139", c: "At Port", color: "#D4AF37" },
+      { a: "Rajvi Industries", b: "NOS/2026/0138", c: "Delivered", color: "#16A34A" },
+    ],
+    colA: "Client", colB: "Job", colC: "Status",
+    footer: "4 clients tracking · 0 support calls today",
+  },
+  {
+    id: "accountsos",
+    label: "AccountsOS",
+    badge: "Accounts · Balanced",
+    badgeColor: "#059669",
+    title: "P&L — June 2026",
+    rows: [
+      { a: "Revenue", b: "14 Invoices", c: "₹8,42,000", color: "#16A34A" },
+      { a: "CFS Expenses", b: "Vendor Bills", c: "₹1,23,400", color: "#EF4444" },
+      { a: "Staff Costs", b: "Salary + OT", c: "₹84,000", color: "#EF4444" },
+      { a: "Net Profit", b: "After Tax", c: "₹6,34,600", color: "#D4AF37" },
+    ],
+    colA: "Head", colB: "Category", colC: "Amount",
+    footer: "GSTR-1 export ready · Tally XML generated",
+  },
+  {
+    id: "ratedesk",
+    label: "RateDesk",
+    badge: "Rates · 12 Active",
+    badgeColor: "#F59E0B",
+    title: "Rate Cards",
+    rows: [
+      { a: "INNSA→DEHAM", b: "Hapag-Lloyd", c: "$890/TEU", color: "#1a1c1c" },
+      { a: "INMAA→SGSIN", b: "MSC", c: "$320/TEU", color: "#1a1c1c" },
+      { a: "INCCU→USLAX", b: "Evergreen", c: "$1,240/TEU", color: "#D4AF37" },
+      { a: "INMUN→AEJEA", b: "CMA CGM", c: "$460/TEU", color: "#1a1c1c" },
+    ],
+    colA: "Trade Lane", colB: "Carrier", colC: "Rate",
+    footer: "Quote → Job in 1 click · Rates expire alert on",
+  },
+  {
+    id: "connectlayer",
+    label: "ConnectLayer",
+    badge: "APIs · 5/6 Connected",
+    badgeColor: "#6366F1",
+    title: "Integration Status",
+    rows: [
+      { a: "ICEGATE", b: "Customs EDI", c: "● Live", color: "#16A34A" },
+      { a: "GSTN", b: "Tax API", c: "● Live", color: "#16A34A" },
+      { a: "WhatsApp API", b: "Notifications", c: "● Live", color: "#16A34A" },
+      { a: "MarineTraffic", b: "Vessel Tracking", c: "● Live", color: "#16A34A" },
+    ],
+    colA: "Service", colB: "Type", colC: "Status",
+    footer: "Razorpay payment link · Tally XML sync ready",
   },
 ];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
-  },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const } },
 };
 const stagger = {
   hidden: {},
@@ -111,14 +186,14 @@ const stagger = {
 };
 
 export default function HeroSection() {
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setActiveSlide((s) => (s + 1) % slides.length), 4000);
+    const t = setInterval(() => setActive((s) => (s + 1) % modules.length), 4000);
     return () => clearInterval(t);
   }, []);
 
-  const slide = slides[activeSlide];
+  const mod = modules[active];
 
   return (
     <section
@@ -131,9 +206,9 @@ export default function HeroSection() {
         className="relative w-full max-w-7xl mx-auto px-8 lg:px-16 grid lg:grid-cols-12 gap-8 items-center"
         style={{ zIndex: 2 }}
       >
-        {/* Left: Copy */}
+        {/* Left */}
         <motion.div
-          className="lg:col-span-7 pt-24 pb-12 lg:pt-0 lg:pb-0"
+          className="lg:col-span-6 pt-28 pb-12 lg:pt-0 lg:pb-0"
           variants={stagger}
           initial="hidden"
           animate="show"
@@ -152,7 +227,7 @@ export default function HeroSection() {
             className="mb-8 leading-tight"
             style={{
               fontFamily: "'EB Garamond', Georgia, serif",
-              fontSize: "clamp(44px, 6vw, 76px)",
+              fontSize: "clamp(44px, 5.5vw, 72px)",
               fontWeight: 400,
               color: "#1a1c1c",
               letterSpacing: "-0.02em",
@@ -161,13 +236,13 @@ export default function HeroSection() {
           >
             One Platform for
             <br />
-            <span style={{ color: "#D4AF37" }}>Indian Logistics.</span>
+            <span style={{ color: "#D4AF37" }}>Modern Logistics.</span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             className="max-w-lg mb-12 leading-relaxed"
-            style={{ fontSize: "18px", fontWeight: 300, color: "#4c4546", lineHeight: 1.75 }}
+            style={{ fontSize: "17px", fontWeight: 300, color: "#4c4546", lineHeight: 1.75 }}
           >
             From shipment creation to customs clearance, GST invoicing to
             client communication — NavkarOS unifies every workflow across your
@@ -175,8 +250,9 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-5">
-            <button
-              className="px-10 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none"
+            <a
+              href="/signup"
+              className="px-10 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none inline-block"
               style={{ background: "#1a1c1c", color: "#fff" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#D4AF37";
@@ -188,9 +264,10 @@ export default function HeroSection() {
               }}
             >
               Start Free Trial
-            </button>
-            <button
-              className="px-10 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none"
+            </a>
+            <a
+              href="/demo/freightops"
+              className="px-10 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none inline-block"
               style={{ borderColor: "#1a1c1c", borderWidth: "0.5px", color: "#1a1c1c" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#1a1c1c";
@@ -202,7 +279,7 @@ export default function HeroSection() {
               }}
             >
               Watch Demo
-            </button>
+            </a>
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-16 flex items-center gap-10">
@@ -223,38 +300,38 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Right: animated dashboard slides */}
+        {/* Right: All 7 module slides */}
         <motion.div
-          className="lg:col-span-5 hidden lg:flex flex-col gap-4"
+          className="lg:col-span-6 hidden lg:flex flex-col gap-3"
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Slide tabs */}
-          <div className="flex gap-2">
-            {slides.map((s, i) => (
+          {/* Module tabs — all 7 */}
+          <div className="flex flex-wrap gap-1.5">
+            {modules.map((m, i) => (
               <button
-                key={s.id}
-                onClick={() => setActiveSlide(i)}
-                className="px-3 py-1.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none"
+                key={m.id}
+                onClick={() => setActive(i)}
+                className="px-2.5 py-1 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-none"
                 style={{
-                  background: i === activeSlide ? "#1a1c1c" : "rgba(0,0,0,0.07)",
-                  color: i === activeSlide ? "#fff" : "#7e7576",
+                  background: i === active ? "#1a1c1c" : "rgba(0,0,0,0.06)",
+                  color: i === active ? "#fff" : "#7e7576",
+                  borderBottom: i === active ? "1.5px solid #D4AF37" : "1.5px solid transparent",
                 }}
               >
-                {s.id === "freightops" ? "FreightOps" : "BillGen"}
+                {m.label}
               </button>
             ))}
           </div>
 
-          {/* Slide panel */}
+          {/* Panel */}
           <div
             className="relative overflow-hidden"
             style={{
               background: "#fff",
               border: "0.5px solid rgba(0,0,0,0.1)",
               boxShadow: "0 24px 48px rgba(0,0,0,0.07)",
-              minHeight: "360px",
             }}
           >
             {/* Window chrome */}
@@ -262,100 +339,84 @@ export default function HeroSection() {
               className="flex items-center gap-1.5 px-4 py-3 border-b"
               style={{ borderColor: "rgba(0,0,0,0.06)", background: "#fafafa" }}
             >
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
-              <span className="ml-4 text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
-                navkaros.in/app
+              <span className="w-2 h-2 rounded-full" style={{ background: "#FF5F57" }} />
+              <span className="w-2 h-2 rounded-full" style={{ background: "#FEBC2E" }} />
+              <span className="w-2 h-2 rounded-full" style={{ background: "#28C840" }} />
+              <span className="ml-3 text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
+                navkaros.in/app/{mod.id}
               </span>
             </div>
 
             <AnimatePresence mode="wait">
               <motion.div
-                key={slide.id}
-                initial={{ opacity: 0, y: 12 }}
+                key={mod.id}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="p-6"
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="p-5"
               >
-                {/* Slide header */}
-                <div className="flex items-center justify-between mb-5">
-                  <h3
-                    style={{
-                      fontFamily: "'EB Garamond', Georgia, serif",
-                      fontSize: "18px",
-                      color: "#1a1c1c",
-                    }}
-                  >
-                    {slide.title}
+                <div className="flex items-center justify-between mb-4">
+                  <h3 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "17px", color: "#1a1c1c" }}>
+                    {mod.title}
                   </h3>
                   <span
                     className="text-xs font-semibold px-2 py-0.5"
-                    style={{ background: `${slide.badgeColor}18`, color: slide.badgeColor }}
+                    style={{ background: `${mod.badgeColor}18`, color: mod.badgeColor, fontSize: "10px" }}
                   >
-                    ● {slide.badge}
+                    {mod.badge}
                   </span>
                 </div>
 
-                {/* Column headers */}
-                <div
-                  className="grid grid-cols-3 pb-2 mb-1 border-b"
-                  style={{ borderColor: "rgba(0,0,0,0.06)" }}
-                >
-                  <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#7e7576" }}>
-                    {slide.id === "freightops" ? "Job No." : "Item"}
-                  </span>
-                  <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#7e7576" }}>
-                    {slide.id === "freightops" ? "Route" : "Detail"}
-                  </span>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-right" style={{ color: "#7e7576" }}>
-                    {slide.id === "freightops" ? "Status" : "Amount"}
-                  </span>
+                <div className="grid grid-cols-3 pb-1.5 mb-1 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+                  {[mod.colA, mod.colB, mod.colC].map((c, i) => (
+                    <span
+                      key={i}
+                      className={`text-xs font-semibold uppercase tracking-wider ${i === 2 ? "text-right" : ""}`}
+                      style={{ color: "#7e7576" }}
+                    >
+                      {c}
+                    </span>
+                  ))}
                 </div>
 
-                {/* Rows */}
-                {slide.rows.map((row, i) => (
+                {mod.rows.map((row, i) => (
                   <motion.div
-                    key={row.id}
-                    initial={{ opacity: 0, x: -8 }}
+                    key={i}
+                    initial={{ opacity: 0, x: -6 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
-                    className="grid grid-cols-3 py-2.5 border-b"
+                    transition={{ delay: i * 0.05 }}
+                    className="grid grid-cols-3 py-2 border-b"
                     style={{ borderColor: "rgba(0,0,0,0.04)" }}
                   >
-                    <span className="text-xs font-semibold" style={{ color: "#1a1c1c" }}>{row.id}</span>
-                    <span className="text-xs" style={{ color: "#7e7576" }}>{row.route}</span>
-                    <span className="text-xs font-semibold text-right" style={{ color: row.color }}>{row.status}</span>
+                    <span className="text-xs font-semibold truncate pr-2" style={{ color: "#1a1c1c" }}>{row.a}</span>
+                    <span className="text-xs truncate pr-2" style={{ color: "#7e7576" }}>{row.b}</span>
+                    <span className="text-xs font-semibold text-right" style={{ color: row.color }}>{row.c}</span>
                   </motion.div>
                 ))}
 
-                {/* Footer */}
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-xs" style={{ color: "#7e7576" }}>{slide.footer}</span>
-                  <span
-                    className="text-xs px-3 py-1 font-semibold"
-                    style={{ background: "#1a1c1c", color: "#fff" }}
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-xs" style={{ color: "#7e7576" }}>{mod.footer}</span>
+                  <a
+                    href={`/demo/${mod.id}`}
+                    className="text-xs font-semibold uppercase tracking-widest cursor-none"
+                    style={{ color: "#D4AF37" }}
                   >
-                    {slide.id === "freightops" ? "New Job" : "Send"}
-                  </span>
+                    Demo →
+                  </a>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Slide dots */}
-          <div className="flex gap-1.5 justify-center">
-            {slides.map((_, i) => (
+          {/* Progress bar */}
+          <div className="flex gap-1">
+            {modules.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setActiveSlide(i)}
-                className="rounded-full transition-all duration-300 cursor-none"
-                style={{
-                  width: i === activeSlide ? "24px" : "6px",
-                  height: "6px",
-                  background: i === activeSlide ? "#D4AF37" : "rgba(0,0,0,0.15)",
-                }}
+                onClick={() => setActive(i)}
+                className="flex-1 h-0.5 rounded-full transition-all duration-300 cursor-none"
+                style={{ background: i === active ? "#D4AF37" : "rgba(0,0,0,0.12)" }}
               />
             ))}
           </div>

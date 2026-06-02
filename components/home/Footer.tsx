@@ -39,7 +39,7 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-2">
               <p className="text-xs" style={{ color: "#7e7576" }}>hello@navkaros.in</p>
-              <p className="text-xs" style={{ color: "#7e7576" }}>+91 98765 43210</p>
+              <p className="text-xs" style={{ color: "#7e7576" }}>+91 90807 67398</p>
               <p className="text-xs" style={{ color: "#7e7576" }}>BKC, Mumbai — 400051</p>
               <p className="text-xs italic mt-1" style={{ color: "#D4AF37" }}>
                 Built in Mumbai. Made for the world.
