@@ -103,7 +103,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
       const dots: [number, number][] = [];
       const bounds = d3.geoBounds(feature);
       const [[minLng, minLat], [maxLng, maxLat]] = bounds;
-      const stepSize = dotSpacing * 0.08;
+      const stepSize = dotSpacing * 0.14;
       for (let lng = minLng; lng <= maxLng; lng += stepSize) {
         for (let lat = minLat; lat <= maxLat; lat += stepSize) {
           const point: [number, number] = [lng, lat];
@@ -217,11 +217,22 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
         );
         if (!response.ok) throw new Error("Failed to load land data");
         landFeatures = await response.json();
-        landFeatures.features.forEach((feature: any) => {
-          const dots = generateDotsInPolygon(feature, 16);
-          dots.forEach(([lng, lat]) => allDots.push({ lng, lat }));
-        });
-        setIsLoading(false);
+        // Process features in chunks to avoid blocking the main thread
+        const features = landFeatures.features;
+        const chunkSize = 4;
+        const processChunk = (startIdx: number) => {
+          const end = Math.min(startIdx + chunkSize, features.length);
+          for (let i = startIdx; i < end; i++) {
+            const dots = generateDotsInPolygon(features[i], 16);
+            dots.forEach(([lng, lat]) => allDots.push({ lng, lat }));
+          }
+          if (end < features.length) {
+            setTimeout(() => processChunk(end), 0);
+          } else {
+            setIsLoading(false);
+          }
+        };
+        processChunk(0);
       } catch (err) {
         setError("Failed to load globe data");
         setIsLoading(false);

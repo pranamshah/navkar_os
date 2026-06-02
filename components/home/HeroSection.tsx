@@ -21,8 +21,47 @@ const slides = [
     footer: "4 jobs active · 2 pending customs",
   },
   {
+    id: "entryx",
+    label: "EntryX · BE Filing",
+    badge: "ICEGATE",
+    badgeColor: "#8B0000",
+    rows: [
+      { a: "BE/2026/0341", b: "JNPT · FCL 20'", c: "Filed", color: "#16A34A" },
+      { a: "Duty Calculated", b: "BCD + IGST", c: "₹2,14,880", color: "#1a1c1c" },
+      { a: "HS Code", b: "8471.30.00", c: "AI Verified", color: "#D4AF37" },
+      { a: "OOC Alert", b: "Exam Waived", c: "Ready", color: "#16A34A" },
+    ],
+    footer: "3 BEs ready · 1 queued for exam",
+  },
+  {
+    id: "dockiq",
+    label: "DockIQ · CFS Live",
+    badge: "Gate-In",
+    badgeColor: "#0D7057",
+    rows: [
+      { a: "CNTR/MSCU341829", b: "Bay 04 · Slot 12", c: "Day 3", color: "#D4AF37" },
+      { a: "Storage Slab", b: "₹450 / day", c: "₹1,350", color: "#1a1c1c" },
+      { a: "Examination", b: "Customs Exam", c: "Scheduled", color: "#3B82F6" },
+      { a: "Importer Portal", b: "Auto-notified", c: "Viewed", color: "#16A34A" },
+    ],
+    footer: "12 containers in yard · ₹48,200 storage due",
+  },
+  {
+    id: "rundesk",
+    label: "RunDesk · Trip Board",
+    badge: "GPS Live",
+    badgeColor: "#92400E",
+    rows: [
+      { a: "LR/26/00891", b: "JNPT → Bhiwandi", c: "In Transit", color: "#D4AF37" },
+      { a: "MH04 BX 7792", b: "45 km remaining", c: "On Track", color: "#16A34A" },
+      { a: "Freight Invoice", b: "GST 5%", c: "₹18,500", color: "#1a1c1c" },
+      { a: "E-Way Bill", b: "Auto-generated", c: "Valid 2 days", color: "#3B82F6" },
+    ],
+    footer: "6 trips active · 2 delivered today",
+  },
+  {
     id: "accura",
-    label: "Accura · Invoice Ready",
+    label: "Accura · GST Invoice",
     badge: "GST",
     badgeColor: "#D4AF37",
     rows: [
@@ -32,6 +71,19 @@ const slides = [
       { a: "IGST @ 18%", b: "Auto-split", c: "₹17,136", color: "#D4AF37" },
     ],
     footer: "Total ₹1,11,336 · Sent via WhatsApp",
+  },
+  {
+    id: "tradepilot",
+    label: "TradePilot · Shipment",
+    badge: "Import",
+    badgeColor: "#004D40",
+    rows: [
+      { a: "Landed Cost", b: "CIF + Duty + CFS", c: "₹5,42,000", color: "#1a1c1c" },
+      { a: "FTA Status", b: "India–UAE CEPA", c: "Eligible", color: "#16A34A" },
+      { a: "RoDTEP Credit", b: "Export benefit", c: "₹4,200", color: "#D4AF37" },
+      { a: "Docs Vault", b: "BL, CI, PL filed", c: "Complete", color: "#16A34A" },
+    ],
+    footer: "2 active shipments · 1 FTA benefit applied",
   },
 ];
 
@@ -52,130 +104,127 @@ export default function HeroSection() {
 
   return (
     <AuroraBackground
-      className="min-h-screen w-full pt-24"
+      className="min-h-screen w-full pt-24 relative overflow-hidden"
       showRadialGradient
       style={{ background: "#f9f9f9", alignItems: "flex-start" }}
     >
-      <div className="relative w-full max-w-7xl mx-auto px-8 lg:px-16" style={{ zIndex: 2 }}>
-        {/* Top grid: text left + globe right */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center pt-16 pb-10">
-          {/* LEFT: text content */}
-          <motion.div variants={stagger} initial="hidden" animate="show">
-            <motion.div variants={fadeUp} className="mb-7">
-              <span
-                className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
-                style={{ background: "#e8e8e8", color: "#4c4546" }}
-              >
-                NavkarOS · Free Beta — 6 Products, One Login
-              </span>
-            </motion.div>
+      {/* Globe background — large, right side, behind everything */}
+      <div
+        className="absolute right-0 top-0 pointer-events-none select-none"
+        style={{ zIndex: 0, width: "700px", height: "700px", transform: "translate(15%, -5%)" }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(circle at center, rgba(212,175,55,0.12) 0%, transparent 65%)",
+          }}
+        />
+        <RotatingEarth width={700} height={700} className="w-full h-full opacity-80" />
+        <div
+          className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap"
+          style={{
+            background: "rgba(10,11,12,0.82)",
+            color: "#D4AF37",
+            backdropFilter: "blur(8px)",
+            border: "0.5px solid rgba(212,175,55,0.3)",
+          }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+          16 major ports connected
+        </div>
+      </div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="mb-6 leading-tight"
-              style={{
-                fontFamily: "'EB Garamond', Georgia, serif",
-                fontSize: "clamp(40px, 5vw, 68px)",
-                fontWeight: 400,
-                color: "#1a1c1c",
-                letterSpacing: "-0.02em",
-                lineHeight: 1.08,
+      {/* Main content */}
+      <div className="relative w-full max-w-7xl mx-auto px-8 lg:px-16" style={{ zIndex: 2 }}>
+        {/* Hero text */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          animate="show"
+          className="pt-16 pb-10 max-w-xl"
+        >
+          <motion.div variants={fadeUp} className="mb-7">
+            <span
+              className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+              style={{ background: "#e8e8e8", color: "#4c4546" }}
+            >
+              NavkarOS · Free Beta — 6 Products, One Login
+            </span>
+          </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            className="mb-6 leading-tight"
+            style={{
+              fontFamily: "'EB Garamond', Georgia, serif",
+              fontSize: "clamp(40px, 5vw, 68px)",
+              fontWeight: 400,
+              color: "#1a1c1c",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.08,
+            }}
+          >
+            One Platform for
+            <br />
+            <span style={{ color: "#D4AF37" }}>Modern Logistics.</span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            className="max-w-lg mb-10"
+            style={{ fontSize: "17px", fontWeight: 300, color: "#4c4546", lineHeight: 1.75 }}
+          >
+            Six specialized products — for freight forwarders, CHAs, CFS stations, transporters, accountants, and importers. Each works standalone. Each connects to every other.
+          </motion.p>
+
+          <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+            <Link
+              href="/signup"
+              className="relative group overflow-hidden inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest cursor-none transition-all duration-200"
+              style={{ background: "#1a1c1c", color: "#fff" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#D4AF37";
+                e.currentTarget.style.color = "#1a1c1c";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#1a1c1c";
+                e.currentTarget.style.color = "#fff";
               }}
             >
-              One OS.
-              <br />
-              Every Role.
-              <br />
-              <span style={{ color: "#D4AF37" }}>Indian Logistics,</span>
-              <br />
-              <span style={{ color: "#D4AF37" }}>Reimagined.</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="max-w-lg mb-10"
-              style={{ fontSize: "17px", fontWeight: 300, color: "#4c4546", lineHeight: 1.75 }}
+              Start Free Trial →
+            </Link>
+            <Link
+              href="/demo/freightops"
+              className="inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest border cursor-none transition-all duration-200"
+              style={{ borderColor: "#1a1c1c", borderWidth: "0.5px", color: "#1a1c1c" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#1a1c1c";
+                e.currentTarget.style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "#1a1c1c";
+              }}
             >
-              Six specialized products — for freight forwarders, CHAs, CFS stations, transporters, accountants, and importers. Each works standalone. Each connects to every other.
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-              <Link
-                href="/signup"
-                className="relative group overflow-hidden inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest cursor-none transition-all duration-200"
-                style={{ background: "#1a1c1c", color: "#fff" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#D4AF37";
-                  e.currentTarget.style.color = "#1a1c1c";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#1a1c1c";
-                  e.currentTarget.style.color = "#fff";
-                }}
-              >
-                Start Free Trial →
-              </Link>
-              <Link
-                href="/demo/freightops"
-                className="inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest border cursor-none transition-all duration-200"
-                style={{ borderColor: "#1a1c1c", borderWidth: "0.5px", color: "#1a1c1c" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#1a1c1c";
-                  e.currentTarget.style.color = "#fff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.color = "#1a1c1c";
-                }}
-              >
-                Watch Demo
-              </Link>
-            </motion.div>
-
-            <motion.div variants={fadeUp} className="mt-12 flex items-center gap-10">
-              {[
-                { val: "6", label: "Products in Suite" },
-                { val: "14hrs", label: "Saved Weekly" },
-                { val: "Free", label: "Beta Access" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <p className="font-semibold text-2xl" style={{ color: "#1a1c1c", letterSpacing: "-0.02em" }}>{s.val}</p>
-                  <p className="text-xs uppercase tracking-widest" style={{ color: "#7e7576" }}>{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
+              Watch Demo
+            </Link>
           </motion.div>
 
-          {/* RIGHT: Globe */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:flex items-center justify-center"
-          >
-            <div className="relative">
-              {/* Glow ring behind globe */}
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "radial-gradient(circle at center, rgba(212,175,55,0.15) 0%, transparent 70%)",
-                  transform: "scale(1.1)",
-                }}
-              />
-              <RotatingEarth width={520} height={520} className="w-[520px] h-[520px]" />
-              {/* Port label overlays */}
-              <div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                style={{ background: "rgba(10,11,12,0.85)", color: "#D4AF37", backdropFilter: "blur(8px)", border: "0.5px solid rgba(212,175,55,0.3)" }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
-                16 major ports connected
+          <motion.div variants={fadeUp} className="mt-12 flex items-center gap-10">
+            {[
+              { val: "6", label: "Products in Suite" },
+              { val: "14hrs", label: "Saved Weekly" },
+              { val: "Free", label: "Beta Access" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="font-semibold text-2xl" style={{ color: "#1a1c1c", letterSpacing: "-0.02em" }}>{s.val}</p>
+                <p className="text-xs uppercase tracking-widest" style={{ color: "#7e7576" }}>{s.label}</p>
               </div>
-            </div>
+            ))}
           </motion.div>
-        </div>
+        </motion.div>
 
-        {/* BELOW: 2-slide demo panel */}
+        {/* 6-slide demo panel */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
@@ -188,27 +237,27 @@ export default function HeroSection() {
               background: "#fff",
               border: "0.5px solid rgba(0,0,0,0.1)",
               boxShadow: "0 24px 60px rgba(0,0,0,0.08)",
-              maxWidth: "860px",
+              maxWidth: "900px",
             }}
           >
             {/* Window chrome */}
             <div
-              className="flex items-center gap-1.5 px-4 py-3 border-b"
+              className="flex items-center gap-1.5 px-4 py-3 border-b overflow-x-auto"
               style={{ borderColor: "rgba(0,0,0,0.06)", background: "#fafafa" }}
             >
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
-              <span className="ml-4 text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
+              <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#FF5F57" }} />
+              <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#FEBC2E" }} />
+              <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#28C840" }} />
+              <span className="ml-4 text-xs font-semibold uppercase tracking-widest flex-shrink-0" style={{ color: "#7e7576" }}>
                 navkaros.in/app
               </span>
-              {/* Tabs */}
-              <div className="ml-auto flex gap-0">
+              {/* Product tabs */}
+              <div className="ml-auto flex gap-0 flex-shrink-0">
                 {slides.map((s, i) => (
                   <button
                     key={s.id}
                     onClick={() => setActive(i)}
-                    className="px-4 py-1 text-xs font-semibold uppercase tracking-widest cursor-none transition-all duration-200"
+                    className="px-3 py-1 text-xs font-semibold uppercase tracking-widest cursor-none transition-all duration-200 whitespace-nowrap"
                     style={{
                       background: i === active ? "#1a1c1c" : "transparent",
                       color: i === active ? "#fff" : "#7e7576",
