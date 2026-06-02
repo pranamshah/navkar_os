@@ -1,5 +1,6 @@
 import Navbar from "@/components/home/Navbar";
 import HeroSection from "@/components/home/HeroSection";
+import ModuleShowcaseSection from "@/components/home/ModuleShowcaseSection";
 import TrustTicker from "@/components/home/TrustTicker";
 import ProblemSection from "@/components/home/ProblemSection";
 import WhoItsFor from "@/components/home/WhoItsFor";
@@ -23,6 +24,7 @@ export default function Home() {
       <main className="flex flex-col min-h-screen">
         <Navbar />
         <HeroSection />
+        <ModuleShowcaseSection />
         <TrustTicker />
         <ProblemSection />
         <WhoItsFor />
