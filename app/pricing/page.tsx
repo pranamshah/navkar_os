@@ -159,7 +159,19 @@ export default function PricingPage() {
     <>
       <CustomCursor />
       <Navbar />
-      <main style={{ background: "#f9f9f9", minHeight: "100vh" }}>
+      <main
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#f9f9f9",
+          backgroundImage: `
+            radial-gradient(ellipse 90% 55% at 50% -5%, rgba(212,175,55,0.10) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at -5% 38%, rgba(212,175,55,0.06) 0%, transparent 58%),
+            radial-gradient(ellipse 50% 40% at 105% 38%, rgba(212,175,55,0.06) 0%, transparent 58%),
+            radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px)
+          `,
+          backgroundSize: "100%, 100%, 100%, 20px 20px",
+        }}
+      >
 
         {/* ── Hero ─────────────────────────────────────────── */}
         <section className="pt-40 pb-20 px-6">
