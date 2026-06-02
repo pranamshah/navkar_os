@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { AuroraBackground } from "@/components/ui/aurora-background";
+
+const RotatingEarth = dynamic(() => import("@/components/ui/wireframe-dotted-globe"), { ssr: false });
 
 function RibbonCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -187,15 +190,6 @@ const stagger = {
 };
 
 export default function HeroSection() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setActive((s) => (s + 1) % modules.length), 4000);
-    return () => clearInterval(t);
-  }, []);
-
-  const mod = modules[active];
-
   return (
     <AuroraBackground className="items-center">
       <RibbonCanvas />
@@ -298,126 +292,14 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Right: All 7 module slides */}
+        {/* Right: Globe */}
         <motion.div
-          className="lg:col-span-6 hidden lg:flex flex-col gap-3"
+          className="lg:col-span-6 hidden lg:flex items-center justify-center"
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Module tabs — all 7 */}
-          <div className="flex flex-wrap gap-1.5">
-            {modules.map((m, i) => (
-              <button
-                key={m.id}
-                onClick={() => setActive(i)}
-                className="px-2.5 py-1 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-none"
-                style={{
-                  background: i === active ? "#1a1c1c" : "rgba(0,0,0,0.06)",
-                  color: i === active ? "#fff" : "#7e7576",
-                  borderBottom: i === active ? "1.5px solid #D4AF37" : "1.5px solid transparent",
-                }}
-              >
-                {m.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Panel */}
-          <div
-            className="relative overflow-hidden"
-            style={{
-              background: "#fff",
-              border: "0.5px solid rgba(0,0,0,0.1)",
-              boxShadow: "0 24px 48px rgba(0,0,0,0.07)",
-            }}
-          >
-            {/* Window chrome */}
-            <div
-              className="flex items-center gap-1.5 px-4 py-3 border-b"
-              style={{ borderColor: "rgba(0,0,0,0.06)", background: "#fafafa" }}
-            >
-              <span className="w-2 h-2 rounded-full" style={{ background: "#FF5F57" }} />
-              <span className="w-2 h-2 rounded-full" style={{ background: "#FEBC2E" }} />
-              <span className="w-2 h-2 rounded-full" style={{ background: "#28C840" }} />
-              <span className="ml-3 text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
-                navkaros.in/app/{mod.id}
-              </span>
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={mod.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="p-5"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "17px", color: "#1a1c1c" }}>
-                    {mod.title}
-                  </h3>
-                  <span
-                    className="text-xs font-semibold px-2 py-0.5"
-                    style={{ background: `${mod.badgeColor}18`, color: mod.badgeColor, fontSize: "10px" }}
-                  >
-                    {mod.badge}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-3 pb-1.5 mb-1 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-                  {[mod.colA, mod.colB, mod.colC].map((c, i) => (
-                    <span
-                      key={i}
-                      className={`text-xs font-semibold uppercase tracking-wider ${i === 2 ? "text-right" : ""}`}
-                      style={{ color: "#7e7576" }}
-                    >
-                      {c}
-                    </span>
-                  ))}
-                </div>
-
-                {mod.rows.map((row, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -6 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="grid grid-cols-3 py-2 border-b"
-                    style={{ borderColor: "rgba(0,0,0,0.04)" }}
-                  >
-                    <span className="text-xs font-semibold truncate pr-2" style={{ color: "#1a1c1c" }}>{row.a}</span>
-                    <span className="text-xs truncate pr-2" style={{ color: "#7e7576" }}>{row.b}</span>
-                    <span className="text-xs font-semibold text-right" style={{ color: row.color }}>{row.c}</span>
-                  </motion.div>
-                ))}
-
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="text-xs" style={{ color: "#7e7576" }}>{mod.footer}</span>
-                  <a
-                    href={`/demo/${mod.id}`}
-                    className="text-xs font-semibold uppercase tracking-widest cursor-none"
-                    style={{ color: "#D4AF37" }}
-                  >
-                    Demo →
-                  </a>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Progress bar */}
-          <div className="flex gap-1">
-            {modules.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActive(i)}
-                className="flex-1 h-0.5 rounded-full transition-all duration-300 cursor-none"
-                style={{ background: i === active ? "#D4AF37" : "rgba(0,0,0,0.12)" }}
-              />
-            ))}
-          </div>
+          <RotatingEarth width={520} height={520} />
         </motion.div>
       </div>
     </AuroraBackground>
