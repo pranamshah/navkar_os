@@ -5,8 +5,6 @@ import ProblemSection from "@/components/home/ProblemSection";
 import WhoItsFor from "@/components/home/WhoItsFor";
 import CommandSuite from "@/components/home/CommandSuite";
 import WorkflowSection from "@/components/home/WorkflowSection";
-import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
-import PricingSection from "@/components/home/PricingSection";
 import StatsSection from "@/components/home/StatsSection";
 import FAQSection from "@/components/home/FAQSection";
 import BeyondBorders from "@/components/home/BeyondBorders";
@@ -28,8 +26,6 @@ export default function Home() {
         <WhoItsFor />
         <CommandSuite />
         <WorkflowSection />
-        <TestimonialsCarousel />
-        <PricingSection />
         <StatsSection />
         <FAQSection />
         <BeyondBorders />

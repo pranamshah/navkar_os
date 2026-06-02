@@ -35,16 +35,16 @@ export default function StatsSection() {
           className="text-center text-xs font-semibold uppercase tracking-widest mb-12"
           style={{ color: "rgba(246,190,57,0.7)" }}
         >
-          Platform Performance
+          What NavkarOS Delivers
         </p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((s, i) => (
+          {stats.map((s) => (
             <div
               key={s.id}
-              className="reveal text-center p-6 rounded-2xl"
+              className="reveal text-center p-6"
               style={{
                 background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                border: "0.5px solid rgba(255,255,255,0.07)",
               }}
             >
               <p

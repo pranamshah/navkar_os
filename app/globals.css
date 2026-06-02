@@ -80,6 +80,25 @@ body {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* Aurora animation */
+@keyframes aurora {
+  from { background-position: 50% 50%, 50% 50%; }
+  to { background-position: 350% 50%, 350% 50%; }
+}
+.animate-aurora { animation: aurora 60s linear infinite; }
+
+/* Aurora CSS color vars */
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --transparent: transparent;
+  --blue-500: rgb(212,175,55);
+  --indigo-300: rgb(180,140,40);
+  --blue-300: rgb(240,200,80);
+  --violet-200: rgb(255,220,100);
+  --blue-400: rgb(200,160,50);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   body { cursor: auto; }
