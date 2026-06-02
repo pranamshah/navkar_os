@@ -6,6 +6,7 @@ import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
+import CustomCursor from "@/components/home/CustomCursor";
 
 const modules = [
   {
@@ -146,6 +147,7 @@ export default function PricingPage() {
 
   return (
     <>
+      <CustomCursor />
       <Navbar />
       <main style={{ background: "#f9f9f9", minHeight: "100vh" }}>
 
