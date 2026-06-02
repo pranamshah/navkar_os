@@ -49,19 +49,22 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
     const containerWidth = canvas.offsetWidth || width;
     const containerHeight = canvas.offsetHeight || height;
-    const radius = Math.min(containerWidth, containerHeight) / 2.2;
+    const radius = Math.min(containerWidth, containerHeight) / 2.15;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap at 2x for perf
     canvas.width = containerWidth * dpr;
     canvas.height = containerHeight * dpr;
     canvas.style.width = `${containerWidth}px`;
     canvas.style.height = `${containerHeight}px`;
     context.scale(dpr, dpr);
 
+    const cx = containerWidth / 2;
+    const cy = containerHeight / 2;
+
     const projection = d3
       .geoOrthographic()
       .scale(radius)
-      .translate([containerWidth / 2, containerHeight / 2])
+      .translate([cx, cy])
       .clipAngle(90);
 
     const path = d3.geoPath().projection(projection).context(context);
@@ -99,11 +102,11 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
       return false;
     };
 
-    const generateDotsInPolygon = (feature: any, dotSpacing = 16) => {
+    const generateDotsInPolygon = (feature: any) => {
       const dots: [number, number][] = [];
       const bounds = d3.geoBounds(feature);
       const [[minLng, minLat], [maxLng, maxLat]] = bounds;
-      const stepSize = dotSpacing * 0.14;
+      const stepSize = 1.8; // fixed degrees — coarser = fewer dots = faster
       for (let lng = minLng; lng <= maxLng; lng += stepSize) {
         for (let lat = minLat; lat <= maxLat; lat += stepSize) {
           const point: [number, number] = [lng, lat];
@@ -119,7 +122,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
     const drawArc = (from: [number, number], to: [number, number], progress: number) => {
       const interp = d3.geoInterpolate(from, to);
-      const steps = 40;
+      const steps = 32;
       context.beginPath();
       for (let i = 0; i <= Math.floor(steps * progress); i++) {
         const t = i / steps;
@@ -128,8 +131,8 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
         if (i === 0) context.moveTo(pt[0], pt[1]);
         else context.lineTo(pt[0], pt[1]);
       }
-      context.strokeStyle = "rgba(212,175,55,0.6)";
-      context.lineWidth = 0.8;
+      context.strokeStyle = "rgba(212,175,55,0.55)";
+      context.lineWidth = 0.9;
       context.stroke();
     };
 
@@ -137,39 +140,41 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
       context.clearRect(0, 0, containerWidth, containerHeight);
       animTime += 0.004;
 
-      // Globe sphere
+      // Clip everything to the sphere circle
+      context.save();
       context.beginPath();
-      context.arc(containerWidth / 2, containerHeight / 2, radius, 0, 2 * Math.PI);
-      context.fillStyle = "#0a0b0c";
-      context.fill();
-      context.strokeStyle = "rgba(212,175,55,0.3)";
-      context.lineWidth = 1;
-      context.stroke();
+      context.arc(cx, cy, radius, 0, 2 * Math.PI);
+      context.clip();
 
       if (landFeatures) {
-        // Graticule
+        // Graticule — subtle dark lines
         const graticule = d3.geoGraticule();
         context.beginPath();
         path(graticule());
-        context.strokeStyle = "rgba(255,255,255,0.06)";
+        context.strokeStyle = "rgba(26,28,28,0.1)";
         context.lineWidth = 0.5;
         context.stroke();
 
         // Land outlines
         context.beginPath();
         landFeatures.features.forEach((f: any) => path(f));
-        context.strokeStyle = "rgba(212,175,55,0.25)";
-        context.lineWidth = 0.6;
+        context.strokeStyle = "rgba(26,28,28,0.18)";
+        context.lineWidth = 0.7;
         context.stroke();
+
+        // Land fill — subtle
+        context.beginPath();
+        landFeatures.features.forEach((f: any) => path(f));
+        context.fillStyle = "rgba(212,175,55,0.04)";
+        context.fill();
 
         // Land dots
         allDots.forEach((dot) => {
           const projected = projection([dot.lng, dot.lat]);
           if (!projected) return;
-          if (projected[0] < 0 || projected[0] > containerWidth || projected[1] < 0 || projected[1] > containerHeight) return;
           context.beginPath();
-          context.arc(projected[0], projected[1], 1.0, 0, 2 * Math.PI);
-          context.fillStyle = "rgba(180,150,60,0.65)";
+          context.arc(projected[0], projected[1], 1.1, 0, 2 * Math.PI);
+          context.fillStyle = "rgba(180,140,40,0.55)";
           context.fill();
         });
 
@@ -186,27 +191,34 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
         PORTS.forEach((port) => {
           const projected = projection([port.lng, port.lat]);
           if (!projected) return;
-
-          // Check if on visible hemisphere
           const geoCoords = projection.invert ? projection.invert(projected) : null;
           if (!geoCoords) return;
 
           // Outer glow
-          const gradient = context.createRadialGradient(projected[0], projected[1], 0, projected[0], projected[1], 6);
-          gradient.addColorStop(0, "rgba(212,175,55,0.9)");
+          const gradient = context.createRadialGradient(projected[0], projected[1], 0, projected[0], projected[1], 5);
+          gradient.addColorStop(0, "rgba(212,175,55,0.85)");
           gradient.addColorStop(1, "rgba(212,175,55,0)");
           context.beginPath();
-          context.arc(projected[0], projected[1], 6, 0, 2 * Math.PI);
+          context.arc(projected[0], projected[1], 5, 0, 2 * Math.PI);
           context.fillStyle = gradient;
           context.fill();
 
           // Core dot
           context.beginPath();
-          context.arc(projected[0], projected[1], 2.2, 0, 2 * Math.PI);
+          context.arc(projected[0], projected[1], 2, 0, 2 * Math.PI);
           context.fillStyle = "#D4AF37";
           context.fill();
         });
       }
+
+      context.restore();
+
+      // Sphere border — gold ring (drawn outside clip)
+      context.beginPath();
+      context.arc(cx, cy, radius, 0, 2 * Math.PI);
+      context.strokeStyle = "rgba(212,175,55,0.22)";
+      context.lineWidth = 1;
+      context.stroke();
     };
 
     const loadWorldData = async () => {
@@ -217,13 +229,14 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
         );
         if (!response.ok) throw new Error("Failed to load land data");
         landFeatures = await response.json();
-        // Process features in chunks to avoid blocking the main thread
+
+        // Chunked async dot generation to avoid blocking
         const features = landFeatures.features;
-        const chunkSize = 4;
+        const chunkSize = 5;
         const processChunk = (startIdx: number) => {
           const end = Math.min(startIdx + chunkSize, features.length);
           for (let i = startIdx; i < end; i++) {
-            const dots = generateDotsInPolygon(features[i], 16);
+            const dots = generateDotsInPolygon(features[i]);
             dots.forEach(([lng, lat]) => allDots.push({ lng, lat }));
           }
           if (end < features.length) {
@@ -233,7 +246,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
           }
         };
         processChunk(0);
-      } catch (err) {
+      } catch {
         setError("Failed to load globe data");
         setIsLoading(false);
       }
@@ -241,13 +254,22 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
     const rotation: [number, number] = [0, -20];
     let autoRotate = true;
-    const rotationTimer = d3.timer(() => {
-      if (autoRotate) {
-        rotation[0] += 0.3;
-        projection.rotate(rotation);
+
+    // 30fps throttle using rAF
+    let rafId: number;
+    let lastFrameTime = 0;
+    const animate = (time: number) => {
+      if (time - lastFrameTime >= 33) {
+        lastFrameTime = time;
+        if (autoRotate) {
+          rotation[0] += 0.25;
+          projection.rotate(rotation);
+        }
+        render();
       }
-      render();
-    });
+      rafId = requestAnimationFrame(animate);
+    };
+    rafId = requestAnimationFrame(animate);
 
     const handleMouseDown = (event: MouseEvent) => {
       autoRotate = false;
@@ -262,7 +284,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
       const onUp = () => {
         document.removeEventListener("mousemove", onMove);
         document.removeEventListener("mouseup", onUp);
-        setTimeout(() => { autoRotate = true; }, 50);
+        setTimeout(() => { autoRotate = true; }, 1500);
       };
       document.addEventListener("mousemove", onMove);
       document.addEventListener("mouseup", onUp);
@@ -272,15 +294,15 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
     loadWorldData();
 
     return () => {
-      rotationTimer.stop();
+      cancelAnimationFrame(rafId);
       canvas.removeEventListener("mousedown", handleMouseDown);
     };
   }, [width, height]);
 
   if (error) {
     return (
-      <div className={`flex items-center justify-center rounded-full bg-[#0a0b0c] ${className}`}>
-        <p className="text-sm text-yellow-500/60">Globe unavailable</p>
+      <div className={`flex items-center justify-center ${className}`} style={{ background: "transparent" }}>
+        <p className="text-sm" style={{ color: "rgba(212,175,55,0.5)" }}>Globe unavailable</p>
       </div>
     );
   }
@@ -288,14 +310,14 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
   return (
     <div className={`relative ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center rounded-full bg-[#0a0b0c] z-10">
+        <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="w-8 h-8 rounded-full border-2 border-[#D4AF37]/30 border-t-[#D4AF37] animate-spin" />
         </div>
       )}
       <canvas
         ref={canvasRef}
-        className="w-full h-full rounded-full"
-        style={{ background: "#0a0b0c", cursor: "grab" }}
+        className="w-full h-full"
+        style={{ background: "transparent", cursor: "grab" }}
       />
     </div>
   );

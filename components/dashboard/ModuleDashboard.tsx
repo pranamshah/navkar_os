@@ -5,13 +5,12 @@ import Link from "next/link";
 import type { ModuleId } from "@/lib/modules";
 
 const dashboardContent: Record<ModuleId, React.ReactNode> = {
-  freightops: <FreightOpsDash />,
-  docai: <DocAIDash />,
-  billgen: <BillGenDash />,
-  clienthub: <ClientHubDash />,
-  accountsos: <AccountsOSDash />,
-  ratedesk: <RateDeskDash />,
-  connectlayer: <ConnectLayerDash />,
+  nexlog: <FreightOpsDash />,
+  entryx: <DocAIDash />,
+  dockiq: <ClientHubDash />,
+  rundesk: <RateDeskDash />,
+  accura: <AccountsOSDash />,
+  tradepilot: <ConnectLayerDash />,
 };
 
 export function ModuleDashboard({ moduleId }: { moduleId: ModuleId }) {

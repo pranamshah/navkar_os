@@ -1,70 +1,27 @@
 "use client";
 
-import { useState } from "react";
-
 const partners = [
-  { name: "MAERSK", domain: "maersk.com", color: "#00243D" },
-  { name: "HAPAG-LLOYD", domain: "hapag-lloyd.com", color: "#E2700A" },
-  { name: "CMA CGM", domain: "cma-cgm.com", color: "#003B7A" },
-  { name: "MSC", domain: "msc.com", color: "#0058A6" },
-  { name: "ADANI PORTS", domain: "adaniports.com", color: "#1B4F9C" },
-  { name: "TALLY PRIME", domain: "tallysolutions.com", color: "#0052CC" },
-  { name: "RAZORPAY", domain: "razorpay.com", color: "#072654" },
-  { name: "DHL", domain: "dhl.com", color: "#FFCC00" },
-  { name: "MAERSK", domain: "maersk.com", color: "#00243D" },
-  { name: "HAPAG-LLOYD", domain: "hapag-lloyd.com", color: "#E2700A" },
-  { name: "CMA CGM", domain: "cma-cgm.com", color: "#003B7A" },
-  { name: "MSC", domain: "msc.com", color: "#0058A6" },
-  { name: "ADANI PORTS", domain: "adaniports.com", color: "#1B4F9C" },
-  { name: "TALLY PRIME", domain: "tallysolutions.com", color: "#0052CC" },
-  { name: "RAZORPAY", domain: "razorpay.com", color: "#072654" },
-  { name: "DHL", domain: "dhl.com", color: "#FFCC00" },
+  { name: "MAERSK", abbr: "MSK", bg: "#00243D", fg: "#fff" },
+  { name: "HAPAG-LLOYD", abbr: "HL", bg: "#E2700A", fg: "#fff" },
+  { name: "CMA CGM", abbr: "CMA", bg: "#003B7A", fg: "#fff" },
+  { name: "MSC", abbr: "MSC", bg: "#0058A6", fg: "#fff" },
+  { name: "ADANI PORTS", abbr: "AP", bg: "#1B4F9C", fg: "#fff" },
+  { name: "JNPT", abbr: "JN", bg: "#1A6B3C", fg: "#fff" },
+  { name: "ICEGATE", abbr: "ICG", bg: "#8B0000", fg: "#fff" },
+  { name: "TALLY PRIME", abbr: "TP", bg: "#0052CC", fg: "#fff" },
+  { name: "RAZORPAY", abbr: "RZ", bg: "#2D4CE2", fg: "#fff" },
+  { name: "DHL", abbr: "DHL", bg: "#FFCC00", fg: "#1a1c1c" },
+  { name: "MAERSK", abbr: "MSK", bg: "#00243D", fg: "#fff" },
+  { name: "HAPAG-LLOYD", abbr: "HL", bg: "#E2700A", fg: "#fff" },
+  { name: "CMA CGM", abbr: "CMA", bg: "#003B7A", fg: "#fff" },
+  { name: "MSC", abbr: "MSC", bg: "#0058A6", fg: "#fff" },
+  { name: "ADANI PORTS", abbr: "AP", bg: "#1B4F9C", fg: "#fff" },
+  { name: "JNPT", abbr: "JN", bg: "#1A6B3C", fg: "#fff" },
+  { name: "ICEGATE", abbr: "ICG", bg: "#8B0000", fg: "#fff" },
+  { name: "TALLY PRIME", abbr: "TP", bg: "#0052CC", fg: "#fff" },
+  { name: "RAZORPAY", abbr: "RZ", bg: "#2D4CE2", fg: "#fff" },
+  { name: "DHL", abbr: "DHL", bg: "#FFCC00", fg: "#1a1c1c" },
 ];
-
-function LogoItem({ partner }: { partner: typeof partners[0] }) {
-  const [failed, setFailed] = useState(false);
-  const initials = partner.name.slice(0, 3);
-
-  return (
-    <span className="mx-8 flex items-center gap-2.5 whitespace-nowrap select-none">
-      <span
-        className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0 overflow-hidden"
-        style={{
-          background: failed ? (partner.color === "#FFCC00" ? partner.color : partner.color + "22") : "#fff",
-          border: `0.5px solid ${partner.color}44`,
-        }}
-      >
-        {!failed ? (
-          <img
-            src={`https://logo.clearbit.com/${partner.domain}`}
-            alt={partner.name}
-            width={24}
-            height={24}
-            style={{ objectFit: "contain", width: "24px", height: "24px" }}
-            onError={() => setFailed(true)}
-          />
-        ) : (
-          <span
-            style={{
-              fontSize: "7px",
-              fontWeight: 900,
-              letterSpacing: 0,
-              color: partner.color === "#FFCC00" ? "#1a1c1c" : partner.color,
-            }}
-          >
-            {initials}
-          </span>
-        )}
-      </span>
-      <span
-        className="font-black text-base"
-        style={{ color: "rgba(26,28,29,0.35)", letterSpacing: "-0.02em" }}
-      >
-        {partner.name}
-      </span>
-    </span>
-  );
-}
 
 export default function TrustTicker() {
   return (
@@ -88,8 +45,34 @@ export default function TrustTicker() {
           style={{ background: "linear-gradient(-90deg, #ffffff, transparent)" }}
         />
         <div className="ticker-track">
-          {partners.map((partner, i) => (
-            <LogoItem key={i} partner={partner} />
+          {partners.map((p, i) => (
+            <span
+              key={i}
+              className="mx-8 flex items-center gap-2.5 whitespace-nowrap select-none"
+            >
+              {/* Logo mark — colored badge with abbreviation */}
+              <span
+                className="flex items-center justify-center rounded flex-shrink-0"
+                style={{
+                  width: "32px",
+                  height: "28px",
+                  background: p.bg,
+                  color: p.fg,
+                  fontSize: p.abbr.length > 2 ? "7px" : "9px",
+                  fontWeight: 900,
+                  letterSpacing: "0.02em",
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+              >
+                {p.abbr}
+              </span>
+              <span
+                className="font-black"
+                style={{ fontSize: "13px", color: "rgba(26,28,29,0.32)", letterSpacing: "-0.01em" }}
+              >
+                {p.name}
+              </span>
+            </span>
           ))}
         </div>
       </div>

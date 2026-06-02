@@ -20,7 +20,7 @@ body {
   color: #1a1c1c;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
+  cursor: auto;
 }
 
 .material-symbols-outlined {
@@ -99,8 +99,11 @@ body {
   --blue-400: rgb(200,160,50);
 }
 
+/* body.custom-cursor hides native cursor on homepage only */
+body.custom-cursor { cursor: none; }
+body.custom-cursor button, body.custom-cursor a { cursor: none; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  body { cursor: auto; }
   #navkar-cursor { display: none; }
 }

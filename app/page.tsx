@@ -3,7 +3,7 @@ import HeroSection from "@/components/home/HeroSection";
 import TrustTicker from "@/components/home/TrustTicker";
 import ProblemSection from "@/components/home/ProblemSection";
 import WhoItsFor from "@/components/home/WhoItsFor";
-import CommandSuite from "@/components/home/CommandSuite";
+import SuiteScroll from "@/components/home/SuiteScroll";
 import WorkflowSection from "@/components/home/WorkflowSection";
 import StatsSection from "@/components/home/StatsSection";
 import FAQSection from "@/components/home/FAQSection";
@@ -24,7 +24,7 @@ export default function Home() {
         <TrustTicker />
         <ProblemSection />
         <WhoItsFor />
-        <CommandSuite />
+        <SuiteScroll />
         <WorkflowSection />
         <StatsSection />
         <FAQSection />
