@@ -2,77 +2,87 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import {
+  CheckCircle2,
+  Anchor,
+  FileText,
+  Receipt,
+  Users,
+  BarChart2,
+  TrendingUp,
+  Zap,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
 import CustomCursor from "@/components/home/CustomCursor";
 
+// ── Icon map ───────────────────────────────────────────────────────────────
+const MODULE_ICONS: Record<string, LucideIcon> = {
+  freightops: Anchor,
+  docai: FileText,
+  billgen: Receipt,
+  clienthub: Users,
+  accountsos: BarChart2,
+  ratedesk: TrendingUp,
+  connectlayer: Zap,
+};
+
+// ── Data ───────────────────────────────────────────────────────────────────
 const modules = [
   {
     id: "freightops",
     name: "FreightOps",
     tagline: "Job & shipment management",
-    desc: "Create, track and manage FCL, LCL, air, and breakbulk jobs end-to-end. ICEGATE EDI ready.",
     price: 799,
-    icon: "🚢",
-    features: ["Unlimited job entries", "Multi-mode freight (FCL/LCL/Air)", "ICEGATE customs filing", "Vessel & flight tracking"],
+    features: ["Unlimited job entries", "FCL / LCL / Air / Breakbulk", "ICEGATE customs filing", "Vessel & flight tracking"],
   },
   {
     id: "docai",
     name: "DocAI",
     tagline: "AI document extraction",
-    desc: "Extract data from BL, invoices, packing lists and customs documents automatically with 98%+ accuracy.",
     price: 599,
-    icon: "🧠",
     features: ["PDF & scanned doc support", "BL, invoice, packing list", "Bill of Entry parsing", "Mobile photo capture"],
   },
   {
     id: "billgen",
     name: "BillGen",
     tagline: "GST invoicing",
-    desc: "Generate GST-compliant invoices in seconds. Auto-split IGST/CGST/SGST, send via WhatsApp or email.",
     price: 399,
-    icon: "🧾",
     features: ["GST invoice generation", "Auto IGST / CGST split", "WhatsApp delivery", "GSTR-1 data export"],
   },
   {
     id: "clienthub",
     name: "ClientHub",
     tagline: "Client tracking portal",
-    desc: "Give clients a branded portal to track their shipments, download documents and view invoices.",
     price: 499,
-    icon: "🤝",
     features: ["Branded client portal", "Real-time tracking", "Document downloads", "Invoice access"],
   },
   {
     id: "accountsos",
     name: "AccountsOS",
     tagline: "Accounts & P&L",
-    desc: "Full accounts module with receivables, payables, vendor bills, P&L and Tally XML sync.",
     price: 699,
-    icon: "📊",
     features: ["Receivables & payables", "Vendor bill management", "P&L reports", "Tally XML export"],
   },
   {
     id: "ratedesk",
     name: "RateDesk",
     tagline: "Rate management & quoting",
-    desc: "Maintain carrier rate cards, compare rates, generate instant quotations and convert to jobs in one click.",
     price: 349,
-    icon: "💹",
-    features: ["Carrier rate cards", "Instant quotation", "Quote → Job conversion", "Rate expiry alerts"],
+    features: ["Carrier rate cards", "Instant quotation", "Quote to Job in one click", "Rate expiry alerts"],
   },
   {
     id: "connectlayer",
     name: "ConnectLayer",
     tagline: "API integrations",
-    desc: "Connect NavkarOS to ICEGATE, GSTN, WhatsApp Business, MarineTraffic, Razorpay and Tally.",
     price: 449,
-    icon: "🔗",
     features: ["ICEGATE & GSTN APIs", "WhatsApp Business", "MarineTraffic AIS", "Razorpay payment links"],
   },
 ];
+
+const TOTAL_MODULE_PRICE = modules.reduce((s, m) => s + m.price, 0); // 3793
 
 const bundles = [
   {
@@ -184,7 +194,7 @@ export default function PricingPage() {
               className="mt-5 text-base"
               style={{ color: "#7e7576", fontWeight: 300, lineHeight: 1.75 }}
             >
-              Start with a bundle or pick individual modules. Every plan includes a 14-day free trial — no credit card required.
+              Start with a bundle or pick individual modules. Every plan includes a 14-day free trial with no credit card required.
             </motion.p>
           </motion.div>
         </section>
@@ -229,7 +239,9 @@ export default function PricingPage() {
                   style={{
                     background: plan.highlight ? "#1a1c1c" : "#fff",
                     border: plan.highlight ? "1px solid #D4AF37" : "0.5px solid rgba(0,0,0,0.1)",
-                    boxShadow: plan.highlight ? "0 24px 60px rgba(212,175,55,0.14)" : "0 4px 24px rgba(0,0,0,0.04)",
+                    boxShadow: plan.highlight
+                      ? "0 24px 60px rgba(212,175,55,0.14)"
+                      : "0 4px 24px rgba(0,0,0,0.04)",
                     transform: plan.highlight ? "scale(1.03)" : "scale(1)",
                   }}
                 >
@@ -245,7 +257,6 @@ export default function PricingPage() {
                   <div className="p-8 flex flex-col gap-5">
                     <div>
                       <h3
-                        className="font-black text-xl mb-1"
                         style={{
                           fontFamily: "'EB Garamond', Georgia, serif",
                           fontWeight: 400,
@@ -256,7 +267,7 @@ export default function PricingPage() {
                       >
                         {plan.name}
                       </h3>
-                      <p className="text-sm" style={{ color: plan.highlight ? "rgba(255,255,255,0.5)" : "#7e7576" }}>
+                      <p className="text-sm mt-1" style={{ color: plan.highlight ? "rgba(255,255,255,0.5)" : "#7e7576" }}>
                         {plan.desc}
                       </p>
                     </div>
@@ -278,7 +289,7 @@ export default function PricingPage() {
                         </span>
                       </div>
                       {annual && (
-                        <p className="text-xs mt-0.5" style={{ color: plan.highlight ? "#D4AF37" : "#D4AF37" }}>
+                        <p className="text-xs mt-0.5" style={{ color: "#D4AF37" }}>
                           ₹{plan.annual.toLocaleString("en-IN")} billed annually
                         </p>
                       )}
@@ -299,14 +310,20 @@ export default function PricingPage() {
                     </ul>
 
                     <Link
-                      href={plan.id === "pro" ? "#contact" : "/signup"}
+                      href={plan.id === "pro" ? "/#contact" : "/signup"}
                       className="block w-full py-3.5 text-center text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none mt-2"
                       style={{
                         background: plan.highlight ? "#D4AF37" : "#1a1c1c",
                         color: plan.highlight ? "#1a1c1c" : "#fff",
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "scale(1.02)"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.opacity = "0.88";
+                        e.currentTarget.style.transform = "scale(1.02)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.opacity = "1";
+                        e.currentTarget.style.transform = "scale(1)";
+                      }}
                     >
                       {plan.cta}
                     </Link>
@@ -318,7 +335,7 @@ export default function PricingPage() {
             <p className="text-center text-sm mt-8" style={{ color: "#7e7576" }}>
               Need unlimited users and custom integrations?{" "}
               <a href="/#contact" className="font-semibold underline cursor-none" style={{ color: "#D4AF37" }}>
-                Talk to our Enterprise team →
+                Talk to our Enterprise team
               </a>
             </p>
           </div>
@@ -329,96 +346,243 @@ export default function PricingPage() {
           <div style={{ borderTop: "0.5px solid rgba(0,0,0,0.08)" }} />
         </div>
 
-        {/* ── Individual Modules ───────────────────────────── */}
+        {/* ── À la carte — redesigned manifest rows ─────────── */}
         <section className="py-24 px-6">
           <div className="max-w-5xl mx-auto">
+
+            {/* Section header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-14"
+              className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8"
+              style={{ borderBottom: "0.5px solid rgba(0,0,0,0.1)" }}
             >
-              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>
-                À la carte
-              </p>
-              <h2
-                style={{
-                  fontFamily: "'EB Garamond', Georgia, serif",
-                  fontSize: "clamp(28px, 3.5vw, 42px)",
-                  fontWeight: 400,
-                  color: "#1a1c1c",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Add individual modules to any plan.
-              </h2>
-              <p className="mt-3 text-sm max-w-lg" style={{ color: "#7e7576", lineHeight: 1.75 }}>
-                Already on a bundle? Extend it. Starting fresh? Build your own stack from these modules.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {modules.map((mod, i) => (
-                <motion.div
-                  key={mod.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                  className="p-6 flex flex-col gap-4"
+              <div>
+                <p
+                  className="text-xs font-semibold uppercase tracking-widest mb-3"
+                  style={{ color: "#D4AF37" }}
+                >
+                  À la carte
+                </p>
+                <h2
                   style={{
-                    background: "#fff",
-                    border: "0.5px solid rgba(0,0,0,0.08)",
-                    boxShadow: "0 2px 16px rgba(0,0,0,0.03)",
+                    fontFamily: "'EB Garamond', Georgia, serif",
+                    fontSize: "clamp(28px, 3.5vw, 42px)",
+                    fontWeight: 400,
+                    color: "#1a1c1c",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1.1,
                   }}
                 >
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <span style={{ fontSize: "22px", lineHeight: 1 }}>{mod.icon}</span>
-                      <div>
-                        <p className="font-semibold text-sm" style={{ color: "#1a1c1c" }}>{mod.name}</p>
-                        <p className="text-xs" style={{ color: "#7e7576" }}>{mod.tagline}</p>
+                  Build your own stack.
+                </h2>
+                <p
+                  className="mt-2 text-sm"
+                  style={{ color: "#7e7576", lineHeight: 1.75, maxWidth: "380px" }}
+                >
+                  Add to any bundle, or start from scratch with only the modules you need.
+                </p>
+              </div>
+
+              {/* All-in summary chip */}
+              <div
+                className="flex-shrink-0 p-5"
+                style={{
+                  background: "rgba(26,28,28,0.03)",
+                  border: "0.5px solid rgba(0,0,0,0.08)",
+                  minWidth: "200px",
+                }}
+              >
+                <p
+                  className="text-xs font-semibold uppercase tracking-widest mb-2"
+                  style={{ color: "#7e7576" }}
+                >
+                  All 7 modules
+                </p>
+                <div className="flex items-baseline gap-1">
+                  <span
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: 700,
+                      color: "#1a1c1c",
+                      letterSpacing: "-0.03em",
+                      lineHeight: 1,
+                    }}
+                  >
+                    ₹{TOTAL_MODULE_PRICE.toLocaleString("en-IN")}
+                  </span>
+                  <span className="text-sm ml-0.5" style={{ color: "#7e7576" }}>
+                    /mo
+                  </span>
+                </div>
+                <p className="text-xs mt-1.5" style={{ color: "#7e7576" }}>
+                  Modules only — seats billed on plan
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Module manifest rows */}
+            <div>
+              {modules.map((mod, i) => {
+                const Icon = MODULE_ICONS[mod.id];
+                return (
+                  <motion.div
+                    key={mod.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-8px" }}
+                    transition={{ duration: 0.45, delay: i * 0.055, ease: [0.22, 1, 0.36, 1] }}
+                    className="group relative"
+                    style={{ borderBottom: "0.5px solid rgba(0,0,0,0.07)" }}
+                  >
+                    {/* Gold left border — scaleY from top on hover */}
+                    <div
+                      className="absolute left-0 top-0 bottom-0 w-[2px] origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300 ease-out"
+                      style={{ background: "#D4AF37" }}
+                    />
+
+                    {/* Hover background tint */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{ background: "rgba(212,175,55,0.022)" }}
+                    />
+
+                    {/* Row — 2 cols on mobile, 4 cols on desktop */}
+                    <div
+                      className="relative grid items-center gap-4 lg:gap-6 px-4 lg:px-6 py-5 lg:py-6"
+                      style={{
+                        gridTemplateColumns: "1fr 7rem",
+                      }}
+                    >
+                      {/* ── LEFT BLOCK (spans full width on mobile) ── */}
+                      <div className="flex items-center gap-3 lg:contents">
+
+                        {/* Decorative sequence number — desktop only */}
+                        <span
+                          className="hidden lg:block flex-shrink-0 w-12 text-right select-none"
+                          style={{
+                            fontFamily: "'EB Garamond', Georgia, serif",
+                            fontSize: "32px",
+                            fontWeight: 400,
+                            color: "rgba(26,28,28,0.1)",
+                            lineHeight: 1,
+                          }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+
+                        {/* Icon + name + tagline */}
+                        <div className="min-w-0 flex-1 lg:flex-none">
+                          <div className="flex items-center gap-2.5 mb-1">
+                            {/* Icon container */}
+                            <div
+                              className="flex-shrink-0 flex items-center justify-center"
+                              style={{
+                                width: 26,
+                                height: 26,
+                                background: "rgba(212,175,55,0.1)",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <Icon size={13} strokeWidth={1.5} color="#D4AF37" />
+                            </div>
+
+                            {/* Module name — slides right on row hover */}
+                            <span
+                              className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-[4px]"
+                              style={{
+                                fontFamily: "'EB Garamond', Georgia, serif",
+                                fontSize: "20px",
+                                fontWeight: 400,
+                                color: "#1a1c1c",
+                                letterSpacing: "-0.01em",
+                              }}
+                            >
+                              {mod.name}
+                            </span>
+                          </div>
+
+                          {/* Tagline */}
+                          <p
+                            className="text-xs"
+                            style={{ color: "#7e7576", paddingLeft: "38px" }}
+                          >
+                            {mod.tagline}
+                          </p>
+                        </div>
+
+                        {/* Feature list — desktop only, 2×2 grid */}
+                        <div
+                          className="hidden lg:grid flex-shrink-0"
+                          style={{
+                            gridTemplateColumns: "1fr 1fr",
+                            gap: "6px 24px",
+                            width: "320px",
+                          }}
+                        >
+                          {mod.features.map((f) => (
+                            <div key={f} className="flex items-center gap-2 min-w-0">
+                              <span
+                                className="flex-shrink-0 rounded-full"
+                                style={{
+                                  width: 4,
+                                  height: 4,
+                                  background: "#D4AF37",
+                                  opacity: 0.55,
+                                }}
+                              />
+                              <span
+                                className="text-xs truncate"
+                                style={{ color: "#7e7576" }}
+                              >
+                                {f}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* ── RIGHT BLOCK: price + demo ── */}
+                      <div className="text-right flex-shrink-0">
+                        <span
+                          className="font-bold transition-colors duration-200 group-hover:text-[#D4AF37] text-[#1a1c1c]"
+                          style={{
+                            fontSize: "19px",
+                            letterSpacing: "-0.02em",
+                            lineHeight: 1,
+                          }}
+                        >
+                          ₹{mod.price.toLocaleString("en-IN")}
+                        </span>
+                        <p className="text-xs mt-0.5 mb-3" style={{ color: "#7e7576" }}>
+                          /mo
+                        </p>
+                        <Link
+                          href={`/demo/${mod.id}`}
+                          className="text-xs font-semibold uppercase tracking-widest cursor-none transition-colors duration-200 group-hover:text-[#D4AF37] text-[#7e7576]"
+                        >
+                          Demo
+                        </Link>
                       </div>
                     </div>
-                    <div className="text-right flex-shrink-0 ml-3">
-                      <p
-                        className="font-bold"
-                        style={{ fontSize: "20px", color: "#1a1c1c", letterSpacing: "-0.02em" }}
-                      >
-                        ₹{mod.price.toLocaleString("en-IN")}
-                      </p>
-                      <p className="text-xs" style={{ color: "#7e7576" }}>/mo</p>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-xs leading-relaxed" style={{ color: "#7e7576" }}>{mod.desc}</p>
-
-                  {/* Features */}
-                  <ul className="flex flex-col gap-1.5 mt-auto">
-                    {mod.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2">
-                        <span style={{ color: "#D4AF37", fontSize: "10px" }}>✦</span>
-                        <span className="text-xs" style={{ color: "#4c4546" }}>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <Link
-                    href={`/demo/${mod.id}`}
-                    className="block text-center text-xs font-semibold uppercase tracking-widest py-2.5 mt-2 transition-all duration-200 cursor-none"
-                    style={{ border: "0.5px solid #1a1c1c", color: "#1a1c1c" }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#1a1c1c"; }}
-                  >
-                    See Demo →
-                  </Link>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
+
+            {/* Footer note */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="text-xs mt-7"
+              style={{ color: "rgba(0,0,0,0.3)" }}
+            >
+              All prices exclusive of GST. Modules can be added or removed at any time.
+            </motion.p>
           </div>
         </section>
 
@@ -452,8 +616,14 @@ export default function PricingPage() {
                 href="/signup"
                 className="px-10 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none"
                 style={{ background: "#D4AF37", color: "#1a1c1c" }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "scale(1.02)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = "0.9";
+                  e.currentTarget.style.transform = "scale(1.02)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
               >
                 Start Free Trial
               </Link>
@@ -461,8 +631,14 @@ export default function PricingPage() {
                 href="/#contact"
                 className="px-10 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none"
                 style={{ borderColor: "rgba(255,255,255,0.2)", color: "#fff" }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#D4AF37"; e.currentTarget.style.color = "#D4AF37"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = "#fff"; }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "#D4AF37";
+                  e.currentTarget.style.color = "#D4AF37";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+                  e.currentTarget.style.color = "#fff";
+                }}
               >
                 Book a Demo
               </Link>
