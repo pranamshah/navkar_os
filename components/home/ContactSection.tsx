@@ -75,30 +75,6 @@ export default function ContactSection() {
               ))}
             </div>
 
-            <div className="mt-12 pt-10" style={{ borderTop: "0.5px solid rgba(0,0,0,0.1)" }}>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#7e7576" }}>
-                Quick Actions
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {["Book a Demo", "Pricing Questions", "Technical Support", "Partner with Us"].map((action) => (
-                  <button
-                    key={action}
-                    className="px-4 py-2 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none"
-                    style={{ borderColor: "rgba(0,0,0,0.15)", color: "#1a1c1c", borderWidth: "0.5px" }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#1a1c1c";
-                      e.currentTarget.style.color = "#fff";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#1a1c1c";
-                    }}
-                  >
-                    {action}
-                  </button>
-                ))}
-              </div>
-            </div>
           </motion.div>
 
           {/* Right: Form */}
