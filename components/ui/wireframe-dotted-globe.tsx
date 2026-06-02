@@ -147,25 +147,25 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
       context.clip();
 
       if (landFeatures) {
-        // Graticule — subtle dark lines
+        // Graticule — dark lines
         const graticule = d3.geoGraticule();
         context.beginPath();
         path(graticule());
-        context.strokeStyle = "rgba(26,28,28,0.1)";
+        context.strokeStyle = "rgba(26,28,28,0.18)";
         context.lineWidth = 0.5;
         context.stroke();
 
-        // Land outlines
+        // Land outlines — clearly visible
         context.beginPath();
         landFeatures.features.forEach((f: any) => path(f));
-        context.strokeStyle = "rgba(26,28,28,0.18)";
-        context.lineWidth = 0.7;
+        context.strokeStyle = "rgba(26,28,28,0.38)";
+        context.lineWidth = 0.8;
         context.stroke();
 
-        // Land fill — subtle
+        // Land fill — subtle gold tint
         context.beginPath();
         landFeatures.features.forEach((f: any) => path(f));
-        context.fillStyle = "rgba(212,175,55,0.04)";
+        context.fillStyle = "rgba(212,175,55,0.07)";
         context.fill();
 
         // Land dots
@@ -173,8 +173,8 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
           const projected = projection([dot.lng, dot.lat]);
           if (!projected) return;
           context.beginPath();
-          context.arc(projected[0], projected[1], 1.1, 0, 2 * Math.PI);
-          context.fillStyle = "rgba(180,140,40,0.55)";
+          context.arc(projected[0], projected[1], 1.2, 0, 2 * Math.PI);
+          context.fillStyle = "rgba(150,110,20,0.68)";
           context.fill();
         });
 
@@ -224,9 +224,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
     const loadWorldData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(
-          "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json"
-        );
+        const response = await fetch("/world-110m.json");
         if (!response.ok) throw new Error("Failed to load land data");
         landFeatures = await response.json();
 

@@ -24,28 +24,22 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.6, delay: 0.2 }}
       >
-        <div
-          style={{
-            width: "min(900px, 96vw)",
-            height: "min(900px, 96vw)",
-            position: "relative",
-          }}
-        >
+        <div style={{ width: "min(900px, 96vw)", height: "min(900px, 96vw)", position: "relative" }}>
           <RotatingEarth width={900} height={900} className="w-full h-full" />
         </div>
       </motion.div>
 
-      {/* Radial vignette so text reads cleanly over globe center */}
+      {/* Radial vignette for text readability */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 55% 60% at 50% 50%, transparent 0%, rgba(249,249,249,0.55) 55%, rgba(249,249,249,0.92) 80%, #f9f9f9 100%)",
+            "radial-gradient(ellipse 55% 60% at 50% 50%, transparent 0%, rgba(249,249,249,0.5) 50%, rgba(249,249,249,0.9) 78%, #f9f9f9 100%)",
           zIndex: 1,
         }}
       />
 
-      {/* Hero text — centered, overlaid on globe */}
+      {/* Hero text — centered over globe */}
       <div className="relative w-full max-w-5xl mx-auto px-8 flex flex-col items-center text-center" style={{ zIndex: 2, paddingTop: "80px" }}>
         <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col items-center">
           <motion.div variants={fadeUp} className="mb-7">
@@ -120,25 +114,10 @@ export default function HeroSection() {
               </div>
             ))}
           </motion.div>
-
-          {/* Port label */}
-          <motion.div
-            variants={fadeUp}
-            className="mt-12 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-            style={{
-              background: "rgba(26,28,28,0.72)",
-              color: "#D4AF37",
-              backdropFilter: "blur(8px)",
-              border: "0.5px solid rgba(212,175,55,0.3)",
-            }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
-            16 major Indian & global ports connected
-          </motion.div>
         </motion.div>
       </div>
 
-      {/* Bottom fade into white */}
+      {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ height: "100px", background: "linear-gradient(to bottom, transparent, #f9f9f9)", zIndex: 3 }}

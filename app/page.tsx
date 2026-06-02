@@ -1,5 +1,6 @@
 import Navbar from "@/components/home/Navbar";
 import HeroSection from "@/components/home/HeroSection";
+import ServicePreview from "@/components/home/ServicePreview";
 import TrustTicker from "@/components/home/TrustTicker";
 import ProblemSection from "@/components/home/ProblemSection";
 import WhoItsFor from "@/components/home/WhoItsFor";
@@ -21,6 +22,7 @@ export default function Home() {
       <main className="flex flex-col min-h-screen">
         <Navbar />
         <HeroSection />
+        <ServicePreview />
         <TrustTicker />
         <ProblemSection />
         <WhoItsFor />
