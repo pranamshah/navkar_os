@@ -127,23 +127,23 @@ export default function ModuleShowcaseSection() {
       style={{ background: "#f9f9f9", borderTop: "0.5px solid rgba(0,0,0,0.06)" }}
     >
       <motion.div
-        className="max-w-3xl mx-auto px-8 lg:px-16 py-20 flex flex-col gap-4"
-        initial={{ opacity: 0, y: 24 }}
+        className="max-w-5xl mx-auto px-8 lg:px-16 py-24 flex flex-col gap-5"
+        initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Module tabs */}
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           {modules.map((m, i) => (
             <button
               key={m.id}
               onClick={() => setActive(i)}
-              className="px-2.5 py-1 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-none"
+              className="px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-none"
               style={{
-                background: i === active ? "#1a1c1c" : "rgba(0,0,0,0.06)",
+                background: i === active ? "#1a1c1c" : "rgba(0,0,0,0.05)",
                 color: i === active ? "#fff" : "#7e7576",
-                borderBottom: i === active ? "1.5px solid #D4AF37" : "1.5px solid transparent",
+                borderBottom: i === active ? "2px solid #D4AF37" : "2px solid transparent",
               }}
             >
               {m.label}
@@ -155,20 +155,20 @@ export default function ModuleShowcaseSection() {
         <div
           style={{
             background: "#fff",
-            border: "0.5px solid rgba(0,0,0,0.1)",
-            boxShadow: "0 24px 48px rgba(0,0,0,0.07)",
+            border: "0.5px solid rgba(0,0,0,0.09)",
+            boxShadow: "0 32px 64px rgba(0,0,0,0.06), 0 8px 16px rgba(0,0,0,0.04)",
           }}
         >
           {/* Window chrome */}
           <div
-            className="flex items-center gap-1.5 px-4 py-3 border-b"
+            className="flex items-center gap-2 px-6 py-4 border-b"
             style={{ borderColor: "rgba(0,0,0,0.06)", background: "#fafafa" }}
           >
-            <span className="w-2 h-2 rounded-full" style={{ background: "#FF5F57" }} />
-            <span className="w-2 h-2 rounded-full" style={{ background: "#FEBC2E" }} />
-            <span className="w-2 h-2 rounded-full" style={{ background: "#28C840" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
             <span
-              className="ml-3 text-xs font-semibold uppercase tracking-widest"
+              className="ml-4 text-xs font-semibold uppercase tracking-widest"
               style={{ color: "#7e7576" }}
             >
               navkaros.in/app/{mod.id}
@@ -182,25 +182,27 @@ export default function ModuleShowcaseSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="p-5"
+              className="p-8"
             >
               {/* Panel header */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h3
                   style={{
                     fontFamily: "'EB Garamond', Georgia, serif",
-                    fontSize: "17px",
+                    fontSize: "22px",
                     color: "#1a1c1c",
+                    fontWeight: 400,
                   }}
                 >
                   {mod.title}
                 </h3>
                 <span
-                  className="text-xs font-semibold px-2 py-0.5"
+                  className="font-semibold px-3 py-1"
                   style={{
-                    background: `${mod.badgeColor}18`,
+                    background: `${mod.badgeColor}15`,
                     color: mod.badgeColor,
-                    fontSize: "10px",
+                    fontSize: "11px",
+                    letterSpacing: "0.04em",
                   }}
                 >
                   {mod.badge}
@@ -209,13 +211,13 @@ export default function ModuleShowcaseSection() {
 
               {/* Column headers */}
               <div
-                className="grid grid-cols-3 pb-1.5 mb-1 border-b"
-                style={{ borderColor: "rgba(0,0,0,0.06)" }}
+                className="grid grid-cols-3 pb-3 mb-1 border-b"
+                style={{ borderColor: "rgba(0,0,0,0.07)" }}
               >
                 {[mod.colA, mod.colB, mod.colC].map((c, i) => (
                   <span
                     key={i}
-                    className={`text-xs font-semibold uppercase tracking-wider ${i === 2 ? "text-right" : ""}`}
+                    className={`text-xs font-semibold uppercase tracking-widest ${i === 2 ? "text-right" : ""}`}
                     style={{ color: "#7e7576" }}
                   >
                     {c}
@@ -227,32 +229,32 @@ export default function ModuleShowcaseSection() {
               {mod.rows.map((row, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -6 }}
+                  initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="grid grid-cols-3 py-2 border-b"
-                  style={{ borderColor: "rgba(0,0,0,0.04)" }}
+                  transition={{ delay: i * 0.06 }}
+                  className="grid grid-cols-3 border-b"
+                  style={{ borderColor: "rgba(0,0,0,0.04)", padding: "14px 0" }}
                 >
-                  <span className="text-xs font-semibold truncate pr-2" style={{ color: "#1a1c1c" }}>
+                  <span className="text-sm font-semibold truncate pr-4" style={{ color: "#1a1c1c" }}>
                     {row.a}
                   </span>
-                  <span className="text-xs truncate pr-2" style={{ color: "#7e7576" }}>
+                  <span className="text-sm truncate pr-4" style={{ color: "#7e7576" }}>
                     {row.b}
                   </span>
-                  <span className="text-xs font-semibold text-right" style={{ color: row.color }}>
+                  <span className="text-sm font-semibold text-right" style={{ color: row.color }}>
                     {row.c}
                   </span>
                 </motion.div>
               ))}
 
               {/* Footer */}
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-xs" style={{ color: "#7e7576" }}>
+              <div className="mt-5 flex items-center justify-between">
+                <span className="text-xs" style={{ color: "#7e7576", letterSpacing: "0.02em" }}>
                   {mod.footer}
                 </span>
                 <a
                   href={`/demo/${mod.id}`}
-                  className="text-xs font-semibold uppercase tracking-widest cursor-none"
+                  className="text-xs font-semibold uppercase tracking-widest cursor-none transition-colors duration-200"
                   style={{ color: "#D4AF37" }}
                 >
                   Demo →
@@ -263,13 +265,13 @@ export default function ModuleShowcaseSection() {
         </div>
 
         {/* Progress bar */}
-        <div className="flex gap-1">
+        <div className="flex gap-1.5">
           {modules.map((_, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
-              className="flex-1 h-0.5 rounded-full transition-all duration-300 cursor-none"
-              style={{ background: i === active ? "#D4AF37" : "rgba(0,0,0,0.12)" }}
+              className="flex-1 h-px rounded-full transition-all duration-300 cursor-none"
+              style={{ background: i === active ? "#D4AF37" : "rgba(0,0,0,0.1)", height: "2px" }}
             />
           ))}
         </div>
