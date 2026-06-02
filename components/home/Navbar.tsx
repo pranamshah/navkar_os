@@ -6,9 +6,9 @@ import { X, Menu } from "lucide-react";
 import Link from "next/link";
 
 const links = [
-  { label: "The Suite", href: "#suite" },
+  { label: "Platform", href: "#suite" },
   { label: "Who It's For", href: "#stakeholders" },
-  { label: "DocAI", href: "#docai" },
+  { label: "Modules", href: "#suite" },
   { label: "Pricing", href: "#pricing" },
   { label: "About", href: "#about" },
 ];
@@ -37,11 +37,15 @@ export default function Navbar() {
         className="fixed top-5 left-0 right-0 z-50 px-5"
       >
         <div
-          className="glass max-w-5xl mx-auto rounded-full px-6 h-14 flex items-center justify-between transition-all duration-300"
+          className="max-w-5xl mx-auto rounded-full px-6 h-14 flex items-center justify-between transition-all duration-300"
           style={{
+            background: scrolled ? "rgba(249,249,249,0.98)" : "rgba(249,249,249,0.88)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            border: "0.5px solid rgba(0,0,0,0.1)",
             boxShadow: scrolled
-              ? "0 4px 30px rgba(0,0,0,0.07), 0 1px 0 rgba(255,255,255,0.8) inset"
-              : "0 2px 15px rgba(0,0,0,0.04)",
+              ? "0 4px 30px rgba(0,0,0,0.1), 0 1px 0 rgba(255,255,255,0.8) inset"
+              : "0 2px 15px rgba(0,0,0,0.05)",
           }}
         >
           {/* Logo */}
@@ -89,12 +93,10 @@ export default function Navbar() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#D4A017";
                 e.currentTarget.style.color = "#1a1c1d";
-                e.currentTarget.style.boxShadow = "0 0 20px rgba(212,160,23,0.3)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "#1a1c1d";
                 e.currentTarget.style.color = "#fff";
-                e.currentTarget.style.boxShadow = "none";
               }}
             >
               Start Free

@@ -35,7 +35,7 @@ export default function TestimonialsCarousel() {
             letterSpacing: "-0.02em",
           }}
         >
-          Trusted by Elite Forwarders
+          What India's Logistics Leaders Say
         </h2>
 
         {/* Desktop: all 3 visible, centre elevated */}

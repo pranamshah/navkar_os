@@ -2,6 +2,14 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
+
+const contactDetails = [
+  { label: "Email", value: "hello@navkaros.in", Icon: Mail },
+  { label: "Phone", value: "+91 98765 43210", Icon: Phone },
+  { label: "Office", value: "BKC, Bandra East, Mumbai — 400051", Icon: MapPin },
+  { label: "Support Hours", value: "Mon–Sat, 9am–7pm IST", Icon: Clock },
+];
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
@@ -15,8 +23,9 @@ export default function ContactSection() {
   return (
     <section id="contact" className="px-8 lg:px-16 py-32" style={{ background: "#ffffff" }}>
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
-          {/* Left */}
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+
+          {/* Left: Info */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -37,43 +46,37 @@ export default function ContactSection() {
                 lineHeight: 1.15,
               }}
             >
-              Let's Talk
+              Let&apos;s Talk
               <br />
               Logistics.
             </h2>
             <p className="mb-12" style={{ fontSize: "16px", color: "#4c4546", lineHeight: 1.7, fontWeight: 300 }}>
-              Whether you want a demo, have a question about DocAI, or want to
-              discuss a custom enterprise deployment — our team responds within
+              Whether you want a demo, have a question about our platform, or want
+              to discuss a custom enterprise deployment — our team responds within
               4 working hours.
             </p>
 
-            <div className="space-y-6">
-              {[
-                { label: "Email", value: "hello@navkaros.in", icon: "mail" },
-                { label: "Phone", value: "+91 98765 43210", icon: "phone" },
-                { label: "Office", value: "BKC, Bandra East, Mumbai — 400051", icon: "location_on" },
-                { label: "Support Hours", value: "Mon–Sat, 9am–7pm IST", icon: "schedule" },
-              ].map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
-                  <span
-                    className="material-symbols-outlined mt-0.5 flex-shrink-0"
-                    style={{ fontSize: "18px", color: "#D4AF37", fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24" }}
+            <div className="flex flex-col gap-7">
+              {contactDetails.map(({ label, value, Icon }) => (
+                <div key={label} className="flex items-start gap-4">
+                  <div
+                    className="flex-shrink-0 w-9 h-9 flex items-center justify-center mt-0.5"
+                    style={{ background: "rgba(212,175,55,0.1)", border: "0.5px solid rgba(212,175,55,0.25)" }}
                   >
-                    {item.icon}
-                  </span>
+                    <Icon size={15} style={{ color: "#D4AF37" }} strokeWidth={1.5} />
+                  </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "#7e7576" }}>
-                      {item.label}
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#7e7576" }}>
+                      {label}
                     </p>
-                    <p style={{ fontSize: "15px", color: "#1a1c1c" }}>{item.value}</p>
+                    <p style={{ fontSize: "15px", color: "#1a1c1c" }}>{value}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Quick links */}
             <div className="mt-12 pt-10" style={{ borderTop: "0.5px solid rgba(0,0,0,0.1)" }}>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#7e7576" }}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#7e7576" }}>
                 Quick Actions
               </p>
               <div className="flex flex-wrap gap-3">
@@ -111,13 +114,15 @@ export default function ContactSection() {
             }}
           >
             {submitted ? (
-              <div className="flex flex-col items-center justify-center h-full py-16 text-center gap-4">
-                <span
-                  className="material-symbols-outlined text-5xl"
-                  style={{ color: "#D4AF37", fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}
+              <div className="flex flex-col items-center justify-center py-20 text-center gap-5">
+                <div
+                  className="w-14 h-14 flex items-center justify-center"
+                  style={{ background: "rgba(212,175,55,0.12)", border: "0.5px solid rgba(212,175,55,0.4)" }}
                 >
-                  check_circle
-                </span>
+                  <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="#D4AF37" strokeWidth="1.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
                 <h3
                   style={{
                     fontFamily: "'EB Garamond', Georgia, serif",
@@ -128,13 +133,12 @@ export default function ContactSection() {
                   Message Received.
                 </h3>
                 <p style={{ fontSize: "15px", color: "#4c4546" }}>
-                  We'll get back to you within 4 working hours.
+                  We&apos;ll get back to you within 4 working hours.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handle} className="flex flex-col gap-7">
+              <form onSubmit={handle} className="flex flex-col gap-8">
                 <h3
-                  className="mb-2"
                   style={{
                     fontFamily: "'EB Garamond', Georgia, serif",
                     fontSize: "26px",
@@ -145,48 +149,76 @@ export default function ContactSection() {
                   Send a Message
                 </h3>
 
-                {[
-                  { key: "name", label: "Full Name", type: "text", placeholder: "Rajesh Mehta" },
-                  { key: "company", label: "Company", type: "text", placeholder: "Mehta Freight Solutions" },
-                  { key: "email", label: "Email Address", type: "email", placeholder: "rajesh@mehtafreight.com" },
-                  { key: "phone", label: "Phone Number", type: "tel", placeholder: "+91 98765 43210" },
-                ].map((field) => (
-                  <div key={field.key} className="flex flex-col gap-1.5">
-                    <label
-                      className="text-xs font-semibold uppercase tracking-widest"
-                      style={{ color: "#7e7576" }}
-                    >
-                      {field.label}
-                    </label>
-                    <input
-                      required
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      value={form[field.key as keyof typeof form]}
-                      onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                      className="outline-none bg-transparent pb-2 text-sm transition-colors duration-200"
-                      style={{
-                        borderBottom: "0.5px solid rgba(0,0,0,0.2)",
-                        color: "#1a1c1c",
-                        fontSize: "15px",
-                      }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
-                      onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
-                    />
-                  </div>
-                ))}
+                {/* Name + Company row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {[
+                    { key: "name", label: "Full Name", type: "text", placeholder: "Rajesh Mehta" },
+                    { key: "company", label: "Company", type: "text", placeholder: "Mehta Freight" },
+                  ].map((field) => (
+                    <div key={field.key} className="flex flex-col gap-2">
+                      <label className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
+                        {field.label}
+                      </label>
+                      <input
+                        required
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        value={form[field.key as keyof typeof form]}
+                        onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                        className="outline-none bg-transparent pb-2 transition-colors duration-200 w-full"
+                        style={{
+                          borderBottom: "0.5px solid rgba(0,0,0,0.2)",
+                          color: "#1a1c1c",
+                          fontSize: "15px",
+                        }}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
+                      />
+                    </div>
+                  ))}
+                </div>
 
-                <div className="flex flex-col gap-1.5">
+                {/* Email + Phone row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {[
+                    { key: "email", label: "Email Address", type: "email", placeholder: "rajesh@company.com" },
+                    { key: "phone", label: "Phone Number", type: "tel", placeholder: "+91 98765 43210" },
+                  ].map((field) => (
+                    <div key={field.key} className="flex flex-col gap-2">
+                      <label className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
+                        {field.label}
+                      </label>
+                      <input
+                        required
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        value={form[field.key as keyof typeof form]}
+                        onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                        className="outline-none bg-transparent pb-2 transition-colors duration-200 w-full"
+                        style={{
+                          borderBottom: "0.5px solid rgba(0,0,0,0.2)",
+                          color: "#1a1c1c",
+                          fontSize: "15px",
+                        }}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Message */}
+                <div className="flex flex-col gap-2">
                   <label className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
                     Message
                   </label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     required
                     placeholder="Tell us about your business and what you're looking for..."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="outline-none bg-transparent pb-2 text-sm resize-none transition-colors duration-200"
+                    className="outline-none bg-transparent pb-2 resize-none transition-colors duration-200"
                     style={{
                       borderBottom: "0.5px solid rgba(0,0,0,0.2)",
                       color: "#1a1c1c",
@@ -199,7 +231,7 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className="px-10 py-4 text-xs font-semibold uppercase tracking-widest mt-2 transition-all duration-200 cursor-none"
+                  className="w-full py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none"
                   style={{ background: "#1a1c1c", color: "#fff" }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "#D4AF37";
