@@ -1,27 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Sora } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Navkar OS — India's Freight Forwarding OS",
+  title: "NavkarOS — The Operating System for Indian Logistics",
   description:
-    "Manage shipments, invoices, accounts, and client portal in one platform. Built for Indian C&F agents and freight forwarders.",
+    "One platform for every player in Indian logistics — C&F agents, freight forwarders, CHA, transporters, importers & exporters. Shipment ops, AI document extraction, GST billing, client portal, and full freight accounting.",
   openGraph: {
-    title: "Navkar OS — India's Freight Forwarding OS",
+    title: "NavkarOS — The Operating System for Indian Logistics",
     description:
-      "Manage shipments, invoices, accounts, and client portal in one platform. Built for Indian C&F agents and freight forwarders.",
+      "One platform. Every stakeholder. Total control over your logistics business.",
     type: "website",
   },
 };
@@ -32,11 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable} h-full`}>
-      <body
-        className="min-h-full flex flex-col"
-        style={{ fontFamily: "var(--font-inter), sans-serif" }}
-      >
+    <html lang="en" className={GeistSans.variable}>
+      <body style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}>
         {children}
       </body>
     </html>

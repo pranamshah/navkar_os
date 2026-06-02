@@ -2,37 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Ship } from "lucide-react";
+import { X, Menu } from "lucide-react";
 import Link from "next/link";
 
-const navLinks = [
-  { label: "Product", href: "#modules" },
-  { label: "Features", href: "#features" },
+const links = [
+  { label: "The Suite", href: "#suite" },
+  { label: "Who It's For", href: "#stakeholders" },
+  { label: "DocAI", href: "#docai" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Integrations", href: "#integrations" },
   { label: "About", href: "#about" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
   return (
@@ -40,111 +33,85 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={{
-          background: scrolled ? "rgba(255,255,255,0.97)" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          boxShadow: scrolled ? "0 1px 24px rgba(0,0,0,0.08)" : "none",
-        }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="fixed top-5 left-0 right-0 z-50 px-5"
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ background: "#D4A017" }}
-              >
-                <Ship className="w-4.5 h-4.5 text-white" strokeWidth={2.5} />
-              </div>
-              <span
-                className="text-xl font-bold tracking-tight"
-                style={{
-                  fontFamily: "var(--font-sora), sans-serif",
-                  color: "#0A0A0A",
-                }}
-              >
-                Navkar<span style={{ color: "#D4A017" }}>OS</span>
-              </span>
-            </Link>
-
-            {/* Desktop Nav Links */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setActiveLink(link.label)}
-                  className="relative text-sm font-medium transition-colors duration-200"
-                  style={{
-                    color: activeLink === link.label ? "#D4A017" : "#1A1A2E",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  {link.label}
-                  {activeLink === link.label && (
-                    <motion.span
-                      layoutId="activeUnderline"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full"
-                      style={{ background: "#D4A017" }}
-                    />
-                  )}
-                </a>
-              ))}
-            </div>
-
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center gap-3">
-              <button
-                className="text-sm font-medium px-4 py-2 rounded-xl transition-all duration-200"
-                style={{ color: "#1A1A2E" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#D4A017")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#1A1A2E")
-                }
-              >
-                Sign In
-              </button>
-              <button
-                className="text-sm font-semibold px-6 py-2.5 rounded-xl transition-all duration-200"
-                style={{
-                  background: "#0A0A0A",
-                  color: "#FFFFFF",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                  e.currentTarget.style.boxShadow =
-                    "0 0 20px rgba(212,160,23,0.4)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                Start Free Trial
-              </button>
-            </div>
-
-            {/* Mobile hamburger */}
-            <button
-              className="lg:hidden p-2 rounded-lg"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+        <div
+          className="glass max-w-5xl mx-auto rounded-full px-6 h-14 flex items-center justify-between transition-all duration-300"
+          style={{
+            boxShadow: scrolled
+              ? "0 4px 30px rgba(0,0,0,0.07), 0 1px 0 rgba(255,255,255,0.8) inset"
+              : "0 2px 15px rgba(0,0,0,0.04)",
+          }}
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div
+              className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
+              style={{ background: "#1a1c1d", color: "#f6be39" }}
             >
-              {mobileOpen ? (
-                <X className="w-6 h-6" style={{ color: "#0A0A0A" }} />
-              ) : (
-                <Menu className="w-6 h-6" style={{ color: "#0A0A0A" }} />
-              )}
+              N
+            </div>
+            <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1d" }}>
+              NavkarOS
+            </span>
+          </Link>
+
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-7">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="text-sm transition-colors duration-200 cursor-none"
+                style={{ color: "#444748" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#D4A017")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              className="text-sm px-4 py-1.5 transition-colors duration-200 cursor-none"
+              style={{ color: "#444748" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#1a1c1d")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
+            >
+              Login
+            </button>
+            <button
+              className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200 cursor-none"
+              style={{ background: "#1a1c1d", color: "#fff" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#D4A017";
+                e.currentTarget.style.color = "#1a1c1d";
+                e.currentTarget.style.boxShadow = "0 0 20px rgba(212,160,23,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#1a1c1d";
+                e.currentTarget.style.color = "#fff";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              Start Free
             </button>
           </div>
+
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden p-2 cursor-none"
+            onClick={() => setMobileOpen(true)}
+          >
+            <Menu className="w-5 h-5" style={{ color: "#1a1c1d" }} />
+          </button>
         </div>
       </motion.nav>
 
-      {/* Mobile full-screen overlay */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -152,68 +119,42 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 flex flex-col"
-            style={{ background: "#0A1628" }}
+            className="fixed inset-0 z-50 flex flex-col"
+            style={{ background: "#1a1c1d" }}
           >
-            <div className="flex items-center justify-between h-16 px-6">
-              <Link
-                href="/"
-                className="flex items-center gap-2.5"
-                onClick={() => setMobileOpen(false)}
-              >
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: "#D4A017" }}
-                >
-                  <Ship className="w-4.5 h-4.5 text-white" strokeWidth={2.5} />
-                </div>
-                <span
-                  className="text-xl font-bold text-white tracking-tight"
-                  style={{ fontFamily: "var(--font-sora), sans-serif" }}
-                >
-                  Navkar<span style={{ color: "#D4A017" }}>OS</span>
-                </span>
-              </Link>
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="p-2 rounded-lg"
-                aria-label="Close menu"
-              >
+            <div className="flex items-center justify-between px-6 h-20">
+              <span className="font-black text-sm uppercase tracking-widest text-white">
+                Navkar<span style={{ color: "#f6be39" }}>OS</span>
+              </span>
+              <button onClick={() => setMobileOpen(false)}>
                 <X className="w-6 h-6 text-white" />
               </button>
             </div>
-
-            <div className="flex-1 flex flex-col justify-center px-8 gap-6">
-              {navLinks.map((link, i) => (
+            <div className="flex-1 flex flex-col justify-center px-8 gap-5">
+              {links.map((l, i) => (
                 <motion.a
-                  key={link.label}
-                  href={link.href}
+                  key={l.label}
+                  href={l.href}
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.07 }}
-                  className="text-2xl font-semibold text-white py-2 border-b"
-                  style={{
-                    fontFamily: "var(--font-sora), sans-serif",
-                    borderColor: "rgba(255,255,255,0.1)",
-                  }}
+                  className="text-3xl font-semibold text-white py-2 border-b border-white/10"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {link.label}
+                  {l.label}
                 </motion.a>
               ))}
             </div>
-
-            <div className="px-8 pb-12 flex flex-col gap-3">
+            <div className="px-8 pb-14 flex flex-col gap-3">
               <button
-                className="w-full py-3.5 rounded-xl text-white font-semibold border transition-all"
-                style={{ borderColor: "rgba(255,255,255,0.3)" }}
+                className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white"
                 onClick={() => setMobileOpen(false)}
               >
-                Sign In
+                Login
               </button>
               <button
-                className="w-full py-3.5 rounded-xl font-semibold text-black"
-                style={{ background: "#D4A017" }}
+                className="w-full py-4 rounded-2xl font-semibold text-black"
+                style={{ background: "#f6be39" }}
                 onClick={() => setMobileOpen(false)}
               >
                 Start Free Trial

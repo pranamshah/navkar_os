@@ -1,111 +1,61 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 import { stats } from "@/data/homepage";
 
-function CountUp({
-  value,
-  suffix,
-  duration = 2,
-}: {
-  value: number;
-  suffix: string;
-  duration?: number;
-}) {
+function CountUp({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [displayed, setDisplayed] = useState(0);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
-    const start = 0;
-    const end = value;
-    const startTime = performance.now();
-
+    const start = performance.now();
+    const dur = 2000;
     const tick = (now: number) => {
-      const elapsed = (now - startTime) / 1000;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayed(parseFloat((start + (end - start) * eased).toFixed(1)));
-      if (progress < 1) requestAnimationFrame(tick);
+      const t = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(parseFloat((value * eased).toFixed(value % 1 !== 0 ? 1 : 0)));
+      if (t < 1) requestAnimationFrame(tick);
     };
-
     requestAnimationFrame(tick);
-  }, [inView, value, duration]);
+  }, [inView, value]);
 
-  const formatted =
-    value % 1 === 0 ? Math.round(displayed).toString() : displayed.toFixed(1);
+  const fmt = value % 1 !== 0 ? display.toFixed(1) : Math.round(display).toLocaleString("en-IN");
 
-  return (
-    <span ref={ref}>
-      {formatted}
-      {suffix}
-    </span>
-  );
+  return <span ref={ref}>{fmt}{suffix}</span>;
 }
 
 export default function StatsSection() {
   return (
-    <section
-      className="py-20 px-6"
-      style={{ background: "#0A1628" }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+    <section className="py-24 px-6" style={{ background: "#1a1c1d" }}>
+      <div className="max-w-5xl mx-auto">
+        <p
+          className="text-center text-xs font-semibold uppercase tracking-widest mb-12"
+          style={{ color: "rgba(246,190,57,0.7)" }}
         >
-          <span
-            className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-            style={{ background: "rgba(212,160,23,0.15)", color: "#D4A017", border: "1px solid rgba(212,160,23,0.3)" }}
-          >
-            By The Numbers
-          </span>
-          <h2
-            className="text-3xl lg:text-4xl font-bold text-white"
-            style={{ fontFamily: "var(--font-sora), sans-serif" }}
-          >
-            Trusted by India's Best Freight Teams
-          </h2>
-        </motion.div>
-
+          Platform Performance
+        </p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="text-center p-6 rounded-2xl"
+          {stats.map((s, i) => (
+            <div
+              key={s.id}
+              className="reveal text-center p-6 rounded-2xl"
               style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(212,160,23,0.15)",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.07)",
               }}
             >
-              <div
-                className="text-4xl lg:text-5xl font-bold mb-2"
-                style={{
-                  fontFamily: "var(--font-sora), sans-serif",
-                  color: "#D4A017",
-                }}
-              >
-                <CountUp value={stat.value} suffix={stat.suffix} />
-              </div>
               <p
-                className="font-semibold text-white mb-1"
-                style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                className="font-black text-4xl lg:text-5xl mb-1"
+                style={{ color: "#f6be39", letterSpacing: "-0.03em" }}
               >
-                {stat.label}
+                <CountUp value={s.value} suffix={s.suffix} />
               </p>
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
-                {stat.sub}
-              </p>
-            </motion.div>
+              <p className="font-semibold text-white text-sm mb-0.5">{s.label}</p>
+              <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{s.sub}</p>
+            </div>
           ))}
         </div>
       </div>

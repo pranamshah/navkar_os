@@ -1,383 +1,311 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Play, CheckCircle2 } from "lucide-react";
-import { Suspense, useRef } from "react";
 
-const floatVariants = {
-  initial: { y: 0 },
-  animate: {
-    y: [-8, 8, -8],
-    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" as const },
-  },
-};
+function RibbonCanvas() {
+  const ref = useRef<HTMLCanvasElement>(null);
 
-const floatVariants2 = {
-  initial: { y: 0 },
-  animate: {
-    y: [8, -8, 8],
-    transition: { duration: 4.5, repeat: Infinity, ease: "easeInOut" as const, delay: 0.5 },
-  },
-};
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-const floatVariants3 = {
-  initial: { y: 0 },
-  animate: {
-    y: [-6, 6, -6],
-    transition: { duration: 3.8, repeat: Infinity, ease: "easeInOut" as const, delay: 1 },
-  },
-};
+    let animId: number;
+    let time = 0;
 
-function HeroCards() {
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const draw = () => {
+      const { width, height } = canvas;
+      ctx.clearRect(0, 0, width, height);
+
+      const ribbons = [
+        { color: "rgba(212,175,55,0.55)", lw: 1 },
+        { color: "rgba(212,175,55,0.18)", lw: 0.6 },
+        { color: "rgba(212,175,55,0.08)", lw: 0.4 },
+      ];
+
+      ribbons.forEach((r, j) => {
+        ctx.beginPath();
+        ctx.strokeStyle = r.color;
+        ctx.lineWidth = r.lw;
+        const yBase = height * 0.52 + j * 35;
+        ctx.moveTo(-60, yBase);
+        for (let x = -60; x <= width + 60; x += 8) {
+          const y =
+            yBase +
+            Math.sin(x * 0.0018 + time * 0.45 + j * 0.9) * 55 +
+            Math.sin(x * 0.0009 - time * 0.28 + j * 1.4) * 30;
+          ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      });
+
+      time += 0.012;
+      animId = requestAnimationFrame(draw);
+    };
+
+    draw();
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
-    <div className="relative w-full h-[480px] hidden md:block">
-      {/* Card 1 - Shipment Status */}
-      <motion.div
-        variants={floatVariants}
-        initial="initial"
-        animate="animate"
-        className="absolute top-12 right-0 w-64 rounded-2xl p-4 shadow-xl"
-        style={{
-          background: "rgba(255,255,255,0.85)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(212,160,23,0.3)",
-          transform: "perspective(1000px) rotateY(-8deg) rotateX(4deg)",
-        }}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
-            style={{ background: "#D4A017" }}
-          >
-            SH
-          </div>
-          <div>
-            <p className="text-xs font-semibold" style={{ color: "#0A0A0A" }}>
-              MHPL/2024/00142
-            </p>
-            <p className="text-xs" style={{ color: "#6B7280" }}>
-              Nhava Sheva → Hamburg
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span
-            className="text-xs px-2 py-0.5 rounded-full font-medium"
-            style={{ background: "#DCFCE7", color: "#166534" }}
-          >
-            ● In Transit
-          </span>
-          <span className="text-xs" style={{ color: "#6B7280" }}>
-            ETA: Dec 18
-          </span>
-        </div>
-        <div className="mt-3 h-1.5 rounded-full" style={{ background: "#F3F4F6" }}>
-          <div
-            className="h-1.5 rounded-full"
-            style={{ width: "65%", background: "#D4A017" }}
-          />
-        </div>
-      </motion.div>
-
-      {/* Card 2 - Invoice */}
-      <motion.div
-        variants={floatVariants2}
-        initial="initial"
-        animate="animate"
-        className="absolute top-40 left-8 w-56 rounded-2xl p-4 shadow-xl"
-        style={{
-          background: "rgba(255,255,255,0.85)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(212,160,23,0.3)",
-          transform: "perspective(1000px) rotateY(6deg) rotateX(-3deg)",
-        }}
-      >
-        <p className="text-xs font-semibold mb-1" style={{ color: "#6B7280" }}>
-          Invoice Generated
-        </p>
-        <p
-          className="text-2xl font-bold mb-0.5"
-          style={{ fontFamily: "var(--font-sora), sans-serif", color: "#0A0A0A" }}
-        >
-          ₹1,24,800
-        </p>
-        <p className="text-xs mb-3" style={{ color: "#6B7280" }}>
-          GST inclusive · INV-2024-0892
-        </p>
-        <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5" style={{ color: "#D4A017" }} />
-          <span className="text-xs font-medium" style={{ color: "#D4A017" }}>
-            GST Compliant
-          </span>
-        </div>
-      </motion.div>
-
-      {/* Card 3 - Doc AI */}
-      <motion.div
-        variants={floatVariants3}
-        initial="initial"
-        animate="animate"
-        className="absolute bottom-16 right-8 w-60 rounded-2xl p-4 shadow-xl"
-        style={{
-          background: "rgba(10,22,40,0.92)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(212,160,23,0.4)",
-          transform: "perspective(1000px) rotateY(-5deg) rotateX(6deg)",
-        }}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center"
-            style={{ background: "#D4A017" }}
-          >
-            <span className="text-xs font-bold text-black">AI</span>
-          </div>
-          <p className="text-xs font-semibold text-white">Doc AI Processing</p>
-        </div>
-        <div className="space-y-2">
-          {["BL Number", "Shipper Name", "Cargo Weight", "Port of Loading"].map(
-            (field, i) => (
-              <div key={field} className="flex items-center justify-between">
-                <span className="text-xs" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  {field}
-                </span>
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: i * 0.3 + 1 }}
-                  className="text-xs font-medium"
-                  style={{ color: "#F0C040" }}
-                >
-                  ✓ Extracted
-                </motion.span>
-              </div>
-            )
-          )}
-        </div>
-        <div className="mt-3 text-center">
-          <span className="text-xs" style={{ color: "#D4A017" }}>
-            98% accuracy · 3 seconds
-          </span>
-        </div>
-      </motion.div>
-
-      {/* Decorative blob */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
-        style={{ background: "radial-gradient(circle, #D4A017, transparent)" }}
-      />
-    </div>
+    <canvas
+      ref={ref}
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      style={{ zIndex: 1 }}
+    />
   );
 }
 
-export default function HeroSection() {
-  const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.15 } },
-  };
-  const lineVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
-  };
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
+};
 
+export default function HeroSection() {
   return (
     <section
-      className="relative min-h-screen flex items-center overflow-hidden pt-20"
-      style={{ background: "linear-gradient(135deg, #0A1628 0%, #1A1A2E 60%, #0A1628 100%)" }}
+      className="relative min-h-screen w-full flex items-center overflow-hidden"
+      style={{ background: "#f9f9f9" }}
     >
-      {/* Background grid */}
+      <RibbonCanvas />
+
+      {/* Ambient blobs */}
       <div
-        className="absolute inset-0 opacity-5"
+        className="absolute pointer-events-none"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(212,160,23,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,160,23,0.5) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+          top: "18%",
+          left: "8%",
+          width: 64,
+          height: 64,
+          borderRadius: "50%",
+          background: "rgba(212,175,55,0.12)",
+          filter: "blur(24px)",
+        }}
+      />
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "62%",
+          right: "4%",
+          width: 128,
+          height: 128,
+          borderRadius: "50%",
+          background: "rgba(0,0,0,0.04)",
+          filter: "blur(40px)",
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Text Content */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col gap-6"
+      <div
+        className="relative w-full max-w-7xl mx-auto px-8 lg:px-16 grid lg:grid-cols-12 gap-8 items-center"
+        style={{ zIndex: 2 }}
+      >
+        <motion.div
+          className="lg:col-span-7"
+          variants={stagger}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Badge */}
+          <motion.div variants={fadeUp} className="mb-7">
+            <span
+              className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+              style={{
+                background: "#e8e8e8",
+                color: "#4c4546",
+              }}
+            >
+              Now for CHAs & Forwarders · Free Beta
+            </span>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            variants={fadeUp}
+            className="mb-8 leading-tight"
+            style={{
+              fontFamily: "'EB Garamond', Georgia, serif",
+              fontSize: "clamp(44px, 6vw, 76px)",
+              fontWeight: 400,
+              color: "#1a1c1c",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.08,
+            }}
           >
-            {/* Badge */}
-            <motion.div variants={lineVariants}>
-              <span
-                className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
-                style={{
-                  background: "#FEF3C7",
-                  color: "#92400E",
-                  border: "1px solid #D4A017",
-                }}
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse"
-                  style={{ background: "#D4A017" }}
-                />
-                India's #1 Freight Forwarding OS · Now in Beta
-              </span>
-            </motion.div>
+            The Precision of
+            <br />
+            <span style={{ color: "#D4AF37" }}>Modern Logistics.</span>
+          </motion.h1>
 
-            {/* Headline */}
-            <motion.h1
-              variants={lineVariants}
-              className="text-4xl lg:text-6xl font-bold leading-tight text-white"
-              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          {/* Subtitle */}
+          <motion.p
+            variants={fadeUp}
+            className="max-w-lg mb-12 leading-relaxed"
+            style={{
+              fontSize: "18px",
+              fontWeight: 300,
+              color: "#4c4546",
+              lineHeight: 1.75,
+              letterSpacing: "0.01em",
+            }}
+          >
+            Consolidate shipments, automate documentation, and clear customs
+            with 10x the speed. An operating system designed for the
+            uncompromising standards of Indian freight management.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div variants={fadeUp} className="flex flex-wrap gap-5">
+            <button
+              className="px-10 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none"
+              style={{ background: "#1a1c1c", color: "#fff" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#D4AF37";
+                e.currentTarget.style.transform = "scale(1.03)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#1a1c1c";
+                e.currentTarget.style.transform = "scale(1)";
+              }}
             >
-              Run Your{" "}
-              <span
-                className="relative"
-                style={{ color: "#D4A017" }}
-              >
-                Freight Business
-                <svg
-                  className="absolute -bottom-2 left-0 w-full"
-                  height="6"
-                  viewBox="0 0 200 6"
-                  fill="none"
+              Start Free Trial
+            </button>
+            <button
+              className="px-10 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none"
+              style={{ borderColor: "#1a1c1c", borderWidth: "0.5px", color: "#1a1c1c" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#1a1c1c";
+                e.currentTarget.style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "#1a1c1c";
+              }}
+            >
+              Watch Demo
+            </button>
+          </motion.div>
+
+          {/* Quick stats strip */}
+          <motion.div
+            variants={fadeUp}
+            className="mt-16 flex items-center gap-10"
+          >
+            {[
+              { val: "500+", label: "Businesses Live" },
+              { val: "98%", label: "DocAI Accuracy" },
+              { val: "14hrs", label: "Saved Weekly" },
+            ].map((s, i) => (
+              <div key={s.label}>
+                <p
+                  className="font-semibold text-2xl"
+                  style={{ color: "#1a1c1c", fontFamily: "Geist, sans-serif", letterSpacing: "-0.02em" }}
                 >
-                  <path
-                    d="M0 5 Q50 1 100 4 Q150 7 200 3"
-                    stroke="#D4A017"
-                    strokeWidth="2"
-                    fill="none"
-                    opacity="0.6"
-                  />
-                </svg>
-              </span>{" "}
-              from One OS
-            </motion.h1>
+                  {s.val}
+                </p>
+                <p className="text-xs uppercase tracking-widest" style={{ color: "#7e7576" }}>
+                  {s.label}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
 
-            {/* Subtitle */}
-            <motion.p
-              variants={lineVariants}
-              className="text-lg leading-relaxed max-w-lg"
-              style={{ color: "rgba(255,255,255,0.7)", fontFamily: "var(--font-inter), sans-serif" }}
+        {/* Right: floating status cards */}
+        <motion.div
+          className="lg:col-span-5 hidden lg:block relative"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="relative h-[480px]">
+            {/* Main card */}
+            <div
+              className="absolute top-8 right-0 w-72 p-5 rounded-none shadow-[0_20px_40px_rgba(0,0,0,0.06)]"
+              style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.1)" }}
             >
-              Shipments, invoicing, Doc AI, client portal, and analytics — all
-              in one platform. Built specifically for Indian C&F agents and
-              freight forwarders.
-            </motion.p>
-
-            {/* Feature list */}
-            <motion.div variants={lineVariants} className="flex flex-col gap-2">
+              <p className="text-xs uppercase tracking-widest font-semibold mb-3" style={{ color: "#D4AF37" }}>
+                Live Jobs
+              </p>
               {[
-                "GST-compliant invoicing out of the box",
-                "AI extracts BL, AWB, and invoice data in 3 seconds",
-                "ICEGATE & GST Portal integration",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-2.5">
-                  <CheckCircle2
-                    className="w-4 h-4 flex-shrink-0"
-                    style={{ color: "#D4A017" }}
-                  />
-                  <span
-                    className="text-sm"
-                    style={{ color: "rgba(255,255,255,0.8)" }}
-                  >
-                    {item}
-                  </span>
+                { job: "NOS/2026/0142", route: "INNSA → DEHAM", status: "Under Exam" },
+                { job: "NOS/2026/0141", route: "INMAA → SGSIN", status: "OOC Cleared" },
+                { job: "NOS/2026/0139", route: "INCCU → USLAX", status: "On Vessel" },
+              ].map((r) => (
+                <div
+                  key={r.job}
+                  className="flex items-center justify-between py-2 border-b"
+                  style={{ borderColor: "rgba(0,0,0,0.06)" }}
+                >
+                  <div>
+                    <p className="text-xs font-semibold" style={{ color: "#1a1c1c" }}>{r.job}</p>
+                    <p className="text-xs" style={{ color: "#7e7576" }}>{r.route}</p>
+                  </div>
+                  <span className="text-xs font-medium" style={{ color: "#D4AF37" }}>{r.status}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* DocAI card */}
+            <motion.div
+              animate={{ y: [-7, 7, -7] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" as const }}
+              className="absolute top-0 -left-4 w-52 p-4 shadow-[0_20px_40px_rgba(0,0,0,0.06)]"
+              style={{ background: "#fff", border: "0.5px solid rgba(212,175,55,0.4)" }}
+            >
+              <p className="text-xs uppercase tracking-widest font-semibold mb-2" style={{ color: "#D4AF37" }}>
+                DocAI · Live
+              </p>
+              {[
+                { label: "Bill of Lading", ok: true },
+                { label: "Packing List", ok: true },
+                { label: "Bill of Entry", ok: false },
+              ].map((d) => (
+                <div key={d.label} className="flex justify-between py-1 text-xs border-b" style={{ borderColor: "rgba(0,0,0,0.05)" }}>
+                  <span style={{ color: "#4c4546" }}>{d.label}</span>
+                  <span style={{ color: d.ok ? "#16A34A" : "#D4AF37" }}>{d.ok ? "✓ Done" : "● Reading"}</span>
                 </div>
               ))}
             </motion.div>
 
-            {/* CTA Buttons */}
-            <motion.div variants={lineVariants} className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button
-                className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 group"
-                style={{ background: "#D4A017", color: "#0A0A0A" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#F0C040";
-                  e.currentTarget.style.transform = "scale(1.02)";
-                  e.currentTarget.style.boxShadow = "0 0 24px rgba(212,160,23,0.5)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#D4A017";
-                  e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                Start Free Trial
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </button>
-              <button
-                className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm border transition-all duration-200"
-                style={{
-                  background: "transparent",
-                  color: "white",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
-                }}
-              >
-                <Play className="w-4 h-4 fill-current" />
-                Watch Demo
-              </button>
-            </motion.div>
-
-            {/* Social proof */}
+            {/* Invoice card */}
             <motion.div
-              variants={lineVariants}
-              className="flex items-center gap-4 pt-2"
+              animate={{ y: [6, -6, 6] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" as const, delay: 1 }}
+              className="absolute bottom-8 right-4 w-56 p-4 shadow-[0_20px_40px_rgba(0,0,0,0.06)]"
+              style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.1)" }}
             >
-              <div className="flex -space-x-2">
-                {["RM", "PN", "SA", "MK"].map((initials, i) => (
-                  <div
-                    key={initials}
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white border-2"
-                    style={{
-                      background: i % 2 === 0 ? "#1A1A2E" : "#D4A017",
-                      borderColor: "#0A1628",
-                      color: i % 2 === 0 ? "#D4A017" : "#0A0A0A",
-                    }}
-                  >
-                    {initials}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <p
-                  className="text-sm font-medium text-white"
-                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                >
-                  500+ freight forwarders
-                </p>
-                <p className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
-                  already on Navkar OS
-                </p>
+              <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#7e7576" }}>BillGen</p>
+              <p className="text-2xl font-semibold" style={{ color: "#1a1c1c", fontFamily: "Geist, sans-serif", letterSpacing: "-0.02em" }}>
+                ₹1,24,800
+              </p>
+              <p className="text-xs mt-0.5 mb-2" style={{ color: "#7e7576" }}>INV-2026-0892 · IGST</p>
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#D4AF37" }} />
+                <span className="text-xs" style={{ color: "#D4AF37" }}>Sent via WhatsApp</span>
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Right: Floating Cards Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <HeroCards />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" className="w-full">
-          <path
-            d="M0,80 L0,40 Q360,0 720,40 Q1080,80 1440,40 L1440,80 Z"
-            fill="#F8F9FA"
-          />
-        </svg>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
