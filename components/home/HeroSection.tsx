@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 
 function RibbonCanvas() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -196,10 +197,7 @@ export default function HeroSection() {
   const mod = modules[active];
 
   return (
-    <section
-      className="relative min-h-screen w-full flex items-center overflow-hidden"
-      style={{ background: "#f9f9f9" }}
-    >
+    <AuroraBackground className="items-center">
       <RibbonCanvas />
 
       <div
@@ -422,6 +420,6 @@ export default function HeroSection() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </AuroraBackground>
   );
 }
