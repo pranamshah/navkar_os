@@ -71,8 +71,17 @@ export default function StatusPage() {
 
   useEffect(() => {
     if (sessionStatus === "unauthenticated") { router.push("/login"); return; }
-    if (sessionStatus === "authenticated") fetchStatus();
-  }, [sessionStatus]);
+    if (sessionStatus === "authenticated") {
+      // Admins/superadmins skip the status screen and go straight to the admin panel
+      const role = (session?.user as { role?: string } | undefined)?.role;
+      if (role === "SUPERADMIN" || role === "ADMIN") {
+        router.replace("/dashboard/admin");
+        return;
+      }
+      fetchStatus();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionStatus, session]);
 
   // Poll every 60 seconds
   useEffect(() => {

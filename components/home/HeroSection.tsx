@@ -2,7 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import RotatingEarth from "@/components/ui/wireframe-dotted-globe";
+import dynamic from "next/dynamic";
+
+// Lazy-load the globe (d3 is heavy) — keeps it out of the initial bundle so the
+// page paints and becomes interactive first. ssr:false → never runs on server.
+const RotatingEarth = dynamic(() => import("@/components/ui/wireframe-dotted-globe"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },

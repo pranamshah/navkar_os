@@ -244,16 +244,24 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
         context.stroke();
       };
 
-      // ── Animation loop: 24 fps, pauses on hidden tab ────────────────
+      // ── Animation loop: 24 fps, pauses on hidden tab + off-screen ───
       const rotation: [number,number] = [0,-20];
-      let autoRotate=true, lastFrame=0, paused=false;
+      let autoRotate=true, lastFrame=0, paused=false, offscreen=false;
 
       const onVisibility=()=>{paused=document.hidden;};
       document.addEventListener("visibilitychange",onVisibility);
 
+      // Pause the whole render loop when the globe scrolls out of view —
+      // this is what keeps the rest of the page scrolling buttery-smooth.
+      const io = new IntersectionObserver(
+        (entries) => { offscreen = !entries[0].isIntersecting; },
+        { rootMargin: "120px" }
+      );
+      io.observe(canvas);
+
       const animate=(t:number)=>{
         rafId=requestAnimationFrame(animate);
-        if (paused) return;
+        if (paused || offscreen) return;
         if (t-lastFrame<42) return;
         lastFrame=t;
         if (autoRotate){rotation[0]+=0.18;projection.rotate(rotation);}
@@ -308,6 +316,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
       return ()=>{
         cancelAnimationFrame(rafId);
+        io.disconnect();
         canvas.removeEventListener("mousedown",onMouseDown);
         document.removeEventListener("visibilitychange",onVisibility);
       };

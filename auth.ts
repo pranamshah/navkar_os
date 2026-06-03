@@ -7,11 +7,15 @@ import { prisma } from "@/lib/prisma";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  // v5 reads AUTH_SECRET; fall back to NEXTAUTH_SECRET for backward compat
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  // Trust the deployment host (Vercel) — avoids UntrustedHost configuration errors
+  trustHost: true,
   session: { strategy: "jwt" },
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID ?? process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? process.env.AUTH_GOOGLE_SECRET,
     }),
     Credentials({
       name: "credentials",
@@ -20,37 +24,59 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        try {
+          if (!credentials?.email || !credentials?.password) return null;
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
-        });
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email as string },
+          });
 
-        if (!user || !user.hashedPassword) return null;
+          if (!user || !user.hashedPassword) return null;
 
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          user.hashedPassword
-        );
+          const isValid = await bcrypt.compare(
+            credentials.password as string,
+            user.hashedPassword
+          );
 
-        if (!isValid) return null;
-        return user;
+          if (!isValid) return null;
+
+          // Return a sanitized object (never leak hashedPassword into the token)
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            role: user.role,
+            status: user.status,
+            clientId: user.clientId,
+            businessType: user.businessType,
+          };
+        } catch (err) {
+          // A thrown error here surfaces as a vague "Configuration" error to the
+          // client — log it and return null so the user sees "incorrect password"
+          console.error("[auth] authorize failed:", err);
+          return null;
+        }
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: user.email! },
-          select: { role: true, status: true, clientId: true, businessType: true, id: true },
-        });
-        if (dbUser) {
-          token.role = dbUser.role;
-          token.status = dbUser.status;
-          token.clientId = dbUser.clientId;
-          token.businessType = dbUser.businessType;
-          token.userId = dbUser.id;
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: user.email! },
+            select: { role: true, status: true, clientId: true, businessType: true, id: true },
+          });
+          if (dbUser) {
+            token.role = dbUser.role;
+            token.status = dbUser.status;
+            token.clientId = dbUser.clientId;
+            token.businessType = dbUser.businessType;
+            token.userId = dbUser.id;
+          }
+        } catch (err) {
+          console.error("[auth] jwt callback failed:", err);
         }
       }
       return token;
@@ -68,22 +94,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user, account }) {
       // For Google sign-in: auto-create user with PENDING_VERIFICATION
       if (account?.provider === "google") {
-        const existing = await prisma.user.findUnique({
-          where: { email: user.email! },
-        });
-        if (!existing) {
-          const year = new Date().getFullYear();
-          const rand = Math.floor(10000 + Math.random() * 90000);
-          await prisma.user.create({
-            data: {
-              clientId: `NVK-${year}-${rand}`,
-              name: user.name ?? "New User",
-              email: user.email!,
-              image: user.image,
-              role: "CLIENT",
-              status: "PENDING_VERIFICATION",
-            },
+        try {
+          const existing = await prisma.user.findUnique({
+            where: { email: user.email! },
           });
+          if (!existing) {
+            const year = new Date().getFullYear();
+            const rand = Math.floor(10000 + Math.random() * 90000);
+            await prisma.user.create({
+              data: {
+                clientId: `NVK-${year}-${rand}`,
+                name: user.name ?? "New User",
+                email: user.email!,
+                image: user.image,
+                role: "CLIENT",
+                status: "PENDING_VERIFICATION",
+              },
+            });
+          }
+        } catch (err) {
+          console.error("[auth] google signIn failed:", err);
+          return false;
         }
       }
       return true;
