@@ -1,379 +1,261 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import * as d3 from "d3";
+/**
+ * Rotating globe — animation runs entirely in a Web Worker via OffscreenCanvas.
+ * The main thread only does:
+ *   1. Fetch world-110m.json once
+ *   2. Pre-process polygon rings + land dots (chunked, non-blocking)
+ *   3. Forward mouse/visibility events to the worker
+ *
+ * Zero canvas work on the main thread → no jank, no cursor lag.
+ */
 
+import { useEffect, useRef, useState, useCallback } from "react";
+
+/* ── Port & route data (kept here so we don't re-fetch) ─────────────── */
 const PORTS = [
-  { name: "Mumbai",      lng: 72.8,   lat: 19.1  },  // 0
-  { name: "JNPT",        lng: 72.9,   lat: 18.9  },  // 1
-  { name: "Chennai",     lng: 80.3,   lat: 13.1  },  // 2
-  { name: "Mundra",      lng: 69.7,   lat: 22.9  },  // 3
-  { name: "Kolkata",     lng: 88.3,   lat: 22.6  },  // 4
-  { name: "Kochi",       lng: 76.3,   lat: 9.9   },  // 5
-  { name: "Vizag",       lng: 83.3,   lat: 17.7  },  // 6
-  { name: "Colombo",     lng: 79.8,   lat: 6.9   },  // 7
-  { name: "Singapore",   lng: 103.8,  lat: 1.3   },  // 8
-  { name: "Port Klang",  lng: 101.4,  lat: 3.0   },  // 9
-  { name: "Hong Kong",   lng: 114.2,  lat: 22.3  },  // 10
-  { name: "Shanghai",    lng: 121.5,  lat: 31.2  },  // 11
-  { name: "Busan",       lng: 129.0,  lat: 35.1  },  // 12
-  { name: "Tokyo",       lng: 139.7,  lat: 35.7  },  // 13
-  { name: "Dubai",       lng: 55.3,   lat: 25.2  },  // 14
-  { name: "Jeddah",      lng: 39.2,   lat: 21.5  },  // 15
-  { name: "Salalah",     lng: 57.0,   lat: 17.0  },  // 16
-  { name: "Djibouti",    lng: 43.1,   lat: 11.6  },  // 17
-  { name: "Mombasa",     lng: 39.7,   lat: -4.0  },  // 18
-  { name: "Rotterdam",   lng: 4.5,    lat: 51.9  },  // 19
-  { name: "Hamburg",     lng: 10.0,   lat: 53.5  },  // 20
-  { name: "Antwerp",     lng: 4.4,    lat: 51.2  },  // 21
-  { name: "Piraeus",     lng: 23.6,   lat: 37.9  },  // 22
-  { name: "Los Angeles", lng: -118.2, lat: 33.7  },  // 23
-  { name: "New York",    lng: -74.0,  lat: 40.7  },  // 24
+  { name: "Mumbai",      lng: 72.8,   lat: 19.1  },
+  { name: "JNPT",        lng: 72.9,   lat: 18.9  },
+  { name: "Chennai",     lng: 80.3,   lat: 13.1  },
+  { name: "Mundra",      lng: 69.7,   lat: 22.9  },
+  { name: "Kolkata",     lng: 88.3,   lat: 22.6  },
+  { name: "Kochi",       lng: 76.3,   lat: 9.9   },
+  { name: "Vizag",       lng: 83.3,   lat: 17.7  },
+  { name: "Colombo",     lng: 79.8,   lat: 6.9   },
+  { name: "Singapore",   lng: 103.8,  lat: 1.3   },
+  { name: "Port Klang",  lng: 101.4,  lat: 3.0   },
+  { name: "Hong Kong",   lng: 114.2,  lat: 22.3  },
+  { name: "Shanghai",    lng: 121.5,  lat: 31.2  },
+  { name: "Busan",       lng: 129.0,  lat: 35.1  },
+  { name: "Tokyo",       lng: 139.7,  lat: 35.7  },
+  { name: "Dubai",       lng: 55.3,   lat: 25.2  },
+  { name: "Jeddah",      lng: 39.2,   lat: 21.5  },
+  { name: "Salalah",     lng: 57.0,   lat: 17.0  },
+  { name: "Djibouti",    lng: 43.1,   lat: 11.6  },
+  { name: "Mombasa",     lng: 39.7,   lat: -4.0  },
+  { name: "Rotterdam",   lng: 4.5,    lat: 51.9  },
+  { name: "Hamburg",     lng: 10.0,   lat: 53.5  },
+  { name: "Antwerp",     lng: 4.4,    lat: 51.2  },
+  { name: "Piraeus",     lng: 23.6,   lat: 37.9  },
+  { name: "Los Angeles", lng: -118.2, lat: 33.7  },
+  { name: "New York",    lng: -74.0,  lat: 40.7  },
 ];
 
-// 20 clean, non-congested key trade corridors
-const ROUTES: [number, number][] = [
-  [0,  8],  // Mumbai → Singapore (Indian Ocean eastbound)
-  [0,  14], // Mumbai → Dubai (Arabian Sea)
-  [0,  19], // Mumbai → Rotterdam (via Suez)
-  [0,  18], // Mumbai → Mombasa (East Africa)
-  [2,  8],  // Chennai → Singapore (Bay of Bengal)
-  [3,  15], // Mundra → Jeddah (Arabian Sea)
-  [4,  8],  // Kolkata → Singapore (Bay of Bengal)
-  [7,  8],  // Colombo → Singapore
-  [8,  11], // Singapore → Shanghai (South China Sea)
-  [8,  19], // Singapore → Rotterdam (via Suez)
-  [10, 19], // Hong Kong → Rotterdam
-  [11, 23], // Shanghai → Los Angeles (Trans-Pacific)
-  [11, 12], // Shanghai → Busan (East Asia)
-  [12, 23], // Busan → Los Angeles (North Pacific)
-  [14, 22], // Dubai → Piraeus (via Suez)
-  [15, 22], // Jeddah → Piraeus (Red Sea)
-  [19, 24], // Rotterdam → New York (North Atlantic)
-  [19, 20], // Rotterdam → Hamburg (North Sea)
-  [17, 18], // Djibouti → Mombasa (East Africa coast)
-  [23, 24], // LA → New York (Americas)
+const ROUTE_INDICES: [number, number][] = [
+  [0, 8],  [0, 14], [0, 19], [0, 18],
+  [2, 8],  [3, 15], [4, 8],  [7, 8],
+  [8, 11], [8, 19], [10, 19],[11, 23],
+  [11, 12],[12, 23],[14, 22],[15, 22],
+  [19, 24],[19, 20],[17, 18],[23, 24],
 ];
 
-interface RotatingEarthProps {
-  width?: number;
-  height?: number;
-  className?: string;
+/* ── Geo helpers (run once on main thread) ──────────────────────────── */
+
+function pointInRing(lng: number, lat: number, ring: number[][]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if (yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) {
+      inside = !inside;
+    }
+  }
+  return inside;
 }
 
-export default function RotatingEarth({ width = 600, height = 600, className = "" }: RotatingEarthProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+function getBounds(geo: any): [[number, number], [number, number]] {
+  let minLng = Infinity, maxLng = -Infinity;
+  let minLat = Infinity, maxLat = -Infinity;
+  const scan = (ring: number[][]) => {
+    for (const [lng, lat] of ring) {
+      if (lng < minLng) minLng = lng; if (lng > maxLng) maxLng = lng;
+      if (lat < minLat) minLat = lat; if (lat > maxLat) maxLat = lat;
+    }
+  };
+  if (geo.type === "Polygon") geo.coordinates.forEach(scan);
+  else if (geo.type === "MultiPolygon") geo.coordinates.forEach((p: number[][][]) => p.forEach(scan));
+  return [[minLng, minLat], [maxLng, maxLat]];
+}
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    const containerWidth  = canvas.offsetWidth  || width;
-    const containerHeight = canvas.offsetHeight || height;
-    const radius = Math.min(containerWidth, containerHeight) / 2.15;
-
-    // Cap DPR at 1 — retina doesn't add visible value on a canvas globe but doubles GPU work
-    const dpr = 1;
-    canvas.width  = containerWidth  * dpr;
-    canvas.height = containerHeight * dpr;
-    canvas.style.width  = `${containerWidth}px`;
-    canvas.style.height = `${containerHeight}px`;
-    context.scale(dpr, dpr);
-
-    const cx = containerWidth  / 2;
-    const cy = containerHeight / 2;
-
-    const projection = d3
-      .geoOrthographic()
-      .scale(radius)
-      .translate([cx, cy])
-      .clipAngle(90);
-
-    const path = d3.geoPath().projection(projection).context(context);
-
-    // ── Dot generation ──────────────────────────────────────────────
-    const pointInPolygon = (point: [number, number], polygon: number[][]): boolean => {
-      const [x, y] = point;
-      let inside = false;
-      for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-        const [xi, yi] = polygon[i];
-        const [xj, yj] = polygon[j];
-        if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+function isOnLand(lng: number, lat: number, geo: any): boolean {
+  if (geo.type === "Polygon") {
+    if (!pointInRing(lng, lat, geo.coordinates[0])) return false;
+    for (let i = 1; i < geo.coordinates.length; i++)
+      if (pointInRing(lng, lat, geo.coordinates[i])) return false;
+    return true;
+  }
+  if (geo.type === "MultiPolygon") {
+    for (const poly of geo.coordinates) {
+      if (pointInRing(lng, lat, poly[0])) {
+        let inHole = false;
+        for (let i = 1; i < poly.length; i++)
+          if (pointInRing(lng, lat, poly[i])) { inHole = true; break; }
+        if (!inHole) return true;
       }
-      return inside;
+    }
+  }
+  return false;
+}
+
+/** Extract exterior ring of every polygon as a flat Float32Array. */
+function extractLandRings(features: any[]): Float32Array[] {
+  const rings: Float32Array[] = [];
+  for (const feat of features) {
+    const geo = feat.geometry;
+    const addRing = (ring: number[][]) => {
+      const buf = new Float32Array(ring.length * 2);
+      for (let i = 0; i < ring.length; i++) {
+        buf[i * 2]     = ring[i][0];
+        buf[i * 2 + 1] = ring[i][1];
+      }
+      rings.push(buf);
     };
+    if (geo.type === "Polygon")      addRing(geo.coordinates[0]);
+    else if (geo.type === "MultiPolygon")
+      geo.coordinates.forEach((p: number[][][]) => addRing(p[0]));
+  }
+  return rings;
+}
 
-    const pointInFeature = (point: [number, number], feature: any): boolean => {
-      const geo = feature.geometry;
-      if (geo.type === "Polygon") {
-        if (!pointInPolygon(point, geo.coordinates[0])) return false;
-        for (let i = 1; i < geo.coordinates.length; i++)
-          if (pointInPolygon(point, geo.coordinates[i])) return false;
-        return true;
-      }
-      if (geo.type === "MultiPolygon") {
-        for (const polygon of geo.coordinates) {
-          if (pointInPolygon(point, polygon[0])) {
-            let inHole = false;
-            for (let i = 1; i < polygon.length; i++)
-              if (pointInPolygon(point, polygon[i])) { inHole = true; break; }
-            if (!inHole) return true;
-          }
+/** Chunked dot generation — yields control between chunks to stay non-blocking. */
+function generateDotsChunked(
+  features: any[],
+  onProgress: (dots: number[]) => void,
+  onDone: (all: Float32Array) => void
+) {
+  const accumulated: number[] = [];
+  const STEP = 2.4;
+  const CHUNK = 4;
+  let i = 0;
+
+  const tick = () => {
+    const end = Math.min(i + CHUNK, features.length);
+    for (; i < end; i++) {
+      const g = features[i].geometry;
+      const [[minLng, minLat], [maxLng, maxLat]] = getBounds(g);
+      for (let lng = minLng; lng <= maxLng; lng += STEP) {
+        for (let lat = minLat; lat <= maxLat; lat += STEP) {
+          if (isOnLand(lng, lat, g)) { accumulated.push(lng, lat); }
         }
       }
-      return false;
+    }
+    onProgress(accumulated);
+    if (i < features.length) {
+      setTimeout(tick, 0);
+    } else {
+      onDone(new Float32Array(accumulated));
+    }
+  };
+  setTimeout(tick, 0);
+}
+
+/* ── Component ──────────────────────────────────────────────────────── */
+
+interface Props { width?: number; height?: number; className?: string; }
+
+export default function RotatingEarth({ width = 600, height = 600, className = "" }: Props) {
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const workerRef  = useRef<Worker | null>(null);
+  const [loading, setLoading]   = useState(true);
+  const [error,   setError]     = useState<string | null>(null);
+
+  // Initialise worker once canvas + data are both ready
+  const initWorker = useCallback((
+    canvas: HTMLCanvasElement,
+    landRings: Float32Array[],
+    dots: Float32Array
+  ) => {
+    // OffscreenCanvas moves ALL drawing to the worker thread
+    const offscreen = canvas.transferControlToOffscreen();
+    const w = canvas.offsetWidth  || width;
+    const h = canvas.offsetHeight || height;
+
+    const routes = ROUTE_INDICES.map(([a, b]) => ({
+      from: [PORTS[a].lng, PORTS[a].lat],
+      to:   [PORTS[b].lng, PORTS[b].lat],
+    }));
+    const portCoords = PORTS.map(p => [p.lng, p.lat]);
+
+    const worker = new Worker("/globe.worker.js");
+    workerRef.current = worker;
+
+    worker.onmessage = (e) => {
+      if (e.data.type === "ready") setLoading(false);
     };
 
-    const generateDotsInPolygon = (feature: any) => {
-      const dots: [number, number][] = [];
-      const [[minLng, minLat], [maxLng, maxLat]] = d3.geoBounds(feature);
-      const step = 2.4; // fewer dots = less per-frame work
-      for (let lng = minLng; lng <= maxLng; lng += step)
-        for (let lat = minLat; lat <= maxLat; lat += step) {
-          const p: [number, number] = [lng, lat];
-          if (pointInFeature(p, feature)) dots.push(p);
-        }
-      return dots;
-    };
+    // Transfer canvas ownership + all data in one message
+    // landRings are Float32Arrays — transfer their underlying ArrayBuffers
+    const transferables: Transferable[] = [offscreen as unknown as Transferable];
+    landRings.forEach(r => transferables.push(r.buffer));
+    transferables.push(dots.buffer);
 
-    const allDots: { lng: number; lat: number }[] = [];
-    let landFeatures: any;
-
-    // ── Pre-compute route interpolators ────────────────────────────
-    const routeInterps = ROUTES.map(([a, b]) =>
-      d3.geoInterpolate(
-        [PORTS[a].lng, PORTS[a].lat],
-        [PORTS[b].lng, PORTS[b].lat]
-      )
+    worker.postMessage(
+      { type: "init", canvas: offscreen, width: w, height: h, landRings, dots, ports: portCoords, routes },
+      transferables
     );
 
-    // Each particle has its own phase (0-1) and speed
-    const particlePhases  = ROUTES.map((_, i) => i / ROUTES.length);          // staggered start
-    const particleSpeeds  = ROUTES.map((_, i) => 0.0012 + (i % 6) * 0.00025); // slight variation
-
-    // Pre-bake static arc paths (40 points each) — only needs to be recomputed on rotation
-    // We rebuild them inside render since projection changes with rotation
-    const TRAIL_LEN   = 3;    // fewer trail dots = less work per frame
-    const TRAIL_GAP   = 0.025;
-
-    const render = () => {
-      context.clearRect(0, 0, containerWidth, containerHeight);
-
-      // Advance all particle phases
-      for (let i = 0; i < particlePhases.length; i++)
-        particlePhases[i] = (particlePhases[i] + particleSpeeds[i]) % 1;
-
-      // Clip to globe circle
-      context.save();
-      context.beginPath();
-      context.arc(cx, cy, radius, 0, 2 * Math.PI);
-      context.clip();
-
-      if (landFeatures) {
-        // Graticule
-        const graticule = d3.geoGraticule();
-        context.beginPath();
-        path(graticule());
-        context.strokeStyle = "rgba(26,28,28,0.16)";
-        context.lineWidth = 0.5;
-        context.stroke();
-
-        // Land fill
-        context.beginPath();
-        landFeatures.features.forEach((f: any) => path(f));
-        context.fillStyle = "rgba(212,175,55,0.07)";
-        context.fill();
-
-        // Land outlines
-        context.beginPath();
-        landFeatures.features.forEach((f: any) => path(f));
-        context.strokeStyle = "rgba(26,28,28,0.35)";
-        context.lineWidth = 0.75;
-        context.stroke();
-
-        // Land dots
-        allDots.forEach((dot) => {
-          const pt = projection([dot.lng, dot.lat]);
-          if (!pt) return;
-          context.beginPath();
-          context.arc(pt[0], pt[1], 1.15, 0, 2 * Math.PI);
-          context.fillStyle = "rgba(150,110,20,0.65)";
-          context.fill();
-        });
-
-        // ── Static arc guides ─────────────────────────────────────
-        ROUTES.forEach((_, idx) => {
-          const interp = routeInterps[idx];
-          context.beginPath();
-          let started = false;
-          for (let s = 0; s <= 60; s++) {
-            const pt = projection(interp(s / 60) as [number, number]);
-            if (!pt) { started = false; continue; }
-            if (!started) { context.moveTo(pt[0], pt[1]); started = true; }
-            else context.lineTo(pt[0], pt[1]);
-          }
-          context.strokeStyle = "rgba(212,160,20,0.55)";
-          context.lineWidth = 1.1;
-          context.setLineDash([4, 6]);
-          context.stroke();
-          context.setLineDash([]);
-        });
-
-        // ── Moving particles with trails ──────────────────────────
-        ROUTES.forEach((_, idx) => {
-          const interp  = routeInterps[idx];
-          const phase   = particlePhases[idx];
-
-          // Trail dots (drawn back-to-front so main dot is on top)
-          for (let t = TRAIL_LEN; t >= 0; t--) {
-            const tPhase = (phase - t * TRAIL_GAP + 10) % 1;
-            const pos = projection(interp(tPhase) as [number, number]);
-            if (!pos) continue;
-
-            const alpha = t === 0 ? 1.0 : (1 - t / (TRAIL_LEN + 1)) * 0.75;
-            const r     = t === 0 ? 4.0 : (1 - t / (TRAIL_LEN + 1)) * 2.8;
-
-            if (t === 0) {
-              // Main dot: bright glow
-              const grd = context.createRadialGradient(pos[0], pos[1], 0, pos[0], pos[1], 12);
-              grd.addColorStop(0, "rgba(255,230,80,1.0)");
-              grd.addColorStop(0.35, "rgba(255,200,40,0.65)");
-              grd.addColorStop(0.7, "rgba(212,175,55,0.25)");
-              grd.addColorStop(1, "rgba(212,175,55,0)");
-              context.beginPath();
-              context.arc(pos[0], pos[1], 12, 0, 2 * Math.PI);
-              context.fillStyle = grd;
-              context.fill();
-
-              context.beginPath();
-              context.arc(pos[0], pos[1], r, 0, 2 * Math.PI);
-              context.fillStyle = "#FFF176";
-              context.fill();
-            } else {
-              // Trail dot
-              context.beginPath();
-              context.arc(pos[0], pos[1], r, 0, 2 * Math.PI);
-              context.fillStyle = `rgba(255,210,50,${alpha})`;
-              context.fill();
-            }
-          }
-        });
-
-        // ── Port markers ──────────────────────────────────────────
-        PORTS.forEach((port) => {
-          const pt = projection([port.lng, port.lat]);
-          if (!pt) return;
-          if (!projection.invert?.(pt)) return;
-
-          // Glow ring
-          const grd = context.createRadialGradient(pt[0], pt[1], 0, pt[0], pt[1], 5);
-          grd.addColorStop(0, "rgba(212,175,55,0.85)");
-          grd.addColorStop(1, "rgba(212,175,55,0)");
-          context.beginPath();
-          context.arc(pt[0], pt[1], 5, 0, 2 * Math.PI);
-          context.fillStyle = grd;
-          context.fill();
-
-          // Core dot
-          context.beginPath();
-          context.arc(pt[0], pt[1], 1.9, 0, 2 * Math.PI);
-          context.fillStyle = "#D4AF37";
-          context.fill();
-        });
-      }
-
-      context.restore();
-
-      // Sphere border
-      context.beginPath();
-      context.arc(cx, cy, radius, 0, 2 * Math.PI);
-      context.strokeStyle = "rgba(212,175,55,0.2)";
-      context.lineWidth = 1;
-      context.stroke();
-    };
-
-    // ── Load world data ──────────────────────────────────────────────
-    const loadWorldData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch("/world-110m.json");
-        if (!response.ok) throw new Error("Failed");
-        landFeatures = await response.json();
-
-        const features  = landFeatures.features;
-        const chunkSize = 5;
-        const processChunk = (start: number) => {
-          for (let i = start; i < Math.min(start + chunkSize, features.length); i++) {
-            generateDotsInPolygon(features[i]).forEach(([lng, lat]) => allDots.push({ lng, lat }));
-          }
-          if (start + chunkSize < features.length)
-            setTimeout(() => processChunk(start + chunkSize), 0);
-          else
-            setIsLoading(false);
-        };
-        processChunk(0);
-      } catch {
-        setError("Failed to load globe data");
-        setIsLoading(false);
-      }
-    };
-
-    // ── Animation loop (24 fps cap, pauses when tab hidden) ──────────
-    const rotation: [number, number] = [0, -20];
-    let autoRotate = true;
-    let rafId: number;
-    let lastFrameTime = 0;
-    let paused = false;
-
-    const onVisibility = () => { paused = document.hidden; };
+    // Visibility API — pause animation when tab is hidden
+    const onVisibility = () => worker.postMessage({ type: "visibility", hidden: document.hidden });
     document.addEventListener("visibilitychange", onVisibility);
 
-    const animate = (time: number) => {
-      rafId = requestAnimationFrame(animate);
-      if (paused) return;
-      if (time - lastFrameTime < 42) return; // ~24 fps
-      lastFrameTime = time;
-      if (autoRotate) {
-        rotation[0] += 0.18;
-        projection.rotate(rotation);
-      }
-      render();
-    };
-    rafId = requestAnimationFrame(animate);
-
-    // ── Drag to rotate ───────────────────────────────────────────────
-    const handleMouseDown = (e: MouseEvent) => {
-      autoRotate = false;
-      const startX = e.clientX, startY = e.clientY;
-      const startRot: [number, number] = [...rotation] as [number, number];
-      const onMove = (ev: MouseEvent) => {
-        rotation[0] = startRot[0] + (ev.clientX - startX) * 0.5;
-        rotation[1] = Math.max(-90, Math.min(90, startRot[1] - (ev.clientY - startY) * 0.5));
-        projection.rotate(rotation);
-      };
-      const onUp = () => {
+    // Forward mouse events for drag-to-rotate
+    const onMouseDown = (e: MouseEvent) => {
+      worker.postMessage({ type: "dragstart", x: e.clientX, y: e.clientY });
+      const onMove = (ev: MouseEvent) => worker.postMessage({ type: "dragmove", x: ev.clientX, y: ev.clientY });
+      const onUp   = () => {
+        worker.postMessage({ type: "dragend" });
         document.removeEventListener("mousemove", onMove);
-        document.removeEventListener("mouseup", onUp);
-        setTimeout(() => { autoRotate = true; }, 1500);
+        document.removeEventListener("mouseup",   onUp);
       };
       document.addEventListener("mousemove", onMove);
-      document.addEventListener("mouseup", onUp);
+      document.addEventListener("mouseup",   onUp);
     };
-
-    canvas.addEventListener("mousedown", handleMouseDown);
-    loadWorldData();
+    canvas.addEventListener("mousedown", onMouseDown);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      canvas.removeEventListener("mousedown", handleMouseDown);
+      worker.terminate();
+      canvas.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [width, height]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    let cleanup: (() => void) | undefined;
+
+    // Check OffscreenCanvas support
+    if (typeof canvas.transferControlToOffscreen !== "function") {
+      setError("Your browser doesn't support OffscreenCanvas. Please update Chrome/Edge.");
+      return;
+    }
+
+    const run = async () => {
+      try {
+        const res = await fetch("/world-110m.json");
+        if (!res.ok) throw new Error("Failed to load world data");
+        const geojson = await res.json();
+        const features: any[] = geojson.features;
+
+        const landRings = extractLandRings(features);
+
+        generateDotsChunked(
+          features,
+          () => {}, // progress — could update a progress bar here
+          (dots) => {
+            cleanup = initWorker(canvas, landRings, dots);
+          }
+        );
+      } catch (err) {
+        console.error("Globe init failed:", err);
+        setError("Globe failed to load");
+        setLoading(false);
+      }
+    };
+
+    run();
+
+    return () => { cleanup?.(); workerRef.current?.terminate(); };
+  }, [initWorker]);
 
   if (error) {
     return (
@@ -385,9 +267,12 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
   return (
     <div className={`relative ${className}`}>
-      {isLoading && (
+      {loading && (
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="w-8 h-8 rounded-full border-2 border-[#D4AF37]/30 border-t-[#D4AF37] animate-spin" />
+          <div
+            className="w-8 h-8 rounded-full border-2 animate-spin"
+            style={{ borderColor: "rgba(212,175,55,0.25)", borderTopColor: "#D4AF37" }}
+          />
         </div>
       )}
       <canvas
