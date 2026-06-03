@@ -474,20 +474,6 @@ export default function StatsSection() {
                 ))}
               </div>
 
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <span
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: "#16A34A",
-                    display: "block",
-                  }}
-                />
-                <span style={{ fontSize: "11px", fontWeight: 600, color: "#16A34A" }}>
-                  All Live
-                </span>
-              </div>
             </motion.div>
           </div>
 
