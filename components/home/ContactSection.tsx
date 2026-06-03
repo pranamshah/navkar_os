@@ -7,8 +7,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 const contactDetails = [
   { label: "Email", value: "hello@navkaros.in", Icon: Mail },
   { label: "Phone", value: "+91 90807 67398", Icon: Phone },
-  { label: "Office", value: "BKC, Bandra East, Mumbai — 400051", Icon: MapPin },
-  { label: "Support Hours", value: "Mon–Sat, 9am–7pm IST", Icon: Clock },
+  { label: "Availability", value: "24/7 — We're always here to help.", Icon: Clock },
 ];
 
 export default function ContactSection() {
