@@ -1,46 +1,56 @@
-import { createServerClient } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
+import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request });
+export default auth((req) => {
+  const { pathname } = req.nextUrl;
+  const user = req.auth?.user;
 
-  try {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() { return request.cookies.getAll(); },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-            supabaseResponse = NextResponse.next({ request });
-            cookiesToSet.forEach(({ name, value, options }) =>
-              supabaseResponse.cookies.set(name, value, options)
-            );
-          },
-        },
-      }
-    );
-
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-
-    if (user && (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup")) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  } catch {
-    // If Supabase is unreachable, allow the request through rather than crashing
-    if (request.nextUrl.pathname.startsWith("/dashboard")) {
-      return NextResponse.redirect(new URL("/login", request.url));
+  // Admin routes
+  if (pathname.startsWith("/dashboard/admin")) {
+    if (!user) return NextResponse.redirect(new URL("/login", req.url));
+    if (user.role !== "SUPERADMIN" && user.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/dashboard/client", req.url));
     }
   }
 
-  return supabaseResponse;
-}
+  // Client routes
+  if (
+    pathname.startsWith("/dashboard/client") ||
+    pathname.startsWith("/app/") ||
+    pathname.startsWith("/pricing")
+  ) {
+    if (!user) return NextResponse.redirect(new URL("/login", req.url));
+    if (
+      user.status === "PENDING_VERIFICATION" &&
+      !pathname.startsWith("/status") &&
+      !pathname.startsWith("/onboarding")
+    ) {
+      return NextResponse.redirect(new URL("/status", req.url));
+    }
+  }
+
+  // Redirect logged-in admin away from /login
+  if (pathname === "/login" && user?.role === "SUPERADMIN") {
+    return NextResponse.redirect(new URL("/dashboard/admin", req.url));
+  }
+
+  // Redirect logged-in client away from /login
+  if (pathname === "/login" && user?.role === "CLIENT") {
+    if (user.status === "ACTIVE") {
+      return NextResponse.redirect(new URL("/dashboard/client", req.url));
+    }
+    return NextResponse.redirect(new URL("/status", req.url));
+  }
+
+  return NextResponse.next();
+});
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/signup"],
+  matcher: [
+    "/dashboard/:path*",
+    "/app/:path*",
+    "/status",
+    "/onboarding/:path*",
+    "/login",
+  ],
 };

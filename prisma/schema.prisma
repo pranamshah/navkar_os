@@ -1,0 +1,226 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  clientId       String    @unique
+  name           String
+  email          String    @unique
+  emailVerified  DateTime?
+  hashedPassword String?
+  image          String?
+  phone          String?
+  whatsapp       String?
+  role           Role      @default(CLIENT)
+  status         Status    @default(PENDING_VERIFICATION)
+
+  // Business details
+  businessName    String?
+  businessType    BusinessType?
+  city            String?
+  state           String?
+  stateCode       String?
+  gstin           String?
+  pan             String?
+  iecCode         String?
+  chaLicenceNo    String?
+  businessAddress String?
+  yearsInBusiness String?
+
+  // Document uploads (Cloudinary URLs)
+  gstCertPath     String?
+  panCopyPath     String?
+  licenceCopyPath String?
+
+  // Verification
+  verifiedAt      DateTime?
+  verifiedBy      String?
+  rejectionReason String?
+
+  // OTP for Client ID login
+  otpCode         String?
+  otpExpiry       DateTime?
+
+  // Relations
+  subscriptions   Subscription[]
+  invoices        Invoice[]
+  tickets         Ticket[]
+  notifications   Notification[]
+  accounts        Account[]
+  sessions        Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Subscription {
+  id                 String       @id @default(cuid())
+  userId             String
+  product            Product
+  plan               Plan
+  billingCycle       BillingCycle
+  status             SubStatus    @default(TRIAL)
+  amount             Int
+  trialEndsAt        DateTime
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  razorpaySubId      String?
+  razorpayPlanId     String?
+  cancelledAt        DateTime?
+  user               User         @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Invoice {
+  id        String    @id @default(cuid())
+  invoiceNo String    @unique
+  userId    String
+  product   Product
+  amount    Int
+  status    PayStatus @default(PENDING)
+  razorpayId String?
+  paidAt    DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Ticket {
+  id         String       @id @default(cuid())
+  ticketId   String       @unique
+  userId     String?
+  name       String
+  email      String
+  message    String
+  status     TicketStatus @default(OPEN)
+  source     String       @default("CHATBOT")
+  adminReply String?
+  resolvedAt DateTime?
+  user       User?        @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id      String  @id @default(cuid())
+  userId  String
+  type    String
+  title   String
+  message String
+  read    Boolean @default(false)
+  user    User    @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  CLIENT
+}
+
+enum Status {
+  PENDING_VERIFICATION
+  ACTIVE
+  REJECTED
+  SUSPENDED
+}
+
+enum BusinessType {
+  CF_AGENT
+  FREIGHT_FORWARDER
+  CHA
+  IMPORTER_EXPORTER
+  CFS_WAREHOUSE
+  TRANSPORTER
+  OTHER
+}
+
+enum Product {
+  NEXLOG
+  ENTRYX
+  DOCKIQ
+  RUNDESK
+  ACCURA
+  TRADEPILOT
+  FORWARDER_BUNDLE
+  CHA_BUNDLE
+  CFS_BUNDLE
+  TRANSPORTER_BUNDLE
+  FULL_SUITE
+}
+
+enum Plan {
+  STARTER
+  PRO
+  ENTERPRISE
+}
+
+enum BillingCycle {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum SubStatus {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+}
+
+enum PayStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}

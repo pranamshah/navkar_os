@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import AuthSessionProvider from "@/components/providers/SessionProvider";
 
 export const metadata: Metadata = {
   title: "NavkarOS — The Operating System for Indian Logistics",
@@ -30,7 +31,9 @@ export default function RootLayout({
         />
       </head>
       <body style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}>
-        {children}
+        <AuthSessionProvider>
+          {children}
+        </AuthSessionProvider>
       </body>
     </html>
   );
