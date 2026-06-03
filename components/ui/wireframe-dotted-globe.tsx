@@ -210,15 +210,15 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
           const interp = routeInterps[idx];
           context.beginPath();
           let started = false;
-          for (let s = 0; s <= 40; s++) {
-            const pt = projection(interp(s / 40) as [number, number]);
+          for (let s = 0; s <= 60; s++) {
+            const pt = projection(interp(s / 60) as [number, number]);
             if (!pt) { started = false; continue; }
             if (!started) { context.moveTo(pt[0], pt[1]); started = true; }
             else context.lineTo(pt[0], pt[1]);
           }
-          context.strokeStyle = "rgba(180,130,10,0.18)";
-          context.lineWidth = 0.6;
-          context.setLineDash([3, 5]);
+          context.strokeStyle = "rgba(212,160,20,0.55)";
+          context.lineWidth = 1.1;
+          context.setLineDash([4, 6]);
           context.stroke();
           context.setLineDash([]);
         });
@@ -234,29 +234,30 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
             const pos = projection(interp(tPhase) as [number, number]);
             if (!pos) continue;
 
-            const alpha = t === 0 ? 0.95 : (1 - t / (TRAIL_LEN + 1)) * 0.55;
-            const r     = t === 0 ? 2.6  : (1 - t / (TRAIL_LEN + 1)) * 1.8;
+            const alpha = t === 0 ? 1.0 : (1 - t / (TRAIL_LEN + 1)) * 0.75;
+            const r     = t === 0 ? 4.0 : (1 - t / (TRAIL_LEN + 1)) * 2.8;
 
             if (t === 0) {
               // Main dot: bright glow
-              const grd = context.createRadialGradient(pos[0], pos[1], 0, pos[0], pos[1], 7);
-              grd.addColorStop(0, "rgba(255,215,60,0.9)");
-              grd.addColorStop(0.4, "rgba(212,175,55,0.4)");
+              const grd = context.createRadialGradient(pos[0], pos[1], 0, pos[0], pos[1], 12);
+              grd.addColorStop(0, "rgba(255,230,80,1.0)");
+              grd.addColorStop(0.35, "rgba(255,200,40,0.65)");
+              grd.addColorStop(0.7, "rgba(212,175,55,0.25)");
               grd.addColorStop(1, "rgba(212,175,55,0)");
               context.beginPath();
-              context.arc(pos[0], pos[1], 7, 0, 2 * Math.PI);
+              context.arc(pos[0], pos[1], 12, 0, 2 * Math.PI);
               context.fillStyle = grd;
               context.fill();
 
               context.beginPath();
               context.arc(pos[0], pos[1], r, 0, 2 * Math.PI);
-              context.fillStyle = "#FFD54F";
+              context.fillStyle = "#FFF176";
               context.fill();
             } else {
               // Trail dot
               context.beginPath();
               context.arc(pos[0], pos[1], r, 0, 2 * Math.PI);
-              context.fillStyle = `rgba(212,175,55,${alpha})`;
+              context.fillStyle = `rgba(255,210,50,${alpha})`;
               context.fill();
             }
           }
