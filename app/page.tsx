@@ -15,12 +15,14 @@ import Footer from "@/components/home/Footer";
 import CustomCursor from "@/components/home/CustomCursor";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import AnchorScroller from "@/components/home/AnchorScroller";
+import ChatWidget from "@/components/home/ChatWidget";
 
 export default function Home() {
   return (
     <>
       <CustomCursor />
       <ScrollReveal />
+      <ChatWidget />
       <Suspense fallback={null}>
         <AnchorScroller />
       </Suspense>
