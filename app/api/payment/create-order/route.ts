@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { razorpay } from "@/lib/razorpay";
+import { getRazorpay } from "@/lib/razorpay";
 import { PRICING, BUNDLES, getPrice } from "@/lib/pricing";
 
 export async function POST(req: Request) {
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
   const amount = getPrice(baseMonthly, billingCycle);
 
-  const order = await razorpay.orders.create({
+  const order = await getRazorpay().orders.create({
     amount: amount * 100, // paise
     currency: "INR",
     receipt: `rcpt_${Date.now()}`,

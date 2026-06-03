@@ -77,7 +77,8 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
     const containerHeight = canvas.offsetHeight || height;
     const radius = Math.min(containerWidth, containerHeight) / 2.15;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Cap DPR at 1 — retina doesn't add visible value on a canvas globe but doubles GPU work
+    const dpr = 1;
     canvas.width  = containerWidth  * dpr;
     canvas.height = containerHeight * dpr;
     canvas.style.width  = `${containerWidth}px`;
@@ -131,7 +132,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
     const generateDotsInPolygon = (feature: any) => {
       const dots: [number, number][] = [];
       const [[minLng, minLat], [maxLng, maxLat]] = d3.geoBounds(feature);
-      const step = 1.8;
+      const step = 2.4; // fewer dots = less per-frame work
       for (let lng = minLng; lng <= maxLng; lng += step)
         for (let lat = minLat; lat <= maxLat; lat += step) {
           const p: [number, number] = [lng, lat];
@@ -157,8 +158,8 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
     // Pre-bake static arc paths (40 points each) — only needs to be recomputed on rotation
     // We rebuild them inside render since projection changes with rotation
-    const TRAIL_LEN   = 5;   // number of trail dots behind the particle
-    const TRAIL_GAP   = 0.022; // spacing between trail dots (in 0-1 arc units)
+    const TRAIL_LEN   = 3;    // fewer trail dots = less work per frame
+    const TRAIL_GAP   = 0.025;
 
     const render = () => {
       context.clearRect(0, 0, containerWidth, containerHeight);
@@ -322,22 +323,26 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
       }
     };
 
-    // ── Animation loop (30 fps) ──────────────────────────────────────
+    // ── Animation loop (24 fps cap, pauses when tab hidden) ──────────
     const rotation: [number, number] = [0, -20];
     let autoRotate = true;
     let rafId: number;
     let lastFrameTime = 0;
+    let paused = false;
+
+    const onVisibility = () => { paused = document.hidden; };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const animate = (time: number) => {
-      if (time - lastFrameTime >= 33) {
-        lastFrameTime = time;
-        if (autoRotate) {
-          rotation[0] += 0.22;
-          projection.rotate(rotation);
-        }
-        render();
-      }
       rafId = requestAnimationFrame(animate);
+      if (paused) return;
+      if (time - lastFrameTime < 42) return; // ~24 fps
+      lastFrameTime = time;
+      if (autoRotate) {
+        rotation[0] += 0.18;
+        projection.rotate(rotation);
+      }
+      render();
     };
     rafId = requestAnimationFrame(animate);
 
@@ -366,6 +371,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
     return () => {
       cancelAnimationFrame(rafId);
       canvas.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [width, height]);
 
