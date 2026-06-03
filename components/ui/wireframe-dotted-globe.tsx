@@ -4,29 +4,74 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const PORTS = [
-  { name: "Mumbai", lng: 72.8, lat: 19.1 },
-  { name: "JNPT", lng: 72.9, lat: 18.9 },
-  { name: "Chennai", lng: 80.3, lat: 13.1 },
-  { name: "Mundra", lng: 69.7, lat: 22.9 },
-  { name: "Singapore", lng: 103.8, lat: 1.3 },
-  { name: "Shanghai", lng: 121.5, lat: 31.2 },
-  { name: "Rotterdam", lng: 4.5, lat: 51.9 },
-  { name: "Dubai", lng: 55.3, lat: 25.2 },
-  { name: "Colombo", lng: 79.8, lat: 6.9 },
-  { name: "Hong Kong", lng: 114.2, lat: 22.3 },
-  { name: "Hamburg", lng: 10.0, lat: 53.5 },
-  { name: "Los Angeles", lng: -118.2, lat: 33.7 },
-  { name: "Busan", lng: 129.0, lat: 35.1 },
-  { name: "Antwerp", lng: 4.4, lat: 51.2 },
-  { name: "Port Klang", lng: 101.4, lat: 3.0 },
-  { name: "Jeddah", lng: 39.2, lat: 21.5 },
+  // Indian ports (0-8)
+  { name: "Mumbai",     lng: 72.8,   lat: 19.1  },  // 0
+  { name: "JNPT",       lng: 72.9,   lat: 18.9  },  // 1
+  { name: "Chennai",    lng: 80.3,   lat: 13.1  },  // 2
+  { name: "Mundra",     lng: 69.7,   lat: 22.9  },  // 3
+  { name: "Kolkata",    lng: 88.3,   lat: 22.6  },  // 4
+  { name: "Kochi",      lng: 76.3,   lat: 9.9   },  // 5
+  { name: "Vizag",      lng: 83.3,   lat: 17.7  },  // 6
+  { name: "Colombo",    lng: 79.8,   lat: 6.9   },  // 7
+  { name: "Haldia",     lng: 87.9,   lat: 22.1  },  // 8
+  // SE Asia / East Asia (9-16)
+  { name: "Singapore",  lng: 103.8,  lat: 1.3   },  // 9
+  { name: "Port Klang", lng: 101.4,  lat: 3.0   },  // 10
+  { name: "Hong Kong",  lng: 114.2,  lat: 22.3  },  // 11
+  { name: "Shanghai",   lng: 121.5,  lat: 31.2  },  // 12
+  { name: "Shenzhen",   lng: 114.1,  lat: 22.5  },  // 13
+  { name: "Tianjin",    lng: 117.7,  lat: 39.1  },  // 14
+  { name: "Busan",      lng: 129.0,  lat: 35.1  },  // 15
+  { name: "Tokyo",      lng: 139.7,  lat: 35.7  },  // 16
+  // Middle East / Africa (17-21)
+  { name: "Dubai",      lng: 55.3,   lat: 25.2  },  // 17
+  { name: "Jeddah",     lng: 39.2,   lat: 21.5  },  // 18
+  { name: "Salalah",    lng: 57.0,   lat: 17.0  },  // 19
+  { name: "Djibouti",   lng: 43.1,   lat: 11.6  },  // 20
+  { name: "Mombasa",    lng: 39.7,   lat: -4.0  },  // 21
+  // Europe (22-26)
+  { name: "Rotterdam",  lng: 4.5,    lat: 51.9  },  // 22
+  { name: "Hamburg",    lng: 10.0,   lat: 53.5  },  // 23
+  { name: "Antwerp",    lng: 4.4,    lat: 51.2  },  // 24
+  { name: "Felixstowe", lng: 1.35,   lat: 51.95 },  // 25
+  { name: "Le Havre",   lng: 0.1,    lat: 49.5  },  // 26
+  { name: "Piraeus",    lng: 23.6,   lat: 37.9  },  // 27
+  // Americas (28-29)
+  { name: "Los Angeles",lng: -118.2, lat: 33.7  },  // 28
+  { name: "New York",   lng: -74.0,  lat: 40.7  },  // 29
 ];
 
 const ROUTES = [
-  [0, 4], [0, 6], [0, 7], [0, 3], [2, 4],
-  [4, 5], [4, 9], [5, 11], [6, 12], [7, 1],
-  [1, 8], [8, 4], [6, 13], [4, 14], [7, 15],
-  [2, 7], [3, 7], [5, 14], [9, 11],
+  // Indian ports → global hubs
+  [0, 9], [0, 17], [0, 22], [0, 3],
+  [1, 7], [1, 17], [1, 9],
+  [2, 9], [2, 17], [2, 6],
+  [3, 17], [3, 19],
+  [4, 9], [4, 17],
+  [5, 7], [5, 18],
+  [6, 9], [6, 2],
+  [7, 9], [7, 10],
+  [8, 4],
+  // Indian ports → Africa / Middle East
+  [0, 21], [0, 20],
+  [17, 20], [18, 27], [20, 21],
+  [19, 17],
+  // SE Asia connections
+  [9, 12], [9, 11], [9, 10], [9, 13],
+  [10, 11], [11, 12], [11, 15],
+  [12, 14], [12, 15], [12, 16],
+  [13, 9], [15, 16], [15, 28],
+  // Trans-Pacific
+  [12, 28], [12, 29], [11, 28],
+  [28, 29],
+  // Europe connections
+  [22, 23], [22, 24], [22, 25], [22, 26],
+  [24, 25], [27, 22],
+  // Asia → Europe
+  [9, 22], [17, 22], [18, 27],
+  [12, 22],
+  // Americas ↔ Europe
+  [29, 22], [28, 22],
 ];
 
 interface RotatingEarthProps {
@@ -131,8 +176,8 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
         if (i === 0) context.moveTo(pt[0], pt[1]);
         else context.lineTo(pt[0], pt[1]);
       }
-      context.strokeStyle = "rgba(212,175,55,0.55)";
-      context.lineWidth = 0.9;
+      context.strokeStyle = "rgba(180,130,10,0.82)";
+      context.lineWidth = 1.2;
       context.stroke();
     };
 

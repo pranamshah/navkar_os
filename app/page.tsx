@@ -3,8 +3,8 @@ import HeroSection from "@/components/home/HeroSection";
 import ServicePreview from "@/components/home/ServicePreview";
 import TrustTicker from "@/components/home/TrustTicker";
 import ProblemSection from "@/components/home/ProblemSection";
-import WhoItsFor from "@/components/home/WhoItsFor";
 import SuiteScroll from "@/components/home/SuiteScroll";
+import WhoItsFor from "@/components/home/WhoItsFor";
 import WorkflowSection from "@/components/home/WorkflowSection";
 import StatsSection from "@/components/home/StatsSection";
 import FAQSection from "@/components/home/FAQSection";
@@ -25,8 +25,8 @@ export default function Home() {
         <ServicePreview />
         <TrustTicker />
         <ProblemSection />
-        <WhoItsFor />
         <SuiteScroll />
+        <WhoItsFor />
         <WorkflowSection />
         <StatsSection />
         <FAQSection />
