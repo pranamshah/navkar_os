@@ -232,7 +232,7 @@ function ServiceDemo() {
 
 export default function ServicePreview() {
   return (
-    <section style={{ background: "#f9f9f9" }}>
+    <section id="suite" style={{ background: "#f9f9f9" }}>
       <ContainerScroll
         titleComponent={
           <div className="mb-2">

@@ -1,70 +1,52 @@
 "use client";
 
-const LOGOS: Record<string, string> = {
-  "MAERSK":       "https://logo.clearbit.com/maersk.com",
-  "HAPAG-LLOYD":  "https://logo.clearbit.com/hapag-lloyd.com",
-  "CMA CGM":      "https://logo.clearbit.com/cma-cgm.com",
-  "MSC":          "https://logo.clearbit.com/msc.com",
-  "DHL":          "https://logo.clearbit.com/dhl.com",
-  "EVERGREEN":    "https://logo.clearbit.com/evergreen-line.com",
-  "COSCO":        "https://logo.clearbit.com/cosco.com",
-  "TALLY PRIME":  "https://logo.clearbit.com/tallysolutions.com",
-  "RAZORPAY":     "https://logo.clearbit.com/razorpay.com",
-  "WHATSAPP":     "https://logo.clearbit.com/whatsapp.com",
-  "GSTN":         "https://logo.clearbit.com/gst.gov.in",
-  "ICEGATE":      "https://www.icegate.gov.in/favicon.ico",
-};
-
-const partners = [
-  "MAERSK",
-  "HAPAG-LLOYD",
-  "CMA CGM",
-  "MSC",
-  "DHL",
-  "EVERGREEN",
-  "COSCO",
-  "TALLY PRIME",
-  "RAZORPAY",
-  "WHATSAPP",
-  "GSTN",
-  "ICEGATE",
+const LOGOS: { name: string; src: string; bg: string }[] = [
+  { name: "MAERSK",       src: "/logos/maersk.svg",    bg: "#42B0D5" },
+  { name: "HAPAG-LLOYD",  src: "/logos/hapag.svg",     bg: "#003A70" },
+  { name: "CMA CGM",      src: "/logos/cmacgm.svg",    bg: "#003087" },
+  { name: "MSC",          src: "/logos/msc.svg",        bg: "#003087" },
+  { name: "DHL",          src: "/logos/dhl.svg",        bg: "#FFCC00" },
+  { name: "EVERGREEN",    src: "/logos/evergreen.svg",  bg: "#006400" },
+  { name: "COSCO",        src: "/logos/cosco.svg",      bg: "#CC0000" },
+  { name: "TALLY PRIME",  src: "/logos/tally.svg",      bg: "#0A4DA1" },
+  { name: "RAZORPAY",     src: "/logos/razorpay.svg",   bg: "#072654" },
+  { name: "WHATSAPP",     src: "/logos/whatsapp.svg",   bg: "#25D366" },
+  { name: "GSTN",         src: "/logos/gstn.svg",       bg: "#FF6B00" },
+  { name: "ICEGATE",      src: "/logos/icegate.svg",    bg: "#1A3C6E" },
 ];
 
-const all = [...partners, ...partners];
+const all = [...LOGOS, ...LOGOS];
 
-function LogoItem({ name }: { name: string }) {
+function LogoItem({ item }: { item: typeof LOGOS[number] }) {
   return (
     <span className="mx-8 flex items-center gap-3 whitespace-nowrap select-none">
       <div
         style={{
-          width: 40,
-          height: 40,
+          width: 44,
+          height: 44,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#ffffff",
+          backgroundColor: item.bg,
           borderRadius: 8,
-          padding: 4,
-          border: "1px solid #e5e7eb",
+          padding: 6,
+          flexShrink: 0,
         }}
       >
         <img
-          src={LOGOS[name]}
-          alt={name}
+          src={item.src}
+          alt={item.name}
           width={32}
           height={32}
           loading="lazy"
-          style={{ objectFit: "contain" }}
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
+          style={{ objectFit: "contain", width: 32, height: 32 }}
         />
       </div>
       <span
         className="font-black"
-        style={{ fontSize: "13px", color: "rgba(26,28,29,0.32)", letterSpacing: "-0.01em" }}
+        style={{ fontSize: "13px", color: "rgba(26,28,29,0.38)", letterSpacing: "-0.01em" }}
       >
-        {name}
+        {item.name}
       </span>
     </span>
   );
@@ -80,14 +62,16 @@ export default function TrustTicker() {
         className="text-center text-xs font-semibold uppercase tracking-widest mb-6"
         style={{ color: "#5d5f5f" }}
       >
-        Integrated with India's logistics infrastructure
+        Integrated with India&apos;s logistics infrastructure
       </p>
       <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: "linear-gradient(90deg,#fff,transparent)" }} />
-        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" style={{ background: "linear-gradient(-90deg,#fff,transparent)" }} />
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(90deg,#fff,transparent)" }} />
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(-90deg,#fff,transparent)" }} />
         <div className="ticker-track">
-          {all.map((name, i) => (
-            <LogoItem key={i} name={name} />
+          {all.map((item, i) => (
+            <LogoItem key={i} item={item} />
           ))}
         </div>
       </div>

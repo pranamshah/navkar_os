@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navbar from "@/components/home/Navbar";
 import HeroSection from "@/components/home/HeroSection";
 import ServicePreview from "@/components/home/ServicePreview";
@@ -13,12 +14,16 @@ import ContactSection from "@/components/home/ContactSection";
 import Footer from "@/components/home/Footer";
 import CustomCursor from "@/components/home/CustomCursor";
 import ScrollReveal from "@/components/home/ScrollReveal";
+import AnchorScroller from "@/components/home/AnchorScroller";
 
 export default function Home() {
   return (
     <>
       <CustomCursor />
       <ScrollReveal />
+      <Suspense fallback={null}>
+        <AnchorScroller />
+      </Suspense>
       <main className="flex flex-col min-h-screen">
         <Navbar />
         <HeroSection />

@@ -4,17 +4,20 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 
 const links = [
-  { label: "Services", href: "#suite" },
-  { label: "Who It's For", href: "#whoisfor" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "About", href: "/about" },
+  { label: "Services",    href: "/#suite" },
+  { label: "Who It's For", href: "/#whoisfor" },
+  { label: "Pricing",     href: "/pricing" },
+  { label: "About",       href: "/about" },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
+  const router   = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -26,6 +29,23 @@ export default function Navbar() {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
+
+  // Handle anchor links from any page
+  const handleAnchorLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("/#")) return; // let normal links work
+    e.preventDefault();
+    const anchor = href.slice(1); // "#suite" or "#whoisfor"
+    setMobileOpen(false);
+
+    if (pathname === "/") {
+      // Already on homepage — just scroll
+      const el = document.querySelector(anchor);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Navigate to homepage, then scroll after load
+      router.push(`/${anchor}`);
+    }
+  };
 
   return (
     <>
@@ -42,9 +62,7 @@ export default function Navbar() {
             backdropFilter: "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
             border: "0.5px solid rgba(0,0,0,0.1)",
-            boxShadow: scrolled
-              ? "0 4px 30px rgba(0,0,0,0.1)"
-              : "0 2px 15px rgba(0,0,0,0.05)",
+            boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.1)" : "0 2px 15px rgba(0,0,0,0.05)",
           }}
         >
           {/* Logo */}
@@ -56,16 +74,17 @@ export default function Navbar() {
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">
             {links.map((l) => (
-              <Link
+              <a
                 key={l.label}
                 href={l.href}
+                onClick={(e) => handleAnchorLink(e, l.href)}
                 className="text-sm transition-colors duration-200 cursor-none"
-                style={{ color: "#444748" }}
+                style={{ color: "#444748", textDecoration: "none" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#D4A017")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
               >
                 {l.label}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -84,14 +103,8 @@ export default function Navbar() {
               href="/signup"
               className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200 cursor-none"
               style={{ background: "#1a1c1d", color: "#fff" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#D4A017";
-                e.currentTarget.style.color = "#1a1c1d";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#1a1c1d";
-                e.currentTarget.style.color = "#fff";
-              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1d"; e.currentTarget.style.color = "#fff"; }}
             >
               Start Free
             </Link>
@@ -122,19 +135,20 @@ export default function Navbar() {
             <div className="flex-1 flex flex-col justify-center px-8 gap-5">
               {links.map((l, i) => (
                 <motion.div key={l.label} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
-                  <Link href={l.href} className="text-3xl font-semibold text-white py-2 border-b border-white/10 block" onClick={() => setMobileOpen(false)}>
+                  <a
+                    href={l.href}
+                    onClick={(e) => handleAnchorLink(e, l.href)}
+                    className="text-3xl font-semibold text-white py-2 border-b border-white/10 block"
+                    style={{ textDecoration: "none" }}
+                  >
                     {l.label}
-                  </Link>
+                  </a>
                 </motion.div>
               ))}
             </div>
             <div className="px-8 pb-14 flex flex-col gap-3">
-              <Link href="/login" className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block" onClick={() => setMobileOpen(false)}>
-                Login
-              </Link>
-              <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#f6be39" }} onClick={() => setMobileOpen(false)}>
-                Start Free Trial
-              </Link>
+              <Link href="/login" className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block" onClick={() => setMobileOpen(false)}>Login</Link>
+              <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#f6be39" }} onClick={() => setMobileOpen(false)}>Start Free Trial</Link>
             </div>
           </motion.div>
         )}

@@ -1,8 +1,18 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendOtpEmail } from "@/lib/email";
+import { rateLimit, getIP } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
+  // Rate limit: 5 OTP requests per IP per 10 minutes
+  const rl = rateLimit(`otp:${getIP(req)}`, 5, 10 * 60 * 1000);
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: `Too many OTP requests. Wait ${rl.retryAfter} seconds.` },
+      { status: 429 }
+    );
+  }
+
   try {
     const { identifier } = await req.json();
     if (!identifier) return NextResponse.json({ error: "Identifier required" }, { status: 400 });

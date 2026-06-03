@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { sendWelcomeEmail, sendAdminNotification } from "@/lib/email";
+import { rateLimit, getIP } from "@/lib/rate-limit";
 
 const schema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -18,6 +19,15 @@ function generateClientId() {
 }
 
 export async function POST(req: Request) {
+  // Rate limit: 5 registrations per IP per hour
+  const rl = rateLimit(`register:${getIP(req)}`, 5, 60 * 60 * 1000);
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: `Too many requests. Try again in ${rl.retryAfter} seconds.` },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const parsed = schema.safeParse(body);
@@ -27,12 +37,27 @@ export async function POST(req: Request) {
 
     const { name, email, phone, password } = parsed.data;
 
+    // Check database connectivity first
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+    } catch {
+      console.error("Database not connected — DATABASE_URL may not be set");
+      return NextResponse.json(
+        { error: "Service temporarily unavailable. Please try again in a moment." },
+        { status: 503 }
+      );
+    }
+
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
-      return NextResponse.json({ error: "An account with this email already exists" }, { status: 409 });
+      return NextResponse.json(
+        { error: "An account with this email already exists" },
+        { status: 409 }
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
+
     let clientId = generateClientId();
     let attempts = 0;
     while (await prisma.user.findUnique({ where: { clientId } })) {
@@ -41,19 +66,34 @@ export async function POST(req: Request) {
     }
 
     await prisma.user.create({
-      data: { clientId, name, email, phone, whatsapp: phone, hashedPassword, role: "CLIENT", status: "PENDING_VERIFICATION" },
+      data: {
+        clientId,
+        name,
+        email,
+        phone,
+        whatsapp: phone,
+        hashedPassword,
+        role: "CLIENT",
+        status: "PENDING_VERIFICATION",
+      },
     });
 
-    // Emails — never throw, just log
-    await sendWelcomeEmail(email, name, clientId);
-    await sendAdminNotification(
-      `New Signup: ${name} — ${email}`,
-      `<p>New user: <strong>${name}</strong> (${email})<br>Client ID: ${clientId}</p>`
-    );
+    // Fire emails async — never block registration on email failure
+    Promise.allSettled([
+      sendWelcomeEmail(email, name, clientId),
+      sendAdminNotification(
+        `New Signup: ${name} — ${email}`,
+        `<p>New user: <strong>${name}</strong> (${email})<br>Client ID: <strong>${clientId}</strong></p>`
+      ),
+    ]).catch(() => {});
 
     return NextResponse.json({ success: true, redirectUrl: "/onboarding" });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "Registration failed. Please try again." }, { status: 500 });
+    const message = err instanceof Error ? err.message : "Unknown error";
+    console.error("Registration error:", message);
+    return NextResponse.json(
+      { error: "Registration failed. Please try again." },
+      { status: 500 }
+    );
   }
 }
