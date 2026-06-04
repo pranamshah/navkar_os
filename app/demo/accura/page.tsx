@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight, TrendingUp, TrendingDown, AlertCircle, Download, ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
 
@@ -57,44 +58,44 @@ function DashboardScreen() {
   const months = ["Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun"];
 
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4" style={{ background: "#0f1010" }}>
+    <div className="h-full overflow-y-auto p-3 space-y-3" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
       {/* KPI Cards */}
       <div className="grid grid-cols-3 gap-2">
         {kpis.map((k) => (
-          <div key={k.label} className="rounded-xl p-3" style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.08)" }}>
-            <p className="text-xs mb-1" style={{ color: "rgba(255,255,255,0.35)", fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{k.label}</p>
-            <p className="font-bold text-sm text-white">{k.value}</p>
-            <p className="text-xs mt-0.5" style={{ color: k.up ? "#22c55e" : "#f59e0b", fontSize: "9px" }}>{k.change}</p>
+          <div key={k.label} className="rounded-lg p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
+            <p className="mb-1" style={{ color: "#6B7280", fontSize: "8px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{k.label}</p>
+            <p className="font-bold" style={{ fontSize: "13px", color: "#111827" }}>{k.value}</p>
+            <p className="mt-0.5" style={{ color: k.up ? "#059669" : "#D97706", fontSize: "9px" }}>{k.change}</p>
           </div>
         ))}
       </div>
       {/* Bar Chart */}
-      <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.07)" }}>
-        <p className="text-xs font-semibold mb-3" style={{ color: "rgba(255,255,255,0.5)", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Revenue vs Expenses — Last 12 Months</p>
-        <div className="flex items-end gap-1.5 h-16">
+      <div className="rounded-lg p-3" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
+        <p className="font-semibold mb-2" style={{ color: "#111827", fontSize: "10px" }}>Revenue vs Expenses — Last 12 Months</p>
+        <div className="flex items-end gap-1 h-14">
           {bars.map((h, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
-              <div className="w-full rounded-sm" style={{ height: `${h * 0.64}px`, background: "#D4AF37", opacity: 0.8 }} />
-              <div className="w-full rounded-sm" style={{ height: `${h * 0.38}px`, background: "#1A237E", opacity: 0.7 }} />
-              <p style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>{months[i]}</p>
+              <div className="w-full rounded-sm" style={{ height: `${h * 0.55}px`, background: "#0E7490", opacity: i === 11 ? 1 : 0.6 }} />
+              <div className="w-full rounded-sm" style={{ height: `${h * 0.33}px`, background: "#FDA4AF", opacity: i === 11 ? 1 : 0.6 }} />
+              <p style={{ fontSize: "6px", color: "#9CA3AF" }}>{months[i]}</p>
             </div>
           ))}
         </div>
-        <div className="flex gap-4 mt-2">
-          <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-sm" style={{ background: "#D4AF37" }}/><p style={{ fontSize: "9px", color: "rgba(255,255,255,0.4)" }}>Revenue</p></div>
-          <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-sm" style={{ background: "#1A237E" }}/><p style={{ fontSize: "9px", color: "rgba(255,255,255,0.4)" }}>Expenses</p></div>
+        <div className="flex gap-4 mt-1.5">
+          <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm" style={{ background: "#0E7490" }}/><p style={{ fontSize: "8px", color: "#6B7280" }}>Revenue</p></div>
+          <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm" style={{ background: "#FDA4AF" }}/><p style={{ fontSize: "8px", color: "#6B7280" }}>Expenses</p></div>
         </div>
       </div>
       {/* Alerts */}
       <div className="space-y-1.5">
         {[
-          { text: "HDFC Traders — ₹48,000 overdue 42 days", color: "#ef4444" },
-          { text: "GST filing due in 3 days — ₹62,140 payable", color: "#f59e0b" },
-          { text: "TDS deposit due 7th July — ₹8,200 under 194C", color: "#f59e0b" },
+          { text: "HDFC Traders — ₹48,000 overdue 42 days", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
+          { text: "GST filing due in 3 days — ₹62,140 payable", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
+          { text: "TDS deposit due 7th July — ₹8,200 under 194C", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
         ].map((a) => (
-          <div key={a.text} className="flex items-start gap-2 px-3 py-2 rounded-lg" style={{ background: `${a.color}12`, border: `0.5px solid ${a.color}30` }}>
-            <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0" style={{ background: a.color }} />
-            <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.7)" }}>{a.text}</p>
+          <div key={a.text} className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: a.bg, border: `1px solid ${a.border}` }}>
+            <div className="w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0" style={{ background: a.color }} />
+            <p style={{ fontSize: "9.5px", color: "#374151" }}>{a.text}</p>
           </div>
         ))}
       </div>
@@ -511,6 +512,13 @@ const FAQS = [
 /* PAGE                                                        */
 /* ─────────────────────────────────────────────────────────── */
 export default function AccuraPage() {
+  const { data: session } = useSession();
+  const hasAccura = (session?.user as { subscriptions?: { product: string; status: string }[] } | undefined)?.subscriptions?.some(
+    (s) => (s.product === "ACCURA" || s.product === "FULL_SUITE") && (s.status === "ACTIVE" || s.status === "TRIAL")
+  );
+  const ctaHref = hasAccura ? "/dashboard/accura" : "/pricing";
+  const ctaLabel = hasAccura ? "Open Accura →" : "View Pricing & Start Free Trial";
+
   const [activeModule, setActiveModule] = useState("dashboard");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -543,9 +551,9 @@ export default function AccuraPage() {
               Freight-specific accounting that auto-posts from every NavkarOS invoice, generates GSTR-1 in one click, shows per-job profitability, and costs ₹31,932 less per year than Tally Gold.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mb-14">
-              <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
+              <Link href={ctaHref} className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
                 style={{ background: "#D4AF37", color: "#1a1c1c" }}>
-                View Pricing &amp; Start Free Trial <ArrowRight className="h-4 w-4" />
+                {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
               <a href="#demo" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider border transition-all duration-200 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                 style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}>
@@ -836,10 +844,10 @@ export default function AccuraPage() {
           <p className="mb-10 text-base" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
             14-day free trial. No credit card. No setup fee. Your existing data stays yours.
           </p>
-          <Link href="/pricing"
+          <Link href={ctaHref}
             className="inline-flex items-center gap-3 px-10 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
             style={{ background: "#D4AF37", color: "#1a1c1c" }}>
-            View Pricing &amp; Get Started <ArrowRight className="h-4 w-4" />
+            {ctaLabel} <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
             Accura Pro · ₹2,299/mo · Tally Gold = ₹4,500/mo and does less.

@@ -154,6 +154,157 @@ model Notification {
   createdAt DateTime @default(now())
 }
 
+// ─── Accura Accounting Module ─────────────────────────────────
+
+model LedgerGroup {
+  id       String  @id @default(cuid())
+  userId   String
+  name     String
+  parentId String?
+  parent   LedgerGroup?  @relation("GroupTree", fields: [parentId], references: [id])
+  children LedgerGroup[] @relation("GroupTree")
+  nature   String        // ASSETS / LIABILITIES / INCOME / EXPENSE
+  isSystem Boolean       @default(false)
+  ledgers  Ledger[]
+
+  @@index([userId])
+}
+
+model Ledger {
+  id              String      @id @default(cuid())
+  userId          String
+  name            String
+  groupId         String
+  group           LedgerGroup @relation(fields: [groupId], references: [id])
+  openingBalance  Int         @default(0)
+  openingType     String      @default("Dr")
+  gstin           String?
+  pan             String?
+  creditPeriod    Int         @default(0)
+  billByBill      Boolean     @default(false)
+  tdsSection      String?
+  isFreightLedger Boolean     @default(false)
+  jobNo           String?
+  currency        String      @default("INR")
+  isActive        Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  voucherLines    VoucherLine[]
+  billAllocations BillAllocation[]
+
+  @@index([userId])
+}
+
+model Voucher {
+  id            String      @id @default(cuid())
+  userId        String
+  voucherType   String
+  voucherNo     String
+  date          DateTime
+  narration     String?
+  totalAmount   Int
+  status        String      @default("ACTIVE")
+  irnNumber     String?
+  costCentre    String?
+  jobNo         String?
+  attachmentUrl String?
+  lines         VoucherLine[]
+  bills         BillAllocation[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([userId, date])
+}
+
+model VoucherLine {
+  id           String   @id @default(cuid())
+  voucherId    String
+  voucher      Voucher  @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  ledgerId     String
+  ledger       Ledger   @relation(fields: [ledgerId], references: [id])
+  type         String
+  amount       Int
+  cgst         Int      @default(0)
+  sgst         Int      @default(0)
+  igst         Int      @default(0)
+  costCentre   String?
+  narration    String?
+  currency     String   @default("INR")
+  forexAmount  Float?
+  exchangeRate Float?
+}
+
+model BillAllocation {
+  id        String   @id @default(cuid())
+  voucherId String
+  voucher   Voucher  @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  ledgerId  String
+  ledger    Ledger   @relation(fields: [ledgerId], references: [id])
+  billRef   String
+  billDate  DateTime
+  amount    Int
+  type      String
+}
+
+model AccuraEmployee {
+  id          String       @id @default(cuid())
+  userId      String
+  name        String
+  designation String
+  basic       Int
+  hra         Int
+  special     Int
+  pan         String?
+  bankAccount String?
+  ifsc        String?
+  joiningDate DateTime
+  isActive    Boolean      @default(true)
+  salarySlips SalarySlip[]
+
+  @@index([userId])
+}
+
+model SalarySlip {
+  id         String         @id @default(cuid())
+  employeeId String
+  employee   AccuraEmployee @relation(fields: [employeeId], references: [id])
+  month      Int
+  year       Int
+  gross      Int
+  tds        Int            @default(0)
+  pf         Int            @default(0)
+  advance    Int            @default(0)
+  net        Int
+  pdfUrl     String?
+  paidDate   DateTime?
+  voucherId  String?
+  createdAt  DateTime       @default(now())
+}
+
+model BankStatement {
+  id               String   @id @default(cuid())
+  userId           String
+  bankLedgerId     String
+  date             DateTime
+  description      String
+  debit            Int      @default(0)
+  credit           Int      @default(0)
+  balance          Int
+  matched          Boolean  @default(false)
+  matchedVoucherId String?
+  createdAt        DateTime @default(now())
+
+  @@index([userId])
+}
+
+model ExchangeRate {
+  id       String   @id @default(cuid())
+  userId   String
+  currency String
+  date     DateTime
+  rate     Float
+}
+
 enum Role {
   SUPERADMIN
   ADMIN
