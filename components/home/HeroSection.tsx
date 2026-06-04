@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { CobeGlobe } from "@/components/ui/cobe-globe";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -11,6 +12,31 @@ const stagger = {
   hidden: {},
   show:   { transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
 };
+
+// Indian port cities + major global trade hubs
+const MARKERS = [
+  // India
+  { id: "mumbai",    location: [19.0760,  72.8777] as [number, number], size: 0.055 }, // JNPT — largest
+  { id: "chennai",   location: [13.0827,  80.2707] as [number, number], size: 0.05  },
+  { id: "delhi",     location: [28.6139,  77.2090] as [number, number], size: 0.045 },
+  { id: "kolkata",   location: [22.5726,  88.3639] as [number, number], size: 0.04  },
+  { id: "cochin",    location: [ 9.9312,  76.2673] as [number, number], size: 0.04  },
+  // Global
+  { id: "dubai",     location: [25.2048,  55.2708] as [number, number], size: 0.045 },
+  { id: "singapore", location: [ 1.3521, 103.8198] as [number, number], size: 0.045 },
+  { id: "shanghai",  location: [31.2304, 121.4737] as [number, number], size: 0.04  },
+  { id: "rotterdam", location: [51.9225,   4.4792] as [number, number], size: 0.04  },
+  { id: "losangeles",location: [34.0522,-118.2437] as [number, number], size: 0.035 },
+];
+
+// Trade lane arcs
+const ARCS = [
+  { id: "mumbai-dubai",     from: [19.0760, 72.8777] as [number, number], to: [25.2048, 55.2708] as [number, number] },
+  { id: "mumbai-singapore", from: [19.0760, 72.8777] as [number, number], to: [ 1.3521,103.8198] as [number, number] },
+  { id: "chennai-singapore",from: [13.0827, 80.2707] as [number, number], to: [ 1.3521,103.8198] as [number, number] },
+  { id: "mumbai-rotterdam", from: [19.0760, 72.8777] as [number, number], to: [51.9225,  4.4792] as [number, number] },
+  { id: "singapore-shanghai",from:[1.3521, 103.8198] as [number, number], to: [31.2304,121.4737] as [number, number] },
+];
 
 export default function HeroSection() {
   return (
@@ -23,7 +49,7 @@ export default function HeroSection() {
         style={{ minHeight: "100svh" }}
       >
 
-        {/* ── LEFT: copy on clean white ─────────────────────────────── */}
+        {/* ── LEFT: copy ─────────────────────────────────────────────── */}
         <div
           className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-16 lg:pt-0 lg:pb-0"
           style={{ background: "#f9f9f9", zIndex: 2 }}
@@ -32,7 +58,7 @@ export default function HeroSection() {
             variants={stagger}
             initial="hidden"
             animate="show"
-            className="flex flex-col max-w-xl lg:ml-auto lg:mr-8 xl:mr-16"
+            className="flex flex-col max-w-xl lg:ml-auto lg:mr-6 xl:mr-14"
           >
             <motion.div variants={fadeUp} className="mb-7">
               <span
@@ -140,66 +166,42 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* ── RIGHT: globe video ────────────────────────────────────── */}
+        {/* ── RIGHT: interactive COBE globe ──────────────────────────── */}
         <div
-          className="relative overflow-hidden hidden lg:block"
+          className="relative hidden lg:flex items-center justify-center overflow-hidden"
           style={{ background: "#f9f9f9" }}
         >
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.8, delay: 0.3 }}
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              style={{
-                opacity: 0.92,
-                filter: "sepia(0.25) brightness(0.95) contrast(0.95)",
-                /* Left edge blends into left panel; right/top/bottom fade to page white */
-                WebkitMaskImage:
-                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 7%, black 16%, black 84%, rgba(0,0,0,0.4) 94%, transparent 100%)",
-                maskImage:
-                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 7%, black 16%, black 84%, rgba(0,0,0,0.4) 94%, transparent 100%)",
-              }}
-            >
-              <source src="/hero.mp4" type="video/mp4" />
-            </video>
-          </motion.div>
+          {/* Subtle left-edge fade so globe blends into the left panel */}
+          <div
+            className="absolute inset-y-0 left-0 w-24 pointer-events-none"
+            style={{ background: "linear-gradient(to right, #f9f9f9, transparent)", zIndex: 10 }}
+          />
 
-          {/* Top/bottom edge fades to match page white */}
-          <div
-            className="absolute inset-x-0 top-0 h-28 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, #f9f9f9, transparent)", zIndex: 1 }}
-          />
-          <div
-            className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
-            style={{ background: "linear-gradient(to top, #f9f9f9, transparent)", zIndex: 1 }}
-          />
+          <motion.div
+            className="relative w-full"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.4, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            /* push globe slightly right so it overflows the panel edge naturally */
+            style={{ paddingLeft: "5%", paddingRight: "0" }}
+          >
+            <CobeGlobe
+              markers={MARKERS}
+              arcs={ARCS}
+              className="w-full"
+            />
+          </motion.div>
         </div>
 
-        {/* Mobile: video as thin banner above the fold (shown on small screens only) */}
+        {/* Mobile: small globe banner above text */}
         <div
-          className="lg:hidden relative overflow-hidden order-first"
-          style={{ height: "40vw", maxHeight: "280px", background: "#1a1c1c" }}
+          className="lg:hidden relative overflow-hidden order-first flex items-center justify-center"
+          style={{ height: "52vw", maxHeight: "320px", background: "#f9f9f9" }}
         >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-            style={{ opacity: 0.8, filter: "sepia(0.3) brightness(0.9)" }}
-          >
-            <source src="/hero.mp4" type="video/mp4" />
-          </video>
-          <div
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(to bottom, transparent 50%, #f9f9f9 100%)" }}
+          <CobeGlobe
+            markers={MARKERS}
+            arcs={ARCS}
+            className="w-[52vw] max-w-[300px]"
           />
         </div>
 
