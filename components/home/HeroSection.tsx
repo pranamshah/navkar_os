@@ -15,15 +15,14 @@ export default function HeroSection() {
       className="relative w-full overflow-hidden flex flex-col items-center justify-center"
       style={{ minHeight: "100svh", background: "#f9f9f9" }}
     >
-      {/* ── Background video ───────────────────────────────────────────── */}
-      {/*
-        CSS mask-image fades the video to transparent outside the globe,
-        so the #f9f9f9 page background shows there — no blend-mode needed.
-        sepia(0.55) + brightness(0.82) → warm gold tone on the globe lines.
-      */}
+      {/* ── Video: masked to globe shape, warm gold filter, low opacity ── */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 0, animation: "heroFadeIn 1.4s ease-out forwards", opacity: 0 }}
+        style={{
+          zIndex: 0,
+          animation: "heroFadeIn 1.8s ease-out forwards",
+          opacity: 0,
+        }}
       >
         <video
           autoPlay
@@ -32,37 +31,43 @@ export default function HeroSection() {
           playsInline
           className="w-full h-full object-cover"
           style={{
-            filter: "sepia(0.55) brightness(0.82)",
+            opacity: 0.55,
+            filter: "sepia(0.6) brightness(0.78) contrast(0.9)",
             WebkitMaskImage:
-              "radial-gradient(ellipse 44% 50% at 50% 50%, black 30%, rgba(0,0,0,0.55) 52%, transparent 70%)",
+              "radial-gradient(ellipse 42% 48% at 50% 50%, black 20%, rgba(0,0,0,0.6) 44%, rgba(0,0,0,0.15) 60%, transparent 72%)",
             maskImage:
-              "radial-gradient(ellipse 44% 50% at 50% 50%, black 30%, rgba(0,0,0,0.55) 52%, transparent 70%)",
+              "radial-gradient(ellipse 42% 48% at 50% 50%, black 20%, rgba(0,0,0,0.6) 44%, rgba(0,0,0,0.15) 60%, transparent 72%)",
           }}
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* Centre fog so the copy sits on a clean white base */}
+      {/* ── Large page-colour wash — pushes globe back, clears text ────── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse 48% 52% at 50% 50%, rgba(249,249,249,0.72) 0%, rgba(249,249,249,0.35) 40%, transparent 65%)",
           zIndex: 1,
+          background: [
+            /* outer ring fully opaque — kills any leftover dark edges */
+            "radial-gradient(ellipse 68% 74% at 50% 50%, transparent 0%, rgba(249,249,249,0.0) 38%, rgba(249,249,249,0.60) 55%, rgba(249,249,249,0.92) 68%, #f9f9f9 80%)",
+            /* centre lift — text sits on near-white */
+            "radial-gradient(ellipse 46% 50% at 50% 50%, rgba(249,249,249,0.82) 0%, rgba(249,249,249,0.50) 45%, transparent 72%)",
+          ].join(", "),
         }}
       />
 
-      {/* ── Hero copy ─────────────────────────────────────────────────── */}
+      {/* ── Hero copy ────────────────────────────────────────────────────── */}
       <div
         className="relative w-full max-w-5xl mx-auto px-8 flex flex-col items-center text-center"
         style={{ zIndex: 2, paddingTop: "80px" }}
       >
         <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col items-center">
+
           <motion.div variants={fadeUp} className="mb-7">
             <span
               className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
-              style={{ background: "rgba(236,236,236,0.85)", color: "#4c4546", backdropFilter: "blur(4px)" }}
+              style={{ background: "rgba(236,236,236,0.90)", color: "#4c4546", backdropFilter: "blur(4px)" }}
             >
               NavkarOS · Free Beta — 6 Products, One Login
             </span>
@@ -107,9 +112,9 @@ export default function HeroSection() {
             <a
               href="#suite"
               className="inline-flex items-center gap-2 px-9 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200"
-              style={{ borderColor: "rgba(26,28,28,0.25)", borderWidth: "0.5px", color: "#1a1c1c" }}
+              style={{ borderColor: "rgba(26,28,28,0.25)", borderWidth: "0.5px", color: "#1a1c1c", background: "rgba(249,249,249,0.7)", backdropFilter: "blur(4px)" }}
               onMouseEnter={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#1a1c1c"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(249,249,249,0.7)"; e.currentTarget.style.color = "#1a1c1c"; }}
             >
               See 6 Products ↓
             </a>
@@ -134,17 +139,14 @@ export default function HeroSection() {
               </div>
             ))}
           </motion.div>
+
         </motion.div>
       </div>
 
       {/* Bottom fade into next section */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{
-          height: "120px",
-          background: "linear-gradient(to bottom, transparent, #f9f9f9)",
-          zIndex: 3,
-        }}
+        style={{ height: "140px", background: "linear-gradient(to bottom, transparent, #f9f9f9)", zIndex: 3 }}
       />
     </section>
   );
