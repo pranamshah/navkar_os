@@ -201,26 +201,75 @@ export default function StatusPage() {
           </div>
         </div>
 
-        {/* Timeline */}
-        <div className="p-8 mb-6" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)", boxShadow: "0 4px 24px rgba(0,0,0,0.04)" }}>
-          <h3 className="text-xs font-semibold uppercase tracking-widest mb-6" style={{ color: "#7e7576" }}>Application Progress</h3>
-          <StatusStep done label="Application Submitted" sub={userData?.createdAt ? new Date(userData.createdAt).toLocaleString("en-IN") : "Just now"} active={false} />
-          <StatusStep done label="Documents Received" sub={`${docCount} document${docCount !== 1 ? "s" : ""} uploaded`} active={false} />
-          <StatusStep done={false} active label="Under Verification" sub="Our team is reviewing your documents. Usually 24-48 business hours." />
-          <div className="flex gap-4">
-            <div className="flex flex-col items-center">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(0,0,0,0.05)" }}>
-                <div className="w-2 h-2 rounded-full" style={{ background: "rgba(0,0,0,0.15)" }} />
+        {/* Timeline — live status based on actual data ── */}
+        {(() => {
+          const onboardingDone = !!userData?.businessName;
+          const docsDone       = docCount > 0;
+          // step states
+          const step1done  = true;               // always done if they're on this page
+          const step2done  = onboardingDone;
+          const step2active = !onboardingDone;
+          const step3done  = onboardingDone && docsDone;
+          const step3active = onboardingDone && !docsDone;
+          const step4active = step3done;         // under review
+          return (
+            <div className="p-8 mb-6" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)", boxShadow: "0 4px 24px rgba(0,0,0,0.04)" }}>
+              <h3 className="text-xs font-semibold uppercase tracking-widest mb-6" style={{ color: "#7e7576" }}>Application Progress</h3>
+
+              <StatusStep
+                done={step1done}
+                active={false}
+                label="Account Created"
+                sub={userData?.createdAt ? new Date(userData.createdAt).toLocaleString("en-IN") : "Just now"}
+              />
+              <StatusStep
+                done={step2done}
+                active={step2active}
+                label="Business Details Submitted"
+                sub={step2done ? `${userData?.businessName} · ${userData?.businessType?.replace(/_/g, " ") ?? ""}` : "Complete your business profile below"}
+              />
+              <StatusStep
+                done={step3done}
+                active={step3active}
+                label="Documents Uploaded"
+                sub={step3done ? `${docCount} document${docCount !== 1 ? "s" : ""} received` : step3active ? "Please upload GST certificate and PAN copy" : "Waiting for step above"}
+              />
+              <StatusStep
+                done={false}
+                active={step4active}
+                label="Under Verification"
+                sub={step4active ? "Our team is reviewing your documents. Usually 24–48 business hours." : "Complete the steps above to begin verification"}
+              />
+              <div className="flex gap-4">
+                <div className="flex flex-col items-center">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(0,0,0,0.05)" }}>
+                    <div className="w-2 h-2 rounded-full" style={{ background: "rgba(0,0,0,0.15)" }} />
+                  </div>
+                </div>
+                <div className="pt-1">
+                  <p className="text-sm font-semibold" style={{ color: "#7e7576" }}>Account Activated</p>
+                  <p className="text-xs mt-0.5" style={{ color: "#7e7576" }}>
+                    You will receive a WhatsApp message and email once approved
+                  </p>
+                </div>
               </div>
+
+              {/* CTA if onboarding not complete */}
+              {!onboardingDone && (
+                <div className="mt-6 pt-6 border-t" style={{ borderColor: "rgba(0,0,0,0.07)" }}>
+                  <Link
+                    href="/onboarding"
+                    className="flex items-center justify-center gap-2 w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
+                    style={{ background: "#D4AF37", color: "#1a1c1c" }}
+                  >
+                    Complete Business Profile →
+                  </Link>
+                  <p className="text-xs text-center mt-2" style={{ color: "#7e7576" }}>Takes about 5 minutes</p>
+                </div>
+              )}
             </div>
-            <div className="pt-1">
-              <p className="text-sm font-semibold" style={{ color: "#7e7576" }}>Account Activated</p>
-              <p className="text-xs mt-0.5" style={{ color: "#7e7576" }}>
-                You will receive a WhatsApp message and email at {userData?.phone ?? "your registered number"} and {userData?.email}
-              </p>
-            </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Important notice */}
         <div
