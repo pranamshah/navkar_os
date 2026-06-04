@@ -94,17 +94,28 @@ export async function POST(req: Request) {
       maxOutputTokens: 512,
     });
 
-    return result.toTextStreamResponse();
-  } catch (err) {
-    console.error("[NavkarBot] streamText error:", err);
-    // Return a plain-text fallback so the UI doesn't hang
-    const fallback =
-      "Hi! I'm NavkarBot. I'm having a small technical hiccup right now. " +
-      "For immediate help please email hello@navkaros.in or call +91 90807 67398. " +
-      "Our team responds within 4 business hours!";
-    return new Response(fallback, {
-      status: 200,
+    // Stream raw text tokens — avoids AI SDK SSE formatting that breaks plain-text readers
+    const stream = new ReadableStream({
+      async start(controller) {
+        const encoder = new TextEncoder();
+        try {
+          for await (const chunk of result.textStream) {
+            controller.enqueue(encoder.encode(chunk));
+          }
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
+  } catch (err) {
+    console.error("[NavkarBot] error:", err);
+    return new Response(
+      "Hi! I'm NavkarBot. Having a small issue right now — please email hello@navkaros.in or call +91 90807 67398.",
+      { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+    );
   }
 }

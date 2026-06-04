@@ -8,23 +8,6 @@ import { useSession } from "next-auth/react";
 import Navbar from "@/components/home/Navbar";
 import Footer from "@/components/home/Footer";
 
-/* ─────────────────────────────────────────────────────────── */
-/* VS SCMCube DATA                                             */
-/* ─────────────────────────────────────────────────────────── */
-const SCM_COMPARE = [
-  { scm: "No client self-service portal",                       nexlog: "Full client portal with real-time tracking" },
-  { scm: "Manual pre-alert emails — 45 min each",               nexlog: "AI reads BL, auto-fills pre-alert in seconds" },
-  { scm: "No WhatsApp client updates",                          nexlog: "Stage updates fire WhatsApp + email together" },
-  { scm: "Job number sequences break across teams",             nexlog: "Centralized IMP/EXP/AIR series, auto-incremented" },
-  { scm: "Rate cards live in spreadsheets",                     nexlog: "Versioned rate cards with expiry alerts" },
-  { scm: "No per-job P&L until month-end",                      nexlog: "Live margin per job, every charge captured" },
-  { scm: "DSR is a manual Excel email",                         nexlog: "Auto-DSR scheduled per client, daily or weekly" },
-  { scm: "No vessel/AWB live tracking",                         nexlog: "IMO + flight number tracked with delay alerts" },
-  { scm: "Documents scattered across folders",                  nexlog: "All BL/HBL/Invoice in one job folder, shareable" },
-  { scm: "No anomaly detection on jobs",                        nexlog: "AI flags duplicate BLs, stuck jobs, expiring free days" },
-  { scm: "Invoicing is a separate workflow",                    nexlog: "Auto-generate GST invoice from job charges" },
-  { scm: "SCMCube costs ₹4,500+/month",                         nexlog: "Nexlog Pro = ₹2,499/month — does MORE" },
-];
 
 /* ─────────────────────────────────────────────────────────── */
 /* MODULE TABS                                                 */
@@ -412,7 +395,7 @@ const FEATURES = [
 /* FAQ                                                         */
 /* ─────────────────────────────────────────────────────────── */
 const FAQS = [
-  { q: "Does Nexlog replace SCMCube / Freight ERP completely?", a: "Yes. Every feature an Indian freight forwarder needs — job management, CRM, documents, pre-alerts, tracking, invoicing, GP reporting — is in Nexlog. Plus AI features (DocAI, anomaly detection) that legacy ERPs don't have." },
+  { q: "Does Nexlog cover everything a freight forwarder needs?", a: "Yes. Every feature an Indian C&F agent or freight forwarder needs — job management, CRM, documents, pre-alerts, tracking, invoicing, GP reporting — is in Nexlog. Plus AI features (DocAI, anomaly detection) that no legacy ERP has." },
   { q: "How does Nexlog connect to Accura accounting?", a: "When you raise a Nexlog invoice, Accura automatically records the income entry. When you log a vendor charge on a job, Accura creates the expense. Zero double-entry between operations and accounts." },
   { q: "Can clients track their shipments without logging in?", a: "Yes. Every job has a shareable tracking link — clients see stage updates, ETA, documents (if you've enabled sharing) without needing a Nexlog login." },
   { q: "What does the DocAI scanner actually do?", a: "Drop a BL PDF — it extracts BL no, vessel, ports, container, seal, weights, CBM, shipper, consignee, cargo description. 98% accurate on standard carrier BLs. One click pre-fills a new job." },
@@ -474,42 +457,11 @@ export default function NexlogDemoPage() {
               { val: "45 min → 30s", sub: "Pre-alert with DocAI" },
               { val: "1 click",      sub: "GST invoice from job" },
               { val: "13 stages",    sub: "Tracked per shipment" },
-              { val: "₹2,499/mo",    sub: "vs ₹4,500 SCMCube" },
+              { val: "₹2,499/mo",    sub: "Pro — all 12 modules" },
             ].map((s) => (
               <div key={s.sub} className="rounded-2xl p-5 text-center" style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.08)" }}>
                 <p className="text-3xl font-black" style={{ color: "#60A5FA" }}>{s.val}</p>
                 <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.4)" }}>{s.sub}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* VS SCMCUBE */}
-      <section className="py-20 px-6" style={{ background: "#f9f9f9" }}>
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">The difference</span>
-            <h2 className="text-3xl font-black text-gray-900 mt-2">SCMCube vs Nexlog</h2>
-            <p className="text-gray-500 mt-2 text-sm">12 things legacy freight ERPs can&apos;t do. Nexlog does all of them.</p>
-          </div>
-          <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-            <div className="grid grid-cols-2">
-              <div className="px-6 py-4 font-black text-sm" style={{ background: "#f3f4f6", color: "#6b7280" }}>
-                ❌ SCMCube / Legacy ERPs
-              </div>
-              <div className="px-6 py-4 font-black text-sm" style={{ background: "#0A1628", color: "#60A5FA" }}>
-                ✅ Nexlog by NavkarOS
-              </div>
-            </div>
-            {SCM_COMPARE.map((row, i) => (
-              <div key={i} className="grid grid-cols-2 border-t" style={{ borderColor: "#f0f0f0" }}>
-                <div className="px-6 py-3.5 text-sm flex items-center gap-2" style={{ color: "#9ca3af", background: i % 2 === 0 ? "#fafafa" : "#fff" }}>
-                  <span className="text-red-300 text-xs flex-shrink-0">✕</span> {row.scm}
-                </div>
-                <div className="px-6 py-3.5 text-sm flex items-center gap-2 font-medium" style={{ color: "#0A1628", background: i % 2 === 0 ? "rgba(21,101,192,0.05)" : "rgba(21,101,192,0.03)" }}>
-                  <Check className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "#1565C0" }} /> {row.nexlog}
-                </div>
               </div>
             ))}
           </div>
@@ -656,7 +608,7 @@ export default function NexlogDemoPage() {
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Pricing</span>
             <h2 className="text-3xl font-black text-gray-900 mt-2">Honest pricing for Indian freight</h2>
-            <p className="text-sm text-gray-500 mt-2">SCMCube starts at ₹4,500/mo and adds modules à la carte.<br />Nexlog Pro is everything — including AI — for ₹2,499/mo.</p>
+            <p className="text-sm text-gray-500 mt-2">Every module included. No hidden add-ons. Start free for 14 days.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
@@ -721,8 +673,8 @@ export default function NexlogDemoPage() {
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(96,165,250,0.6)" }}>Ready to switch?</p>
           <h2 className="text-4xl font-black text-white mb-4 leading-tight">
-            Stop wrestling with SCMCube.<br />
-            <span style={{ color: "#60A5FA" }}>Start using Nexlog.</span>
+            Your freight ops, finally<br />
+            <span style={{ color: "#60A5FA" }}>running on one platform.</span>
           </h2>
           <p className="mb-10 text-base" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
             14-day free trial. No credit card. No setup fee. Migrate jobs in one CSV.
@@ -733,7 +685,7 @@ export default function NexlogDemoPage() {
             {ctaLabel} <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-            Nexlog Pro · ₹2,499/mo · SCMCube starts at ₹4,500/mo and does less.
+            Nexlog Pro · ₹2,499/mo · 12 modules · 14-day free trial
           </p>
         </div>
       </section>

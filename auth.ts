@@ -92,18 +92,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async signIn({ user, account }) {
-      // For Google sign-in: auto-create user with PENDING_VERIFICATION
       if (account?.provider === "google") {
         try {
           const existing = await prisma.user.findUnique({
             where: { email: user.email! },
           });
           if (!existing) {
-            const year = new Date().getFullYear();
-            const rand = Math.floor(10000 + Math.random() * 90000);
+            // Use timestamp-based suffix to avoid clientId collisions
+            const suffix = Date.now().toString(36).toUpperCase().slice(-5);
+            const clientId = `NVK-${new Date().getFullYear()}-${suffix}`;
             await prisma.user.create({
               data: {
-                clientId: `NVK-${year}-${rand}`,
+                clientId,
                 name: user.name ?? "New User",
                 email: user.email!,
                 image: user.image,
@@ -113,8 +113,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             });
           }
         } catch (err) {
-          console.error("[auth] google signIn failed:", err);
-          return false;
+          // Log but never block sign-in — user may already exist or adapter handles it
+          console.error("[auth] google user upsert:", err);
         }
       }
       return true;
