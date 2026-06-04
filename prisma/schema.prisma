@@ -375,3 +375,306 @@ enum TicketStatus {
   RESOLVED
   CLOSED
 }
+
+// ─── Nexlog Freight Forwarding Module ────────────────────────
+
+model NexClient {
+  id           String   @id @default(cuid())
+  userId       String
+  clientCode   String   @unique
+  companyName  String
+  contactName  String
+  phone        String
+  email        String?
+  address      String?
+  city         String?
+  state        String?
+  gstin        String?
+  pan          String?
+  iecCode      String?
+  creditLimit  Int      @default(0)
+  creditDays   Int      @default(0)
+  kycComplete  Boolean  @default(false)
+  jobs         NexJob[]
+  enquiries    NexEnquiry[]
+  quotations   NexQuotation[]
+  leads        NexLead[]
+  createdAt    DateTime @default(now())
+  @@index([userId])
+}
+
+model NexJob {
+  id              String    @id @default(cuid())
+  userId          String
+  jobNo           String    @unique
+  jobType         String
+  mode            String
+  clientId        String
+  client          NexClient @relation(fields: [clientId], references: [id])
+  clientRef       String?
+  handler         String?
+  status          String    @default("ACTIVE")
+  stage           String    @default("JOB_CREATED")
+  countryOrigin   String?
+  portLoading     String?
+  portDischarge   String?
+  finalDest       String?
+  commodity       String?
+  hsCode          String?
+  packages        Int?
+  packageType     String?
+  grossWeight     Float?
+  netWeight       Float?
+  cbm             Float?
+  cargoNature     String    @default("GENERAL")
+  shippingLine    String?
+  linerBookingRef String?
+  vessel          String?
+  voyage          String?
+  mblNo           String?
+  hblNo           String?
+  mawbNo          String?
+  hawbNo          String?
+  flightNo        String?
+  sailingDate     DateTime?
+  etaOriginal     DateTime?
+  etaUpdated      DateTime?
+  arrivalDate     DateTime?
+  chaName         String?
+  beNo            String?
+  sbNo            String?
+  beDate          DateTime?
+  sbDate          DateTime?
+  assessValue     BigInt?
+  dutyAmount      BigInt?
+  examType        String?
+  clearanceDate   DateTime?
+  cfsName         String?
+  gateInDate      DateTime?
+  igmNo           String?
+  destuffDate     DateTime?
+  freeDays        Int       @default(10)
+  transporter     String?
+  vehicleNos      String?
+  lrNo            String?
+  gateOutDate     DateTime?
+  deliveryDate    DateTime?
+  internalNotes   String?
+  isLocked        Boolean   @default(false)
+  containers      NexContainer[]
+  documents       NexDocument[]
+  charges         NexCharge[]
+  invoices        NexInvoice[]
+  trackingUpdates NexTracking[]
+  comms           NexComm[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  @@index([userId])
+}
+
+model NexContainer {
+  id          String  @id @default(cuid())
+  jobId       String
+  job         NexJob  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  containerNo String
+  sealNo      String?
+  size        String
+  type        String  @default("DC")
+  tare        Float?
+  vgmWeight   Float?
+}
+
+model NexDocument {
+  id          String   @id @default(cuid())
+  jobId       String
+  job         NexJob   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  type        String
+  label       String
+  fileUrl     String
+  fileSize    Int?
+  uploadedBy  String
+  shareToken  String?
+  shareExpiry DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model NexCharge {
+  id            String   @id @default(cuid())
+  jobId         String
+  job           NexJob   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  category      String
+  vendorName    String
+  vendorRef     String?
+  amount        Int
+  cgst          Int      @default(0)
+  sgst          Int      @default(0)
+  igst          Int      @default(0)
+  paymentStatus String   @default("PENDING")
+  paymentDate   DateTime?
+  notes         String?
+  createdAt     DateTime @default(now())
+}
+
+model NexTracking {
+  id           String   @id @default(cuid())
+  jobId        String
+  job          NexJob   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  stage        String
+  notes        String?
+  notifyClient Boolean  @default(false)
+  updatedBy    String
+  createdAt    DateTime @default(now())
+}
+
+model NexComm {
+  id        String   @id @default(cuid())
+  jobId     String
+  job       NexJob   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  type      String
+  subject   String?
+  content   String
+  sentTo    String?
+  createdAt DateTime @default(now())
+}
+
+model NexInvoice {
+  id             String   @id @default(cuid())
+  userId         String
+  invoiceNo      String   @unique
+  jobId          String?
+  job            NexJob?  @relation(fields: [jobId], references: [id])
+  clientId       String
+  type           String
+  currency       String   @default("INR")
+  exchangeRate   Float    @default(1)
+  date           DateTime
+  dueDate        DateTime?
+  items          Json
+  subtotal       Int
+  cgst           Int      @default(0)
+  sgst           Int      @default(0)
+  igst           Int      @default(0)
+  totalAmount    Int
+  status         String   @default("DRAFT")
+  amountReceived Int      @default(0)
+  paidDate       DateTime?
+  paymentRef     String?
+  createdAt      DateTime @default(now())
+  @@index([userId])
+}
+
+model NexPartner {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  type      String
+  scacCode  String?
+  gstin     String?
+  contact   String?
+  email     String?
+  phone     String?
+  country   String   @default("India")
+  notes     String?
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model NexRateCard {
+  id            String   @id @default(cuid())
+  userId        String
+  partnerName   String
+  type          String
+  originPort    String?
+  destPort      String?
+  containerSize String?
+  currency      String   @default("INR")
+  amount        Int
+  validFrom     DateTime
+  validTo       DateTime
+  notes         String?
+  createdAt     DateTime @default(now())
+  @@index([userId])
+}
+
+model NexFundRequest {
+  id             String   @id @default(cuid())
+  userId         String
+  jobId          String?
+  vendor         String
+  amount         Int
+  purpose        String
+  urgency        String   @default("NORMAL")
+  status         String   @default("PENDING")
+  approvedBy     String?
+  approvedAt     DateTime?
+  rejectedReason String?
+  createdAt      DateTime @default(now())
+  @@index([userId])
+}
+
+model NexLead {
+  id           String     @id @default(cuid())
+  userId       String
+  source       String
+  companyName  String
+  contactName  String
+  phone        String
+  email        String?
+  city         String?
+  cargoType    String?
+  tradeLane    String?
+  status       String     @default("NEW")
+  assignedTo   String?
+  followUpDate DateTime?
+  notes        String?
+  clientId     String?
+  client       NexClient? @relation(fields: [clientId], references: [id])
+  enquiries    NexEnquiry[]
+  createdAt    DateTime   @default(now())
+  @@index([userId])
+}
+
+model NexEnquiry {
+  id            String        @id @default(cuid())
+  userId        String
+  enquiryNo     String        @unique
+  leadId        String?
+  lead          NexLead?      @relation(fields: [leadId], references: [id])
+  clientId      String?
+  client        NexClient?    @relation(fields: [clientId], references: [id])
+  type          String
+  originPort    String
+  destPort      String
+  commodity     String?
+  hsCode        String?
+  weight        Float?
+  cbm           Float?
+  containerType String?
+  count         Int           @default(1)
+  incoterms     String?
+  targetDate    DateTime?
+  notes         String?
+  quotations    NexQuotation[]
+  createdAt     DateTime      @default(now())
+  @@index([userId])
+}
+
+model NexQuotation {
+  id          String       @id @default(cuid())
+  userId      String
+  quoteNo     String       @unique
+  enquiryId   String?
+  enquiry     NexEnquiry?  @relation(fields: [enquiryId], references: [id])
+  clientId    String?
+  client      NexClient?   @relation(fields: [clientId], references: [id])
+  items       Json
+  totalAmount Int
+  currency    String       @default("INR")
+  status      String       @default("DRAFT")
+  validTill   DateTime?
+  acceptedAt  DateTime?
+  rejectedAt  DateTime?
+  jobId       String?
+  createdAt   DateTime     @default(now())
+  @@index([userId])
+}

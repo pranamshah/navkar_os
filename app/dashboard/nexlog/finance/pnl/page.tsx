@@ -1,0 +1,95 @@
+"use client";
+
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+
+const jobs = [
+  { no: "IMP/2526/089", client: "Ravi Exports", mode: "SEA", route: "Shanghai → JNPT", rev: 348000, cost: 282500, gp: 65500, gpPct: 18.8 },
+  { no: "IMP/2526/088", client: "Sunrise Logistics", mode: "SEA", route: "Singapore → Chennai", rev: 196000, cost: 142000, gp: 54000, gpPct: 27.6 },
+  { no: "EXP/2526/044", client: "HDFC Traders", mode: "SEA", route: "Chennai → Hamburg", rev: 412000, cost: 318000, gp: 94000, gpPct: 22.8 },
+  { no: "AIR/2526/032", client: "Global Impex", mode: "AIR", route: "Mumbai → Dubai", rev: 68000, cost: 42000, gp: 26000, gpPct: 38.2 },
+  { no: "IMP/2526/087", client: "Sakthi Cargo", mode: "SEA", route: "Rotterdam → JNPT", rev: 285000, cost: 234000, gp: 51000, gpPct: 17.9 },
+  { no: "AIR/2526/031", client: "Apollo Pharma", mode: "AIR", route: "Hyd → Frankfurt", rev: 92000, cost: 64000, gp: 28000, gpPct: 30.4 },
+];
+
+const monthly = [
+  { m: "Jul", gp: 218 }, { m: "Aug", gp: 246 }, { m: "Sep", gp: 312 }, { m: "Oct", gp: 284 },
+  { m: "Nov", gp: 358 }, { m: "Dec", gp: 412 }, { m: "Jan", gp: 386 }, { m: "Feb", gp: 442 },
+  { m: "Mar", gp: 498 }, { m: "Apr", gp: 524 }, { m: "May", gp: 478 }, { m: "Jun", gp: 318 },
+];
+
+export default function PnlPage() {
+  const totals = jobs.reduce((acc, j) => ({ rev: acc.rev + j.rev, cost: acc.cost + j.cost, gp: acc.gp + j.gp }), { rev: 0, cost: 0, gp: 0 });
+  const avgGp = ((totals.gp / totals.rev) * 100).toFixed(1);
+
+  return (
+    <div className="p-6" style={{ fontFamily: "Inter, sans-serif" }}>
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h1 className="text-xl font-semibold" style={{ color: "#111827" }}>Job-wise P&L</h1>
+          <p className="text-xs mt-0.5" style={{ color: "#6B7280" }}>Per-shipment profitability · Last 30 days</p>
+        </div>
+        <div className="flex gap-2">
+          <input type="date" defaultValue="2026-05-01" className="px-3 py-1.5 rounded-md border text-[12px]" style={{ borderColor: "#E5E7EB", background: "#fff" }} />
+          <input type="date" defaultValue="2026-06-04" className="px-3 py-1.5 rounded-md border text-[12px]" style={{ borderColor: "#E5E7EB", background: "#fff" }} />
+          <button className="px-3 py-1.5 rounded-md text-[12px] font-semibold text-white" style={{ background: "#1565C0" }}>Export</button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-4 gap-4 mb-5">
+        {[
+          { l: "Total Revenue", v: `₹${(totals.rev / 100000).toFixed(2)} L`, c: "#1565C0", bg: "#E3F2FD" },
+          { l: "Total Cost", v: `₹${(totals.cost / 100000).toFixed(2)} L`, c: "#D97706", bg: "#FFFBEB" },
+          { l: "Gross Profit", v: `₹${(totals.gp / 100000).toFixed(2)} L`, c: "#059669", bg: "#ECFDF5" },
+          { l: "Avg GP %", v: `${avgGp}%`, c: "#7C3AED", bg: "#F5F3FF" },
+        ].map((k) => (
+          <div key={k.l} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+            <div className="text-[11px] font-medium" style={{ color: "#6B7280" }}>{k.l}</div>
+            <div className="text-2xl font-bold mt-1" style={{ color: k.c }}>{k.v}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="rounded-xl border p-5 mb-5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <h3 className="text-sm font-semibold mb-4" style={{ color: "#111827" }}>Monthly Gross Profit · ₹ thousands</h3>
+        <ResponsiveContainer width="100%" height={240}>
+          <BarChart data={monthly}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
+            <XAxis dataKey="m" tick={{ fontSize: 11, fill: "#6B7280" }} />
+            <YAxis tick={{ fontSize: 11, fill: "#6B7280" }} />
+            <Tooltip />
+            <Bar dataKey="gp" fill="#1565C0" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <table className="w-full text-[12px]">
+          <thead style={{ background: "#F9FAFB" }}>
+            <tr>{["Job No", "Client", "Mode", "Route", "Revenue", "Cost", "GP", "GP %"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
+          </thead>
+          <tbody>
+            {jobs.map((j) => (
+              <tr key={j.no} style={{ borderTop: "1px solid #F3F4F6" }}>
+                <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{j.no}</td>
+                <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{j.client}</td>
+                <td className="py-2.5 px-3"><span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{ background: j.mode === "SEA" ? "#DBEAFE" : "#FEF3C7", color: j.mode === "SEA" ? "#1E40AF" : "#92400E" }}>{j.mode}</span></td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>{j.route}</td>
+                <td className="py-2.5 px-3" style={{ color: "#111827" }}>₹{j.rev.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>₹{j.cost.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-3 font-bold" style={{ color: "#059669" }}>₹{j.gp.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-3 font-bold" style={{ color: "#059669" }}>{j.gpPct}%</td>
+              </tr>
+            ))}
+            <tr style={{ borderTop: "2px solid #E5E7EB", background: "#F9FAFB" }}>
+              <td className="py-2.5 px-3 font-bold" colSpan={4} style={{ color: "#111827" }}>Total</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{totals.rev.toLocaleString("en-IN")}</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{totals.cost.toLocaleString("en-IN")}</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#059669" }}>₹{totals.gp.toLocaleString("en-IN")}</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#059669" }}>{avgGp}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
