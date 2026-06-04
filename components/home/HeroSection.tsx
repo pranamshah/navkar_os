@@ -36,7 +36,7 @@ export default function HeroSection() {
       >
         {/* ── LEFT: copy ─────────────────────────────────────────────── */}
         <div
-          className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-16 lg:pt-0 lg:pb-0"
+          className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-8 pb-16 lg:pt-0 lg:pb-0"
           style={{ zIndex: 2 }}
         >
           <motion.div
@@ -151,47 +151,80 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* ── RIGHT: hero video ────────────────────────────────────────── */}
-        <div
-          className="relative hidden lg:block overflow-hidden"
-          style={{ background: "#0d0d0e" }}
-        >
-          {/* Left-edge fade blends into left panel */}
-          <div
-            className="absolute inset-y-0 left-0 w-20 pointer-events-none z-10"
-            style={{ background: "linear-gradient(to right, rgba(249,249,249,0.95), transparent)" }}
-          />
-
-          <motion.video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.4, delay: 0.2, ease: "easeOut" }}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ willChange: "opacity" }}
+        {/* ── RIGHT: globe-style video orb ──────────────────────────── */}
+        <div className="relative hidden lg:flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex items-center justify-center"
           >
-            <source src="/hero.mp4" type="video/mp4" />
-          </motion.video>
+            {/* Outer decorative rings */}
+            <div
+              className="absolute rounded-full pointer-events-none"
+              style={{
+                width: 560, height: 560,
+                border: "0.5px solid rgba(212,175,55,0.1)",
+              }}
+            />
+            <div
+              className="absolute rounded-full pointer-events-none"
+              style={{
+                width: 520, height: 520,
+                border: "0.5px solid rgba(212,175,55,0.18)",
+              }}
+            />
+
+            {/* Circular video orb */}
+            <div
+              className="relative overflow-hidden rounded-full"
+              style={{
+                width: 480,
+                height: 480,
+                border: "1px solid rgba(212,175,55,0.28)",
+                boxShadow: "0 0 80px rgba(212,175,55,0.1), 0 30px 80px rgba(0,0,0,0.1)",
+              }}
+            >
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                style={{ willChange: "opacity" }}
+              >
+                <source src="/hero.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Mobile: video banner above text */}
-        <div
-          className="lg:hidden relative overflow-hidden order-first"
-          style={{ height: "56vw", maxHeight: "320px", background: "#0d0d0e" }}
-        >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
+        {/* Mobile: circular orb above text */}
+        <div className="lg:hidden flex items-center justify-center order-first pt-28 pb-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden rounded-full"
+            style={{
+              width: "68vw",
+              maxWidth: 280,
+              aspectRatio: "1 / 1",
+              border: "1px solid rgba(212,175,55,0.3)",
+              boxShadow: "0 0 40px rgba(212,175,55,0.1)",
+            }}
           >
-            <source src="/hero.mp4" type="video/mp4" />
-          </video>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src="/hero.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
         </div>
 
       </div>
