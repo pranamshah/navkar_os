@@ -4,17 +4,17 @@ import { useEffect } from "react";
 
 export default function CustomCursor() {
   useEffect(() => {
-    document.body.classList.add("custom-cursor");
+    // Only run on true pointer devices
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     const cursor = document.getElementById("navkar-cursor");
     if (!cursor) return;
 
     let rafId = 0;
     let mx = -100, my = -100;
-    let px = -100, py = -100;   // last painted position
-    let dirty = false;          // only repaint when the mouse actually moved
+    let px = -100, py = -100;
+    let dirty = false;
 
-    // Throttle via rAF — only one DOM write per frame, and only when needed
     const move = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
@@ -36,16 +36,26 @@ export default function CustomCursor() {
 
     document.addEventListener("mousemove", move, { passive: true });
 
-    const targets = document.querySelectorAll("button, a, [data-cursor]");
-    targets.forEach((el) => {
-      el.addEventListener("mouseenter", enter);
-      el.addEventListener("mouseleave", leave);
-    });
+    // Attach hover listeners to all interactive elements on mount
+    const attach = () => {
+      const targets = document.querySelectorAll("button, a, [data-cursor], input[type=submit], input[type=button]");
+      targets.forEach((el) => {
+        el.removeEventListener("mouseenter", enter);
+        el.removeEventListener("mouseleave", leave);
+        el.addEventListener("mouseenter", enter);
+        el.addEventListener("mouseleave", leave);
+      });
+    };
+    attach();
+
+    // Re-attach when DOM changes (new buttons/links added dynamically)
+    const observer = new MutationObserver(attach);
+    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      document.body.classList.remove("custom-cursor");
       document.removeEventListener("mousemove", move);
       cancelAnimationFrame(rafId);
+      observer.disconnect();
     };
   }, []);
 

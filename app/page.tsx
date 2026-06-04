@@ -12,7 +12,6 @@ import FAQSection from "@/components/home/FAQSection";
 import BeyondBorders from "@/components/home/BeyondBorders";
 import ContactSection from "@/components/home/ContactSection";
 import Footer from "@/components/home/Footer";
-import CustomCursor from "@/components/home/CustomCursor";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import AnchorScroller from "@/components/home/AnchorScroller";
 import ChatWidget from "@/components/home/ChatWidget";
@@ -20,7 +19,6 @@ import ChatWidget from "@/components/home/ChatWidget";
 export default function Home() {
   return (
     <>
-      <CustomCursor />
       <ScrollReveal />
       <ChatWidget />
       <Suspense fallback={null}>

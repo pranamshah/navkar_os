@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 
 const links = [
   { label: "Services",    href: "/#suite" },
@@ -18,6 +19,9 @@ export default function Navbar() {
   const [scrolled, setScrolled]     = useState(false);
   const router   = useRouter();
   const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === "authenticated";
+  const user = session?.user;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -30,19 +34,15 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  // Handle anchor links from any page
   const handleAnchorLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("/#")) return; // let normal links work
+    if (!href.startsWith("/#")) return;
     e.preventDefault();
-    const anchor = href.slice(1); // "#suite" or "#whoisfor"
+    const anchor = href.slice(1);
     setMobileOpen(false);
-
     if (pathname === "/") {
-      // Already on homepage — just scroll
       const el = document.querySelector(anchor);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     } else {
-      // Navigate to homepage, then scroll after load
       router.push(`/${anchor}`);
     }
   };
@@ -66,7 +66,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 cursor-none">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1d", color: "#f6be39" }}>N</div>
             <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1d" }}>NavkarOS</span>
           </Link>
@@ -78,7 +78,7 @@ export default function Navbar() {
                 key={l.label}
                 href={l.href}
                 onClick={(e) => handleAnchorLink(e, l.href)}
-                className="text-sm transition-colors duration-200 cursor-none"
+                className="text-sm transition-colors duration-200"
                 style={{ color: "#444748", textDecoration: "none" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#D4A017")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
@@ -88,30 +88,58 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTAs */}
+          {/* CTAs — session-aware */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-sm px-4 py-1.5 transition-colors duration-200 cursor-none"
-              style={{ color: "#444748" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#1a1c1d")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200 cursor-none"
-              style={{ background: "#1a1c1d", color: "#fff" }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1d"; e.currentTarget.style.color = "#fff"; }}
-            >
-              Start Free
-            </Link>
+            {isLoggedIn ? (
+              <>
+                {/* Avatar + name */}
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
+                    style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.3)" }}
+                  >
+                    {(user?.name || user?.email || "U").charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-xs font-semibold" style={{ color: "#444748" }}>
+                    {user?.name?.split(" ")[0] || "Account"}
+                  </span>
+                </div>
+                <Link
+                  href="/dashboard/client"
+                  className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200"
+                  style={{ background: "#1a1c1d", color: "#D4AF37" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1d"; e.currentTarget.style.color = "#D4AF37"; }}
+                >
+                  My Dashboard
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm px-4 py-1.5 transition-colors duration-200"
+                  style={{ color: "#444748" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#1a1c1d")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200"
+                  style={{ background: "#1a1c1d", color: "#fff" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1d"; e.currentTarget.style.color = "#fff"; }}
+                >
+                  Start Free
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile toggle */}
-          <button className="md:hidden p-2 cursor-none" onClick={() => setMobileOpen(true)}>
+          <button className="md:hidden p-2" onClick={() => setMobileOpen(true)}>
             <Menu className="w-5 h-5" style={{ color: "#1a1c1d" }} />
           </button>
         </div>
@@ -147,8 +175,29 @@ export default function Navbar() {
               ))}
             </div>
             <div className="px-8 pb-14 flex flex-col gap-3">
-              <Link href="/login" className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block" onClick={() => setMobileOpen(false)}>Login</Link>
-              <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#f6be39" }} onClick={() => setMobileOpen(false)}>Start Free Trial</Link>
+              {isLoggedIn ? (
+                <>
+                  <Link
+                    href="/dashboard/client"
+                    className="w-full py-4 rounded-2xl font-semibold text-black text-center block"
+                    style={{ background: "#f6be39" }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    My Dashboard
+                  </Link>
+                  <button
+                    onClick={() => { setMobileOpen(false); signOut({ callbackUrl: "/" }); }}
+                    className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block" onClick={() => setMobileOpen(false)}>Login</Link>
+                  <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#f6be39" }} onClick={() => setMobileOpen(false)}>Start Free Trial</Link>
+                </>
+              )}
             </div>
           </motion.div>
         )}

@@ -543,9 +543,9 @@ export default function AccuraPage() {
               Freight-specific accounting that auto-posts from every NavkarOS invoice, generates GSTR-1 in one click, shows per-job profitability, and costs ₹31,932 less per year than Tally Gold.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mb-14">
-              <Link href="/signup" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
+              <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
                 style={{ background: "#D4AF37", color: "#1a1c1c" }}>
-                Start Free 14-Day Trial <ArrowRight className="h-4 w-4" />
+                View Pricing &amp; Start Free Trial <ArrowRight className="h-4 w-4" />
               </Link>
               <a href="#demo" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider border transition-all duration-200 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                 style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}>
@@ -793,13 +793,13 @@ export default function AccuraPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href={p.name === "Enterprise" ? "/contact" : "/signup"}
+                <Link href={p.name === "Enterprise" ? "/contact" : "/pricing"}
                   className="w-full py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-center transition-all duration-200 block"
                   style={{
                     background: p.highlight ? "#D4AF37" : "#1a1c1c",
                     color: p.highlight ? "#1a1c1c" : "#D4AF37",
                   }}>
-                  {p.name === "Enterprise" ? "Talk to Sales" : "Start Free Trial"}
+                  {p.name === "Enterprise" ? "Talk to Sales" : "View Pricing →"}
                 </Link>
               </div>
             ))}
@@ -836,10 +836,10 @@ export default function AccuraPage() {
           <p className="mb-10 text-base" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
             14-day free trial. No credit card. No setup fee. Your existing data stays yours.
           </p>
-          <Link href="/signup"
+          <Link href="/pricing"
             className="inline-flex items-center gap-3 px-10 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
             style={{ background: "#D4AF37", color: "#1a1c1c" }}>
-            Start Free Trial — No Card Needed <ArrowRight className="h-4 w-4" />
+            View Pricing &amp; Get Started <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
             Accura Pro · ₹2,299/mo · Tally Gold = ₹4,500/mo and does less.

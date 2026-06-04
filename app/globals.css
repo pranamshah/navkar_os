@@ -101,9 +101,12 @@ body {
   --blue-400: rgb(200,160,50);
 }
 
-/* body.custom-cursor hides native cursor on homepage only */
-body.custom-cursor { cursor: none; }
-body.custom-cursor button, body.custom-cursor a { cursor: none; }
+/* Custom cursor — applied globally on pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  body button, body a, body [data-cursor] { cursor: none; }
+  body input, body select, body textarea { cursor: text; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

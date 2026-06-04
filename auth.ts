@@ -120,8 +120,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
     async redirect({ url, baseUrl }) {
+      // After sign-in, send to /status which handles role-based routing
+      if (url === baseUrl || url === `${baseUrl}/`) return `${baseUrl}/status`;
       if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
+      return `${baseUrl}/status`;
     },
   },
   pages: {
