@@ -152,7 +152,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── RIGHT: globe-style video orb ──────────────────────────── */}
-        <div className="relative hidden lg:flex items-center justify-center overflow-hidden">
+        <div className="relative hidden lg:flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -196,6 +196,15 @@ export default function HeroSection() {
                 <source src="/hero.mp4" type="video/mp4" />
               </video>
             </div>
+
+            {/* Radial fade — blends orb edges into the page background */}
+            <div
+              className="absolute pointer-events-none"
+              style={{
+                inset: "-15%",
+                background: "radial-gradient(ellipse at center, transparent 42%, #fefefe 68%)",
+              }}
+            />
           </motion.div>
         </div>
 
