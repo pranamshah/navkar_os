@@ -152,37 +152,36 @@ export default function HeroSection() {
         </div>
 
         {/* ── RIGHT: globe-style video orb ──────────────────────────── */}
-        <div className="relative hidden lg:flex items-center justify-center">
+        <div className="relative hidden lg:flex items-center justify-center overflow-hidden">
           <motion.div
             initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex items-center justify-center"
+            style={{ width: "min(86svh, 96%)", aspectRatio: "1 / 1" }}
           >
             {/* Outer decorative rings */}
             <div
-              className="absolute rounded-full pointer-events-none"
+              className="absolute inset-0 rounded-full pointer-events-none"
               style={{
-                width: 560, height: 560,
+                inset: "-6%",
                 border: "0.5px solid rgba(212,175,55,0.1)",
               }}
             />
             <div
               className="absolute rounded-full pointer-events-none"
               style={{
-                width: 520, height: 520,
+                inset: "-3%",
                 border: "0.5px solid rgba(212,175,55,0.18)",
               }}
             />
 
-            {/* Circular video orb */}
+            {/* Circular video orb — fills the parent */}
             <div
-              className="relative overflow-hidden rounded-full"
+              className="w-full h-full overflow-hidden rounded-full"
               style={{
-                width: 480,
-                height: 480,
                 border: "1px solid rgba(212,175,55,0.28)",
-                boxShadow: "0 0 80px rgba(212,175,55,0.1), 0 30px 80px rgba(0,0,0,0.1)",
+                boxShadow: "0 0 80px rgba(212,175,55,0.12), 0 30px 80px rgba(0,0,0,0.08)",
               }}
             >
               <video
@@ -208,8 +207,8 @@ export default function HeroSection() {
             transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden rounded-full"
             style={{
-              width: "68vw",
-              maxWidth: 280,
+              width: "82vw",
+              maxWidth: 360,
               aspectRatio: "1 / 1",
               border: "1px solid rgba(212,175,55,0.3)",
               boxShadow: "0 0 40px rgba(212,175,55,0.1)",
