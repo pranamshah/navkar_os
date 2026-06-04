@@ -158,7 +158,12 @@ export default function HeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex items-center justify-center"
-            style={{ width: "min(86svh, 96%)", aspectRatio: "1 / 1" }}
+            style={{
+              width: "min(86svh, 96%)",
+              aspectRatio: "1 / 1",
+              maskImage: "radial-gradient(ellipse at center, black 44%, transparent 68%)",
+              WebkitMaskImage: "radial-gradient(ellipse at center, black 44%, transparent 68%)",
+            }}
           >
             {/* Outer decorative rings */}
             <div
@@ -197,14 +202,7 @@ export default function HeroSection() {
               </video>
             </div>
 
-            {/* Radial fade — blends orb edges into the page background */}
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                inset: "-15%",
-                background: "radial-gradient(ellipse at center, transparent 42%, #fefefe 68%)",
-              }}
-            />
+
           </motion.div>
         </div>
 
