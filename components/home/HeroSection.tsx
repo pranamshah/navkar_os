@@ -2,14 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-
-// Lazy-load the globe (d3 is heavy) — keeps it out of the initial bundle so the
-// page paints and becomes interactive first. ssr:false → never runs on server.
-const RotatingEarth = dynamic(() => import("@/components/ui/wireframe-dotted-globe"), {
-  ssr: false,
-  loading: () => null,
-});
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -23,31 +15,51 @@ export default function HeroSection() {
       className="relative w-full overflow-hidden flex flex-col items-center justify-center"
       style={{ minHeight: "100svh", background: "#f9f9f9" }}
     >
-      {/* Globe — large, centered, transparent, fills the background */}
+      {/* ── Background video ───────────────────────────────────────────── */}
       <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-auto"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ zIndex: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.6, delay: 0.2 }}
+        transition={{ duration: 1.4, delay: 0.1 }}
       >
-        <div style={{ width: "min(900px, 96vw)", height: "min(900px, 96vw)", position: "relative" }}>
-          <RotatingEarth width={900} height={900} className="w-full h-full" />
-        </div>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+          style={{ filter: "saturate(0) brightness(1.05)" }}
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gold tint overlay on top of video */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.04) 50%, rgba(212,175,55,0.10) 100%)",
+            mixBlendMode: "multiply",
+          }}
+        />
       </motion.div>
 
-      {/* Radial vignette for text readability */}
+      {/* Radial vignette — keeps text readable over the video */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 55% 60% at 50% 50%, transparent 0%, rgba(249,249,249,0.5) 50%, rgba(249,249,249,0.9) 78%, #f9f9f9 100%)",
+            "radial-gradient(ellipse 65% 70% at 50% 50%, transparent 0%, rgba(249,249,249,0.55) 55%, rgba(249,249,249,0.92) 80%, #f9f9f9 100%)",
           zIndex: 1,
         }}
       />
 
-      {/* Hero text — centered over globe */}
-      <div className="relative w-full max-w-5xl mx-auto px-8 flex flex-col items-center text-center" style={{ zIndex: 2, paddingTop: "80px" }}>
+      {/* ── Hero copy ─────────────────────────────────────────────────── */}
+      <div
+        className="relative w-full max-w-5xl mx-auto px-8 flex flex-col items-center text-center"
+        style={{ zIndex: 2, paddingTop: "80px" }}
+      >
         <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col items-center">
           <motion.div variants={fadeUp} className="mb-7">
             <span
@@ -80,7 +92,8 @@ export default function HeroSection() {
             className="max-w-lg mb-10"
             style={{ fontSize: "17px", fontWeight: 300, color: "#4c4546", lineHeight: 1.75 }}
           >
-            Six products for freight forwarders, CHAs, CFS stations, transporters, accountants, and importers — each standalone, all connected.
+            Six products for freight forwarders, CHAs, CFS stations, transporters,
+            accountants, and importers — each standalone, all connected.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center">
@@ -106,9 +119,9 @@ export default function HeroSection() {
 
           <motion.div variants={fadeUp} className="mt-14 flex items-center gap-12 justify-center">
             {[
-              { val: "6", label: "Products in Suite" },
+              { val: "6",     label: "Products in Suite" },
               { val: "14hrs", label: "Saved Weekly" },
-              { val: "Free", label: "Beta Access" },
+              { val: "Free",  label: "Beta Access" },
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <p
@@ -117,17 +130,23 @@ export default function HeroSection() {
                 >
                   {s.val}
                 </p>
-                <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "#7e7576" }}>{s.label}</p>
+                <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "#7e7576" }}>
+                  {s.label}
+                </p>
               </div>
             ))}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Bottom fade */}
+      {/* Bottom fade into next section */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "100px", background: "linear-gradient(to bottom, transparent, #f9f9f9)", zIndex: 3 }}
+        style={{
+          height: "120px",
+          background: "linear-gradient(to bottom, transparent, #f9f9f9)",
+          zIndex: 3,
+        }}
       />
     </section>
   );
