@@ -84,14 +84,27 @@ All plans come with a 14-day free trial. No credit card required to start.
 - The company is headquartered in Chennai, Mannady`;
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { messages } = await req.json();
 
-  const result = streamText({
-    model: google("gemini-1.5-flash"),
-    system: SYSTEM_PROMPT,
-    messages,
-    maxOutputTokens: 512,
-  });
+    const result = streamText({
+      model: google("gemini-1.5-flash"),
+      system: SYSTEM_PROMPT,
+      messages,
+      maxOutputTokens: 512,
+    });
 
-  return result.toTextStreamResponse();
+    return result.toTextStreamResponse();
+  } catch (err) {
+    console.error("[NavkarBot] streamText error:", err);
+    // Return a plain-text fallback so the UI doesn't hang
+    const fallback =
+      "Hi! I'm NavkarBot. I'm having a small technical hiccup right now. " +
+      "For immediate help please email hello@navkaros.in or call +91 90807 67398. " +
+      "Our team responds within 4 business hours!";
+    return new Response(fallback, {
+      status: 200,
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
+  }
 }

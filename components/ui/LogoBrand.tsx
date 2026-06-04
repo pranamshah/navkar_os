@@ -13,8 +13,8 @@ interface Props {
  * Use only on LIGHT backgrounds (#f9f9f9 / white) — both source images
  * have white backgrounds that blend naturally with light pages.
  */
-export default function LogoBrand({ href = "/", className = "", height = 20 }: Props) {
-  const markPx = Math.round(height * 1.8);
+export default function LogoBrand({ href = "/", className = "", height = 28 }: Props) {
+  const markPx = Math.round(height * 1.9);
   return (
     <Link href={href} className={`flex items-center gap-2.5 ${className}`}>
       <Image

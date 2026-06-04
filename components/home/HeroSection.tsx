@@ -25,14 +25,14 @@ export default function HeroSection() {
 
         {/* ── LEFT: copy on clean white ─────────────────────────────── */}
         <div
-          className="relative flex flex-col justify-center px-10 md:px-16 lg:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0"
+          className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-16 lg:pt-0 lg:pb-0"
           style={{ background: "#f9f9f9", zIndex: 2 }}
         >
           <motion.div
             variants={stagger}
             initial="hidden"
             animate="show"
-            className="flex flex-col max-w-xl"
+            className="flex flex-col max-w-xl lg:ml-auto lg:mr-8 xl:mr-16"
           >
             <motion.div variants={fadeUp} className="mb-7">
               <span
@@ -143,7 +143,7 @@ export default function HeroSection() {
         {/* ── RIGHT: globe video ────────────────────────────────────── */}
         <div
           className="relative overflow-hidden hidden lg:block"
-          style={{ background: "#f0f0f0" }}
+          style={{ background: "#f9f9f9" }}
         >
           <motion.div
             className="absolute inset-0"
@@ -158,27 +158,27 @@ export default function HeroSection() {
               playsInline
               className="w-full h-full object-cover"
               style={{
-                opacity: 0.9,
-                filter: "sepia(0.3) brightness(0.92) contrast(0.95)",
-                /* Mask only the left edge so it blends into the left panel */
+                opacity: 0.92,
+                filter: "sepia(0.25) brightness(0.95) contrast(0.95)",
+                /* Left edge blends into left panel; right/top/bottom fade to page white */
                 WebkitMaskImage:
-                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, black 18%, black 100%)",
+                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 7%, black 16%, black 84%, rgba(0,0,0,0.4) 94%, transparent 100%)",
                 maskImage:
-                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, black 18%, black 100%)",
+                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 7%, black 16%, black 84%, rgba(0,0,0,0.4) 94%, transparent 100%)",
               }}
             >
               <source src="/hero.mp4" type="video/mp4" />
             </video>
           </motion.div>
 
-          {/* Subtle top/bottom edge fades */}
+          {/* Top/bottom edge fades to match page white */}
           <div
-            className="absolute inset-x-0 top-0 h-32 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, #f0f0f0, transparent)", zIndex: 1 }}
+            className="absolute inset-x-0 top-0 h-28 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, #f9f9f9, transparent)", zIndex: 1 }}
           />
           <div
-            className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
-            style={{ background: "linear-gradient(to top, #f0f0f0, transparent)", zIndex: 1 }}
+            className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
+            style={{ background: "linear-gradient(to top, #f9f9f9, transparent)", zIndex: 1 }}
           />
         </div>
 

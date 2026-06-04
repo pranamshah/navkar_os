@@ -15,7 +15,6 @@ const QUICK_MESSAGES: Record<string, string> = {
   "Book a Demo": "Hi, I'd like to book a demo of NavkarOS for my logistics business.",
   "Pricing Questions": "Hi, I have some questions about NavkarOS pricing and plans.",
   "Technical Support": "Hi, I need technical support with my NavkarOS account.",
-  "Partner with Us": "Hi, I'm interested in exploring a partnership opportunity with NavkarOS.",
 };
 
 export default function ContactSection() {
