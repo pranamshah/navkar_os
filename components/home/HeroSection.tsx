@@ -16,19 +16,15 @@ export default function HeroSection() {
       style={{ minHeight: "100svh", background: "#f9f9f9" }}
     >
       {/* ── Background video ───────────────────────────────────────────── */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{ zIndex: 0 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.4, delay: 0.1 }}
+      {/*
+        CSS mask-image fades the video to transparent outside the globe,
+        so the #f9f9f9 page background shows there — no blend-mode needed.
+        sepia(0.55) + brightness(0.82) → warm gold tone on the globe lines.
+      */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 0, animation: "heroFadeIn 1.4s ease-out forwards", opacity: 0 }}
       >
-        {/*
-          mix-blend-mode:screen → every dark/black pixel becomes transparent
-          against the #f9f9f9 page background, so no black bleeding at edges.
-          sepia(0.45) → warms the white globe lines toward gold.
-          brightness(0.88) → prevents the white lines blowing out.
-        */}
         <video
           autoPlay
           muted
@@ -36,21 +32,23 @@ export default function HeroSection() {
           playsInline
           className="w-full h-full object-cover"
           style={{
-            filter: "sepia(0.45) brightness(0.88)",
-            mixBlendMode: "screen",
-            opacity: 0.92,
+            filter: "sepia(0.55) brightness(0.82)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 44% 50% at 50% 50%, black 30%, rgba(0,0,0,0.55) 52%, transparent 70%)",
+            maskImage:
+              "radial-gradient(ellipse 44% 50% at 50% 50%, black 30%, rgba(0,0,0,0.55) 52%, transparent 70%)",
           }}
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
-      </motion.div>
+      </div>
 
-      {/* Soft vignette — just enough to lift text readability in the centre */}
+      {/* Centre fog so the copy sits on a clean white base */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 65% at 50% 50%, rgba(249,249,249,0.10) 0%, rgba(249,249,249,0.45) 50%, rgba(249,249,249,0.80) 72%, #f9f9f9 90%)",
+            "radial-gradient(ellipse 48% 52% at 50% 50%, rgba(249,249,249,0.72) 0%, rgba(249,249,249,0.35) 40%, transparent 65%)",
           zIndex: 1,
         }}
       />
