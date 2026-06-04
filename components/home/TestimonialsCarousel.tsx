@@ -23,7 +23,7 @@ export default function TestimonialsCarousel() {
   }, [next]);
 
   return (
-    <section className="px-8 lg:px-16 py-32" style={{ background: "#f9f9f9" }}>
+    <section className="px-8 lg:px-16 py-32">
       <div className="max-w-7xl mx-auto">
         <h2
           className="mb-20 text-center reveal"

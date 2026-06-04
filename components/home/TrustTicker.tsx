@@ -56,7 +56,7 @@ export default function TrustTicker() {
   return (
     <section
       className="py-10 border-y overflow-hidden"
-      style={{ borderColor: "rgba(196,199,200,0.35)", background: "#ffffff" }}
+      style={{ borderColor: "rgba(196,199,200,0.35)" }}
     >
       <p
         className="text-center text-xs font-semibold uppercase tracking-widest mb-6"

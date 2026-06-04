@@ -55,7 +55,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="px-8 lg:px-16 py-32" style={{ background: "#ffffff" }}>
+    <section id="contact" className="px-8 lg:px-16 py-32">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
 

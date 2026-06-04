@@ -84,7 +84,7 @@ const stagger = {
 
 export default function WhoItsFor() {
   return (
-    <section id="whoisfor" className="py-28 px-8" style={{ background: "#fff" }}>
+    <section id="whoisfor" className="py-28 px-8">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial="hidden"

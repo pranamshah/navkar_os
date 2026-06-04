@@ -140,7 +140,7 @@ export default function SuiteSection() {
   const openFeats   = openId ? (FEATURES[openId] ?? [])      : [];
 
   return (
-    <section id="suite" className="px-8 lg:px-16 py-28" style={{ background: "#fff" }}>
+    <section id="suite" className="px-8 lg:px-16 py-28">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}

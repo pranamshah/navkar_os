@@ -28,7 +28,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ minHeight: "92svh", background: "#f9f9f9" }}
+      style={{ minHeight: "92svh" }}
     >
       <div
         className="grid lg:grid-cols-2"
@@ -37,7 +37,7 @@ export default function HeroSection() {
         {/* ── LEFT: copy ─────────────────────────────────────────────── */}
         <div
           className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-16 lg:pt-0 lg:pb-0"
-          style={{ background: "#f9f9f9", zIndex: 2 }}
+          style={{ zIndex: 2 }}
         >
           <motion.div
             variants={stagger}
@@ -159,7 +159,7 @@ export default function HeroSection() {
           {/* Left-edge fade blends into left panel */}
           <div
             className="absolute inset-y-0 left-0 w-20 pointer-events-none z-10"
-            style={{ background: "linear-gradient(to right, #f9f9f9, transparent)" }}
+            style={{ background: "linear-gradient(to right, rgba(249,249,249,0.95), transparent)" }}
           />
 
           <motion.video

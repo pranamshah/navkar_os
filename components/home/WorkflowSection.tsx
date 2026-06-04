@@ -12,7 +12,7 @@ const productBadges: Record<string, string> = {
 
 export default function WorkflowSection() {
   return (
-    <section className="px-8 lg:px-16 py-32" style={{ background: "#ffffff" }}>
+    <section className="px-8 lg:px-16 py-32">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 reveal">
           <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>

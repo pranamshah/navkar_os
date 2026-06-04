@@ -8,7 +8,7 @@ export default function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="px-8 lg:px-16 py-32" style={{ background: "#f3f3f3" }}>
+    <section className="px-8 lg:px-16 py-32">
       <div className="max-w-3xl mx-auto">
         <h2
           className="text-center mb-16 reveal"

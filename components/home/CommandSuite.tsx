@@ -78,7 +78,7 @@ const illustrations: Record<string, React.ReactNode> = {
 
 export default function CommandSuite() {
   return (
-    <section id="suite" className="px-8 lg:px-16 py-32" style={{ background: "#f3f3f3" }}>
+    <section id="suite" className="px-8 lg:px-16 py-32">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-16 reveal">

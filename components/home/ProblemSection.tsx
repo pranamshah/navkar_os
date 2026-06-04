@@ -89,7 +89,7 @@ const illustrations: Record<string, React.ReactNode> = {
 
 export default function ProblemSection() {
   return (
-    <section className="px-8 lg:px-16 py-32" style={{ background: "#ffffff" }}>
+    <section className="px-8 lg:px-16 py-32">
       <div className="max-w-7xl mx-auto">
         <div className="mb-20 reveal">
           <h2

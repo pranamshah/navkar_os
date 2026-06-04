@@ -9,7 +9,7 @@ export default function PricingSection() {
   const [annual, setAnnual] = useState(true);
 
   return (
-    <section id="pricing" className="py-28 px-6" style={{ background: "#ffffff" }}>
+    <section id="pricing" className="py-28 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14 reveal">
           <span

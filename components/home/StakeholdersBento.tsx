@@ -5,7 +5,7 @@ import { stakeholders } from "@/data/homepage";
 
 export default function StakeholdersBento() {
   return (
-    <section id="stakeholders" className="py-28 px-6" style={{ background: "#f3f3f4" }}>
+    <section id="stakeholders" className="py-28 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-14 reveal">
           <span

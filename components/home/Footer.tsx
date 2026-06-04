@@ -36,7 +36,7 @@ export default function Footer() {
   return (
     <footer
       className="px-8 lg:px-16 py-14 border-t"
-      style={{ background: "#f9f9f9", borderColor: "rgba(0,0,0,0.08)" }}
+      style={{ background: "rgba(249,249,249,0.6)", borderColor: "rgba(0,0,0,0.08)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
     >
       <div className="max-w-7xl mx-auto">
         {/* Top row */}
