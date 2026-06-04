@@ -36,7 +36,7 @@ export default function HeroSection() {
       >
         {/* ── LEFT: copy ─────────────────────────────────────────────── */}
         <div
-          className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-8 pb-16 lg:pt-0 lg:pb-0"
+          className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-16 lg:pt-0 lg:pb-0"
           style={{ zIndex: 2 }}
         >
           <motion.div

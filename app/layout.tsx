@@ -3,7 +3,6 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import AuthSessionProvider from "@/components/providers/SessionProvider";
 import ClientGlobalProviders from "@/components/providers/ClientGlobalProviders";
-import { ShaderBg } from "@/components/ui/shader-bg";
 
 export const metadata: Metadata = {
   title: "NavkarOS — The Operating System for Indian Logistics",
@@ -33,7 +32,6 @@ export default function RootLayout({
         />
       </head>
       <body style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}>
-        <ShaderBg />
         <AuthSessionProvider>
           <ClientGlobalProviders />
           {children}
