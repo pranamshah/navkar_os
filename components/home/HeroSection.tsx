@@ -42,11 +42,11 @@ export default function HeroSection() {
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ minHeight: "100svh", background: "#f9f9f9" }}
+      style={{ minHeight: "92svh", background: "#f9f9f9" }}
     >
       <div
         className="grid lg:grid-cols-2"
-        style={{ minHeight: "100svh" }}
+        style={{ minHeight: "92svh" }}
       >
 
         {/* ── LEFT: copy ─────────────────────────────────────────────── */}
@@ -168,40 +168,43 @@ export default function HeroSection() {
 
         {/* ── RIGHT: interactive COBE globe ──────────────────────────── */}
         <div
-          className="relative hidden lg:flex items-center justify-center overflow-hidden"
+          className="relative hidden lg:block overflow-hidden"
           style={{ background: "#f9f9f9" }}
         >
-          {/* Subtle left-edge fade so globe blends into the left panel */}
+          {/* Left-edge fade blends into left panel */}
           <div
-            className="absolute inset-y-0 left-0 w-24 pointer-events-none"
+            className="absolute inset-y-0 left-0 w-28 pointer-events-none"
             style={{ background: "linear-gradient(to right, #f9f9f9, transparent)", zIndex: 10 }}
           />
 
+          {/* Globe — sized larger than the column and shifted right so it
+              overflows the right edge. overflow-hidden on parent clips it. */}
           <motion.div
-            className="relative w-full"
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.4, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            /* push globe slightly right so it overflows the panel edge naturally */
-            style={{ paddingLeft: "5%", paddingRight: "0" }}
+            className="absolute"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.6, delay: 0.35, ease: "easeOut" }}
+            style={{
+              /* centre-right: top-50% + negative margin push up */
+              top: "50%",
+              left: "-8%",
+              width: "118%",
+              transform: "translateY(-50%)",
+            }}
           >
-            <CobeGlobe
-              markers={MARKERS}
-              arcs={ARCS}
-              className="w-full"
-            />
+            <CobeGlobe markers={MARKERS} arcs={ARCS} className="w-full" />
           </motion.div>
         </div>
 
-        {/* Mobile: small globe banner above text */}
+        {/* Mobile: globe banner above text */}
         <div
           className="lg:hidden relative overflow-hidden order-first flex items-center justify-center"
-          style={{ height: "52vw", maxHeight: "320px", background: "#f9f9f9" }}
+          style={{ height: "56vw", maxHeight: "340px", background: "#f9f9f9" }}
         >
           <CobeGlobe
             markers={MARKERS}
             arcs={ARCS}
-            className="w-[52vw] max-w-[300px]"
+            className="w-[58vw] max-w-[320px]"
           />
         </div>
 

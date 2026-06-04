@@ -50,7 +50,7 @@ export default function FinalCTA() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                className="flex items-center justify-center gap-2 px-9 py-4 rounded-full font-semibold group transition-all duration-200 cursor-none"
+                className="flex items-center justify-center gap-2 px-9 py-4 rounded-full font-semibold group transition-all duration-200"
                 style={{ background: "#1a1c1d", color: "#fff" }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = "#D4A017";
@@ -67,7 +67,7 @@ export default function FinalCTA() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </button>
               <button
-                className="px-9 py-4 rounded-full font-semibold border transition-all duration-200 cursor-none"
+                className="px-9 py-4 rounded-full font-semibold border transition-all duration-200"
                 style={{ border: "1px solid #c4c7c8", color: "#1a1c1d" }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = "#D4A017";

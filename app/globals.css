@@ -41,26 +41,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Cursor */
-#navkar-cursor {
-  width: 10px;
-  height: 10px;
-  background: #1a1c1c;
-  border-radius: 50%;
-  position: fixed;
-  top: -5px;
-  left: -5px;
-  pointer-events: none;
-  z-index: 9999;
-  will-change: transform;
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
-}
-#navkar-cursor.hovering {
-  width: 36px;
-  height: 36px;
-  background: rgba(212,175,55,0.15);
-  border: 0.5px solid rgba(212,175,55,0.6);
-}
+/* Custom cursor removed — browser default cursor is used */
+#navkar-cursor { display: none !important; }
 
 /* Ticker */
 @keyframes ticker {
@@ -107,14 +89,6 @@ body {
   --blue-400: rgb(200,160,50);
 }
 
-/* Custom cursor — applied globally on pointer devices */
-@media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
-  body button, body a, body [data-cursor] { cursor: none; }
-  body input, body select, body textarea { cursor: text; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  #navkar-cursor { display: none; }
 }

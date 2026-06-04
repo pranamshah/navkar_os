@@ -120,7 +120,7 @@ export default function ProblemSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="p-10 transition-all duration-500 cursor-none flex flex-col"
+              className="p-10 transition-all duration-500 flex flex-col"
               style={{ background: "#f9f9f9", boxShadow: "0 20px 40px rgba(0,0,0,0.04)" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-8px)";

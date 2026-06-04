@@ -38,7 +38,7 @@ export default function StakeholdersBento() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-2 glass rounded-3xl overflow-hidden relative group cursor-none"
+            className="md:col-span-2 glass rounded-3xl overflow-hidden relative group"
             style={{ minHeight: "320px" }}
           >
             {/* Dark gradient overlay background */}
@@ -81,7 +81,7 @@ export default function StakeholdersBento() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="glass rounded-3xl p-8 flex flex-col justify-between cursor-none group"
+            className="glass rounded-3xl p-8 flex flex-col justify-between group"
           >
             <div>
               <div
@@ -117,7 +117,7 @@ export default function StakeholdersBento() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: (i + 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="glass rounded-3xl p-7 cursor-none group transition-all duration-300"
+              className="glass rounded-3xl p-7 group transition-all duration-300"
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "#f6be39";
                 e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,160,23,0.12)";

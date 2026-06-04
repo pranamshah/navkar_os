@@ -1,93 +1,105 @@
 "use client"
 
 import { useEffect, useRef, useCallback } from "react"
-import createGlobe from "cobe"
+import createGlobe, { COBEOptions } from "cobe"
 
-interface Marker {
-  id: string
-  location: [number, number]
-  size?: number
-}
-
-interface Arc {
-  id: string
-  from: [number, number]
-  to: [number, number]
-}
+interface Marker { id: string; location: [number, number]; size?: number }
+interface Arc    { id: string; from: [number, number]; to: [number, number] }
 
 interface GlobeProps {
-  markers?: Marker[]
-  arcs?: Arc[]
+  markers?  : Marker[]
+  arcs?     : Arc[]
   className?: string
 }
 
-// NavkarOS colour palette
-// Gold: #D4AF37 → rgb(212,175,55) → [0.831, 0.686, 0.216]
-const GOLD: [number, number, number]  = [0.831, 0.686, 0.216]
-const WHITE: [number, number, number] = [1, 1, 1]
-const CREAM: [number, number, number] = [0.96, 0.92, 0.82]
+// NavkarOS palette  #D4AF37 → rgb(212,175,55) → [0.831, 0.686, 0.216]
+const GOLD : [number,number,number] = [0.831, 0.686, 0.216]
+const CREAM: [number,number,number] = [0.97,  0.93,  0.84 ]
+const LAND : [number,number,number] = [0.96,  0.94,  0.89 ]   // warm off-white land
+
+const BASE_OPTS: Partial<COBEOptions> = {
+  phi:            0.6,     // start facing Indian-Ocean side
+  theta:          0.18,
+  dark:           0,       // light mode — white ocean
+  diffuse:        1.3,
+  mapSamples:     24000,
+  mapBrightness:  4.5,     // lower = more ocean contrast so arcs pop
+  mapBaseBrightness: 0.05,
+  baseColor:      LAND,
+  markerColor:    GOLD,
+  glowColor:      CREAM,
+  arcColor:       GOLD,
+  arcWidth:       0.9,     // thick enough to see clearly
+  arcHeight:      0.32,    // nicely curved arcs
+  markerElevation:0.012,
+  opacity:        0.92,
+  scale:          1.18,    // slightly larger globe on the canvas
+}
 
 export function CobeGlobe({ markers = [], arcs = [], className = "" }: GlobeProps) {
-  const canvasRef              = useRef<HTMLCanvasElement>(null)
-  const pointerInteracting     = useRef<{ x: number; y: number } | null>(null)
-  const lastPointer            = useRef<{ x: number; y: number; t: number } | null>(null)
-  const dragOffset             = useRef({ phi: 0, theta: 0 })
-  const velocity               = useRef({ phi: 0, theta: 0 })
-  const phiOffsetRef           = useRef(0)
-  const thetaOffsetRef         = useRef(0)
-  const isPausedRef            = useRef(false)
+  const canvasRef          = useRef<HTMLCanvasElement>(null)
+  const pointerDown        = useRef<{ x: number; y: number } | null>(null)
+  const lastPtr            = useRef<{ x: number; y: number; t: number } | null>(null)
+  const drag               = useRef({ phi: 0, theta: 0 })
+  const vel                = useRef({ phi: 0, theta: 0 })
+  const phiOff             = useRef(0)
+  const thetaOff           = useRef(0)
+  const paused             = useRef(false)
 
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    pointerInteracting.current = { x: e.clientX, y: e.clientY }
-    if (canvasRef.current) canvasRef.current.style.cursor = "grabbing"
-    isPausedRef.current = true
+  const onDown = useCallback((e: React.PointerEvent) => {
+    pointerDown.current = { x: e.clientX, y: e.clientY }
+    paused.current = true
+    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
   }, [])
 
-  const handlePointerMove = useCallback((e: PointerEvent) => {
-    if (!pointerInteracting.current) return
-    const deltaX = e.clientX - pointerInteracting.current.x
-    const deltaY = e.clientY - pointerInteracting.current.y
-    dragOffset.current = { phi: deltaX / 250, theta: deltaY / 900 }
+  const onMove = useCallback((e: PointerEvent) => {
+    if (!pointerDown.current) return
+    drag.current = {
+      phi:   (e.clientX - pointerDown.current.x) / 250,
+      theta: (e.clientY - pointerDown.current.y) / 900,
+    }
     const now = Date.now()
-    if (lastPointer.current) {
-      const dt = Math.max(now - lastPointer.current.t, 1)
+    if (lastPtr.current) {
+      const dt  = Math.max(now - lastPtr.current.t, 1)
       const cap = 0.12
-      velocity.current = {
-        phi:   Math.max(-cap, Math.min(cap, ((e.clientX - lastPointer.current.x) / dt) * 0.28)),
-        theta: Math.max(-cap, Math.min(cap, ((e.clientY - lastPointer.current.y) / dt) * 0.07)),
+      vel.current = {
+        phi:   Math.max(-cap, Math.min(cap, ((e.clientX - lastPtr.current.x) / dt) * 0.28)),
+        theta: Math.max(-cap, Math.min(cap, ((e.clientY - lastPtr.current.y) / dt) * 0.07)),
       }
     }
-    lastPointer.current = { x: e.clientX, y: e.clientY, t: now }
+    lastPtr.current = { x: e.clientX, y: e.clientY, t: now }
   }, [])
 
-  const handlePointerUp = useCallback(() => {
-    if (pointerInteracting.current) {
-      phiOffsetRef.current   += dragOffset.current.phi
-      thetaOffsetRef.current += dragOffset.current.theta
-      dragOffset.current = { phi: 0, theta: 0 }
-      lastPointer.current = null
+  const onUp = useCallback(() => {
+    if (pointerDown.current) {
+      phiOff.current   += drag.current.phi
+      thetaOff.current += drag.current.theta
+      drag.current = { phi: 0, theta: 0 }
+      lastPtr.current  = null
     }
-    pointerInteracting.current = null
-    if (canvasRef.current) canvasRef.current.style.cursor = "grab"
-    isPausedRef.current = false
+    pointerDown.current = null
+    paused.current = false
   }, [])
 
   useEffect(() => {
-    window.addEventListener("pointermove", handlePointerMove, { passive: true })
-    window.addEventListener("pointerup",   handlePointerUp,   { passive: true })
+    window.addEventListener("pointermove", onMove, { passive: true })
+    window.addEventListener("pointerup",   onUp,   { passive: true })
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove)
-      window.removeEventListener("pointerup",   handlePointerUp)
+      window.removeEventListener("pointermove", onMove)
+      window.removeEventListener("pointerup",   onUp)
     }
-  }, [handlePointerMove, handlePointerUp])
+  }, [onMove, onUp])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    let globe: ReturnType<typeof createGlobe> | null = null
-    let animationId: number
-    let phi = 0.6  // start facing Indian Ocean
+    let globe  : ReturnType<typeof createGlobe> | null = null
+    let rafId  : number
+    let phi = 0.6
+
+    const cobeMarkers = markers.map((m) => ({ location: m.location, size: m.size ?? 0.045, id: m.id }))
+    const cobeArcs    = arcs.map((a) => ({ from: a.from, to: a.to, id: a.id }))
 
     function init() {
       if (!canvas || globe) return
@@ -96,62 +108,45 @@ export function CobeGlobe({ markers = [], arcs = [], className = "" }: GlobeProp
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
       globe = createGlobe(canvas, {
+        ...BASE_OPTS,
         devicePixelRatio: dpr,
-        width:  w * dpr,
-        height: w * dpr,
-        phi:    0.6,
-        theta:  0.18,
-        dark:   0,                    // light globe
-        diffuse: 1.2,
-        mapSamples: 20000,
-        mapBrightness: 6,
-        baseColor: WHITE,             // white land
-        markerColor: GOLD,            // gold dots
-        glowColor: CREAM,             // warm cream glow
-        arcColor: GOLD,
-        arcWidth: 0.6,
-        arcHeight: 0.28,
-        markerElevation: 0.01,
-        markers: markers.map((m) => ({ location: m.location, size: m.size ?? 0.04 })),
-        arcs: arcs.map((a) => ({ from: a.from, to: a.to })),
-        opacity: 0.85,
-      })
+        width:   w * dpr,
+        height:  w * dpr,
+        markers: cobeMarkers,
+        arcs:    cobeArcs,
+      } as COBEOptions)
 
       function animate() {
-        if (!isPausedRef.current) {
-          phi += 0.0028
+        if (!paused.current) {
+          phi += 0.0026   // auto-rotate speed
 
-          if (Math.abs(velocity.current.phi) > 0.0001 || Math.abs(velocity.current.theta) > 0.0001) {
-            phiOffsetRef.current   += velocity.current.phi
-            thetaOffsetRef.current += velocity.current.theta
-            velocity.current.phi   *= 0.94
-            velocity.current.theta *= 0.94
+          // apply inertia from fling
+          if (Math.abs(vel.current.phi) > 0.0001 || Math.abs(vel.current.theta) > 0.0001) {
+            phiOff.current   += vel.current.phi
+            thetaOff.current += vel.current.theta
+            vel.current.phi   *= 0.93
+            vel.current.theta *= 0.93
           }
-
-          const tMin = -0.35, tMax = 0.35
-          if (thetaOffsetRef.current < tMin) thetaOffsetRef.current += (tMin - thetaOffsetRef.current) * 0.1
-          if (thetaOffsetRef.current > tMax) thetaOffsetRef.current += (tMax - thetaOffsetRef.current) * 0.1
+          // clamp vertical tilt
+          const tMin = -0.32, tMax = 0.32
+          if (thetaOff.current < tMin) thetaOff.current += (tMin - thetaOff.current) * 0.1
+          if (thetaOff.current > tMax) thetaOff.current += (tMax - thetaOff.current) * 0.1
         }
 
+        // Only update the rotating params — let cobe handle arc animation internally
         globe!.update({
-          phi:   phi + phiOffsetRef.current   + dragOffset.current.phi,
-          theta: 0.18 + thetaOffsetRef.current + dragOffset.current.theta,
-          dark:  0,
-          mapBrightness: 6,
-          markerColor: GOLD,
-          baseColor:   WHITE,
-          glowColor:   CREAM,
-          arcColor:    GOLD,
-          markerElevation: 0.01,
-          markers: markers.map((m) => ({ location: m.location, size: m.size ?? 0.04 })),
-          arcs: arcs.map((a) => ({ from: a.from, to: a.to })),
+          phi:   phi + phiOff.current   + drag.current.phi,
+          theta: 0.18 + thetaOff.current + drag.current.theta,
         })
 
-        animationId = requestAnimationFrame(animate)
+        rafId = requestAnimationFrame(animate)
       }
 
       animate()
-      setTimeout(() => { if (canvas) canvas.style.opacity = "1" })
+      // fade in once rendered
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (canvas) canvas.style.opacity = "1"
+      }))
     }
 
     if (canvas.offsetWidth > 0) {
@@ -161,12 +156,14 @@ export function CobeGlobe({ markers = [], arcs = [], className = "" }: GlobeProp
         if (entries[0]?.contentRect.width > 0) { ro.disconnect(); init() }
       })
       ro.observe(canvas)
+      return () => ro.disconnect()
     }
 
     return () => {
-      if (animationId) cancelAnimationFrame(animationId)
-      if (globe) globe.destroy()
+      cancelAnimationFrame(rafId)
+      globe?.destroy()
     }
+  // markers/arcs are static config; eslint-disable is intentional
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -174,14 +171,14 @@ export function CobeGlobe({ markers = [], arcs = [], className = "" }: GlobeProp
     <div className={`relative aspect-square select-none ${className}`}>
       <canvas
         ref={canvasRef}
-        onPointerDown={handlePointerDown}
+        onPointerDown={onDown}
         style={{
-          width: "100%",
-          height: "100%",
-          cursor: "grab",
-          opacity: 0,
+          width:      "100%",
+          height:     "100%",
+          opacity:    0,
           transition: "opacity 1.4s ease",
-          touchAction: "none",
+          touchAction:"none",
+          /* Let the global cursor handling work; no override here */
         }}
       />
     </div>

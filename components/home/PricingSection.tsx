@@ -42,7 +42,7 @@ export default function PricingSection() {
               <button
                 key={opt.label}
                 onClick={() => setAnnual(opt.val)}
-                className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 cursor-none"
+                className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
                 style={{
                   background: annual === opt.val ? "#1a1c1d" : "transparent",
                   color: annual === opt.val ? "#fff" : "#5d5f5f",
@@ -134,7 +134,7 @@ export default function PricingSection() {
                 </div>
 
                 <button
-                  className="w-full py-3.5 rounded-full font-semibold text-sm mt-2 transition-all duration-200 cursor-none"
+                  className="w-full py-3.5 rounded-full font-semibold text-sm mt-2 transition-all duration-200"
                   style={{
                     background: plan.highlight ? "#f6be39" : "#1a1c1d",
                     color: plan.highlight ? "#1a1c1d" : "#fff",
@@ -157,7 +157,7 @@ export default function PricingSection() {
 
         <p className="text-center text-sm mt-8" style={{ color: "#5d5f5f" }}>
           Need unlimited users and custom integrations?{" "}
-          <button className="font-semibold underline cursor-none" style={{ color: "#D4A017" }}>
+          <button className="font-semibold underline" style={{ color: "#D4A017" }}>
             Talk to our Enterprise team →
           </button>
         </p>

@@ -118,7 +118,7 @@ export default function ContactSection() {
                   <button
                     key={action}
                     onClick={() => handleQuickAction(action)}
-                    className="px-4 py-2 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none"
+                    className="px-4 py-2 text-xs font-semibold uppercase tracking-widest border transition-all duration-200"
                     style={{ borderColor: "rgba(0,0,0,0.15)", color: "#1a1c1c", borderWidth: "0.5px" }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = "#1a1c1c";
@@ -273,7 +273,7 @@ export default function ContactSection() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none disabled:opacity-60"
+                  className="w-full py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 disabled:opacity-60"
                   style={{ background: "#1a1c1c", color: "#fff" }}
                   onMouseEnter={(e) => {
                     if (!sending) {

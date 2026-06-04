@@ -107,7 +107,7 @@ export default function CommandSuite() {
               </p>
               <a
                 href="#whoisfor"
-                className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest border-b cursor-none transition-colors duration-200"
+                className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest border-b transition-colors duration-200"
                 style={{ borderColor: "#1a1c1c", color: "#1a1c1c", paddingBottom: "2px" }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = "#D4AF37"; e.currentTarget.style.borderColor = "#D4AF37"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = "#1a1c1c"; e.currentTarget.style.borderColor = "#1a1c1c"; }}
@@ -127,7 +127,7 @@ export default function CommandSuite() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
-              className="p-8 flex flex-col gap-5 cursor-none transition-all duration-300 group"
+              className="p-8 flex flex-col gap-5 transition-all duration-300 group"
               style={{ background: "#fff", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-6px)";
@@ -161,7 +161,7 @@ export default function CommandSuite() {
               <div className="mt-auto pt-4 border-t" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
                 <a
                   href={`/demo/${mod.id}`}
-                  className="text-xs font-semibold uppercase tracking-widest cursor-none transition-colors duration-200"
+                  className="text-xs font-semibold uppercase tracking-widest transition-colors duration-200"
                   style={{ color: "#D4AF37" }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = "#1a1c1c"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = "#D4AF37"; }}

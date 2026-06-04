@@ -32,7 +32,7 @@ export default function FAQSection() {
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex justify-between items-center p-8 text-left cursor-none"
+                className="w-full flex justify-between items-center p-8 text-left"
               >
                 <span
                   style={{

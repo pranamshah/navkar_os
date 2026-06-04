@@ -100,7 +100,7 @@ export default function BeyondBorders() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.7 }}
-              className="mt-10 px-10 py-4 text-xs font-semibold uppercase tracking-widest cursor-none transition-all duration-200 inline-block"
+              className="mt-10 px-10 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 inline-block"
               style={{ background: "#D4AF37", color: "#1a1c1c" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#fff";
