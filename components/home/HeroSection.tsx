@@ -161,6 +161,7 @@ export default function HeroSection() {
             style={{
               width: "min(86svh, 96%)",
               aspectRatio: "1 / 1",
+              marginRight: "6%",
               maskImage: "radial-gradient(ellipse at center, black 44%, transparent 68%)",
               WebkitMaskImage: "radial-gradient(ellipse at center, black 44%, transparent 68%)",
             }}
