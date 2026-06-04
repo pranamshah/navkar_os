@@ -554,13 +554,74 @@ function ActiveWithSubsView({
   );
 }
 
+/* ── Admin View ────────────────────────────────────── */
+function AdminView({ name, products }: { name?: string; products: typeof PRODUCTS }) {
+  const mockSub: Subscription = {
+    id: "admin",
+    product: "",
+    plan: "FULL_SUITE",
+    status: "ACTIVE",
+    billingCycle: "ANNUAL",
+    currentPeriodEnd: "",
+  };
+  return (
+    <main className="flex-1 overflow-auto p-8">
+      <div className="mb-8">
+        <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#D4AF37" }}>
+          Admin Access
+        </p>
+        <h1 className="text-2xl font-black uppercase tracking-widest" style={{ color: "#1a1c1c" }}>
+          {name || "NavkarOS Admin"}
+        </h1>
+        <p className="text-sm mt-1" style={{ color: "#7e7576" }}>
+          Full access to all 6 products — no subscription required.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 mb-8">
+        {[
+          { label: "Products", value: "6" },
+          { label: "Access Level", value: "Full" },
+          { label: "Status", value: "Admin" },
+        ].map((s) => (
+          <div key={s.label} className="rounded-xl p-4 border" style={{ background: "#ffffff", borderColor: "rgba(0,0,0,0.07)" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#7e7576" }}>{s.label}</p>
+            <p className="font-black text-2xl" style={{ color: "#1a1c1c" }}>{s.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mb-4">
+        <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>All Products</h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {products.map((product, i) => (
+          <motion.div
+            key={product.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.06 }}
+          >
+            <ActiveProductCard product={product} subscription={{ ...mockSub, product: product.id.toUpperCase() }} />
+          </motion.div>
+        ))}
+      </div>
+    </main>
+  );
+}
+
 /* ── Main Page ─────────────────────────────────────── */
 export default function ClientDashboardPage() {
   const { data: session, status } = useSession();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [subsLoading, setSubsLoading] = useState(true);
 
+  const role = (session?.user as { role?: string })?.role;
+  const isAdmin = role === "ADMIN" || role === "SUPERADMIN";
+
   useEffect(() => {
+    if (isAdmin) { setSubsLoading(false); return; }
     async function loadSubs() {
       try {
         const res = await fetch("/api/client/subscriptions");
@@ -575,7 +636,7 @@ export default function ClientDashboardPage() {
       }
     }
     if (status === "authenticated") loadSubs();
-  }, [status]);
+  }, [status, isAdmin]);
 
   if (status === "loading" || subsLoading) {
     return (
@@ -593,8 +654,10 @@ export default function ClientDashboardPage() {
   const activeSubs = subscriptions.filter((s) => ["ACTIVE", "TRIAL"].includes(s.status));
 
   // Determine which view to show
-  let view: "pending" | "active-no-subs" | "active-with-subs";
-  if (!isVerified) {
+  let view: "admin" | "pending" | "active-no-subs" | "active-with-subs";
+  if (isAdmin) {
+    view = "admin";
+  } else if (!isVerified) {
     view = "pending";
   } else if (activeSubs.length === 0) {
     view = "active-no-subs";
@@ -612,6 +675,17 @@ export default function ClientDashboardPage() {
       />
 
       <AnimatePresence mode="wait">
+        {view === "admin" && (
+          <motion.div
+            key="admin"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex-1"
+          >
+            <AdminView name={user?.name ?? undefined} products={PRODUCTS} />
+          </motion.div>
+        )}
         {view === "pending" && (
           <motion.div
             key="pending"
