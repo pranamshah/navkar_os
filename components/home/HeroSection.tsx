@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { CobeGlobe } from "@/components/ui/cobe-globe";
+import { useRef, useEffect } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -13,32 +13,18 @@ const stagger = {
   show:   { transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
 };
 
-// Indian port cities + major global trade hubs
-const MARKERS = [
-  // India
-  { id: "mumbai",    location: [19.0760,  72.8777] as [number, number], size: 0.055 }, // JNPT — largest
-  { id: "chennai",   location: [13.0827,  80.2707] as [number, number], size: 0.05  },
-  { id: "delhi",     location: [28.6139,  77.2090] as [number, number], size: 0.045 },
-  { id: "kolkata",   location: [22.5726,  88.3639] as [number, number], size: 0.04  },
-  { id: "cochin",    location: [ 9.9312,  76.2673] as [number, number], size: 0.04  },
-  // Global
-  { id: "dubai",     location: [25.2048,  55.2708] as [number, number], size: 0.045 },
-  { id: "singapore", location: [ 1.3521, 103.8198] as [number, number], size: 0.045 },
-  { id: "shanghai",  location: [31.2304, 121.4737] as [number, number], size: 0.04  },
-  { id: "rotterdam", location: [51.9225,   4.4792] as [number, number], size: 0.04  },
-  { id: "losangeles",location: [34.0522,-118.2437] as [number, number], size: 0.035 },
-];
-
-// Trade lane arcs
-const ARCS = [
-  { id: "mumbai-dubai",     from: [19.0760, 72.8777] as [number, number], to: [25.2048, 55.2708] as [number, number] },
-  { id: "mumbai-singapore", from: [19.0760, 72.8777] as [number, number], to: [ 1.3521,103.8198] as [number, number] },
-  { id: "chennai-singapore",from: [13.0827, 80.2707] as [number, number], to: [ 1.3521,103.8198] as [number, number] },
-  { id: "mumbai-rotterdam", from: [19.0760, 72.8777] as [number, number], to: [51.9225,  4.4792] as [number, number] },
-  { id: "singapore-shanghai",from:[1.3521, 103.8198] as [number, number], to: [31.2304,121.4737] as [number, number] },
-];
-
 export default function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.playsInline = true;
+    v.loop = true;
+    v.play().catch(() => {});
+  }, []);
+
   return (
     <section
       className="relative w-full overflow-hidden"
@@ -48,7 +34,6 @@ export default function HeroSection() {
         className="grid lg:grid-cols-2"
         style={{ minHeight: "92svh" }}
       >
-
         {/* ── LEFT: copy ─────────────────────────────────────────────── */}
         <div
           className="relative flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-16 lg:pt-0 lg:pb-0"
@@ -166,46 +151,47 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* ── RIGHT: interactive COBE globe ──────────────────────────── */}
+        {/* ── RIGHT: hero video ────────────────────────────────────────── */}
         <div
           className="relative hidden lg:block overflow-hidden"
-          style={{ background: "#f9f9f9" }}
+          style={{ background: "#0d0d0e" }}
         >
           {/* Left-edge fade blends into left panel */}
           <div
-            className="absolute inset-y-0 left-0 w-28 pointer-events-none"
-            style={{ background: "linear-gradient(to right, #f9f9f9, transparent)", zIndex: 10 }}
+            className="absolute inset-y-0 left-0 w-20 pointer-events-none z-10"
+            style={{ background: "linear-gradient(to right, #f9f9f9, transparent)" }}
           />
 
-          {/* Globe — sized larger than the column and shifted right so it
-              overflows the right edge. overflow-hidden on parent clips it. */}
-          <motion.div
-            className="absolute"
+          <motion.video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.6, delay: 0.35, ease: "easeOut" }}
-            style={{
-              /* centre-right: top-50% + negative margin push up */
-              top: "50%",
-              left: "-8%",
-              width: "118%",
-              transform: "translateY(-50%)",
-            }}
+            transition={{ duration: 1.4, delay: 0.2, ease: "easeOut" }}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ willChange: "opacity" }}
           >
-            <CobeGlobe markers={MARKERS} arcs={ARCS} className="w-full" />
-          </motion.div>
+            <source src="/hero.mp4" type="video/mp4" />
+          </motion.video>
         </div>
 
-        {/* Mobile: globe banner above text */}
+        {/* Mobile: video banner above text */}
         <div
-          className="lg:hidden relative overflow-hidden order-first flex items-center justify-center"
-          style={{ height: "56vw", maxHeight: "340px", background: "#f9f9f9" }}
+          className="lg:hidden relative overflow-hidden order-first"
+          style={{ height: "56vw", maxHeight: "320px", background: "#0d0d0e" }}
         >
-          <CobeGlobe
-            markers={MARKERS}
-            arcs={ARCS}
-            className="w-[58vw] max-w-[320px]"
-          />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
         </div>
 
       </div>

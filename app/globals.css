@@ -20,7 +20,39 @@ body {
   color: #1a1c1c;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, [data-cursor], input[type=submit], input[type=button],
+  select, label[for] { cursor: none; }
+}
+
+/* Custom gold cursor dot */
+#navkar-cursor {
+  position: fixed;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background: #D4AF37;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-100px, -100px);
+  will-change: transform;
+  transition: width 0.12s ease, height 0.12s ease, background 0.12s ease, top 0.12s ease, left 0.12s ease;
+}
+#navkar-cursor.hovering {
+  width: 24px;
+  height: 24px;
+  top: -12px;
+  left: -12px;
+  background: rgba(212, 175, 55, 0.25);
+  border: 1.5px solid #D4AF37;
+}
+@media (hover: none), (pointer: coarse) {
+  #navkar-cursor { display: none !important; }
 }
 
 .material-symbols-outlined {

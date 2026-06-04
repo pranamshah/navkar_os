@@ -57,7 +57,7 @@ export default function Navbar() {
         className="fixed top-5 left-0 right-0 z-50 px-5"
       >
         <div
-          className="max-w-5xl mx-auto rounded-full px-6 h-16 flex items-center justify-between transition-all duration-300"
+          className="max-w-5xl mx-auto rounded-full px-6 h-18 flex items-center justify-between transition-all duration-300"
           style={{
             background: scrolled ? "rgba(249,249,249,0.98)" : "rgba(249,249,249,0.88)",
             backdropFilter: "blur(24px)",
@@ -67,7 +67,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <LogoBrand height={30} />
+          <LogoBrand height={44} />
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">

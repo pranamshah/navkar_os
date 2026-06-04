@@ -513,7 +513,9 @@ const FAQS = [
 /* ─────────────────────────────────────────────────────────── */
 export default function AccuraPage() {
   const { data: session } = useSession();
-  const hasAccura = (session?.user as { subscriptions?: { product: string; status: string }[] } | undefined)?.subscriptions?.some(
+  const role = (session?.user as { role?: string })?.role;
+  const isAdmin = role === "ADMIN" || role === "SUPERADMIN";
+  const hasAccura = isAdmin || (session?.user as { subscriptions?: { product: string; status: string }[] } | undefined)?.subscriptions?.some(
     (s) => (s.product === "ACCURA" || s.product === "FULL_SUITE") && (s.status === "ACTIVE" || s.status === "TRIAL")
   );
   const ctaHref = hasAccura ? "/dashboard/accura" : "/pricing";

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 const navSections = [
   {
@@ -96,12 +97,38 @@ const navSections = [
 
 export default function AccuraLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [shortcutDismissed, setShortcutDismissed] = useState(false);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (status === "loading") return;
+    if (status === "unauthenticated") { router.replace("/login"); return; }
+    const role = (session?.user as { role?: string })?.role;
+    if (role === "ADMIN" || role === "SUPERADMIN") return;
+    const subs: { product?: string; status?: string }[] = (session?.user as { subscriptions?: { product: string; status: string }[] })?.subscriptions ?? [];
+    const hasAccess = subs.some(
+      (s) => (s.product === "ACCURA" || s.product === "FULL_SUITE") && s.status === "ACTIVE"
+    );
+    if (!hasAccess) router.replace("/demo/accura");
+  }, [status, session, router]);
 
   const toggleSection = (title: string) => {
     setCollapsed((prev) => ({ ...prev, [title]: !prev[title] }));
   };
+
+  const role = (session?.user as { role?: string })?.role;
+  const subs: { product?: string; status?: string }[] = (session?.user as { subscriptions?: { product: string; status: string }[] })?.subscriptions ?? [];
+  const hasAccess = role === "ADMIN" || role === "SUPERADMIN" || subs.some((s) => (s.product === "ACCURA" || s.product === "FULL_SUITE") && s.status === "ACTIVE");
+
+  if (status === "loading" || !hasAccess) {
+    return (
+      <div className="flex h-screen items-center justify-center" style={{ background: "#F8FAFC" }}>
+        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#0E7490", borderTopColor: "transparent" }} />
+      </div>
+    );
+  }
 
   const isActive = (href: string) => {
     if (href === "/dashboard/accura") return pathname === "/dashboard/accura";
