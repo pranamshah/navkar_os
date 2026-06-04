@@ -310,22 +310,19 @@ export default function SuiteSection() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-50"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
               style={{ background: "rgba(10,10,12,0.75)", backdropFilter: "blur(8px)" }}
               onClick={() => setOpenId(null)}
-            />
-
-            {/* Modal panel */}
+            >
+            {/* Modal panel — stop click propagation so clicking inside doesn't close */}
             <motion.div
               initial={{ opacity: 0, scale: 0.94, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed z-50 overflow-hidden"
+              className="relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
               style={{
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
                 width: "min(1000px, 95vw)",
                 maxHeight: "90vh",
                 background: "#ffffff",
@@ -489,6 +486,7 @@ export default function SuiteSection() {
                   Close ×
                 </button>
               </div>
+            </motion.div>
             </motion.div>
           </>
         )}

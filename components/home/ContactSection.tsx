@@ -1,23 +1,58 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 const contactDetails = [
   { label: "Email", value: "hello@navkaros.in", Icon: Mail },
   { label: "Phone", value: "+91 90807 67398", Icon: Phone },
-  { label: "Office", value: "BKC, Bandra East, Mumbai — 400051", Icon: MapPin },
+  { label: "Office", value: "7, Mannady Street, George Town, Chennai — 600 001", Icon: MapPin },
   { label: "Support Hours", value: "Mon–Sat, 9am–7pm IST", Icon: Clock },
 ];
 
+const QUICK_MESSAGES: Record<string, string> = {
+  "Book a Demo": "Hi, I'd like to book a demo of NavkarOS for my logistics business.",
+  "Pricing Questions": "Hi, I have some questions about NavkarOS pricing and plans.",
+  "Technical Support": "Hi, I need technical support with my NavkarOS account.",
+  "Partner with Us": "Hi, I'm interested in exploring a partnership opportunity with NavkarOS.",
+};
+
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", message: "" });
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
-  const handle = (e: React.FormEvent) => {
+  const handleQuickAction = (action: string) => {
+    setForm((f) => ({ ...f, message: QUICK_MESSAGES[action] ?? "" }));
+    // Scroll to form
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => messageRef.current?.focus(), 400);
+  };
+
+  const handle = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.error ?? "Failed to send");
+      }
+      setSubmitted(true);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -80,9 +115,10 @@ export default function ContactSection() {
                 Quick Actions
               </p>
               <div className="flex flex-wrap gap-3">
-                {["Book a Demo", "Pricing Questions", "Technical Support", "Partner with Us"].map((action) => (
+                {Object.keys(QUICK_MESSAGES).map((action) => (
                   <button
                     key={action}
+                    onClick={() => handleQuickAction(action)}
                     className="px-4 py-2 text-xs font-semibold uppercase tracking-widest border transition-all duration-200 cursor-none"
                     style={{ borderColor: "rgba(0,0,0,0.15)", color: "#1a1c1c", borderWidth: "0.5px" }}
                     onMouseEnter={(e) => {
@@ -103,6 +139,7 @@ export default function ContactSection() {
 
           {/* Right: Form */}
           <motion.div
+            ref={formRef}
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -213,6 +250,7 @@ export default function ContactSection() {
                     Message
                   </label>
                   <textarea
+                    ref={messageRef}
                     rows={4}
                     required
                     placeholder="Tell us about your business and what you're looking for..."
@@ -229,20 +267,27 @@ export default function ContactSection() {
                   />
                 </div>
 
+                {error && (
+                  <p className="text-xs text-red-500">{error}</p>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none"
+                  disabled={sending}
+                  className="w-full py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 cursor-none disabled:opacity-60"
                   style={{ background: "#1a1c1c", color: "#fff" }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#D4AF37";
-                    e.currentTarget.style.color = "#1a1c1c";
+                    if (!sending) {
+                      e.currentTarget.style.background = "#D4AF37";
+                      e.currentTarget.style.color = "#1a1c1c";
+                    }
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = "#1a1c1c";
                     e.currentTarget.style.color = "#fff";
                   }}
                 >
-                  Send Message
+                  {sending ? "Sending…" : "Send Message"}
                 </button>
               </form>
             )}

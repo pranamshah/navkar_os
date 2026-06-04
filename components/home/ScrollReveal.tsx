@@ -13,7 +13,7 @@ export default function ScrollReveal() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
