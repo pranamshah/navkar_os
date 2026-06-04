@@ -23,34 +23,34 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.4, delay: 0.1 }}
       >
+        {/*
+          mix-blend-mode:screen → every dark/black pixel becomes transparent
+          against the #f9f9f9 page background, so no black bleeding at edges.
+          sepia(0.45) → warms the white globe lines toward gold.
+          brightness(0.88) → prevents the white lines blowing out.
+        */}
         <video
           autoPlay
           muted
           loop
           playsInline
           className="w-full h-full object-cover"
-          style={{ filter: "saturate(0) brightness(1.05)" }}
+          style={{
+            filter: "sepia(0.45) brightness(0.88)",
+            mixBlendMode: "screen",
+            opacity: 0.92,
+          }}
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
-
-        {/* Gold tint overlay on top of video */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.04) 50%, rgba(212,175,55,0.10) 100%)",
-            mixBlendMode: "multiply",
-          }}
-        />
       </motion.div>
 
-      {/* Radial vignette — keeps text readable over the video */}
+      {/* Soft vignette — just enough to lift text readability in the centre */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 65% 70% at 50% 50%, transparent 0%, rgba(249,249,249,0.55) 55%, rgba(249,249,249,0.92) 80%, #f9f9f9 100%)",
+            "radial-gradient(ellipse 60% 65% at 50% 50%, rgba(249,249,249,0.10) 0%, rgba(249,249,249,0.45) 50%, rgba(249,249,249,0.80) 72%, #f9f9f9 90%)",
           zIndex: 1,
         }}
       />
