@@ -6,6 +6,7 @@ import { X, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 const links = [
   { label: "Services",    href: "/#suite" },
@@ -66,10 +67,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1d", color: "#f6be39" }}>N</div>
-            <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1d" }}>NavkarOS</span>
-          </Link>
+          <LogoBrand height={18} />
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">

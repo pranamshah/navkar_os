@@ -9,172 +9,201 @@ const fadeUp = {
 };
 const stagger = {
   hidden: {},
-  show:   { transition: { staggerChildren: 0.14, delayChildren: 0.15 } },
+  show:   { transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
 };
 
 export default function HeroSection() {
   return (
     <section
-      className="relative w-full overflow-hidden flex flex-col items-center justify-center"
+      className="relative w-full overflow-hidden"
       style={{ minHeight: "100svh", background: "#f9f9f9" }}
     >
-
-      {/* ── Globe video ─────────────────────────────────────────────────
-          The video is a globe on a dark space background.
-          CSS mask-image clips it to the sphere shape so the dark outer
-          space is invisible and the #f9f9f9 page shows around it.
-          opacity 0.82 + sepia/brightness = warm gold globe, clearly visible.
-          The mask: solid opaque through 78% of the ellipse radius (full globe),
-          then fades to transparent over the next 16% (kills the dark edge ring).
-      ──────────────────────────────────────────────────────────────────── */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 0, animation: "heroFadeIn 1.6s ease-out forwards", opacity: 0 }}
+        className="grid lg:grid-cols-2"
+        style={{ minHeight: "100svh" }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-          style={{
-            opacity: 0.82,
-            filter: "sepia(0.38) brightness(0.9) contrast(0.92)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse 46% 52% at 50% 50%, black 0%, black 78%, rgba(0,0,0,0.45) 88%, transparent 96%)",
-            maskImage:
-              "radial-gradient(ellipse 46% 52% at 50% 50%, black 0%, black 78%, rgba(0,0,0,0.45) 88%, transparent 96%)",
-          }}
+
+        {/* ── LEFT: copy on clean white ─────────────────────────────── */}
+        <div
+          className="relative flex flex-col justify-center px-10 md:px-16 lg:px-20 pt-28 pb-16 lg:pt-0 lg:pb-0"
+          style={{ background: "#f9f9f9", zIndex: 2 }}
         >
-          <source src="/hero.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* ── Subtle text-area lift ────────────────────────────────────────
-          Only fogging the very centre where the copy lives.
-          Globe edges and the globe itself remain fully visible.
-      ──────────────────────────────────────────────────────────────────── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          zIndex: 1,
-          background:
-            "radial-gradient(ellipse 38% 42% at 50% 46%, rgba(249,249,249,0.62) 0%, rgba(249,249,249,0.22) 55%, transparent 80%)",
-        }}
-      />
-
-      {/* ── Hero copy ────────────────────────────────────────────────── */}
-      <div
-        className="relative w-full max-w-5xl mx-auto px-8 flex flex-col items-center text-center"
-        style={{ zIndex: 2, paddingTop: "80px" }}
-      >
-        <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col items-center">
-
-          <motion.div variants={fadeUp} className="mb-7">
-            <span
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
-              style={{
-                background: "rgba(249,249,249,0.88)",
-                color: "#4c4546",
-                backdropFilter: "blur(6px)",
-                border: "0.5px solid rgba(0,0,0,0.08)",
-              }}
-            >
-              NavkarOS · Free Beta — 6 Products, One Login
-            </span>
-          </motion.div>
-
-          <motion.h1
-            variants={fadeUp}
-            className="mb-6 leading-tight"
-            style={{
-              fontFamily: "'EB Garamond', Georgia, serif",
-              fontSize: "clamp(44px, 6.5vw, 80px)",
-              fontWeight: 400,
-              color: "#1a1c1c",
-              letterSpacing: "-0.025em",
-              lineHeight: 1.05,
-            }}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col max-w-xl"
           >
-            One Platform for
-            <br />
-            <span style={{ color: "#D4AF37" }}>Modern Logistics.</span>
-          </motion.h1>
+            <motion.div variants={fadeUp} className="mb-7">
+              <span
+                className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+                style={{
+                  background: "rgba(212,175,55,0.1)",
+                  color: "#B8860B",
+                  border: "0.5px solid rgba(212,175,55,0.3)",
+                }}
+              >
+                Free Beta — 6 Products, One Login
+              </span>
+            </motion.div>
 
-          <motion.p
-            variants={fadeUp}
-            className="max-w-lg mb-10"
-            style={{
-              fontSize: "17px",
-              fontWeight: 300,
-              color: "#4c4546",
-              lineHeight: 1.75,
-            }}
-          >
-            Six products for freight forwarders, CHAs, CFS stations, transporters,
-            accountants, and importers — each standalone, all connected.
-          </motion.p>
-
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-4 justify-center">
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-2 px-9 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-              style={{ background: "#1a1c1c", color: "#fff" }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#D4AF37"; e.currentTarget.style.color = "#1a1c1c"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
-            >
-              Start Free Trial →
-            </Link>
-            <a
-              href="#suite"
-              className="inline-flex items-center gap-2 px-9 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200"
+            <motion.h1
+              variants={fadeUp}
+              className="mb-6"
               style={{
-                borderColor: "rgba(26,28,28,0.22)",
-                borderWidth: "0.5px",
+                fontFamily: "'EB Garamond', Georgia, serif",
+                fontSize: "clamp(40px, 5vw, 72px)",
+                fontWeight: 400,
                 color: "#1a1c1c",
-                background: "rgba(249,249,249,0.72)",
-                backdropFilter: "blur(6px)",
+                letterSpacing: "-0.025em",
+                lineHeight: 1.06,
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(249,249,249,0.72)"; e.currentTarget.style.color = "#1a1c1c"; }}
             >
-              See 6 Products ↓
-            </a>
+              One Platform
+              <br />
+              for Modern
+              <br />
+              <span style={{ color: "#D4AF37" }}>Logistics.</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="mb-10"
+              style={{
+                fontSize: "16px",
+                fontWeight: 300,
+                color: "#4c4546",
+                lineHeight: 1.8,
+                maxWidth: "440px",
+              }}
+            >
+              Six products for freight forwarders, CHAs, CFS stations,
+              transporters, accountants, and importers — each standalone,
+              all connected.
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mb-14">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
+                style={{ background: "#1a1c1c", color: "#fff" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#D4AF37"; e.currentTarget.style.color = "#1a1c1c"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
+              >
+                Start Free Trial →
+              </Link>
+              <a
+                href="#suite"
+                className="inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest border transition-all duration-200"
+                style={{
+                  borderColor: "rgba(26,28,28,0.22)",
+                  borderWidth: "0.5px",
+                  color: "#1a1c1c",
+                  background: "transparent",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#1a1c1c"; }}
+              >
+                See 6 Products ↓
+              </a>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              variants={fadeUp}
+              className="flex items-center gap-10 pt-8"
+              style={{ borderTop: "0.5px solid rgba(0,0,0,0.08)" }}
+            >
+              {[
+                { val: "6",     label: "Products" },
+                { val: "14hrs", label: "Saved / week" },
+                { val: "Free",  label: "Beta Access" },
+              ].map((s) => (
+                <div key={s.label}>
+                  <p
+                    className="font-semibold"
+                    style={{
+                      fontFamily: "'EB Garamond', Georgia, serif",
+                      fontSize: "28px",
+                      color: "#1a1c1c",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {s.val}
+                  </p>
+                  <p className="text-xs uppercase tracking-widest mt-0.5" style={{ color: "#7e7576" }}>
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* ── RIGHT: globe video ────────────────────────────────────── */}
+        <div
+          className="relative overflow-hidden hidden lg:block"
+          style={{ background: "#f0f0f0" }}
+        >
+          <motion.div
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.8, delay: 0.3 }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+              style={{
+                opacity: 0.9,
+                filter: "sepia(0.3) brightness(0.92) contrast(0.95)",
+                /* Mask only the left edge so it blends into the left panel */
+                WebkitMaskImage:
+                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, black 18%, black 100%)",
+                maskImage:
+                  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 8%, black 18%, black 100%)",
+              }}
+            >
+              <source src="/hero.mp4" type="video/mp4" />
+            </video>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="mt-14 flex items-center gap-12 justify-center">
-            {[
-              { val: "6",     label: "Products in Suite" },
-              { val: "14hrs", label: "Saved Weekly" },
-              { val: "Free",  label: "Beta Access" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <p
-                  className="font-semibold text-2xl"
-                  style={{
-                    fontFamily: "'EB Garamond', Georgia, serif",
-                    color: "#1a1c1c",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {s.val}
-                </p>
-                <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "#7e7576" }}>
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </motion.div>
+          {/* Subtle top/bottom edge fades */}
+          <div
+            className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, #f0f0f0, transparent)", zIndex: 1 }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+            style={{ background: "linear-gradient(to top, #f0f0f0, transparent)", zIndex: 1 }}
+          />
+        </div>
 
-        </motion.div>
+        {/* Mobile: video as thin banner above the fold (shown on small screens only) */}
+        <div
+          className="lg:hidden relative overflow-hidden order-first"
+          style={{ height: "40vw", maxHeight: "280px", background: "#1a1c1c" }}
+        >
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            style={{ opacity: 0.8, filter: "sepia(0.3) brightness(0.9)" }}
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom, transparent 50%, #f9f9f9 100%)" }}
+          />
+        </div>
+
       </div>
-
-      {/* Bottom fade */}
-      <div
-        className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: "140px", background: "linear-gradient(to bottom, transparent, #f9f9f9)", zIndex: 3 }}
-      />
-
     </section>
   );
 }

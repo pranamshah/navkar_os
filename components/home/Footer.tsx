@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 const SOLUTIONS: { label: string; href: string }[] = [
   { label: "Nexlog — Freight Ops",   href: "/demo/nexlog" },
@@ -42,19 +43,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-14">
           {/* Brand */}
           <div className="md:max-w-xs">
-            <Link href="/" className="block mb-5">
-              <span
-                style={{
-                  fontFamily: "'EB Garamond', Georgia, serif",
-                  fontSize: "28px",
-                  fontWeight: 400,
-                  color: "#1a1c1c",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                NavkarOS
-              </span>
-            </Link>
+            <div className="mb-5">
+              <LogoBrand height={22} />
+            </div>
             <p className="text-sm mb-6" style={{ color: "#4c4546", lineHeight: 1.7, fontWeight: 300 }}>
               The Operating System for Indian Logistics. Built for C&F agents,
               freight forwarders, CHA, transporters, and every player in the

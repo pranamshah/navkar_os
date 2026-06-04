@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import LogoBrand from "@/components/ui/LogoBrand";
 import { motion } from "framer-motion";
 import { Check, Copy, CheckCircle, Clock, FileText, Phone, MessageCircle, Mail } from "lucide-react";
 
@@ -149,10 +150,9 @@ export default function StatusPage() {
     <div className="min-h-screen py-16 px-6" style={{ background: "#fafafa" }}>
       <div className="max-w-lg mx-auto">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 mb-12">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#D4AF37" }}>N</div>
-          <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1c" }}>NavkarOS</span>
-        </Link>
+        <div className="mb-12">
+          <LogoBrand height={20} />
+        </div>
 
         {/* Status card */}
         <div className="p-8 mb-6" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)", boxShadow: "0 4px 24px rgba(0,0,0,0.04)" }}>
