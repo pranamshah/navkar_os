@@ -103,7 +103,7 @@ export default function Navbar() {
                   </span>
                 </div>
                 <Link
-                  href="/dashboard/client"
+                  href="/dashboard"
                   className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200"
                   style={{ background: "#1a1c1d", color: "#D4AF37" }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
@@ -176,7 +176,7 @@ export default function Navbar() {
               {isLoggedIn ? (
                 <>
                   <Link
-                    href="/dashboard/client"
+                    href="/dashboard"
                     className="w-full py-4 rounded-2xl font-semibold text-black text-center block"
                     style={{ background: "#f6be39" }}
                     onClick={() => setMobileOpen(false)}
