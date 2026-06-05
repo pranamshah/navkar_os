@@ -196,6 +196,128 @@ export default function AdminOverviewPage() {
         />
       </div>
 
+      {/* NavkarOS Suite */}
+      <div className="mb-8">
+        {/* Section header */}
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "#D4AF37" }}>Admin Access</p>
+            <h2 className="text-lg font-black uppercase tracking-widest" style={{ color: "#1a1c1c" }}>All Products</h2>
+            <p className="text-sm mt-0.5" style={{ color: "#7e7576" }}>Full access to all 6 products — no subscription required.</p>
+          </div>
+        </div>
+
+        {/* Summary strip */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {[
+            { label: "Products", value: "6" },
+            { label: "Access Level", value: "Full" },
+            { label: "Status", value: "Admin" },
+          ].map((s) => (
+            <div key={s.label} className="rounded-xl p-4 border" style={{ background: "#ffffff", borderColor: "rgba(0,0,0,0.07)" }}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#7e7576" }}>{s.label}</p>
+              <p className="font-black text-2xl" style={{ color: "#1a1c1c" }}>{s.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Full product cards — 3-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {[
+            {
+              id: "nexlog", name: "Nexlog", tagline: "Freight Forwarding", icon: "navigation", color: "#1565C0",
+              desc: "End-to-end job management for C&F agents and freight forwarders — booking, BL, tracking, and GST invoicing.",
+              features: ["Job management", "BL/AWB AI reading", "GST invoicing", "Client portal"],
+              href: "/dashboard/nexlog",
+            },
+            {
+              id: "entryx", name: "EntryX", tagline: "Customs Clearance", icon: "gavel", color: "#5B21B6",
+              desc: "AI-powered Bill of Entry preparation, ICEGATE filing, live duty calculation for licensed CHAs.",
+              features: ["AI BE preparation", "ICEGATE filing", "Duty calculator", "HS code lookup"],
+              href: "/dashboard/entryx",
+            },
+            {
+              id: "dockiq", name: "DockIQ", tagline: "CFS & Warehouse", icon: "warehouse", color: "#0D7057",
+              desc: "Complete CFS station management — gate-in/out, yard planning, storage slab billing, importer alerts.",
+              features: ["Gate-in/out tracking", "Yard planning", "Storage billing", "CFS invoicing"],
+              href: "/dashboard/dockiq",
+            },
+            {
+              id: "rundesk", name: "RunDesk", tagline: "Transport & Fleet", icon: "local_shipping", color: "#92400E",
+              desc: "LR generation, trip management, GPS tracking via driver app, vehicle compliance, GST freight invoicing.",
+              features: ["LR generation", "Trip management", "GPS tracking", "Vehicle compliance"],
+              href: "/dashboard/rundesk",
+            },
+            {
+              id: "accura", name: "Accura", tagline: "Freight Accounting", icon: "account_balance_wallet", color: "#1A237E",
+              desc: "Auto-posts income from every product. GSTR-1 & GSTR-3B ready, P&L in 3 seconds, Tally XML export.",
+              features: ["Auto income posting", "GSTR-1 & 3B export", "P&L dashboard", "Tally XML"],
+              href: "/dashboard/accura",
+            },
+            {
+              id: "tradepilot", name: "TradePilot", tagline: "Importers & Exporters", icon: "public", color: "#004D40",
+              desc: "Landed cost calculator, HSN Scout, FTA checker, RoDTEP tracker, document vault, shipment register.",
+              features: ["Landed cost calc", "HSN Scout", "FTA checker", "RoDTEP tracker"],
+              href: "/dashboard/tradepilot",
+            },
+          ].map((p) => (
+            <div
+              key={p.id}
+              className="rounded-xl border flex flex-col overflow-hidden transition-all duration-200 hover:shadow-lg"
+              style={{ background: "#ffffff", borderColor: `${p.color}30`, boxShadow: `0 0 0 1px ${p.color}10` }}
+            >
+              {/* Card header */}
+              <div
+                className="px-5 py-4 flex items-center justify-between"
+                style={{ background: `${p.color}08`, borderBottom: `1px solid ${p.color}15` }}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: `${p.color}18`, border: `1px solid ${p.color}30` }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: 20, color: p.color }}>{p.icon}</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>{p.tagline}</p>
+                    <p className="font-black text-sm" style={{ color: "#1a1c1c" }}>{p.name}</p>
+                  </div>
+                </div>
+                <span
+                  className="text-xs font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                  style={{ background: "rgba(34,197,94,0.1)", color: "#16a34a" }}
+                >
+                  Active
+                </span>
+              </div>
+              {/* Card body */}
+              <div className="px-5 py-4 flex-1 flex flex-col">
+                <p className="text-xs mb-3 flex-1" style={{ color: "#7e7576", lineHeight: 1.65 }}>{p.desc}</p>
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {p.features.map((f) => (
+                    <span
+                      key={f}
+                      className="text-xs px-2 py-0.5 rounded-full"
+                      style={{ background: `${p.color}08`, color: p.color, border: `0.5px solid ${p.color}20` }}
+                    >
+                      {f}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={p.href}
+                  className="flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90 no-underline"
+                  style={{ background: "#1a1c1c", color: "#D4AF37", textDecoration: "none" }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
+                  Open {p.name}
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Revenue Chart + Recent Signups */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Chart */}
