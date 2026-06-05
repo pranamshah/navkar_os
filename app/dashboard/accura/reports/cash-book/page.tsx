@@ -137,7 +137,7 @@ export default function CashBookPage() {
 
       {/* Two-column ledger */}
       <div className="rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
-        <div className="grid grid-cols-2 divide-x" style={{ divideColor: "#E5E7EB" }}>
+        <div className="grid grid-cols-2 divide-x divide-[#E5E7EB]">
           {/* Receipts column */}
           <div>
             <div className="px-4 py-2.5 border-b" style={{ background: "#ECFDF5", borderColor: "#D1FAE5" }}>
