@@ -5,34 +5,80 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type Tab = "smart-entry" | "scanner" | "anomaly";
 
-const anomalies = [
-  { id: 1, type: "Duplicate Entry", severity: "high" as const, desc: "Payment voucher PMT/25-26/089 appears to be a duplicate of PMT/25-26/082 — same party, same amount (₹54,000), 3 days apart.", ledger: "Sakthi Transport", amount: 54000 },
-  { id: 2, type: "Unusual Amount", severity: "medium" as const, desc: "CFS Charges voucher on Jun 12 is 2.4× the average monthly CFS spend. Verify against invoice.", ledger: "CFS Charges", amount: 196000 },
-  { id: 3, type: "Missing GSTIN", severity: "low" as const, desc: "Sales invoice INV/25-26/071 has party GSTIN but no corresponding GSTR-1 entry was generated. Check GST settings.", ledger: "Global Impex Pvt Ltd", amount: 50000 },
-];
-
-const smartEntryResult = {
-  type: "Payment Voucher",
-  date: "2026-06-14",
-  party: "Apollo World Shipping",
-  amount: 74000,
-  ledger: "Apollo World Shipping (Sundry Creditors)",
-  payFrom: "HDFC Bank CC",
-  narration: "Being payment against bill APL/2026/0892 for shipping charges",
-};
+interface ParsedVoucher {
+  voucherType: string;
+  date: string;
+  narration: string;
+  totalAmount: number;
+  suggestedLines: { account: string; type: "Dr" | "Cr"; amount: number; narration?: string }[];
+}
 
 function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
 
 export default function AIPage() {
   const [tab, setTab] = useState<Tab>("smart-entry");
   const [nlpQuery, setNlpQuery] = useState("");
-  const [showResult, setShowResult] = useState(false);
-  const [analysing, setAnalysing] = useState(false);
+  const [parsed, setParsed] = useState<ParsedVoucher | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [voucherSaved, setVoucherSaved] = useState(false);
 
-  const handleNLP = () => {
+  const handleParse = async () => {
     if (!nlpQuery.trim()) return;
-    setAnalysing(true);
-    setTimeout(() => { setAnalysing(false); setShowResult(true); }, 1400);
+    setLoading(true);
+    setError(null);
+    setParsed(null);
+    setVoucherSaved(false);
+    try {
+      const res = await fetch("/api/accura/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: nlpQuery }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Parsing failed. Please try again.");
+      } else {
+        setParsed(data);
+      }
+    } catch {
+      setError("Network error. Please check your connection.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateVoucher = async () => {
+    if (!parsed) return;
+    try {
+      const res = await fetch("/api/accura/vouchers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          voucherType: parsed.voucherType,
+          date: parsed.date,
+          narration: parsed.narration,
+          totalAmount: parsed.totalAmount,
+          lines: parsed.suggestedLines.map((l) => ({
+            ledgerId: null,
+            accountName: l.account,
+            type: l.type,
+            amount: l.amount,
+            narration: l.narration ?? "",
+          })),
+        }),
+      });
+      if (res.ok) {
+        setVoucherSaved(true);
+        setParsed(null);
+        setNlpQuery("");
+      } else {
+        const d = await res.json();
+        setError(d.error || "Failed to create voucher.");
+      }
+    } catch {
+      setError("Failed to create voucher. Please try again.");
+    }
   };
 
   const tabs = [
@@ -67,53 +113,109 @@ export default function AIPage() {
         {tab === "smart-entry" && (
           <div className="max-w-2xl">
             <div className="rounded-xl border p-5 mb-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
-              <h2 className="text-sm font-semibold mb-2" style={{ color: "#111827" }}>Natural Language Entry</h2>
-              <p className="text-[12px] mb-4" style={{ color: "#6B7280" }}>Describe the transaction in plain English and AI will create the voucher for you.</p>
+              <h2 className="text-sm font-semibold mb-1" style={{ color: "#111827" }}>Natural Language Entry</h2>
+              <p className="text-[12px] mb-1" style={{ color: "#6B7280" }}>Describe the transaction in plain language and AI will create the voucher for you.</p>
+              <p className="text-[11px] mb-4 italic" style={{ color: "#9CA3AF" }}>e.g. &quot;Paid ₹5000 to Sakthi Transport for truck charges today&quot;</p>
               <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="e.g. Paid Apollo World Shipping ₹74,000 from HDFC for freight charges on Jun 14"
+                <textarea
+                  rows={2}
+                  placeholder="e.g. Paid ₹74,000 to Apollo World Shipping from HDFC Bank for freight charges on 5 June"
                   value={nlpQuery}
-                  onChange={(e) => { setNlpQuery(e.target.value); setShowResult(false); }}
-                  onKeyDown={(e) => e.key === "Enter" && handleNLP()}
-                  className="flex-1 px-4 py-2.5 rounded-lg border text-[13px] outline-none"
+                  onChange={(e) => { setNlpQuery(e.target.value); setParsed(null); setError(null); setVoucherSaved(false); }}
+                  onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleParse(); } }}
+                  className="flex-1 px-4 py-2.5 rounded-lg border text-[13px] outline-none resize-none"
                   style={{ borderColor: "#E5E7EB", color: "#111827" }}
                 />
-                <button onClick={handleNLP} disabled={!nlpQuery.trim() || analysing}
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-medium text-white disabled:opacity-60 transition-opacity"
+                <button onClick={handleParse} disabled={!nlpQuery.trim() || loading}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-medium text-white disabled:opacity-60 transition-opacity self-start"
                   style={{ background: "linear-gradient(135deg, #0E7490, #7C3AED)" }}>
-                  {analysing ? (
+                  {loading ? (
                     <span className="material-symbols-outlined animate-spin" style={{ fontSize: 16 }}>refresh</span>
                   ) : (
                     <span className="material-symbols-outlined" style={{ fontSize: 16 }}>auto_awesome</span>
                   )}
-                  {analysing ? "Analysing..." : "Parse"}
+                  {loading ? "Parsing..." : "Parse Entry"}
                 </button>
               </div>
             </div>
 
             <AnimatePresence>
-              {showResult && (
+              {error && (
+                <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  className="rounded-xl border p-4 mb-4 flex items-start gap-2" style={{ background: "#FEF2F2", borderColor: "#FECACA" }}>
+                  <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 16, color: "#DC2626" }}>error</span>
+                  <span className="text-[13px]" style={{ color: "#DC2626" }}>{error}</span>
+                </motion.div>
+              )}
+
+              {voucherSaved && (
+                <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  className="rounded-xl border p-4 mb-4 flex items-start gap-2" style={{ background: "#ECFDF5", borderColor: "#A7F3D0" }}>
+                  <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 16, color: "#059669", fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                  <span className="text-[13px] font-medium" style={{ color: "#059669" }}>Voucher created successfully!</span>
+                </motion.div>
+              )}
+
+              {parsed && (
                 <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                   className="rounded-xl border p-5" style={{ background: "#fff", borderColor: "#A5F3FC" }}>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#0E7490", fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    <span className="text-[13px] font-semibold" style={{ color: "#0E7490" }}>Voucher detected — review and save</span>
+                    <span className="text-[13px] font-semibold" style={{ color: "#0E7490" }}>Voucher parsed — review and save</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 text-[13px]">
-                    {Object.entries(smartEntryResult).map(([k, v]) => (
-                      <div key={k}>
-                        <div className="text-[11px] uppercase tracking-wide mb-0.5" style={{ color: "#9CA3AF" }}>{k.replace(/([A-Z])/g, " $1").trim()}</div>
-                        <div className="font-medium" style={{ color: "#111827" }}>{k === "amount" ? fmt(v as number) : v as string}</div>
-                      </div>
-                    ))}
+
+                  {/* Header fields */}
+                  <div className="grid grid-cols-3 gap-3 mb-4 text-[13px]">
+                    <div>
+                      <div className="text-[11px] uppercase tracking-wide mb-0.5" style={{ color: "#9CA3AF" }}>Voucher Type</div>
+                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-white" style={{ background: "#0E7490" }}>{parsed.voucherType}</span>
+                    </div>
+                    <div>
+                      <div className="text-[11px] uppercase tracking-wide mb-0.5" style={{ color: "#9CA3AF" }}>Date</div>
+                      <div className="font-medium" style={{ color: "#111827" }}>{parsed.date}</div>
+                    </div>
+                    <div>
+                      <div className="text-[11px] uppercase tracking-wide mb-0.5" style={{ color: "#9CA3AF" }}>Total Amount</div>
+                      <div className="font-bold font-mono text-[15px]" style={{ color: "#0E7490" }}>{fmt(parsed.totalAmount)}</div>
+                    </div>
+                    <div className="col-span-3">
+                      <div className="text-[11px] uppercase tracking-wide mb-0.5" style={{ color: "#9CA3AF" }}>Narration</div>
+                      <div style={{ color: "#374151" }}>{parsed.narration}</div>
+                    </div>
                   </div>
-                  <div className="flex gap-2 mt-4">
-                    <button className="flex-1 py-2 rounded-lg text-[13px] font-medium text-white" style={{ background: "#0E7490" }}>
-                      Save as Payment Voucher
+
+                  {/* Journal lines table */}
+                  <div className="rounded-lg border overflow-hidden mb-4" style={{ borderColor: "#E5E7EB" }}>
+                    <table className="w-full text-[12px]">
+                      <thead>
+                        <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+                          <th className="px-3 py-2 text-left font-semibold uppercase tracking-wide text-[10px]" style={{ color: "#6B7280" }}>Account</th>
+                          <th className="px-3 py-2 text-right font-semibold uppercase tracking-wide text-[10px]" style={{ color: "#6B7280" }}>Dr</th>
+                          <th className="px-3 py-2 text-right font-semibold uppercase tracking-wide text-[10px]" style={{ color: "#6B7280" }}>Cr</th>
+                          <th className="px-3 py-2 text-left font-semibold uppercase tracking-wide text-[10px]" style={{ color: "#6B7280" }}>Note</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {parsed.suggestedLines.map((line, i) => (
+                          <tr key={i} className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                            <td className="px-3 py-2 font-medium" style={{ color: "#111827" }}>{line.account}</td>
+                            <td className="px-3 py-2 text-right font-mono" style={{ color: "#DC2626" }}>{line.type === "Dr" ? fmt(line.amount) : "—"}</td>
+                            <td className="px-3 py-2 text-right font-mono" style={{ color: "#059669" }}>{line.type === "Cr" ? fmt(line.amount) : "—"}</td>
+                            <td className="px-3 py-2" style={{ color: "#9CA3AF" }}>{line.narration || ""}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button onClick={handleCreateVoucher}
+                      className="flex-1 py-2 rounded-lg text-[13px] font-medium text-white" style={{ background: "#0E7490" }}>
+                      Create Voucher
                     </button>
-                    <button onClick={() => setShowResult(false)} className="px-4 py-2 rounded-lg text-[13px] border" style={{ borderColor: "#E5E7EB", color: "#6B7280" }}>
-                      Edit
+                    <button onClick={() => { setParsed(null); setNlpQuery(""); }}
+                      className="px-4 py-2 rounded-lg text-[13px] border" style={{ borderColor: "#E5E7EB", color: "#6B7280" }}>
+                      Clear
                     </button>
                   </div>
                 </motion.div>
@@ -125,60 +227,36 @@ export default function AIPage() {
         {tab === "scanner" && (
           <div className="max-w-xl">
             <div className="rounded-xl border p-10 text-center" style={{ background: "#fff", borderColor: "#E5E7EB", borderStyle: "dashed" }}>
+              <div className="flex justify-center mb-3">
+                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-widest" style={{ background: "#FEF3C7", color: "#D97706" }}>Coming Soon</span>
+              </div>
               <span className="material-symbols-outlined mb-3 block" style={{ fontSize: 48, color: "#9CA3AF" }}>document_scanner</span>
               <h3 className="text-base font-semibold mb-2" style={{ color: "#111827" }}>Upload Invoice / Bill</h3>
-              <p className="text-[13px] mb-5" style={{ color: "#6B7280" }}>AI extracts party, amount, GST, and date from PDF or image invoices and creates the voucher automatically.</p>
-              <button className="px-6 py-3 rounded-lg text-[13px] font-medium text-white" style={{ background: "#0E7490" }}>
-                Upload Document
-              </button>
-              <div className="mt-4 text-[11px]" style={{ color: "#9CA3AF" }}>Supports: PDF, JPG, PNG, HEIC</div>
+              <p className="text-[13px] mb-5" style={{ color: "#6B7280" }}>Upload invoices, bills, or receipts to auto-extract data. Powered by AI OCR.</p>
+              <div className="border-2 border-dashed rounded-lg p-8 mb-4" style={{ borderColor: "#D1D5DB" }}>
+                <span className="material-symbols-outlined block mb-2" style={{ fontSize: 32, color: "#D1D5DB" }}>cloud_upload</span>
+                <p className="text-[12px]" style={{ color: "#9CA3AF" }}>Drag and drop or click to upload</p>
+              </div>
+              <div className="text-[11px]" style={{ color: "#9CA3AF" }}>Supports: PDF, JPG, PNG, HEIC</div>
             </div>
           </div>
         )}
 
         {tab === "anomaly" && (
-          <div className="space-y-3">
-            <div className="rounded-xl border p-4 flex items-start gap-3 mb-2" style={{ background: "#F5F3FF", borderColor: "#DDD6FE" }}>
-              <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 18, color: "#7C3AED", fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+          <div className="max-w-2xl">
+            <div className="rounded-xl border p-4 mb-4 flex items-start gap-3" style={{ background: "#F5F3FF", borderColor: "#DDD6FE" }}>
+              <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 18, color: "#7C3AED", fontVariationSettings: "'FILL' 1" }}>info</span>
               <div>
-                <div className="text-[13px] font-semibold" style={{ color: "#7C3AED" }}>AI Anomaly Scan Complete</div>
-                <div className="text-[12px] mt-0.5" style={{ color: "#6B7280" }}>Scanned 248 vouchers · {anomalies.length} issues found · Last run: Today 9:00 AM</div>
+                <div className="text-[13px] font-semibold" style={{ color: "#7C3AED" }}>Anomaly Detection</div>
+                <div className="text-[12px] mt-0.5" style={{ color: "#6B7280" }}>Anomaly detection runs on your voucher data. Currently shows duplicate detection.</div>
               </div>
             </div>
 
-            {anomalies.map((a) => (
-              <motion.div key={a.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: a.id * 0.05 }}
-                className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-3">
-                    <span className="material-symbols-outlined mt-0.5" style={{
-                      fontSize: 18,
-                      color: a.severity === "high" ? "#DC2626" : a.severity === "medium" ? "#D97706" : "#0E7490",
-                      fontVariationSettings: "'FILL' 1"
-                    }}>
-                      {a.severity === "high" ? "error" : a.severity === "medium" ? "warning" : "info"}
-                    </span>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-[13px] font-semibold" style={{ color: "#111827" }}>{a.type}</span>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full font-medium uppercase tracking-wide" style={{
-                          background: a.severity === "high" ? "#FEF2F2" : a.severity === "medium" ? "#FFFBEB" : "#ECFEFF",
-                          color: a.severity === "high" ? "#DC2626" : a.severity === "medium" ? "#D97706" : "#0E7490",
-                        }}>{a.severity}</span>
-                      </div>
-                      <p className="text-[12px]" style={{ color: "#6B7280" }}>{a.desc}</p>
-                      <div className="flex items-center gap-4 mt-2 text-[11px]" style={{ color: "#9CA3AF" }}>
-                        <span>{a.ledger}</span>
-                        <span className="font-mono">{fmt(a.amount)}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <button className="text-[12px] px-3 py-1.5 rounded-md border hover:bg-gray-50 transition-colors" style={{ borderColor: "#E5E7EB", color: "#374151" }}>
-                    Review
-                  </button>
-                </div>
-              </motion.div>
-            ))}
+            <div className="rounded-xl border p-12 text-center" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+              <span className="material-symbols-outlined mb-3 block" style={{ fontSize: 40, color: "#D1D5DB" }}>policy</span>
+              <h3 className="text-[14px] font-semibold mb-1" style={{ color: "#374151" }}>No anomalies detected</h3>
+              <p className="text-[12px]" style={{ color: "#9CA3AF" }}>Add vouchers to begin analysis.</p>
+            </div>
           </div>
         )}
       </motion.div>

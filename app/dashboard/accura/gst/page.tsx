@@ -5,17 +5,13 @@ import { motion } from "framer-motion";
 
 type Tab = "summary" | "gstr1" | "gstr3b";
 
-const gstr1Invoices = [
-  { inv: "INV/25-26/058", date: "2026-05-12", party: "Ravi Exports Pvt Ltd", gstin: "27AABCR1234A1Z5", taxable: 54000, cgst: 4860, sgst: 4860, igst: 0, total: 63720 },
-  { inv: "INV/25-26/064", date: "2026-06-01", party: "HDFC Traders", gstin: "27AAACH1234D1Z2", taxable: 42000, cgst: 3780, sgst: 3780, igst: 0, total: 49560 },
-  { inv: "INV/25-26/071", date: "2026-06-10", party: "Global Impex Pvt Ltd", gstin: "29AABCG4567B1Z1", taxable: 50000, cgst: 0, sgst: 0, igst: 9000, total: 59000 },
-];
+const gstr1Invoices: never[] = [];
 
 const gstr3bData = {
-  outward: { taxable: 146000, cgst: 8640, sgst: 8640, igst: 9000 },
-  inward: { taxable: 192000, cgst: 12600, sgst: 12600, igst: 0 },
-  itcAvailable: { cgst: 12600, sgst: 12600, igst: 0 },
-  netPayable: { cgst: 0, sgst: 0, igst: 9000 },
+  outward: { taxable: 0, cgst: 0, sgst: 0, igst: 0 },
+  inward: { taxable: 0, cgst: 0, sgst: 0, igst: 0 },
+  itcAvailable: { cgst: 0, sgst: 0, igst: 0 },
+  netPayable: { cgst: 0, sgst: 0, igst: 0 },
 };
 
 function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
@@ -62,9 +58,9 @@ export default function GSTPage() {
           <div className="space-y-4">
             <div className="grid grid-cols-4 gap-4">
               {[
-                { label: "Total Outward Supplies", val: fmt(gstr3bData.outward.taxable), sub: `CGST ${fmt(gstr3bData.outward.cgst)} + SGST ${fmt(gstr3bData.outward.sgst)}`, color: "#0E7490", bg: "#ECFEFF" },
-                { label: "ITC Available", val: fmt(gstr3bData.itcAvailable.cgst + gstr3bData.itcAvailable.sgst), sub: "Input Tax Credit", color: "#059669", bg: "#ECFDF5" },
-                { label: "GST Payable", val: fmt(gstr3bData.netPayable.igst), sub: "IGST after setoff", color: "#DC2626", bg: "#FEF2F2" },
+                { label: "Total Outward Supplies", val: "₹0", sub: "No sales vouchers yet", color: "#0E7490", bg: "#ECFEFF" },
+                { label: "ITC Available", val: "₹0", sub: "Input Tax Credit", color: "#059669", bg: "#ECFDF5" },
+                { label: "GST Payable", val: "₹0", sub: "IGST after setoff", color: "#DC2626", bg: "#FEF2F2" },
                 { label: "Filing Due", val: "20 Jul 2026", sub: "GSTR-3B deadline", color: "#D97706", bg: "#FFFBEB" },
               ].map((kpi) => (
                 <div key={kpi.label} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
@@ -88,27 +84,27 @@ export default function GSTPage() {
                   <tbody>
                     <tr className="border-b" style={{ borderColor: "#F3F4F6" }}>
                       <td className="px-3 py-2.5 font-medium" style={{ color: "#111827" }}>Outward Supplies (Sales)</td>
-                      <td className="px-3 py-2.5 text-right font-mono">{fmt(gstr3bData.outward.taxable)}</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(gstr3bData.outward.cgst)}</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(gstr3bData.outward.sgst)}</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#7C3AED" }}>{fmt(gstr3bData.outward.igst)}</td>
-                      <td className="px-3 py-2.5 text-right font-mono font-semibold">{fmt(gstr3bData.outward.cgst + gstr3bData.outward.sgst + gstr3bData.outward.igst)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono">{fmt(0)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(0)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(0)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#7C3AED" }}>{fmt(0)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono font-semibold">{fmt(0)}</td>
                     </tr>
                     <tr className="border-b" style={{ borderColor: "#F3F4F6" }}>
                       <td className="px-3 py-2.5 font-medium" style={{ color: "#111827" }}>ITC Available (Purchases)</td>
-                      <td className="px-3 py-2.5 text-right font-mono">{fmt(gstr3bData.inward.taxable)}</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#059669" }}>({fmt(gstr3bData.itcAvailable.cgst)})</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#059669" }}>({fmt(gstr3bData.itcAvailable.sgst)})</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#059669" }}>({fmt(gstr3bData.itcAvailable.igst)})</td>
-                      <td className="px-3 py-2.5 text-right font-mono font-semibold" style={{ color: "#059669" }}>({fmt(gstr3bData.itcAvailable.cgst + gstr3bData.itcAvailable.sgst)})</td>
+                      <td className="px-3 py-2.5 text-right font-mono">{fmt(0)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#059669" }}>({fmt(0)})</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#059669" }}>({fmt(0)})</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#059669" }}>({fmt(0)})</td>
+                      <td className="px-3 py-2.5 text-right font-mono font-semibold" style={{ color: "#059669" }}>({fmt(0)})</td>
                     </tr>
                     <tr style={{ background: "#FFFBEB" }}>
                       <td className="px-3 py-3 font-bold" style={{ color: "#111827" }}>Net GST Payable</td>
                       <td />
                       <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#D97706" }}>{fmt(0)}</td>
                       <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#D97706" }}>{fmt(0)}</td>
-                      <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#DC2626" }}>{fmt(gstr3bData.netPayable.igst)}</td>
-                      <td className="px-3 py-3 text-right font-mono font-bold text-[14px]" style={{ color: "#DC2626" }}>{fmt(gstr3bData.netPayable.igst)}</td>
+                      <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#DC2626" }}>{fmt(0)}</td>
+                      <td className="px-3 py-3 text-right font-mono font-bold text-[14px]" style={{ color: "#DC2626" }}>{fmt(0)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -125,32 +121,24 @@ export default function GSTPage() {
                 <span className="material-symbols-outlined" style={{ fontSize: 14 }}>download</span>Download JSON
               </button>
             </div>
-            <table className="w-full text-[13px]">
-              <thead>
-                <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
-                  {["Invoice No", "Date", "Customer", "GSTIN", "Taxable", "CGST", "SGST", "IGST", "Total"].map((h) => (
-                    <th key={h} className="px-4 py-2.5 text-right first:text-left font-semibold text-[11px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {gstr1Invoices.map((inv) => (
-                  <tr key={inv.inv} className="border-b" style={{ borderColor: "#F3F4F6" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#F9FAFB")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}>
-                    <td className="px-4 py-2.5 font-mono text-[12px]" style={{ color: "#374151" }}>{inv.inv}</td>
-                    <td className="px-4 py-2.5" style={{ color: "#6B7280" }}>{inv.date}</td>
-                    <td className="px-4 py-2.5 font-medium" style={{ color: "#111827" }}>{inv.party}</td>
-                    <td className="px-4 py-2.5 font-mono text-[11px]" style={{ color: "#6B7280" }}>{inv.gstin}</td>
-                    <td className="px-4 py-2.5 text-right font-mono">{fmt(inv.taxable)}</td>
-                    <td className="px-4 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(inv.cgst)}</td>
-                    <td className="px-4 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(inv.sgst)}</td>
-                    <td className="px-4 py-2.5 text-right font-mono" style={{ color: "#7C3AED" }}>{fmt(inv.igst)}</td>
-                    <td className="px-4 py-2.5 text-right font-mono font-semibold" style={{ color: "#111827" }}>{fmt(inv.total)}</td>
+            {gstr1Invoices.length === 0 ? (
+              <div className="p-12 text-center">
+                <span className="material-symbols-outlined block mb-3" style={{ fontSize: 36, color: "#D1D5DB" }}>receipt_long</span>
+                <p className="text-[13px] font-medium" style={{ color: "#374151" }}>No outward supply invoices yet</p>
+                <p className="text-[12px] mt-1" style={{ color: "#9CA3AF" }}>Sales vouchers will appear here once added.</p>
+              </div>
+            ) : (
+              <table className="w-full text-[13px]">
+                <thead>
+                  <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+                    {["Invoice No", "Date", "Customer", "GSTIN", "Taxable", "CGST", "SGST", "IGST", "Total"].map((h) => (
+                      <th key={h} className="px-4 py-2.5 text-right first:text-left font-semibold text-[11px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody />
+              </table>
+            )}
           </div>
         )}
 
@@ -178,12 +166,12 @@ export default function GSTPage() {
               <h2 className="text-sm font-semibold mb-4" style={{ color: "#111827" }}>Table 4 — Eligible ITC</h2>
               <div className="flex justify-between items-center py-2 text-[13px]">
                 <span style={{ color: "#374151" }}>4(a)(5) — All other ITC</span>
-                <span className="font-mono font-semibold" style={{ color: "#059669" }}>{fmt(gstr3bData.itcAvailable.cgst + gstr3bData.itcAvailable.sgst)}</span>
+                <span className="font-mono font-semibold" style={{ color: "#059669" }}>{fmt(0)}</span>
               </div>
               <div className="mt-4 p-4 rounded-lg border" style={{ background: "#FFFBEB", borderColor: "#FDE68A" }}>
                 <div className="font-semibold text-[14px] flex justify-between" style={{ color: "#D97706" }}>
                   <span>Net Tax Payable after ITC</span>
-                  <span className="font-mono">{fmt(gstr3bData.netPayable.igst)}</span>
+                  <span className="font-mono">{fmt(0)}</span>
                 </div>
               </div>
             </div>

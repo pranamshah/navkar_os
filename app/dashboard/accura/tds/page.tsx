@@ -3,20 +3,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const tdsEntries = [
-  { party: "Sakthi Transport", section: "194C", nature: "Contractor payment", amount: 54000, rate: 2, tdsAmt: 1080, month: "April 2026", deposited: true, challanNo: "BSR/041026/00234" },
-  { party: "Sakthi Transport", section: "194C", nature: "Contractor payment", amount: 50000, rate: 2, tdsAmt: 1000, month: "May 2026", deposited: true, challanNo: "BSR/051026/00318" },
-  { party: "Office Rent (Landlord)", section: "194I", nature: "Rent", amount: 28000, rate: 10, tdsAmt: 2800, month: "April 2026", deposited: true, challanNo: "BSR/041026/00235" },
-  { party: "Office Rent (Landlord)", section: "194I", nature: "Rent", amount: 28000, rate: 10, tdsAmt: 2800, month: "May 2026", deposited: false, challanNo: "" },
-  { party: "Apollo World Shipping", section: "194C", nature: "Contractor payment", amount: 74000, rate: 2, tdsAmt: 1480, month: "June 2026", deposited: false, challanNo: "" },
-];
+const tdsEntries: never[] = [];
 
 function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
 
 export default function TDSPage() {
   const [tab, setTab] = useState<"register" | "deposit">("register");
-  const pendingDeposit = tdsEntries.filter((e) => !e.deposited);
-  const totalPending = pendingDeposit.reduce((s, e) => s + e.tdsAmt, 0);
+  const pendingDeposit: never[] = [];
+  const totalPending = 0;
 
   return (
     <div className="p-6" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -59,28 +53,15 @@ export default function TDSPage() {
                 </tr>
               </thead>
               <tbody>
-                {tdsEntries.map((e, i) => (
-                  <tr key={i} className="border-b" style={{ borderColor: "#F3F4F6" }}
-                    onMouseEnter={(ev) => ((ev.currentTarget as HTMLElement).style.background = "#F9FAFB")}
-                    onMouseLeave={(ev) => ((ev.currentTarget as HTMLElement).style.background = "transparent")}>
-                    <td className="px-4 py-2.5 font-medium" style={{ color: "#111827" }}>{e.party}</td>
-                    <td className="px-4 py-2.5">
-                      <span className="text-[11px] px-2 py-0.5 rounded font-mono font-medium" style={{ background: "#ECFEFF", color: "#0E7490" }}>{e.section}</span>
+                {tdsEntries.length === 0 && (
+                  <tr>
+                    <td colSpan={9} className="px-4 py-12 text-center">
+                      <span className="material-symbols-outlined block mb-3 mx-auto" style={{ fontSize: 36, color: "#D1D5DB" }}>receipt</span>
+                      <p className="text-[13px] font-medium" style={{ color: "#374151" }}>No TDS entries yet</p>
+                      <p className="text-[12px] mt-1" style={{ color: "#9CA3AF" }}>Add a TDS entry to get started.</p>
                     </td>
-                    <td className="px-4 py-2.5" style={{ color: "#6B7280" }}>{e.nature}</td>
-                    <td className="px-4 py-2.5" style={{ color: "#374151" }}>{e.month}</td>
-                    <td className="px-4 py-2.5 font-mono">{fmt(e.amount)}</td>
-                    <td className="px-4 py-2.5 font-mono">{e.rate}%</td>
-                    <td className="px-4 py-2.5 font-mono font-semibold" style={{ color: "#DC2626" }}>{fmt(e.tdsAmt)}</td>
-                    <td className="px-4 py-2.5">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-medium" style={{ color: e.deposited ? "#059669" : "#D97706" }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: 13 }}>{e.deposited ? "check_circle" : "pending"}</span>
-                        {e.deposited ? "Deposited" : "Pending"}
-                      </span>
-                    </td>
-                    <td className="px-4 py-2.5 font-mono text-[11px]" style={{ color: "#374151" }}>{e.challanNo || "—"}</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
@@ -88,30 +69,11 @@ export default function TDSPage() {
 
         {tab === "deposit" && (
           <div className="space-y-4">
-            <div className="rounded-xl border p-4" style={{ background: "#FEF2F2", borderColor: "#FECACA" }}>
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#DC2626", fontVariationSettings: "'FILL' 1" }}>warning</span>
-                <div>
-                  <div className="font-semibold text-[13px]" style={{ color: "#DC2626" }}>TDS deposit required by 7th of next month</div>
-                  <div className="text-[12px] mt-0.5" style={{ color: "#6B7280" }}>Total pending: {fmt(totalPending)} across {pendingDeposit.length} entries</div>
-                </div>
-              </div>
+            <div className="rounded-xl border p-12 text-center" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+              <span className="material-symbols-outlined block mb-3" style={{ fontSize: 36, color: "#D1D5DB" }}>pending_actions</span>
+              <p className="text-[13px] font-medium" style={{ color: "#374151" }}>No pending deposits</p>
+              <p className="text-[12px] mt-1" style={{ color: "#9CA3AF" }}>All TDS deposits are up to date.</p>
             </div>
-            {pendingDeposit.map((e, i) => (
-              <div key={i} className="rounded-xl border p-4 flex items-center justify-between" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
-                <div>
-                  <div className="font-medium text-[13px]" style={{ color: "#111827" }}>{e.party}</div>
-                  <div className="text-[12px] mt-0.5" style={{ color: "#6B7280" }}>{e.section} · {e.nature} · {e.month}</div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <div className="text-[11px]" style={{ color: "#6B7280" }}>TDS Amount</div>
-                    <div className="font-bold font-mono text-[15px]" style={{ color: "#DC2626" }}>{fmt(e.tdsAmt)}</div>
-                  </div>
-                  <button className="px-4 py-2 rounded-md text-[13px] font-medium text-white" style={{ background: "#0E7490" }}>Mark Deposited</button>
-                </div>
-              </div>
-            ))}
           </div>
         )}
       </motion.div>

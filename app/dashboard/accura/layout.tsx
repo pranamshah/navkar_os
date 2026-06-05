@@ -40,7 +40,7 @@ const navSections = [
       { label: "P&L Statement", icon: "trending_up", href: "/dashboard/accura/reports/pnl" },
       { label: "Balance Sheet", icon: "account_balance", href: "/dashboard/accura/reports/balance-sheet" },
       { label: "Outstanding Receivables", icon: "arrow_outward", href: "/dashboard/accura/reports/outstanding" },
-      { label: "Outstanding Payables", icon: "arrow_inward", href: "/dashboard/accura/reports/outstanding?tab=payables" },
+      { label: "Outstanding Payables", icon: "south_east", href: "/dashboard/accura/reports/outstanding?tab=payables" },
       { label: "Cash Book", icon: "payments", href: "/dashboard/accura/reports/cash-book" },
       { label: "Bank Book", icon: "account_balance_wallet", href: "/dashboard/accura/reports/bank-book" },
       { label: "Ledger Report", icon: "format_list_bulleted", href: "/dashboard/accura/reports/ledger" },
@@ -95,12 +95,83 @@ const navSections = [
   },
 ];
 
+function getCollapsedState(pathname: string) {
+  const result: Record<string, boolean> = {};
+  for (const section of navSections) {
+    const hasActive = section.items.some(item =>
+      item.href === "/dashboard/accura"
+        ? pathname === "/dashboard/accura"
+        : pathname.startsWith(item.href.split("?")[0])
+    );
+    result[section.title] = !hasActive; // collapse if no active item
+  }
+  return result;
+}
+
+function computeFY(): string {
+  const now = new Date();
+  const month = now.getMonth(); // 0-indexed, so March = 2, April = 3
+  const year = now.getFullYear();
+  if (month >= 3) {
+    // April or later: FY is currentYear-(currentYear+1)
+    return `${year}-${String(year + 1).slice(-2)}`;
+  } else {
+    // Jan-March: FY is (currentYear-1)-currentYear
+    return `${year - 1}-${String(year).slice(-2)}`;
+  }
+}
+
+function getFYOptions(): string[] {
+  const current = computeFY();
+  const startYear = parseInt(current.split("-")[0]);
+  return [
+    `${startYear - 2}-${String(startYear - 1).slice(-2)}`,
+    `${startYear - 1}-${String(startYear).slice(-2)}`,
+    `${startYear}-${String(startYear + 1).slice(-2)}`,
+    `${startYear + 1}-${String(startYear + 2).slice(-2)}`,
+  ];
+}
+
 export default function AccuraLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session, status } = useSession();
   const [shortcutDismissed, setShortcutDismissed] = useState(false);
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>(() => getCollapsedState(pathname));
+  const [selectedFY, setSelectedFY] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("accura_fy");
+      if (saved) return saved;
+    }
+    return computeFY();
+  });
+
+  useEffect(() => {
+    setCollapsed(getCollapsedState(pathname));
+  }, [pathname]);
+
+  useEffect(() => {
+    localStorage.setItem("accura_fy", selectedFY);
+  }, [selectedFY]);
+
+  useEffect(() => {
+    const shortcuts: Record<string, string> = {
+      F4: "/dashboard/accura/vouchers/contra",
+      F5: "/dashboard/accura/vouchers/payment",
+      F6: "/dashboard/accura/vouchers/receipt",
+      F7: "/dashboard/accura/vouchers/journal",
+      F8: "/dashboard/accura/vouchers/sales",
+      F9: "/dashboard/accura/vouchers/purchase",
+    };
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      const path = shortcuts[e.key];
+      if (path) { e.preventDefault(); router.push(path); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [router]);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -239,8 +310,22 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
         <div className="px-4 py-3 border-t border-white/10">
           <div className="text-[10px] text-white/30 leading-relaxed">
             <div className="font-medium text-white/50">Navkar Freight Co.</div>
-            <div>FY 2025–26</div>
           </div>
+        </div>
+
+        {/* Financial Year selector */}
+        <div className="px-4 py-3 border-t border-white/10">
+          <div className="text-[10px] text-white/30 mb-1">Financial Year</div>
+          <select
+            value={selectedFY}
+            onChange={(e) => setSelectedFY(e.target.value)}
+            className="w-full rounded text-[11px] px-2 py-1 outline-none"
+            style={{ background: "rgba(255,255,255,0.08)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+          >
+            {getFYOptions().map(fy => (
+              <option key={fy} value={fy} style={{ background: "#0A1628" }}>FY {fy}</option>
+            ))}
+          </select>
         </div>
       </aside>
 

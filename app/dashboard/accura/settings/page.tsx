@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 type Tab = "company" | "gst" | "opening" | "ca" | "backup";
@@ -8,6 +8,73 @@ type Tab = "company" | "gst" | "opening" | "ca" | "backup";
 export default function SettingsPage() {
   const [tab, setTab] = useState<Tab>("company");
   const [saved, setSaved] = useState(false);
+  const [backupLoading, setBackupLoading] = useState(false);
+  const restoreInputRef = useRef<HTMLInputElement>(null);
+
+  const handleBackup = async () => {
+    setBackupLoading(true);
+    try {
+      const [vouchersRes, ledgersRes, groupsRes] = await Promise.all([
+        fetch("/api/accura/vouchers?limit=10000").then(r => r.json()),
+        fetch("/api/accura/ledgers").then(r => r.json()),
+        fetch("/api/accura/groups").then(r => r.json()),
+      ]);
+
+      const backup = {
+        exportedAt: new Date().toISOString(),
+        version: "1.0",
+        data: { vouchers: vouchersRes, ledgers: ledgersRes, groups: groupsRes }
+      };
+
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `accura-backup-${new Date().toISOString().split("T")[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch { alert("Backup failed. Please try again."); }
+    finally { setBackupLoading(false); }
+  };
+
+  const handleExportCSV = async () => {
+    const res = await fetch("/api/accura/vouchers?limit=10000");
+    const vouchers = await res.json();
+    if (!Array.isArray(vouchers)) return;
+
+    const rows = [["Date","Voucher No","Type","Narration","Amount","Status"]];
+    vouchers.forEach((v: {date: string; voucherNo: string; voucherType: string; narration: string; totalAmount: number; status: string}) => {
+      rows.push([
+        new Date(v.date).toLocaleDateString("en-IN"),
+        v.voucherNo, v.voucherType, v.narration ?? "", String(v.totalAmount), v.status
+      ]);
+    });
+
+    const csv = rows.map(r => r.map(c => `"${c}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `accura-vouchers-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleRestore = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const text = await file.text();
+    try {
+      const backup = JSON.parse(text);
+      if (!backup.data?.vouchers) { alert("Invalid backup file"); return; }
+
+      if (!confirm(`Restore backup from ${new Date(backup.exportedAt).toLocaleDateString("en-IN")}?\n\nThis will NOT overwrite existing data — it merges the backup.`)) return;
+
+      alert("Restore functionality will be available in the next update. Your current data is safe.");
+      // TODO: implement merge restore when the API supports upsert
+    } catch { alert("Invalid backup file. Please select a valid JSON backup."); }
+  };
 
   const [company, setCompany] = useState({
     name: "Navkar Freight Co.",
@@ -145,20 +212,52 @@ export default function SettingsPage() {
               <div className="rounded-xl border p-6 space-y-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
                 <h2 className="text-sm font-semibold" style={{ color: "#111827" }}>Backup & Export</h2>
                 <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: "Export to Tally XML", icon: "code", desc: "Compatible with TallyPrime import", color: "#0E7490" },
-                    { label: "Export to Excel", icon: "table_chart", desc: "All vouchers and ledgers", color: "#059669" },
-                    { label: "Download Full Backup", icon: "backup", desc: "JSON format — all data", color: "#7C3AED" },
-                    { label: "Export GST Data", icon: "receipt_long", desc: "GSTR-1 / GSTR-3B JSON", color: "#D97706" },
-                  ].map((item) => (
-                    <button key={item.label} className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors" style={{ borderColor: "#E5E7EB" }}>
-                      <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: item.color }}>{item.icon}</span>
-                      <div>
-                        <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>{item.label}</div>
-                        <div className="text-[11px] mt-0.5" style={{ color: "#9CA3AF" }}>{item.desc}</div>
+                  <button onClick={handleBackup} disabled={backupLoading}
+                    className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors disabled:opacity-60"
+                    style={{ borderColor: "#E5E7EB" }}>
+                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#7C3AED" }}>backup</span>
+                    <div>
+                      <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>
+                        {backupLoading ? "Exporting..." : "Download Full Backup"}
                       </div>
-                    </button>
-                  ))}
+                      <div className="text-[11px] mt-0.5" style={{ color: "#9CA3AF" }}>JSON format — all data</div>
+                    </div>
+                  </button>
+
+                  <button onClick={handleExportCSV}
+                    className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors"
+                    style={{ borderColor: "#E5E7EB" }}>
+                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#059669" }}>table_chart</span>
+                    <div>
+                      <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>Export Vouchers as CSV</div>
+                      <div className="text-[11px] mt-0.5" style={{ color: "#9CA3AF" }}>All vouchers in spreadsheet format</div>
+                    </div>
+                  </button>
+
+                  <button onClick={() => restoreInputRef.current?.click()}
+                    className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors"
+                    style={{ borderColor: "#E5E7EB" }}>
+                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#0E7490" }}>restore</span>
+                    <div>
+                      <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>Restore from Backup</div>
+                      <div className="text-[11px] mt-0.5" style={{ color: "#9CA3AF" }}>Upload a JSON backup file</div>
+                    </div>
+                  </button>
+                  <input
+                    ref={restoreInputRef}
+                    type="file"
+                    accept="application/json"
+                    className="hidden"
+                    onChange={handleRestore}
+                  />
+
+                  <button className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors" style={{ borderColor: "#E5E7EB" }}>
+                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#D97706" }}>receipt_long</span>
+                    <div>
+                      <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>Export GST Data</div>
+                      <div className="text-[11px] mt-0.5" style={{ color: "#9CA3AF" }}>GSTR-1 / GSTR-3B JSON</div>
+                    </div>
+                  </button>
                 </div>
                 <div className="text-[11px] pt-2" style={{ color: "#9CA3AF" }}>Last backup: Never · Auto-backup: Daily at 11:30 PM IST</div>
               </div>

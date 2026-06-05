@@ -5,30 +5,15 @@ import { useRouter } from "next/navigation";
 import { TypeAheadInput } from "@/components/accura/TypeAheadInput";
 import { motion } from "framer-motion";
 
-const BANK_LEDGERS = [
-  { id: "hdfc", label: "HDFC Bank CC", sub: "Bank Accounts" },
-  { id: "sbi", label: "SBI Current Account", sub: "Bank Accounts" },
-  { id: "cash", label: "Cash", sub: "Cash-in-Hand" },
-  { id: "petty", label: "Petty Cash", sub: "Cash-in-Hand" },
-];
-
-const PARTY_LEDGERS = [
-  { id: "apollo", label: "Apollo World Shipping", sub: "Sundry Creditors" },
-  { id: "sakthi", label: "Sakthi Transport", sub: "Sundry Creditors" },
-  { id: "ravi", label: "Ravi Exports Pvt Ltd", sub: "Sundry Debtors" },
-  { id: "rent", label: "Office Rent", sub: "Indirect Expenses" },
-  { id: "salary", label: "Staff Salary", sub: "Indirect Expenses" },
-  { id: "cfs", label: "CFS Charges", sub: "Direct Expenses" },
-  { id: "transport", label: "Transport Charges", sub: "Direct Expenses" },
-  { id: "cgst", label: "CGST Payable", sub: "Duties & Taxes" },
-  { id: "sgst", label: "SGST Payable", sub: "Duties & Taxes" },
-  { id: "igst", label: "IGST Payable", sub: "Duties & Taxes" },
-  { id: "tds", label: "TDS Payable (194C)", sub: "Duties & Taxes" },
-];
+interface LedgerOption {
+  id: string;
+  name: string;
+  group: { name: string; nature: string };
+}
 
 interface VoucherLine {
   id: number;
-  ledger: string;
+  ledgerId: string;
   amount: string;
   narration: string;
 }
@@ -46,23 +31,75 @@ export default function PaymentVoucherPage() {
   const router = useRouter();
   const [voucherNo] = useState(genVoucherNo);
   const [date, setDate] = useState(today());
-  const [bankLedger, setBankLedger] = useState("");
+  const [bankLedgerId, setBankLedgerId] = useState("");
   const [narration, setNarration] = useState("");
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [ledgerOptions, setLedgerOptions] = useState<LedgerOption[]>([]);
   const [lines, setLines] = useState<VoucherLine[]>([
-    { id: 1, ledger: "", amount: "", narration: "" },
+    { id: 1, ledgerId: "", amount: "", narration: "" },
   ]);
+
+  useEffect(() => {
+    fetch("/api/accura/ledgers")
+      .then((r) => r.json())
+      .then(setLedgerOptions)
+      .catch(() => {});
+  }, []);
 
   const totalAmount = lines.reduce((s, l) => s + (parseFloat(l.amount) || 0), 0);
 
   const addLine = () =>
-    setLines((prev) => [...prev, { id: prev.length + 1, ledger: "", amount: "", narration: "" }]);
+    setLines((prev) => [...prev, { id: Date.now(), ledgerId: "", amount: "", narration: "" }]);
 
   const removeLine = (id: number) =>
     setLines((prev) => prev.filter((l) => l.id !== id));
 
   const updateLine = (id: number, field: keyof VoucherLine, val: string) =>
     setLines((prev) => prev.map((l) => (l.id === id ? { ...l, [field]: val } : l)));
+
+  function resetForm() {
+    setBankLedgerId("");
+    setNarration("");
+    setLines([{ id: 1, ledgerId: "", amount: "", narration: "" }]);
+  }
+
+  const handleSave = async () => {
+    if (!bankLedgerId) { alert("Select a bank/cash ledger"); return; }
+    const validLines = lines.filter((l) => l.ledgerId && parseFloat(l.amount) > 0);
+    if (!validLines.length) { alert("Add at least one payment line"); return; }
+
+    setSaving(true);
+    try {
+      const total = validLines.reduce((s, l) => s + parseFloat(l.amount), 0);
+      const res = await fetch("/api/accura/vouchers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          voucherType: "PAYMENT",
+          voucherNo,
+          date,
+          narration,
+          totalAmount: total,
+          lines: [
+            { ledgerId: bankLedgerId, type: "Cr", amount: total },
+            ...validLines.map((l) => ({ ledgerId: l.ledgerId, type: "Dr", amount: parseFloat(l.amount), narration: l.narration })),
+          ],
+        }),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => { setSaved(false); resetForm(); }, 1500);
+      } else {
+        const err = await res.json();
+        alert(err.error ?? "Failed to save");
+      }
+    } catch {
+      alert("Network error");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -74,13 +111,28 @@ export default function PaymentVoucherPage() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [bankLedgerId, lines, narration, date]);
 
-  const handleSave = () => {
-    if (!bankLedger || !date || lines.some((l) => !l.ledger || !l.amount)) return;
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  };
+  // Build dropdown options for TypeAheadInput
+  const bankOptions = ledgerOptions
+    .filter((l) => ["Bank Accounts", "Cash-in-Hand"].includes(l.group?.name ?? ""))
+    .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }));
+
+  // Fallback hardcoded if API returns nothing (prevents blank state on first load)
+  const bankOpts = bankOptions.length > 0 ? bankOptions : [
+    { id: "__hdfc", label: "HDFC Bank CC", sub: "Bank Accounts" },
+    { id: "__sbi", label: "SBI Current Account", sub: "Bank Accounts" },
+    { id: "__cash", label: "Cash", sub: "Cash-in-Hand" },
+  ];
+
+  const partyOptions = ledgerOptions
+    .filter((l) => !["Bank Accounts", "Cash-in-Hand"].includes(l.group?.name ?? ""))
+    .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }));
+
+  const partyOpts = partyOptions.length > 0 ? partyOptions : [
+    { id: "__rent", label: "Office Rent", sub: "Indirect Expenses" },
+    { id: "__salary", label: "Staff Salary", sub: "Indirect Expenses" },
+  ];
 
   return (
     <div className="p-6 max-w-4xl" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -96,10 +148,7 @@ export default function PaymentVoucherPage() {
           </button>
           <div>
             <h1 className="text-lg font-semibold flex items-center gap-2" style={{ color: "#111827" }}>
-              <span
-                className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
-                style={{ background: "#ECFEFF", color: "#0E7490" }}
-              >F5</span>
+              <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: "#ECFEFF", color: "#0E7490" }}>F5</span>
               Payment Voucher
             </h1>
             <p className="text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{voucherNo}</p>
@@ -141,9 +190,9 @@ export default function PaymentVoucherPage() {
           <TypeAheadInput
             label="Pay from *"
             placeholder="Select bank / cash..."
-            options={BANK_LEDGERS}
-            value={bankLedger}
-            onChange={setBankLedger}
+            options={bankOpts}
+            value={bankLedgerId}
+            onChange={setBankLedgerId}
             required
           />
         </div>
@@ -169,9 +218,9 @@ export default function PaymentVoucherPage() {
               <div key={line.id} className="grid gap-3 items-start" style={{ gridTemplateColumns: "1fr 140px 1fr auto" }}>
                 <TypeAheadInput
                   placeholder={`Party / expense ledger ${i + 1}`}
-                  options={PARTY_LEDGERS}
-                  value={line.ledger}
-                  onChange={(val) => updateLine(line.id, "ledger", val)}
+                  options={partyOpts}
+                  value={line.ledgerId}
+                  onChange={(val) => updateLine(line.id, "ledgerId", val)}
                 />
                 <div className="relative">
                   <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[13px]" style={{ color: "#9CA3AF" }}>₹</span>
@@ -242,18 +291,19 @@ export default function PaymentVoucherPage() {
             {saved && (
               <span className="text-[12px] flex items-center gap-1" style={{ color: "#059669" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: 15 }}>check_circle</span>
-                Saved!
+                Saved ✓
               </span>
             )}
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 px-5 py-2 rounded-md text-[13px] font-medium text-white transition-colors"
-              style={{ background: "#0E7490" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#0C6478")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#0E7490")}
+              disabled={saving || saved}
+              className="flex items-center gap-2 px-5 py-2 rounded-md text-[13px] font-medium text-white transition-colors disabled:opacity-70"
+              style={{ background: saved ? "#059669" : "#0E7490" }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 15 }}>save</span>
-              Save Voucher (Ctrl+A)
+              <span className="material-symbols-outlined" style={{ fontSize: 15 }}>
+                {saved ? "check_circle" : "save"}
+              </span>
+              {saving ? "Saving…" : saved ? "Saved ✓" : "Save Voucher (Ctrl+A)"}
             </button>
           </div>
         </div>
