@@ -91,7 +91,6 @@ type Product = typeof PRODUCTS[number];
 
 const NAV = [
   { href: "/dashboard/client", label: "Home", icon: "dashboard" },
-  { href: "/dashboard/pricing", label: "Plans & Billing", icon: "receipt_long" },
   { href: "/dashboard/client/tickets", label: "Support", icon: "support_agent" },
   { href: "/dashboard/client/profile", label: "Profile", icon: "manage_accounts" },
 ];
