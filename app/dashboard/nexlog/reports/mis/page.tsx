@@ -4,18 +4,12 @@ import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
 
 const data = {
-  daily: [{ d: "29", rev: 84, cost: 52, gp: 32 }, { d: "30", rev: 76, cost: 48, gp: 28 }, { d: "31", rev: 92, cost: 58, gp: 34 }, { d: "01", rev: 88, cost: 54, gp: 34 }, { d: "02", rev: 102, cost: 64, gp: 38 }, { d: "03", rev: 118, cost: 72, gp: 46 }, { d: "04", rev: 96, cost: 60, gp: 36 }],
-  weekly: [{ d: "W1", rev: 412, cost: 268, gp: 144 }, { d: "W2", rev: 486, cost: 312, gp: 174 }, { d: "W3", rev: 524, cost: 338, gp: 186 }, { d: "W4", rev: 612, cost: 392, gp: 220 }],
-  monthly: [{ d: "Jan", rev: 1842, cost: 1186, gp: 656 }, { d: "Feb", rev: 2104, cost: 1342, gp: 762 }, { d: "Mar", rev: 1948, cost: 1248, gp: 700 }, { d: "Apr", rev: 2218, cost: 1424, gp: 794 }, { d: "May", rev: 2384, cost: 1532, gp: 852 }, { d: "Jun", rev: 1284, cost: 824, gp: 460 }],
+  daily: [] as { d: string; rev: number; cost: number; gp: number }[],
+  weekly: [] as { d: string; rev: number; cost: number; gp: number }[],
+  monthly: [] as { d: string; rev: number; cost: number; gp: number }[],
 };
 
-const topClients = [
-  { name: "Ravi Exports Pvt Ltd", jobs: 8, revenue: 1842000 },
-  { name: "HDFC Traders", jobs: 6, revenue: 1542000 },
-  { name: "Bharat Heavy Engg", jobs: 4, revenue: 982000 },
-  { name: "Apollo Pharma", jobs: 5, revenue: 824000 },
-  { name: "Sunrise Logistics", jobs: 3, revenue: 612000 },
-];
+const topClients: { name: string; jobs: number; revenue: number }[] = [];
 
 export default function MisPage() {
   const [period, setPeriod] = useState<"daily" | "weekly" | "monthly">("monthly");
@@ -40,7 +34,7 @@ export default function MisPage() {
           { l: "Total Revenue", v: `₹${(chartData.reduce((s, d) => s + d.rev, 0) / 100).toFixed(1)} L`, c: "#1565C0" },
           { l: "Total Cost", v: `₹${(chartData.reduce((s, d) => s + d.cost, 0) / 100).toFixed(1)} L`, c: "#D97706" },
           { l: "Gross Profit", v: `₹${(chartData.reduce((s, d) => s + d.gp, 0) / 100).toFixed(1)} L`, c: "#059669" },
-          { l: "Avg GP %", v: `${((chartData.reduce((s, d) => s + d.gp, 0) / chartData.reduce((s, d) => s + d.rev, 0)) * 100).toFixed(1)}%`, c: "#7C3AED" },
+          { l: "Avg GP %", v: chartData.reduce((s, d) => s + d.rev, 0) === 0 ? "0.0%" : `${((chartData.reduce((s, d) => s + d.gp, 0) / chartData.reduce((s, d) => s + d.rev, 0)) * 100).toFixed(1)}%`, c: "#7C3AED" },
         ].map((k) => (
           <div key={k.l} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div className="text-[11px] font-medium" style={{ color: "#6B7280" }}>{k.l}</div>
@@ -51,18 +45,26 @@ export default function MisPage() {
 
       <div className="rounded-xl border p-5 mb-5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
         <h3 className="text-sm font-semibold mb-4" style={{ color: "#111827" }}>Revenue / Cost / GP · ₹ thousands</h3>
-        <ResponsiveContainer width="100%" height={260}>
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
-            <XAxis dataKey="d" tick={{ fontSize: 11, fill: "#6B7280" }} />
-            <YAxis tick={{ fontSize: 11, fill: "#6B7280" }} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="rev" fill="#1565C0" name="Revenue" radius={[3, 3, 0, 0]} />
-            <Bar dataKey="cost" fill="#D97706" name="Cost" radius={[3, 3, 0, 0]} />
-            <Bar dataKey="gp" fill="#059669" name="GP" radius={[3, 3, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        {chartData.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>bar_chart</span>
+            <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No chart data yet</p>
+            <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
+              <XAxis dataKey="d" tick={{ fontSize: 11, fill: "#6B7280" }} />
+              <YAxis tick={{ fontSize: 11, fill: "#6B7280" }} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="rev" fill="#1565C0" name="Revenue" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="cost" fill="#D97706" name="Cost" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="gp" fill="#059669" name="GP" radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       <div className="rounded-xl border p-5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
@@ -74,7 +76,11 @@ export default function MisPage() {
             </tr>
           </thead>
           <tbody>
-            {topClients.map((c, i) => {
+            {topClients.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="py-10 text-center text-[12px]" style={{ color: "#6B7280" }}>No client data yet.</td>
+              </tr>
+            ) : topClients.map((c, i) => {
               const total = topClients.reduce((s, x) => s + x.revenue, 0);
               const pct = (c.revenue / total) * 100;
               return (

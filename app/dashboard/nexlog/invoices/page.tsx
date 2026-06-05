@@ -3,14 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const invoices = [
-  { no: "INV-2026-0142", job: "IMP/2526/089", client: "Ravi Exports", date: "05 Jun 2026", amount: 348000, gst: 62640, type: "Tax Invoice", status: "Sent" },
-  { no: "INV-2026-0141", job: "EXP/2526/044", client: "HDFC Traders", date: "04 Jun 2026", amount: 412000, gst: 0, type: "Tax Invoice", status: "Paid" },
-  { no: "INV-2026-0140", job: "AIR/2526/032", client: "Global Impex", date: "03 Jun 2026", amount: 68000, gst: 12240, type: "Tax Invoice", status: "Paid" },
-  { no: "DN-2026-0012", job: "IMP/2526/088", client: "Sunrise Logistics", date: "02 Jun 2026", amount: 18500, gst: 3330, type: "Debit Note", status: "Sent" },
-  { no: "INV-2026-0139", job: "IMP/2526/087", client: "Sakthi Cargo", date: "01 Jun 2026", amount: 285000, gst: 51300, type: "Reimbursement", status: "Draft" },
-  { no: "CN-2026-0008", job: "IMP/2526/085", client: "Bharat Heavy", date: "30 May 2026", amount: 6500, gst: 1170, type: "Credit Note", status: "Sent" },
-];
+const invoices: { no: string; job: string; client: string; date: string; amount: number; gst: number; type: string; status: string }[] = [];
 
 const tabs = ["All", "Tax Invoice", "Reimbursement", "Debit Note", "Credit Note"];
 const statusColors: Record<string, { bg: string; fg: string }> = {
@@ -67,7 +60,17 @@ export default function InvoicesPage() {
             <tr>{["Invoice No", "Job No", "Client", "Date", "Amount", "GST", "Total", "Status", ""].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
           </thead>
           <tbody>
-            {list.map((inv) => (
+            {list.length === 0 ? (
+              <tr>
+                <td colSpan={9} className="py-16 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                    <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No invoices yet</p>
+                    <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : list.map((inv) => (
               <tr key={inv.no} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{inv.no}</td>
                 <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#6B7280" }}>{inv.job}</td>

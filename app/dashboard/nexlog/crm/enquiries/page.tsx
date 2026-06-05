@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 
-const enquiries = [
-  { no: "ENQ/2526/142", client: "Ravi Exports", type: "Sea FCL", route: "Shanghai → JNPT", cbm: "28.5", wt: "12,500 kg", date: "01 Jun 2026", status: "Quoted" },
-  { no: "ENQ/2526/141", client: "HDFC Traders", type: "Air", route: "Mumbai → London", cbm: "—", wt: "450 kg", date: "31 May 2026", status: "Open" },
-  { no: "ENQ/2526/140", client: "Bharat Heavy", type: "Sea LCL", route: "Tianjin → Mumbai", cbm: "12.4", wt: "8,200 kg", date: "30 May 2026", status: "Quoted" },
-  { no: "ENQ/2526/139", client: "Apollo Pharma", type: "Air", route: "Hyderabad → Frankfurt", cbm: "—", wt: "280 kg", date: "29 May 2026", status: "Won" },
-  { no: "ENQ/2526/138", client: "Sunrise Logistics", type: "Sea FCL", route: "Dubai → JNPT", cbm: "60", wt: "22,000 kg", date: "28 May 2026", status: "Open" },
-  { no: "ENQ/2526/137", client: "Marine Spares", type: "Surface", route: "Mumbai → Chennai", cbm: "8", wt: "3,200 kg", date: "27 May 2026", status: "Lost" },
-];
+const enquiries: { no: string; client: string; type: string; route: string; cbm: string; wt: string; date: string; status: string }[] = [];
 
 const statusColors: Record<string, { bg: string; fg: string }> = {
   Open: { bg: "#F3F4F6", fg: "#374151" },
@@ -43,7 +36,17 @@ export default function EnquiriesPage() {
             <tr>{["Enquiry No", "Client", "Type", "Route", "CBM", "Weight", "Date", "Status", ""].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
           </thead>
           <tbody>
-            {list.map((e) => (
+            {list.length === 0 ? (
+              <tr>
+                <td colSpan={9} className="py-16 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                    <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No enquiries yet</p>
+                    <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : list.map((e) => (
               <tr key={e.no} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-3 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{e.no}</td>
                 <td className="py-3 px-3 font-medium" style={{ color: "#111827" }}>{e.client}</td>

@@ -3,31 +3,11 @@
 import { useState } from "react";
 
 const partners: Record<string, { name: string; code: string; gstin?: string; contact: string; phone: string; email: string; country: string }[]> = {
-  line: [
-    { name: "Hapag-Lloyd", code: "HLCU", gstin: "27AAACH0123A1Z2", contact: "Mr. Sharma", phone: "+91 22 6622 5500", email: "ops.in@hapag-lloyd.com", country: "Germany" },
-    { name: "CMA CGM", code: "CMDU", gstin: "27AAACC4567B1Z9", contact: "Ms. Rao", phone: "+91 22 6634 8800", email: "in.bom@cma-cgm.com", country: "France" },
-    { name: "Maersk Line", code: "MAEU", gstin: "27AAACM7890C1Z4", contact: "Mr. Khan", phone: "+91 22 6612 2200", email: "in.maersk@maersk.com", country: "Denmark" },
-    { name: "MSC", code: "MSCU", gstin: "27AAACM5432D1Z6", contact: "Mr. Joshi", phone: "+91 22 6700 4400", email: "in-info@msc.com", country: "Switzerland" },
-  ],
-  cfs: [
-    { name: "APWC CFS Nhava", code: "APWC", gstin: "27AAACA1111E1Z8", contact: "Mr. Patil", phone: "+91 22 2745 5500", email: "ops@apwc.in", country: "India" },
-    { name: "Sanco Trans Chennai", code: "SCTC", gstin: "33AAACS2222F1Z1", contact: "Ms. Kumar", phone: "+91 44 2536 8800", email: "info@sanco.in", country: "India" },
-    { name: "Continental CFS JNPT", code: "CCFS", gstin: "27AAACC3333G1Z3", contact: "Mr. Mehra", phone: "+91 22 2723 1100", email: "ops@continentalcfs.in", country: "India" },
-  ],
-  cha: [
-    { name: "Apollo World Connect", code: "AWC/11/2024", gstin: "27AAACA4444H1Z5", contact: "Mr. Verma", phone: "+91 22 2275 4400", email: "cha@apolloworld.in", country: "India" },
-    { name: "Sanco Customs Brokers", code: "SCB/14/2023", gstin: "33AAACS5555I1Z7", contact: "Mr. Iyer", phone: "+91 44 2536 9900", email: "cha@sanco.in", country: "India" },
-    { name: "Allcargo CHA Services", code: "ACS/09/2024", gstin: "27AAACA6666J1Z9", contact: "Ms. Patel", phone: "+91 22 6618 3300", email: "cha@allcargo.in", country: "India" },
-  ],
-  transporter: [
-    { name: "Sakthi Transport", code: "STT", gstin: "33AAACS7777K1Z2", contact: "Mr. Murugan", phone: "+91 9876543210", email: "ops@sakthitransport.in", country: "India" },
-    { name: "VRL Logistics", code: "VRL", gstin: "29AAACV8888L1Z4", contact: "Mr. Hegde", phone: "+91 9123456789", email: "ops@vrl.in", country: "India" },
-  ],
-  overseas: [
-    { name: "Sino Logistics Shanghai", code: "SLSH", contact: "Mr. Zhang", phone: "+86 21 6234 5678", email: "ops@sinolog.cn", country: "China" },
-    { name: "Speedmark Hamburg", code: "SPHH", contact: "Mr. Mueller", phone: "+49 40 22833 0", email: "ops@speedmark.de", country: "Germany" },
-    { name: "Lotus Cargo Dubai", code: "LCDB", contact: "Mr. Al-Salem", phone: "+971 4 250 8900", email: "ops@lotuscargo.ae", country: "UAE" },
-  ],
+  line: [],
+  cfs: [],
+  cha: [],
+  transporter: [],
+  overseas: [],
 };
 
 const tabs = [
@@ -66,7 +46,17 @@ export default function PartnersPage() {
             <tr>{["Name", tab === "line" ? "SCAC" : "Code", "GSTIN", "Contact", "Phone", "Email", "Country"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
           </thead>
           <tbody>
-            {list.map((p) => (
+            {list.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="py-16 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                    <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No partners added yet</p>
+                    <p className="text-xs mt-1" style={{ color: "#7e7576" }}>Click + Add Partner to get started.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : list.map((p) => (
               <tr key={p.code} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3 font-semibold" style={{ color: "#111827" }}>{p.name}</td>
                 <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{p.code}</td>

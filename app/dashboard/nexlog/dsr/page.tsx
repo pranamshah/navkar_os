@@ -1,16 +1,8 @@
 "use client";
 
-const activeJobs = [
-  { no: "IMP/2526/089", route: "Shanghai → JNPT", stage: "At Customs", eta: "08 Jun 2026" },
-  { no: "IMP/2526/088", route: "Singapore → Chennai", stage: "CFS Destuffed", eta: "06 Jun 2026" },
-  { no: "EXP/2526/044", route: "Chennai → Hamburg", stage: "Vessel Sailed", eta: "22 Jun 2026" },
-];
+const activeJobs: { no: string; route: string; stage: string; eta: string }[] = [];
 
-const history = [
-  { client: "Ravi Exports", date: "03 Jun 2026 10:00 AM", jobs: 4, status: "Delivered" },
-  { client: "HDFC Traders", date: "02 Jun 2026 10:00 AM", jobs: 2, status: "Delivered" },
-  { client: "Global Impex", date: "01 Jun 2026 10:00 AM", jobs: 3, status: "Delivered" },
-];
+const history: { client: string; date: string; jobs: number; status: string }[] = [];
 
 export default function DsrPage() {
   return (
@@ -47,7 +39,9 @@ export default function DsrPage() {
               <tr>{["", "Job No", "Route", "Stage", "ETA"].map((h) => <th key={h} className="text-left py-2 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
             </thead>
             <tbody>
-              {activeJobs.map((j) => (
+              {activeJobs.length === 0 ? (
+                <tr><td colSpan={5} className="py-8 text-center text-[12px]" style={{ color: "#6B7280" }}>No active jobs to include in DSR.</td></tr>
+              ) : activeJobs.map((j) => (
                 <tr key={j.no} style={{ borderTop: "1px solid #F3F4F6" }}>
                   <td className="py-2 px-3"><input type="checkbox" defaultChecked /></td>
                   <td className="py-2 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{j.no}</td>
@@ -70,7 +64,9 @@ export default function DsrPage() {
             <tr>{["Client", "Sent At", "Jobs", "Status"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
           </thead>
           <tbody>
-            {history.map((h, i) => (
+            {history.length === 0 ? (
+              <tr><td colSpan={4} className="py-8 text-center text-[12px]" style={{ color: "#6B7280" }}>No DSR history yet.</td></tr>
+            ) : history.map((h, i) => (
               <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{h.client}</td>
                 <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>{h.date}</td>

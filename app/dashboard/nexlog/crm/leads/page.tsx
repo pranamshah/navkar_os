@@ -5,27 +5,12 @@ import { useState } from "react";
 type Lead = { name: string; lane: string; followUp: string; value: string; overdue?: boolean };
 
 const cols: { id: string; label: string; color: string; bg: string; leads: Lead[] }[] = [
-  { id: "new", label: "New", color: "#6B7280", bg: "#F3F4F6", leads: [
-    { name: "Bharat Heavy Engg", lane: "Tianjin → Mumbai", followUp: "06 Jun", value: "₹2.4L", overdue: true },
-    { name: "Apollo Pharma", lane: "Hyderabad → Frankfurt", followUp: "08 Jun", value: "₹1.8L" },
-  ]},
-  { id: "contacted", label: "Contacted", color: "#1565C0", bg: "#E3F2FD", leads: [
-    { name: "Marine Spares Co", lane: "Singapore → Chennai", followUp: "07 Jun", value: "₹95K" },
-    { name: "Sunrise Logistics", lane: "Dubai → JNPT", followUp: "10 Jun", value: "₹1.4L" },
-  ]},
-  { id: "qualified", label: "Qualified", color: "#7C3AED", bg: "#F5F3FF", leads: [
-    { name: "TechVision Imports", lane: "Shenzhen → Bangalore", followUp: "09 Jun", value: "₹3.2L" },
-  ]},
-  { id: "quoted", label: "Quoted", color: "#D97706", bg: "#FFFBEB", leads: [
-    { name: "Olive Garments", lane: "Tirupur → Hamburg", followUp: "11 Jun", value: "₹2.1L" },
-    { name: "Kraft Polymers", lane: "Rotterdam → Mumbai", followUp: "12 Jun", value: "₹1.6L" },
-  ]},
-  { id: "won", label: "Won", color: "#059669", bg: "#ECFDF5", leads: [
-    { name: "Ravi Exports", lane: "Shanghai → JNPT", followUp: "—", value: "₹3.5L" },
-  ]},
-  { id: "lost", label: "Lost", color: "#DC2626", bg: "#FEF2F2", leads: [
-    { name: "Quick Auto Parts", lane: "China → Mumbai", followUp: "—", value: "—" },
-  ]},
+  { id: "new", label: "New", color: "#6B7280", bg: "#F3F4F6", leads: [] },
+  { id: "contacted", label: "Contacted", color: "#1565C0", bg: "#E3F2FD", leads: [] },
+  { id: "qualified", label: "Qualified", color: "#7C3AED", bg: "#F5F3FF", leads: [] },
+  { id: "quoted", label: "Quoted", color: "#D97706", bg: "#FFFBEB", leads: [] },
+  { id: "won", label: "Won", color: "#059669", bg: "#ECFDF5", leads: [] },
+  { id: "lost", label: "Lost", color: "#DC2626", bg: "#FEF2F2", leads: [] },
 ];
 
 export default function LeadsPage() {
@@ -59,7 +44,11 @@ export default function LeadsPage() {
                 <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: col.bg, color: col.color }}>{col.leads.length}</span>
               </div>
               <div className="space-y-2">
-                {col.leads.map((l, i) => (
+                {col.leads.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-6 text-center">
+                    <p className="text-[11px]" style={{ color: "#9CA3AF" }}>No leads in this stage.</p>
+                  </div>
+                ) : col.leads.map((l, i) => (
                   <div key={i} className="p-2.5 rounded-lg cursor-pointer hover:shadow-sm transition" style={{ background: "#F9FAFB", border: l.overdue ? "1px solid #FECACA" : "1px solid #E5E7EB" }}>
                     <div className="text-[12px] font-semibold" style={{ color: "#111827" }}>{l.name}</div>
                     <div className="text-[10px] mt-1" style={{ color: "#6B7280" }}>{l.lane}</div>
@@ -80,7 +69,17 @@ export default function LeadsPage() {
               <tr>{["Company", "Trade Lane", "Stage", "Follow-up", "Est. Value", ""].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
             </thead>
             <tbody>
-              {cols.flatMap((c) => c.leads.map((l) => ({ ...l, col: c }))).map((l, i) => (
+              {cols.flatMap((c) => c.leads.map((l) => ({ ...l, col: c }))).length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-16 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                      <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No leads yet</p>
+                      <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : cols.flatMap((c) => c.leads.map((l) => ({ ...l, col: c }))).map((l, i) => (
                 <tr key={i} style={{ borderTop: "1px solid #F3F4F6", background: l.overdue ? "#FEF2F2" : "transparent" }}>
                   <td className="py-2.5 px-3 font-semibold" style={{ color: "#111827" }}>{l.name}</td>
                   <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>{l.lane}</td>

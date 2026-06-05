@@ -3,19 +3,9 @@
 import { useState } from "react";
 
 const tracking = {
-  sea: [
-    { job: "IMP/2526/089", vessel: "MV Pacific Ace V.2614E", location: "Berthed JNPT", stage: "At Customs", eta: "08 Jun 2026", delay: "On Time" },
-    { job: "IMP/2526/088", vessel: "MV OOCL Brussels", location: "Discharged Chennai", stage: "CFS Destuffed", eta: "06 Jun 2026", delay: "Delayed" },
-    { job: "IMP/2526/087", vessel: "MV CMA CGM Marco Polo", location: "Arabian Sea", stage: "In Transit", eta: "15 Jun 2026", delay: "On Time" },
-    { job: "EXP/2526/044", vessel: "MV MSC Gulsun", location: "Sailing — Indian Ocean", stage: "Vessel Sailed", eta: "22 Jun 2026", delay: "Critical" },
-  ],
-  air: [
-    { job: "AIR/2526/032", flight: "EK 502 Emirates", location: "Delivered Dubai", stage: "Delivered", eta: "—", delay: "On Time" },
-    { job: "AIR/2526/031", flight: "AI 916 Air India", location: "Hyderabad Airport", stage: "Booking Confirmed", eta: "10 Jun 2026", delay: "On Time" },
-  ],
-  surface: [
-    { job: "RD/2526/044", flight: "Truck MH04AB1234", location: "Pune NHK", stage: "In Transit", eta: "06 Jun 2026", delay: "On Time" },
-  ],
+  sea: [] as { job: string; vessel?: string; flight?: string; location: string; stage: string; eta: string; delay: string }[],
+  air: [] as { job: string; vessel?: string; flight?: string; location: string; stage: string; eta: string; delay: string }[],
+  surface: [] as { job: string; vessel?: string; flight?: string; location: string; stage: string; eta: string; delay: string }[],
 };
 
 const delayColors: Record<string, { bg: string; fg: string }> = {
@@ -49,7 +39,17 @@ export default function TrackingPage() {
             <tr>{["Job No", "Mode", mode === "sea" ? "Vessel" : "Flight/Vehicle", "Current Location", "Stage", "ETA", "Status"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
           </thead>
           <tbody>
-            {list.map((t: { job: string; vessel?: string; flight?: string; location: string; stage: string; eta: string; delay: string }, i: number) => (
+            {list.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="py-16 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                    <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No active shipments</p>
+                    <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : list.map((t: { job: string; vessel?: string; flight?: string; location: string; stage: string; eta: string; delay: string }, i: number) => (
               <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{t.job}</td>
                 <td className="py-2.5 px-3"><span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase" style={{ background: "#E3F2FD", color: "#1565C0" }}>{mode}</span></td>

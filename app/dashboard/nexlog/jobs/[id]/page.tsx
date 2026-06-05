@@ -5,14 +5,14 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const stages = [
-  { name: "Job Created", date: "01 May 2026", notes: "Job opened by Priya M", done: true },
-  { name: "Cargo Ready", date: "05 May 2026", notes: "Confirmed ex-works ready", done: true },
-  { name: "Booking Confirmed", date: "08 May 2026", notes: "Hapag-Lloyd Booking #HLBK7821", done: true },
-  { name: "Container Stuffed", date: "12 May 2026", notes: "FCL stuffed at Shanghai depot", done: true },
-  { name: "Vessel Sailed", date: "15 May 2026", notes: "MV Pacific Ace V.2614E sailed", done: true },
-  { name: "In Transit", date: "18 May 2026", notes: "ETA on track", done: true },
-  { name: "Arrived Port", date: "30 May 2026", notes: "Berthed at JNPT", done: true },
-  { name: "At Customs", date: "02 Jun 2026", notes: "BE filed, awaiting examination", done: true },
+  { name: "Job Created", date: "", notes: "", done: false },
+  { name: "Cargo Ready", date: "", notes: "", done: false },
+  { name: "Booking Confirmed", date: "", notes: "", done: false },
+  { name: "Container Stuffed", date: "", notes: "", done: false },
+  { name: "Vessel Sailed", date: "", notes: "", done: false },
+  { name: "In Transit", date: "", notes: "", done: false },
+  { name: "Arrived Port", date: "", notes: "", done: false },
+  { name: "At Customs", date: "", notes: "", done: false },
   { name: "Customs Cleared", date: "", notes: "", done: false },
   { name: "CFS Destuffed", date: "", notes: "", done: false },
   { name: "Out for Delivery", date: "", notes: "", done: false },
@@ -20,34 +20,13 @@ const stages = [
   { name: "POD Received", date: "", notes: "", done: false },
 ];
 
-const documents = [
-  { type: "BL", label: "Original Bill of Lading", size: "2.4 MB", date: "15 May 2026" },
-  { type: "PL", label: "Packing List", size: "180 KB", date: "12 May 2026" },
-  { type: "CI", label: "Commercial Invoice", size: "210 KB", date: "12 May 2026" },
-  { type: "IC", label: "Insurance Certificate", size: "95 KB", date: "10 May 2026" },
-  { type: "BE", label: "Bill of Entry Copy", size: "340 KB", date: "02 Jun 2026" },
-];
+const documents: { type: string; label: string; size: string; date: string }[] = [];
 
-const charges = [
-  { cat: "Ocean Freight", vendor: "Hapag-Lloyd", amount: 142000, gst: 25560, status: "PAID" },
-  { cat: "THC", vendor: "JNPT", amount: 18500, gst: 3330, status: "PAID" },
-  { cat: "CFS Charges", vendor: "APWC CFS", amount: 24000, gst: 4320, status: "PENDING" },
-  { cat: "CHA Service", vendor: "Apollo World", amount: 12000, gst: 2160, status: "PAID" },
-  { cat: "Customs Duty", vendor: "Customs", amount: 84000, gst: 0, status: "PAID" },
-  { cat: "Transport", vendor: "Sakthi Transport", amount: 18000, gst: 3240, status: "PENDING" },
-  { cat: "DO Charges", vendor: "Hapag-Lloyd", amount: 4500, gst: 810, status: "PAID" },
-];
+const charges: { cat: string; vendor: string; amount: number; gst: number; status: string }[] = [];
 
-const invoices = [
-  { no: "INV-2026-0142", date: "05 Jun 2026", amount: 348000, status: "Sent" },
-  { no: "INV-2026-0148", date: "08 Jun 2026", amount: 24500, status: "Draft" },
-];
+const invoices: { no: string; date: string; amount: number; status: string }[] = [];
 
-const comms = [
-  { type: "email", who: "Pre-alert sent to client", time: "30 May 2026 10:14 AM", content: "All cargo arrival documents shared with consignee@raviexports.com" },
-  { type: "whatsapp", who: "WhatsApp update to handler", time: "02 Jun 2026 03:22 PM", content: "BE filed, awaiting examination — expected clearance EOD tomorrow" },
-  { type: "note", who: "Internal — Priya M", time: "03 Jun 2026 11:00 AM", content: "Customs has asked for additional BIS certificate. Asked client to share." },
-];
+const comms: { type: string; who: string; time: string; content: string }[] = [];
 
 export default function JobDetailPage() {
   const params = useParams();
@@ -72,10 +51,9 @@ export default function JobDetailPage() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold" style={{ color: "#111827" }}>{id}</h1>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#FFFBEB", color: "#D97706" }}>At Customs</span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: "#ECFDF5", color: "#059669" }}>FTA: ASEAN Eligible</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#F3F4F6", color: "#6B7280" }}>Pending</span>
             </div>
-            <p className="text-xs mt-0.5" style={{ color: "#6B7280" }}>Ravi Exports · Shanghai → JNPT · Sea FCL</p>
+            <p className="text-xs mt-0.5" style={{ color: "#6B7280" }}>— · — · —</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -100,12 +78,12 @@ export default function JobDetailPage() {
       {tab === "overview" && (
         <div className="grid grid-cols-2 gap-4">
           {[
-            { title: "Basic Details", icon: "info", fields: [["Job Type", "Import"], ["Mode", "Sea FCL"], ["Client", "Ravi Exports Pvt Ltd"], ["Client Ref", "PO/2026/4421"], ["Handler", "Priya M"], ["Status", "Active"]] },
-            { title: "Routing", icon: "route", fields: [["Country Origin", "China"], ["POL", "CNSHA Shanghai"], ["POD", "INNSA JNPT"], ["Final Dest", "Pune"]] },
-            { title: "Cargo", icon: "inventory_2", fields: [["Commodity", "Electronics — Mobile Accessories"], ["HS Code", "85176290"], ["Packages", "120 Cartons"], ["Gross Wt", "12,500 kg"], ["Net Wt", "11,800 kg"], ["CBM", "28.5"]] },
-            { title: "Shipping", icon: "directions_boat", fields: [["Line", "Hapag-Lloyd"], ["Vessel", "MV Pacific Ace"], ["Voyage", "V.2614E"], ["MBL", "HLCUSHA2614832"], ["HBL", "NXL/HBL/2026/089"], ["Sailing Date", "15 May 2026"], ["ETA", "30 May 2026"]] },
-            { title: "Customs", icon: "gavel", fields: [["CHA", "Apollo World Connect"], ["BE No", "5821432"], ["BE Date", "02 Jun 2026"], ["Assess Value", "₹8,42,000"], ["Duty Amt", "₹84,000"], ["Exam Type", "Yellow"]] },
-            { title: "CFS & Delivery", icon: "warehouse", fields: [["CFS", "APWC CFS Nhava"], ["Gate In", "31 May 2026"], ["Free Days", "10"], ["Transporter", "Sakthi Transport"], ["LR No", "—"], ["Delivery", "Pending"]] },
+            { title: "Basic Details", icon: "info", fields: [["Job Type", "—"], ["Mode", "—"], ["Client", "—"], ["Client Ref", "—"], ["Handler", "—"], ["Status", "—"]] },
+            { title: "Routing", icon: "route", fields: [["Country Origin", "—"], ["POL", "—"], ["POD", "—"], ["Final Dest", "—"]] },
+            { title: "Cargo", icon: "inventory_2", fields: [["Commodity", "—"], ["HS Code", "—"], ["Packages", "—"], ["Gross Wt", "—"], ["Net Wt", "—"], ["CBM", "—"]] },
+            { title: "Shipping", icon: "directions_boat", fields: [["Line", "—"], ["Vessel", "—"], ["Voyage", "—"], ["MBL", "—"], ["HBL", "—"], ["Sailing Date", "—"], ["ETA", "—"]] },
+            { title: "Customs", icon: "gavel", fields: [["CHA", "—"], ["BE No", "—"], ["BE Date", "—"], ["Assess Value", "—"], ["Duty Amt", "—"], ["Exam Type", "—"]] },
+            { title: "CFS & Delivery", icon: "warehouse", fields: [["CFS", "—"], ["Gate In", "—"], ["Free Days", "—"], ["Transporter", "—"], ["LR No", "—"], ["Delivery", "—"]] },
           ].map((sec) => (
             <div key={sec.title} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
               <div className="flex items-center gap-2 mb-3">
@@ -168,7 +146,9 @@ export default function JobDetailPage() {
                 <tr>{["Type", "Document", "Size", "Uploaded", ""].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {documents.map((d) => (
+                {documents.length === 0 ? (
+                  <tr><td colSpan={5} className="py-10 text-center text-[12px]" style={{ color: "#6B7280" }}>No documents uploaded yet.</td></tr>
+                ) : documents.map((d) => (
                   <tr key={d.label} style={{ borderTop: "1px solid #F3F4F6" }}>
                     <td className="py-2.5 px-3"><span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{ background: "#E3F2FD", color: "#1565C0" }}>{d.type}</span></td>
                     <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{d.label}</td>
@@ -201,30 +181,41 @@ export default function JobDetailPage() {
                 <tr>{["Category", "Vendor", "Amount", "GST", "Total", "Status"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
               </thead>
               <tbody>
-                {charges.map((c, i) => (
-                  <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
-                    <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{c.cat}</td>
-                    <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>{c.vendor}</td>
-                    <td className="py-2.5 px-3" style={{ color: "#111827" }}>₹{c.amount.toLocaleString("en-IN")}</td>
-                    <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>₹{c.gst.toLocaleString("en-IN")}</td>
-                    <td className="py-2.5 px-3 font-semibold" style={{ color: "#111827" }}>₹{(c.amount + c.gst).toLocaleString("en-IN")}</td>
-                    <td className="py-2.5 px-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: c.status === "PAID" ? "#ECFDF5" : "#FEF2F2", color: c.status === "PAID" ? "#059669" : "#DC2626" }}>{c.status}</span></td>
-                  </tr>
-                ))}
-                <tr style={{ borderTop: "2px solid #E5E7EB", background: "#F9FAFB" }}>
-                  <td className="py-2.5 px-3 font-bold" colSpan={2} style={{ color: "#111827" }}>Total Cost</td>
-                  <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{charges.reduce((s, c) => s + c.amount, 0).toLocaleString("en-IN")}</td>
-                  <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{charges.reduce((s, c) => s + c.gst, 0).toLocaleString("en-IN")}</td>
-                  <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{charges.reduce((s, c) => s + c.amount + c.gst, 0).toLocaleString("en-IN")}</td>
-                  <td></td>
-                </tr>
+                {charges.length === 0 ? (
+                  <tr><td colSpan={6} className="py-10 text-center text-[12px]" style={{ color: "#6B7280" }}>No charges added yet.</td></tr>
+                ) : (
+                  <>
+                    {charges.map((c, i) => (
+                      <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
+                        <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{c.cat}</td>
+                        <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>{c.vendor}</td>
+                        <td className="py-2.5 px-3" style={{ color: "#111827" }}>₹{c.amount.toLocaleString("en-IN")}</td>
+                        <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>₹{c.gst.toLocaleString("en-IN")}</td>
+                        <td className="py-2.5 px-3 font-semibold" style={{ color: "#111827" }}>₹{(c.amount + c.gst).toLocaleString("en-IN")}</td>
+                        <td className="py-2.5 px-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: c.status === "PAID" ? "#ECFDF5" : "#FEF2F2", color: c.status === "PAID" ? "#059669" : "#DC2626" }}>{c.status}</span></td>
+                      </tr>
+                    ))}
+                    <tr style={{ borderTop: "2px solid #E5E7EB", background: "#F9FAFB" }}>
+                      <td className="py-2.5 px-3 font-bold" colSpan={2} style={{ color: "#111827" }}>Total Cost</td>
+                      <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{charges.reduce((s, c) => s + c.amount, 0).toLocaleString("en-IN")}</td>
+                      <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{charges.reduce((s, c) => s + c.gst, 0).toLocaleString("en-IN")}</td>
+                      <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{charges.reduce((s, c) => s + c.amount + c.gst, 0).toLocaleString("en-IN")}</td>
+                      <td></td>
+                    </tr>
+                  </>
+                )}
               </tbody>
             </table>
           </div>
           <div className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <h3 className="text-sm font-semibold mb-3" style={{ color: "#111827" }}>Invoices</h3>
             <div className="space-y-2">
-              {invoices.map((inv) => (
+              {invoices.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <span className="material-symbols-outlined mb-2" style={{ fontSize: 32, color: "#e5e7eb" }}>receipt_long</span>
+                  <p className="text-[12px]" style={{ color: "#7e7576" }}>No invoices yet.</p>
+                </div>
+              ) : invoices.map((inv) => (
                 <div key={inv.no} className="p-3 rounded-lg border" style={{ borderColor: "#E5E7EB" }}>
                   <div className="font-mono text-[11px]" style={{ color: "#1565C0" }}>{inv.no}</div>
                   <div className="text-[12px] mt-0.5" style={{ color: "#6B7280" }}>{inv.date}</div>
@@ -244,7 +235,12 @@ export default function JobDetailPage() {
       {tab === "comms" && (
         <div className="rounded-xl border p-5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
           <div className="space-y-4 mb-5">
-            {comms.map((c, i) => (
+            {comms.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <span className="material-symbols-outlined mb-2" style={{ fontSize: 32, color: "#e5e7eb" }}>chat</span>
+                <p className="text-[12px]" style={{ color: "#7e7576" }}>No communications yet.</p>
+              </div>
+            ) : comms.map((c, i) => (
               <div key={i} className="flex gap-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: c.type === "email" ? "#E3F2FD" : c.type === "whatsapp" ? "#ECFDF5" : "#FEF3C7" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: 16, color: c.type === "email" ? "#1565C0" : c.type === "whatsapp" ? "#059669" : "#92400E" }}>

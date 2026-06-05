@@ -9,44 +9,15 @@ const PRODUCTS = [
   { name: "TradePilot", revenue: 0, color: "#004D40", icon: "public" },
 ];
 
-const MOCK_SUBSCRIPTIONS = [
-  {
-    clientId: "NVK-2026-00101",
-    client: "Mehta Freight Pvt Ltd",
-    product: "NEXLOG",
-    plan: "PRO",
-    amount: "₹2,449",
-    status: "ACTIVE",
-    date: "1 Jun 2026",
-  },
-  {
-    clientId: "NVK-2026-00203",
-    client: "Nexus Logistics",
-    product: "ACCURA",
-    plan: "STARTER",
-    amount: "₹1,249",
-    status: "TRIAL",
-    date: "28 May 2026",
-  },
-  {
-    clientId: "NVK-2026-00089",
-    client: "India CFS Solutions",
-    product: "DOCKIQ",
-    plan: "PRO",
-    amount: "₹3,299",
-    status: "ACTIVE",
-    date: "15 May 2026",
-  },
-  {
-    clientId: "NVK-2026-00317",
-    client: "Sealink Carriers",
-    product: "RUNDESK",
-    plan: "STARTER",
-    amount: "₹1,249",
-    status: "CANCELLED",
-    date: "10 May 2026",
-  },
-];
+const MOCK_SUBSCRIPTIONS: {
+  clientId: string;
+  client: string;
+  product: string;
+  plan: string;
+  amount: string;
+  status: string;
+  date: string;
+}[] = [];
 
 const SUB_STATUS_STYLE: Record<string, { bg: string; text: string }> = {
   ACTIVE: { bg: "rgba(34,197,94,0.1)", text: "#16a34a" },
@@ -152,49 +123,57 @@ export default function AdminBillingPage() {
                 </tr>
               </thead>
               <tbody>
-                {MOCK_SUBSCRIPTIONS.map((sub, idx) => {
-                  const statusStyle =
-                    SUB_STATUS_STYLE[sub.status] ?? SUB_STATUS_STYLE.SUSPENDED;
-                  return (
-                    <tr
-                      key={idx}
-                      className="transition-colors hover:bg-[#fafafa]"
-                      style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
-                    >
-                      <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#D4AF37" }}>
-                        {sub.clientId}
-                      </td>
-                      <td className="px-4 py-3 font-semibold whitespace-nowrap" style={{ color: "#1a1c1c" }}>
-                        {sub.client}
-                      </td>
-                      <td className="px-4 py-3 font-semibold whitespace-nowrap uppercase" style={{ color: "#4c4546" }}>
-                        {sub.product}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span
-                          className="px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-widest"
-                          style={{ background: "rgba(0,0,0,0.04)", color: "#4c4546" }}
-                        >
-                          {sub.plan}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 font-semibold whitespace-nowrap" style={{ color: "#1a1c1c" }}>
-                        {sub.amount}
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span
-                          className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-widest"
-                          style={{ background: statusStyle.bg, color: statusStyle.text }}
-                        >
-                          {sub.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap" style={{ color: "#7e7576" }}>
-                        {sub.date}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {MOCK_SUBSCRIPTIONS.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="px-4 py-16 text-center" style={{ color: "#7e7576" }}>
+                      No subscription events yet.
+                    </td>
+                  </tr>
+                ) : (
+                  MOCK_SUBSCRIPTIONS.map((sub, idx) => {
+                    const statusStyle =
+                      SUB_STATUS_STYLE[sub.status] ?? SUB_STATUS_STYLE.SUSPENDED;
+                    return (
+                      <tr
+                        key={idx}
+                        className="transition-colors hover:bg-[#fafafa]"
+                        style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
+                      >
+                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#D4AF37" }}>
+                          {sub.clientId}
+                        </td>
+                        <td className="px-4 py-3 font-semibold whitespace-nowrap" style={{ color: "#1a1c1c" }}>
+                          {sub.client}
+                        </td>
+                        <td className="px-4 py-3 font-semibold whitespace-nowrap uppercase" style={{ color: "#4c4546" }}>
+                          {sub.product}
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span
+                            className="px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-widest"
+                            style={{ background: "rgba(0,0,0,0.04)", color: "#4c4546" }}
+                          >
+                            {sub.plan}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-semibold whitespace-nowrap" style={{ color: "#1a1c1c" }}>
+                          {sub.amount}
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span
+                            className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-widest"
+                            style={{ background: statusStyle.bg, color: statusStyle.text }}
+                          >
+                            {sub.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap" style={{ color: "#7e7576" }}>
+                          {sub.date}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>

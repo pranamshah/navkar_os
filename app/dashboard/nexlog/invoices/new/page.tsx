@@ -5,9 +5,7 @@ import { useState } from "react";
 type Row = { sac: string; desc: string; units: number; rate: number; taxType: "IGST" | "CGST+SGST"; taxPct: number };
 
 const initial: Row[] = [
-  { sac: "996712", desc: "Ocean Freight - Shanghai to JNPT 1x40HC", units: 1, rate: 142000, taxType: "IGST", taxPct: 5 },
-  { sac: "996791", desc: "Terminal Handling Charges JNPT", units: 1, rate: 18500, taxType: "CGST+SGST", taxPct: 18 },
-  { sac: "996713", desc: "CHA Service Fee", units: 1, rate: 12000, taxType: "CGST+SGST", taxPct: 18 },
+  { sac: "", desc: "", units: 1, rate: 0, taxType: "IGST", taxPct: 18 },
 ];
 
 function inWords(n: number): string {
@@ -77,10 +75,10 @@ export default function NewInvoicePage() {
         </div>
 
         <div className="grid grid-cols-4 gap-3 mb-6">
-          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Invoice No</label><div className="text-[13px] font-mono font-semibold mt-1" style={{ color: "#1565C0" }}>INV-2026-0143</div></div>
-          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Date</label><input type="date" defaultValue="2026-06-04" className="text-[13px] mt-1 outline-none bg-transparent" style={{ color: "#111827" }} /></div>
-          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Job No</label><div className="text-[13px] font-mono font-semibold mt-1" style={{ color: "#1565C0" }}>IMP/2526/089</div></div>
-          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Due Date</label><input type="date" defaultValue="2026-07-04" className="text-[13px] mt-1 outline-none bg-transparent" style={{ color: "#111827" }} /></div>
+          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Invoice No</label><div className="text-[13px] font-mono font-semibold mt-1" style={{ color: "#1565C0" }}>—</div></div>
+          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Date</label><input type="date" className="text-[13px] mt-1 outline-none bg-transparent" style={{ color: "#111827" }} /></div>
+          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Job No</label><div className="text-[13px] font-mono font-semibold mt-1" style={{ color: "#1565C0" }}>—</div></div>
+          <div><label className="text-[10px] uppercase font-bold tracking-wider" style={{ color: "#6B7280" }}>Due Date</label><input type="date" className="text-[13px] mt-1 outline-none bg-transparent" style={{ color: "#111827" }} /></div>
         </div>
 
         {/* Charges Table */}

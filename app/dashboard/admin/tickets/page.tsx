@@ -14,53 +14,7 @@ interface AdminTicket {
   createdAt: string;
 }
 
-const MOCK_TICKETS: AdminTicket[] = [
-  {
-    id: "TKT-001",
-    subject: "Unable to access Accura dashboard",
-    category: "Technical",
-    client: "Mehta Freight Pvt Ltd",
-    clientId: "NVK-2026-00101",
-    status: "Open",
-    createdAt: "2 Jun 2026",
-  },
-  {
-    id: "TKT-002",
-    subject: "Invoice not generated for job NXL/26/0142",
-    category: "Technical",
-    client: "Nexus Logistics",
-    clientId: "NVK-2026-00203",
-    status: "In Progress",
-    createdAt: "30 May 2026",
-  },
-  {
-    id: "TKT-003",
-    subject: "Billing query for June invoice",
-    category: "Billing",
-    client: "India CFS Solutions",
-    clientId: "NVK-2026-00089",
-    status: "Resolved",
-    createdAt: "22 May 2026",
-  },
-  {
-    id: "TKT-004",
-    subject: "How to export GSTR-1 from Accura?",
-    category: "General",
-    client: "Sealink Carriers",
-    clientId: "NVK-2026-00317",
-    status: "Open",
-    createdAt: "1 Jun 2026",
-  },
-  {
-    id: "TKT-005",
-    subject: "HSN code lookup returning wrong results",
-    category: "Technical",
-    client: "Bharat Trade & Co",
-    clientId: "NVK-2026-00155",
-    status: "In Progress",
-    createdAt: "29 May 2026",
-  },
-];
+const MOCK_TICKETS: AdminTicket[] = [];
 
 const STATUS_STYLE: Record<TicketStatus, { bg: string; text: string }> = {
   Open: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37" },

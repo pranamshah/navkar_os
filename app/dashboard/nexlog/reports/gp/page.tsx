@@ -2,14 +2,7 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
-const jobs = [
-  { no: "IMP/2526/089", client: "Ravi Exports", mode: "SEA", rev: 348000, cost: 282500, gp: 65500, gpPct: 18.8 },
-  { no: "EXP/2526/044", client: "HDFC Traders", mode: "SEA", rev: 412000, cost: 318000, gp: 94000, gpPct: 22.8 },
-  { no: "AIR/2526/032", client: "Global Impex", mode: "AIR", rev: 68000, cost: 42000, gp: 26000, gpPct: 38.2 },
-  { no: "IMP/2526/088", client: "Sunrise Logistics", mode: "SEA", rev: 196000, cost: 142000, gp: 54000, gpPct: 27.6 },
-  { no: "AIR/2526/031", client: "Apollo Pharma", mode: "AIR", rev: 92000, cost: 64000, gp: 28000, gpPct: 30.4 },
-  { no: "RD/2526/044", client: "Marine Spares", mode: "SURFACE", rev: 28000, cost: 18000, gp: 10000, gpPct: 35.7 },
-];
+const jobs: { no: string; client: string; mode: string; rev: number; cost: number; gp: number; gpPct: number }[] = [];
 
 export default function GpReportPage() {
   const byMode = ["SEA", "AIR", "SURFACE"].map((m) => ({
@@ -40,7 +33,17 @@ export default function GpReportPage() {
               <tr>{["Job No", "Client", "Mode", "Revenue", "Cost", "GP", "GP %"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
             </thead>
             <tbody>
-              {jobs.map((j) => (
+              {jobs.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-16 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                      <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No GP data yet</p>
+                      <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : jobs.map((j) => (
                 <tr key={j.no} style={{ borderTop: "1px solid #F3F4F6" }}>
                   <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{j.no}</td>
                   <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{j.client}</td>

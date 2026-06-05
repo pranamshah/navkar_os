@@ -14,85 +14,9 @@ interface Ticket {
   clientName?: string;
 }
 
-const CLIENT_TICKETS: Ticket[] = [
-  {
-    id: "TKT-001",
-    subject: "Unable to access Accura dashboard",
-    category: "Technical",
-    status: "Open",
-    createdAt: "2 days ago",
-    lastReply: "Our team is looking into this.",
-  },
-  {
-    id: "TKT-002",
-    subject: "Invoice not generated for job NXL/26/0142",
-    category: "Technical",
-    status: "In Progress",
-    createdAt: "5 days ago",
-    lastReply: "We've identified the issue and will fix it within 24 hours.",
-  },
-  {
-    id: "TKT-003",
-    subject: "Billing query for June invoice",
-    category: "Billing",
-    status: "Resolved",
-    createdAt: "12 days ago",
-    lastReply: "Your invoice has been corrected and resent.",
-  },
-];
+const CLIENT_TICKETS: Ticket[] = [];
 
-const ALL_TICKETS: Ticket[] = [
-  {
-    id: "TKT-001",
-    subject: "Unable to access Accura dashboard",
-    category: "Technical",
-    status: "Open",
-    createdAt: "2 days ago",
-    lastReply: "Our team is looking into this.",
-    clientId: "NVK-2026-A1B2C",
-    clientName: "Sundar Shipping Co.",
-  },
-  {
-    id: "TKT-002",
-    subject: "Invoice not generated for job NXL/26/0142",
-    category: "Technical",
-    status: "In Progress",
-    createdAt: "5 days ago",
-    lastReply: "We've identified the issue and will fix it within 24 hours.",
-    clientId: "NVK-2026-D3E4F",
-    clientName: "Coastal Freight Pvt. Ltd.",
-  },
-  {
-    id: "TKT-003",
-    subject: "Billing query for June invoice",
-    category: "Billing",
-    status: "Resolved",
-    createdAt: "12 days ago",
-    lastReply: "Your invoice has been corrected and resent.",
-    clientId: "NVK-2026-G5H6I",
-    clientName: "Malabar Customs House",
-  },
-  {
-    id: "TKT-004",
-    subject: "ICEGATE filing rejected — IEC mismatch",
-    category: "Technical",
-    status: "Open",
-    createdAt: "1 day ago",
-    lastReply: "Please verify your IEC number in Settings → Profile.",
-    clientId: "NVK-2026-J7K8L",
-    clientName: "Chennai Clearance Agents",
-  },
-  {
-    id: "TKT-005",
-    subject: "Need to add a second branch",
-    category: "General",
-    status: "In Progress",
-    createdAt: "3 days ago",
-    lastReply: "Multi-branch is available on Pro. We'll upgrade your account today.",
-    clientId: "NVK-2026-M9N0O",
-    clientName: "Trans India Logistics",
-  },
-];
+const ALL_TICKETS: Ticket[] = [];
 
 const STATUS_STYLE: Record<Ticket["status"], { bg: string; text: string }> = {
   Open: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37" },

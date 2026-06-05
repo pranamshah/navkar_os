@@ -4,33 +4,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const kpis = [
-  { label: "Active Jobs", value: "24", icon: "work", color: "#1565C0", bg: "#E3F2FD" },
-  { label: "Import Jobs", value: "15", icon: "download", color: "#0D47A1", bg: "#E3F2FD" },
-  { label: "Export Jobs", value: "9", icon: "upload", color: "#7C3AED", bg: "#F5F3FF" },
-  { label: "Pending Customs", value: "6", icon: "gavel", color: "#DC2626", bg: "#FEF2F2" },
-  { label: "Revenue This Month", value: "₹12,84,500", icon: "trending_up", color: "#059669", bg: "#ECFDF5" },
-  { label: "Outstanding", value: "₹3,42,000", icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
+  { label: "Active Jobs", value: "0", icon: "work", color: "#1565C0", bg: "#E3F2FD" },
+  { label: "Import Jobs", value: "0", icon: "download", color: "#0D47A1", bg: "#E3F2FD" },
+  { label: "Export Jobs", value: "0", icon: "upload", color: "#7C3AED", bg: "#F5F3FF" },
+  { label: "Pending Customs", value: "0", icon: "gavel", color: "#DC2626", bg: "#FEF2F2" },
+  { label: "Revenue This Month", value: "₹0", icon: "trending_up", color: "#059669", bg: "#ECFDF5" },
+  { label: "Outstanding", value: "₹0", icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
 ];
 
-const recentJobs = [
-  { no: "IMP/2526/089", client: "Ravi Exports", route: "Shanghai → JNPT", mode: "SEA", stage: "At Customs", eta: "08 Jun 2026", stageColor: "#D97706", stageBg: "#FFFBEB" },
-  { no: "EXP/2526/044", client: "HDFC Traders", route: "Chennai → Hamburg", mode: "SEA", stage: "Vessel Sailed", eta: "22 Jun 2026", stageColor: "#1565C0", stageBg: "#E3F2FD" },
-  { no: "AIR/2526/032", client: "Global Impex", route: "Mumbai → Dubai", mode: "AIR", stage: "Delivered", eta: "—", stageColor: "#059669", stageBg: "#ECFDF5" },
-  { no: "IMP/2526/088", client: "Sunrise Logistics", route: "Singapore → Chennai", mode: "SEA", stage: "CFS Destuffed", eta: "06 Jun 2026", stageColor: "#7C3AED", stageBg: "#F5F3FF" },
-  { no: "IMP/2526/087", client: "Sakthi Cargo", route: "Rotterdam → JNPT", mode: "SEA", stage: "In Transit", eta: "15 Jun 2026", stageColor: "#1565C0", stageBg: "#E3F2FD" },
-];
+const recentJobs: { no: string; client: string; route: string; mode: string; stage: string; eta: string; stageColor: string; stageBg: string }[] = [];
 
-const alerts = [
-  { icon: "warning", title: "IMP/2526/089 stuck at customs", desc: "3 days at examination — escalate to CHA", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
-  { icon: "schedule", title: "Vessel ETA changed", desc: "MV Pacific Ace — ETA postponed by 2 days", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
-  { icon: "schedule", title: "Free days expiring tomorrow", desc: "Container TCNU8456731 — detention risk", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
-];
+const alerts: { icon: string; title: string; desc: string; color: string; bg: string; border: string }[] = [];
 
-const followUps = [
-  { name: "Bharat Heavy Engg", lane: "China → Mumbai", overdue: "Overdue 4 days" },
-  { name: "Apollo Pharma", lane: "Hyderabad → US", overdue: "Overdue 2 days" },
-  { name: "Marine Spares Co", lane: "Singapore → Chennai", overdue: "Today" },
-];
+const followUps: { name: string; lane: string; overdue: string }[] = [];
 
 export default function NexlogDashboard() {
   return (
@@ -86,7 +72,11 @@ export default function NexlogDashboard() {
               </tr>
             </thead>
             <tbody>
-              {recentJobs.map((j) => (
+              {recentJobs.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-10 text-center text-[12px]" style={{ color: "#6B7280" }}>No jobs yet.</td>
+                </tr>
+              ) : recentJobs.map((j) => (
                 <tr key={j.no} style={{ borderBottom: "1px solid #F3F4F6" }}>
                   <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#1565C0" }}>{j.no}</td>
                   <td className="py-2.5 px-2 font-medium" style={{ color: "#111827" }}>{j.client}</td>
@@ -106,7 +96,12 @@ export default function NexlogDashboard() {
         <div className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
           <h2 className="text-sm font-semibold mb-3" style={{ color: "#111827" }}>Alerts</h2>
           <div className="flex flex-col gap-2">
-            {alerts.map((a, i) => (
+            {alerts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <span className="material-symbols-outlined mb-2" style={{ fontSize: 32, color: "#e5e7eb" }}>notifications_none</span>
+                <p className="text-[12px]" style={{ color: "#7e7576" }}>No alerts right now.</p>
+              </div>
+            ) : alerts.map((a, i) => (
               <div key={i} className="flex items-start gap-2.5 p-2.5 rounded-lg border text-[12px]" style={{ background: a.bg, borderColor: a.border }}>
                 <span className="material-symbols-outlined flex-shrink-0 mt-0.5" style={{ fontSize: 15, color: a.color, fontVariationSettings: "'FILL' 1" }}>{a.icon}</span>
                 <div>
@@ -121,15 +116,22 @@ export default function NexlogDashboard() {
 
       <div className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
         <h2 className="text-sm font-semibold mb-3" style={{ color: "#111827" }}>Follow-up Reminders</h2>
-        <div className="grid grid-cols-3 gap-3">
-          {followUps.map((f) => (
-            <div key={f.name} className="p-3 rounded-lg border" style={{ borderColor: "#FECACA", background: "#FEF2F2" }}>
-              <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>{f.name}</div>
-              <div className="text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{f.lane}</div>
-              <div className="text-[11px] mt-1 font-medium" style={{ color: "#DC2626" }}>{f.overdue}</div>
-            </div>
-          ))}
-        </div>
+        {followUps.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <span className="material-symbols-outlined mb-2" style={{ fontSize: 32, color: "#e5e7eb" }}>inbox</span>
+            <p className="text-[12px]" style={{ color: "#7e7576" }}>No follow-up reminders.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-3">
+            {followUps.map((f) => (
+              <div key={f.name} className="p-3 rounded-lg border" style={{ borderColor: "#FECACA", background: "#FEF2F2" }}>
+                <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>{f.name}</div>
+                <div className="text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{f.lane}</div>
+                <div className="text-[11px] mt-1 font-medium" style={{ color: "#DC2626" }}>{f.overdue}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

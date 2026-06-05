@@ -26,13 +26,7 @@ export function ModuleDashboard({ moduleId }: { moduleId: ModuleId }) {
   );
 }
 
-const jobs = [
-  { id: "NOS/2026/0142", client: "Mehta Exports", route: "INNSA → DEHAM", mode: "FCL", status: "Under Exam", date: "28 May 2026", color: "#D4AF37" },
-  { id: "NOS/2026/0141", client: "Krishna Textiles", route: "INMAA → SGSIN", mode: "LCL", status: "OOC Cleared", date: "26 May 2026", color: "#16A34A" },
-  { id: "NOS/2026/0139", client: "Patel Chemicals", route: "INCCU → USLAX", mode: "Air", status: "On Vessel", date: "24 May 2026", color: "#3B82F6" },
-  { id: "NOS/2026/0137", client: "Rajvi Industries", route: "INMUN → AEJEA", mode: "FCL", status: "At CFS", date: "20 May 2026", color: "#D4AF37" },
-  { id: "NOS/2026/0135", client: "Gupta & Sons", route: "INBOM → GBFXT", mode: "LCL", status: "Delivered", date: "15 May 2026", color: "#16A34A" },
-];
+const jobs: { id: string; client: string; route: string; mode: string; status: string; date: string; color: string }[] = [];
 
 function DashHeader({ title, badge, action }: { title: string; badge?: string; action?: { label: string; href: string } }) {
   return (
@@ -67,10 +61,10 @@ function FreightOpsDash() {
     <div>
       <DashHeader title="FreightOps" badge="Core Shipment Command" action={{ label: "+ New Job", href: "#" }} />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="12" label="Active Jobs" sub="3 need attention" />
-        <StatCard val="4" label="At Customs" />
-        <StatCard val="2" label="OOC Today" sub="+2 from yesterday" />
-        <StatCard val="₹42L" label="Charges This Month" />
+        <StatCard val="0" label="Active Jobs" />
+        <StatCard val="0" label="At Customs" />
+        <StatCard val="0" label="OOC Today" />
+        <StatCard val="₹0" label="Charges This Month" />
       </div>
       <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
         <div className="px-6 py-4 border-b flex items-center justify-between" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
@@ -90,7 +84,17 @@ function FreightOpsDash() {
             </tr>
           </thead>
           <tbody>
-            {jobs.map((j, i) => (
+            {jobs.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-6 py-12 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#e5e7eb" }}>inbox</span>
+                    <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No jobs yet</p>
+                    <p className="text-xs mt-1" style={{ color: "#7e7576" }}>They will appear here once added.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : jobs.map((j, i) => (
               <tr key={j.id} style={{ borderBottom: "0.5px solid rgba(0,0,0,0.04)", background: i % 2 === 0 ? "#fafafa" : "#fff" }}>
                 <td className="px-6 py-3 font-semibold" style={{ color: "#1a1c1c" }}>{j.id}</td>
                 <td className="px-6 py-3" style={{ color: "#4c4546" }}>{j.client}</td>
