@@ -20,33 +20,33 @@ NavkarOS is a B2B SaaS platform that replaces scattered spreadsheets, WhatsApp m
 ### Nexlog — Freight Forwarding Operations (₹1,799/mo)
 For C&F Agents and Freight Forwarders. Unlimited job management, BL/MBL handling, live vessel tracking, GST invoicing in 3 clicks, Tally XML export, AI document extraction, multi-branch support, client portal, WhatsApp notifications.
 
-### EntryX — Customs Clearance (₹1,799/mo)
-For licensed Custom House Agents (CHA). Unlimited Bills of Entry, AI BE preparation, ICEGATE auto-sync, live CBIC tariff, automatic HS code detection, duty drawback tracking, custom workflows.
+### EntryX — Customs Clearance (₹1,899/mo)
+For licensed Custom House Agents (CHA). Unlimited Bills of Entry, AI BE preparation, ICEGATE auto-sync, live CBIC tariff, automatic HS code detection, duty drawback tracking, custom workflows. Most feature-rich product due to ICEGATE complexity.
 
-### DockIQ — CFS & Warehouse Management (₹1,799/mo)
+### DockIQ — CFS & Warehouse Management (₹1,599/mo)
 For CFS Stations and Warehouses. Unlimited container handling, gate-in/out log, automatic storage slab billing, yard 3D view, mobile gate app, WhatsApp notifications, auto invoice generation, importer portal.
 
-### RunDesk — Transport Management (₹1,799/mo)
+### RunDesk — Transport Management (₹1,399/mo)
 For Transporters and Fleet Operators. Unlimited LRs & builty, trip management, GPS tracking via driver app, auto e-way bill, GST freight invoicing, fleet analytics, mobile driver app.
 
-### Accura — Freight Accounting (₹1,799/mo)
+### Accura — Freight Accounting (₹1,499/mo)
 For all logistics businesses. Unlimited invoices, auto GSTR-1 & GSTR-3B, multi-currency, Tally sync, P&L in 3 seconds, per-job profitability, outstanding tracker, TDS/TCS support.
 
-### TradePilot — Import/Export Intelligence (₹1,799/mo)
+### TradePilot — Import/Export Intelligence (₹1,699/mo)
 For Importers and Exporters. AI landed cost calculator, FTA eligibility check, RoDTEP tracker, CEPA compliance, unlimited HS codes, trade analytics, duty benefit alerts, document vault.
 
 ## Bundle Plans
-- Forwarder Bundle (Nexlog + Accura): ₹2,999/mo — saves ₹599/mo vs buying separately
-- CHA Bundle (EntryX + Accura): ₹2,999/mo — saves ₹599/mo vs buying separately
-- CFS Bundle (DockIQ + Accura): ₹2,999/mo — saves ₹599/mo vs buying separately
-- Transporter Bundle (RunDesk + Accura): ₹2,999/mo — saves ₹599/mo vs buying separately
-- Full Suite (all 6 products): ₹7,999/mo — saves ₹2,795/mo vs buying separately
+- Forwarder Bundle (Nexlog + Accura): ₹2,699/mo — saves ₹599/mo vs buying separately
+- CHA Bundle (EntryX + Accura): ₹2,799/mo — saves ₹599/mo vs buying separately
+- CFS Bundle (DockIQ + Accura): ₹2,499/mo — saves ₹599/mo vs buying separately
+- Transporter Bundle (RunDesk + Accura): ₹2,299/mo — saves ₹599/mo vs buying separately
+- Full Suite (all 6 products): ₹7,499/mo — saves ₹2,395/mo vs buying separately
 
 ## Billing Cycles
 - Monthly: standard price
 - Quarterly: 10% discount (billed every 3 months)
 - Yearly: 20% discount (billed annually)
-All plans come with a 14-day free trial. No credit card required to start. All products ₹1,799/month — one plan, all features, no tiers.
+All plans come with a 14-day free trial. No credit card required to start. Prices range from ₹1,399/mo (RunDesk) to ₹1,899/mo (EntryX). One plan per product — all features included, no tiers.
 
 ## Key Facts
 - 100% cloud-based, no installation needed

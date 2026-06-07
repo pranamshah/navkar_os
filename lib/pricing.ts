@@ -18,7 +18,6 @@ export const PRICING = {
       "Multi-branch support",
       "Client portal",
       "WhatsApp notifications",
-      "Priority support",
     ],
   },
   entryx: {
@@ -29,7 +28,7 @@ export const PRICING = {
     icon: "gavel",
     desc: "AI-powered Bill of Entry preparation, ICEGATE filing, duty calculation, and HS code verification for licensed CHAs.",
     forTypes: ["CHA"],
-    price: 1799,
+    price: 1899,
     features: [
       "Unlimited Bills of Entry",
       "AI BE preparation",
@@ -50,7 +49,7 @@ export const PRICING = {
     icon: "warehouse",
     desc: "Complete CFS station management — gate-in/out, yard planning, storage billing, and importer notifications.",
     forTypes: ["CFS_WAREHOUSE"],
-    price: 1799,
+    price: 1599,
     features: [
       "Unlimited container handling",
       "Gate-in/out log",
@@ -71,7 +70,7 @@ export const PRICING = {
     icon: "local_shipping",
     desc: "LR issuance, fleet tracking, e-way bill generation, and GST invoice creation for transporters and fleet operators.",
     forTypes: ["TRANSPORTER"],
-    price: 1799,
+    price: 1399,
     features: [
       "Unlimited LRs & builty",
       "Trip management",
@@ -91,7 +90,7 @@ export const PRICING = {
     icon: "account_balance",
     desc: "Complete freight accounting with auto GSTR-1, GSTR-3B export, multi-currency, and Tally sync built for logistics.",
     forTypes: ["CF_AGENT", "CHA", "CFS_WAREHOUSE", "TRANSPORTER", "FREIGHT_FORWARDER"],
-    price: 1799,
+    price: 1499,
     features: [
       "Unlimited invoices",
       "Auto GSTR-1 & GSTR-3B",
@@ -113,7 +112,7 @@ export const PRICING = {
     icon: "public",
     desc: "Landed cost calculation, FTA eligibility, RoDTEP tracking, and import/export compliance dashboard for traders.",
     forTypes: ["IMPORTER_EXPORTER"],
-    price: 1799,
+    price: 1699,
     features: [
       "AI landed cost calculator",
       "Auto FTA eligibility check",
@@ -136,7 +135,7 @@ export const BUNDLES = {
     name: "Forwarder Bundle",
     desc: "For C&F Agents & Freight Forwarders",
     includes: ["nexlog", "accura"],
-    monthly: 2999,
+    monthly: 2699,
     forTypes: ["CF_AGENT", "FREIGHT_FORWARDER"],
   },
   cha_bundle: {
@@ -144,7 +143,7 @@ export const BUNDLES = {
     name: "CHA Bundle",
     desc: "For Custom House Agents",
     includes: ["entryx", "accura"],
-    monthly: 2999,
+    monthly: 2799,
     forTypes: ["CHA"],
   },
   cfs_bundle: {
@@ -152,7 +151,7 @@ export const BUNDLES = {
     name: "CFS Bundle",
     desc: "For CFS Stations & Warehouses",
     includes: ["dockiq", "accura"],
-    monthly: 2999,
+    monthly: 2499,
     forTypes: ["CFS_WAREHOUSE"],
   },
   transporter_bundle: {
@@ -160,7 +159,7 @@ export const BUNDLES = {
     name: "Transporter Bundle",
     desc: "For Transporters & Fleet Operators",
     includes: ["rundesk", "accura"],
-    monthly: 2999,
+    monthly: 2299,
     forTypes: ["TRANSPORTER"],
   },
   full_suite: {
@@ -168,7 +167,7 @@ export const BUNDLES = {
     name: "Full Suite",
     desc: "All 6 products — complete logistics OS",
     includes: ["nexlog", "entryx", "dockiq", "rundesk", "accura", "tradepilot"],
-    monthly: 7999,
+    monthly: 7499,
     forTypes: [] as string[],
   },
 } as const;
