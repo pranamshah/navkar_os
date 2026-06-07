@@ -59,15 +59,15 @@ export default function Navbar() {
         <div
           className="max-w-5xl mx-auto rounded-full px-6 h-18 flex items-center justify-between transition-all duration-300"
           style={{
-            background: scrolled ? "rgba(249,249,249,0.98)" : "rgba(249,249,249,0.88)",
+            background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.92)",
             backdropFilter: "blur(24px)",
             WebkitBackdropFilter: "blur(24px)",
-            border: "0.5px solid rgba(0,0,0,0.1)",
+            border: "0.5px solid rgba(0,0,0,0.08)",
             boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.1)" : "0 2px 15px rgba(0,0,0,0.05)",
           }}
         >
           {/* Logo */}
-          <LogoBrand height={70} />
+          <LogoBrand height={110} />
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">
@@ -155,7 +155,7 @@ export default function Navbar() {
             style={{ background: "#1a1c1d" }}
           >
             <div className="flex items-center justify-between px-6 h-20">
-              <span className="font-black text-sm uppercase tracking-widest text-white">Navkar<span style={{ color: "#f6be39" }}>OS</span></span>
+              <LogoBrand height={44} onDark />
               <button onClick={() => setMobileOpen(false)}><X className="w-6 h-6 text-white" /></button>
             </div>
             <div className="flex-1 flex flex-col justify-center px-8 gap-5">

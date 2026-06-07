@@ -108,15 +108,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 email: user.email!,
                 image: user.image,
                 role: "CLIENT",
-                // Google already verified the email — no manual verification needed
-                status: "ACTIVE",
+                // New users must upload documents and fill details before admin activates them
+                status: "PENDING_VERIFICATION",
               },
-            });
-          } else if (existing.status === "PENDING_VERIFICATION") {
-            // Existing Google users who were stuck in pending — activate them
-            await prisma.user.update({
-              where: { email: user.email! },
-              data: { status: "ACTIVE" },
             });
           }
         } catch (err) {
@@ -127,8 +121,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
     async redirect({ url, baseUrl }) {
-      // After sign-in, go to /dashboard — the dashboard page handles
-      // role-based routing (admin → /dashboard/admin, client → /dashboard/client)
+      // After sign-in, go to /dashboard — the dashboard middleware handles
+      // role-based routing (admin → /dashboard/admin, pending → /status, active client → /dashboard/client)
       if (url === baseUrl || url === `${baseUrl}/`) return `${baseUrl}/dashboard`;
       if (url.startsWith(baseUrl)) return url;
       return `${baseUrl}/dashboard`;
