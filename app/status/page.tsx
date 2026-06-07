@@ -64,7 +64,10 @@ export default function StatusPage() {
       const data = await res.json();
       setUserData(data);
       if (data.status === "ACTIVE") {
-        setTimeout(() => router.push("/dashboard/client"), 2500);
+        // Use replace so back-button doesn't return to /status
+        router.replace("/dashboard");
+        // Hard fallback in case router.replace stalls (e.g. middleware race)
+        setTimeout(() => { window.location.href = "/dashboard"; }, 1500);
       }
     }
     setLoading(false);
@@ -120,6 +123,13 @@ export default function StatusPage() {
           </div>
           <h2 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "32px", color: "#1a1c1c" }}>Account Activated!</h2>
           <p className="mt-2 text-sm" style={{ color: "#7e7576" }}>Redirecting to your dashboard…</p>
+          <a
+            href="/dashboard"
+            className="inline-block mt-6 px-6 py-3 text-sm font-semibold rounded-lg"
+            style={{ background: "#1a1c1c", color: "#D4AF37" }}
+          >
+            Go to Dashboard →
+          </a>
         </motion.div>
       </div>
     );
