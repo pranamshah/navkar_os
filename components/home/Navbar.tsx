@@ -57,7 +57,7 @@ export default function Navbar() {
         className="fixed top-5 left-0 right-0 z-50 px-5"
       >
         <div
-          className="max-w-5xl mx-auto rounded-full px-6 h-18 flex items-center justify-between transition-all duration-300"
+          className="max-w-5xl mx-auto rounded-full px-6 h-18 flex items-center justify-between transition-all duration-300 overflow-hidden"
           style={{
             background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.92)",
             backdropFilter: "blur(24px)",
