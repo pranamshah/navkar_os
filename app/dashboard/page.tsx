@@ -22,8 +22,26 @@ export default async function DashboardPage() {
       where: { id: userId },
       select: { status: true },
     });
-    if (dbUser?.status === "PENDING_VERIFICATION") {
+
+    // Not yet approved by admin → show verification progress
+    if (!dbUser || dbUser.status === "PENDING_VERIFICATION") {
       redirect("/status");
+    }
+
+    // Admin approved (ACTIVE) → check if they have an active subscription
+    // If not, gate them at pricing so they choose a plan before accessing modules
+    if (dbUser.status === "ACTIVE") {
+      const activeSub = await prisma.subscription.findFirst({
+        where: {
+          userId,
+          status: { in: ["TRIAL", "ACTIVE"] },
+        },
+        select: { id: true },
+      });
+
+      if (!activeSub) {
+        redirect("/dashboard/pricing");
+      }
     }
   }
 

@@ -17,7 +17,7 @@ export default function PricingPage() {
   const cycleSave  = { monthly: "", quarterly: "Save 10%", yearly: "Save 20%" };
 
   return (
-    <div className="p-6 lg:p-10 max-w-6xl">
+    <div className="p-6 lg:p-10 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-10">
         <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D4AF37" }}>
