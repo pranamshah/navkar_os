@@ -727,40 +727,43 @@ export default function AccuraPage() {
             ))}
           </div>
 
-          {/* App shell */}
-          <div className="rounded-2xl overflow-hidden shadow-2xl border" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
-            {/* Browser bar */}
-            <div className="flex items-center gap-3 px-4 py-3" style={{ background: "#0a0b0b", borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
+          {/* App shell — light-themed browser chrome */}
+          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: "1px solid #E5E7EB" }}>
+            {/* Browser bar — light */}
+            <div className="flex items-center gap-3 px-4 py-2.5" style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
               <div className="flex gap-1.5">
-                {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} className="w-3 h-3 rounded-full" style={{ background: c, opacity: 0.8 }} />)}
+                {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} className="w-2.5 h-2.5 rounded-full" style={{ background: c, opacity: 0.85 }} />)}
               </div>
               <div className="flex-1 flex justify-center">
-                <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)" }}>
-                  <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
-                  app.navkaros.in/accura/{activeModule === "dashboard" ? "" : activeModule}
+                <div className="flex items-center gap-2 px-4 py-1 rounded-md border text-xs" style={{ background: "#fff", borderColor: "#E5E7EB", color: "#6B7280", maxWidth: 340 }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 12, color: "#059669" }}>lock</span>
+                  <span style={{ fontSize: "11px" }}>app.navkaros.in/accura/{activeModule === "dashboard" ? "dashboard" : activeModule}</span>
                 </div>
               </div>
             </div>
 
             {/* Sidebar + content */}
-            <div className="flex" style={{ height: "480px" }}>
-              {/* Mini sidebar */}
-              <div className="flex flex-col gap-1 px-2 py-3" style={{ width: "48px", background: "#080909", borderRight: "0.5px solid rgba(255,255,255,0.06)" }}>
+            <div className="flex" style={{ height: "520px" }}>
+              {/* Mini sidebar — light */}
+              <div className="flex flex-col gap-1 px-2 py-3" style={{ width: "120px", background: "#F9FAFB", borderRight: "1px solid #E5E7EB", flexShrink: 0 }}>
                 {MODULES.map((m) => (
                   <button
                     key={m.id}
                     onClick={() => setActiveModule(m.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-150"
-                    style={{ background: activeModule === m.id ? "rgba(212,175,55,0.15)" : "transparent" }}
+                    className="flex flex-col items-center gap-0.5 px-1 py-2 rounded-lg transition-all duration-150 w-full"
+                    style={{
+                      background: activeModule === m.id ? "#ECFEFF" : "transparent",
+                    }}
                     title={m.label}
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: 16, color: activeModule === m.id ? "#D4AF37" : "rgba(255,255,255,0.25)" }}>{m.icon}</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: 18, color: activeModule === m.id ? "#0E7490" : "#9CA3AF", fontVariationSettings: "'FILL' 1" }}>{m.icon}</span>
+                    <span style={{ fontSize: "9px", color: activeModule === m.id ? "#0E7490" : "#6B7280", fontWeight: activeModule === m.id ? 600 : 400, lineHeight: 1.2, textAlign: "center" }}>{m.label}</span>
                   </button>
                 ))}
               </div>
 
               {/* Screen content */}
-              <div className="flex-1 overflow-hidden">
+              <div className="flex-1 overflow-hidden" style={{ background: "#F8FAFC" }}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeModule}
