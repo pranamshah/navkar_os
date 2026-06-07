@@ -112,19 +112,14 @@ function FreightOpsDash() {
 }
 
 function DocAIDash() {
-  const docs = [
-    { name: "BL_HAPL_0142.pdf", type: "Bill of Lading", job: "NOS/2026/0142", status: "Extracted", fields: 18, time: "2.4s", color: "#16A34A" },
-    { name: "PLIST_0142.pdf", type: "Packing List", job: "NOS/2026/0142", status: "Extracted", fields: 12, time: "1.8s", color: "#16A34A" },
-    { name: "BE_ICEGATE_0141.xml", type: "Bill of Entry", job: "NOS/2026/0141", status: "Extracted", fields: 24, time: "3.1s", color: "#16A34A" },
-    { name: "CINV_EXP_0139.pdf", type: "Commercial Invoice", job: "NOS/2026/0139", status: "Reading", fields: "–", time: "●", color: "#D4AF37" },
-  ];
+  const docs: { name: string; type: string; job: string; status: string; fields: number | string; time: string; color: string }[] = [];
   return (
     <div>
       <DashHeader title="DocAI" badge="Zero-Entry Intelligence" />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="98.2%" label="Accuracy" sub="Last 30 days" />
-        <StatCard val="3.1s" label="Avg. Extraction" />
-        <StatCard val="284" label="Docs This Month" />
+        <StatCard val="—" label="Accuracy" sub="No data yet" />
+        <StatCard val="—" label="Avg. Extraction" />
+        <StatCard val="0" label="Docs This Month" />
         <StatCard val="0" label="Manual Corrections" />
       </div>
       <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
@@ -158,20 +153,15 @@ function DocAIDash() {
 }
 
 function BillGenDash() {
-  const invoices = [
-    { no: "INV-2026-0892", client: "Mehta Exports", amount: "₹1,11,336", gst: "IGST", status: "Sent", date: "28 May" },
-    { no: "INV-2026-0891", client: "Patel Chemicals", amount: "₹88,200", gst: "IGST", status: "Paid", date: "26 May" },
-    { no: "INV-2026-0890", client: "Krishna Textiles", amount: "₹32,400", gst: "CGST+SGST", status: "Draft", date: "24 May" },
-    { no: "INV-2026-0889", client: "Rajvi Industries", amount: "₹67,800", gst: "IGST", status: "Sent", date: "20 May" },
-  ];
+  const invoices: { no: string; client: string; amount: string; gst: string; status: string; date: string }[] = [];
   const statusColor: Record<string, string> = { Sent: "#3B82F6", Paid: "#16A34A", Draft: "#D4AF37" };
   return (
     <div>
       <DashHeader title="BillGen" badge="GST-Native Invoicing" action={{ label: "+ New Invoice", href: "#" }} />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="₹8.4L" label="Billed This Month" sub="14 invoices" />
-        <StatCard val="₹5.2L" label="Collected" sub="62% recovery" />
-        <StatCard val="3" label="Pending" />
+        <StatCard val="₹0" label="Billed This Month" />
+        <StatCard val="₹0" label="Collected" />
+        <StatCard val="0" label="Pending" />
         <StatCard val="0" label="GST Errors" />
       </div>
       <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
@@ -205,20 +195,15 @@ function BillGenDash() {
 }
 
 function ClientHubDash() {
-  const clients = [
-    { name: "Mehta Exports", jobs: 4, portal: "Active", tracking: "2 live", lastSeen: "2 hrs ago" },
-    { name: "Krishna Textiles", jobs: 2, portal: "Active", tracking: "1 live", lastSeen: "5 hrs ago" },
-    { name: "Patel Chemicals", jobs: 1, portal: "Invite sent", tracking: "—", lastSeen: "—" },
-    { name: "Rajvi Industries", jobs: 3, portal: "Active", tracking: "1 live", lastSeen: "Yesterday" },
-  ];
+  const clients: { name: string; jobs: number; portal: string; tracking: string; lastSeen: string }[] = [];
   return (
     <div>
       <DashHeader title="ClientHub" badge="White-Label Client Portal" action={{ label: "+ Add Client", href: "#" }} />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="14" label="Active Clients" />
-        <StatCard val="3" label="Tracking Now" sub="Live shipments" />
-        <StatCard val="0" label="Support Calls" sub="vs 12 last month" />
-        <StatCard val="98%" label="Portal Uptime" />
+        <StatCard val="0" label="Active Clients" />
+        <StatCard val="0" label="Tracking Now" sub="Live shipments" />
+        <StatCard val="0" label="Support Calls" />
+        <StatCard val="—" label="Portal Uptime" />
       </div>
       <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
         <div className="px-6 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
@@ -254,72 +239,32 @@ function AccountsOSDash() {
     <div>
       <DashHeader title="AccountsOS" badge="Freight-Native Accounting" />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="₹8.4L" label="Revenue (June)" sub="+12% vs May" />
-        <StatCard val="₹2.1L" label="Expenses" />
-        <StatCard val="₹6.3L" label="Net Profit" sub="75% margin" />
-        <StatCard val="Ready" label="GSTR-1 Export" sub="June 2026" />
+        <StatCard val="₹0" label="Revenue (This Month)" />
+        <StatCard val="₹0" label="Expenses" />
+        <StatCard val="₹0" label="Net Profit" />
+        <StatCard val="—" label="GSTR-1 Export" sub="No data yet" />
       </div>
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
-          <div className="px-6 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-            <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>P&L Summary</p>
-          </div>
-          <div className="p-6 space-y-4">
-            {[
-              { head: "Ocean Freight Revenue", amt: "₹6,20,000", type: "income" },
-              { head: "Air Freight Revenue", amt: "₹1,40,000", type: "income" },
-              { head: "Documentation Charges", amt: "₹80,000", type: "income" },
-              { head: "CFS / THC Expenses", amt: "₹1,23,400", type: "expense" },
-              { head: "Staff Salaries", amt: "₹84,000", type: "expense" },
-              { head: "Office & Misc", amt: "₹18,000", type: "expense" },
-            ].map((r) => (
-              <div key={r.head} className="flex justify-between text-xs">
-                <span style={{ color: "#4c4546" }}>{r.head}</span>
-                <span className="font-semibold" style={{ color: r.type === "income" ? "#16A34A" : "#EF4444" }}>
-                  {r.type === "expense" ? "−" : ""}{r.amt}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
-          <div className="px-6 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-            <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>GST Filings</p>
-          </div>
-          <div className="p-6 space-y-4">
-            {[
-              { label: "GSTR-1 (June 2026)", status: "Ready to Export", color: "#16A34A" },
-              { label: "GSTR-3B (June 2026)", status: "Pending", color: "#D4AF37" },
-              { label: "Tally XML (June 2026)", status: "Generated", color: "#16A34A" },
-              { label: "GSTR-1 (May 2026)", status: "Filed", color: "#7e7576" },
-            ].map((g) => (
-              <div key={g.label} className="flex justify-between items-center text-xs">
-                <span style={{ color: "#4c4546" }}>{g.label}</span>
-                <span className="font-semibold" style={{ color: g.color }}>{g.status}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="flex flex-col items-center justify-center py-16" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
+        <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No accounting data yet</p>
+        <p className="text-xs mt-1" style={{ color: "#7e7576" }}>Add ledgers and vouchers in Accura to see your P&L and GST summary here.</p>
+        <Link href="/dashboard/accura" className="mt-4 px-4 py-2 text-xs font-semibold uppercase tracking-widest" style={{ background: "#1a1c1c", color: "#D4AF37" }}>
+          Open Accura →
+        </Link>
       </div>
     </div>
   );
 }
 
 function RateDeskDash() {
-  const rates = [
-    { lane: "INNSA → DEHAM", carrier: "Hapag-Lloyd", teu: "$890", cbm: "₹4,200", valid: "30 Jun 2026", status: "Active" },
-    { lane: "INMAA → SGSIN", carrier: "MSC", teu: "$320", cbm: "₹1,800", valid: "15 Jun 2026", status: "Expiring" },
-    { lane: "INCCU → USLAX", carrier: "Evergreen", teu: "$1,240", cbm: "₹6,800", valid: "31 Jul 2026", status: "Active" },
-    { lane: "INMUN → AEJEA", carrier: "CMA CGM", teu: "$460", cbm: "₹2,400", valid: "20 Jun 2026", status: "Active" },
-  ];
+  const rates: { lane: string; carrier: string; teu: string; cbm: string; valid: string; status: string }[] = [];
   return (
     <div>
       <DashHeader title="RateDesk" badge="Dynamic Rate Management" action={{ label: "+ Add Rate", href: "#" }} />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="12" label="Active Rates" />
-        <StatCard val="3" label="Expiring Soon" sub="Next 7 days" />
-        <StatCard val="8" label="Quotes Sent" sub="This month" />
-        <StatCard val="6" label="Quotes Converted" sub="75% hit rate" />
+        <StatCard val="0" label="Active Rates" />
+        <StatCard val="0" label="Expiring Soon" sub="Next 7 days" />
+        <StatCard val="0" label="Quotes Sent" sub="This month" />
+        <StatCard val="0" label="Quotes Converted" />
       </div>
       <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
         <div className="px-6 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
@@ -353,20 +298,20 @@ function RateDeskDash() {
 
 function ConnectLayerDash() {
   const integrations = [
-    { name: "ICEGATE", type: "Customs EDI", status: "Connected", calls: "1,240/mo", lastSync: "2 min ago" },
-    { name: "GSTN", type: "Tax API", status: "Connected", calls: "320/mo", lastSync: "1 hr ago" },
-    { name: "WhatsApp Business API", type: "Notifications", status: "Connected", calls: "4,800/mo", lastSync: "Live" },
-    { name: "MarineTraffic", type: "Vessel Tracking", status: "Connected", calls: "180/mo", lastSync: "5 min ago" },
-    { name: "Razorpay", type: "Payment Links", status: "Connected", calls: "24/mo", lastSync: "Today" },
-    { name: "Tally Prime", type: "Accounting Sync", status: "Connected", calls: "XML export", lastSync: "Manual" },
+    { name: "ICEGATE", type: "Customs EDI", status: "Not Connected", calls: "—", lastSync: "—" },
+    { name: "GSTN", type: "Tax API", status: "Not Connected", calls: "—", lastSync: "—" },
+    { name: "WhatsApp Business API", type: "Notifications", status: "Not Connected", calls: "—", lastSync: "—" },
+    { name: "MarineTraffic", type: "Vessel Tracking", status: "Not Connected", calls: "—", lastSync: "—" },
+    { name: "Razorpay", type: "Payment Links", status: "Not Connected", calls: "—", lastSync: "—" },
+    { name: "Tally Prime", type: "Accounting Sync", status: "Not Connected", calls: "—", lastSync: "—" },
   ];
   return (
     <div>
       <DashHeader title="ConnectLayer" badge="Native Integrations" />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard val="6/6" label="Integrations Live" />
-        <StatCard val="99.9%" label="API Uptime" />
-        <StatCard val="6.5k" label="API Calls / Month" />
+        <StatCard val="0/6" label="Integrations Live" />
+        <StatCard val="—" label="API Uptime" />
+        <StatCard val="0" label="API Calls / Month" />
         <StatCard val="0" label="Failed Calls" sub="Last 30 days" />
       </div>
       <div style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
@@ -386,7 +331,7 @@ function ConnectLayerDash() {
               <tr key={int.name} style={{ borderBottom: "0.5px solid rgba(0,0,0,0.04)", background: i % 2 === 0 ? "#fafafa" : "#fff" }}>
                 <td className="px-6 py-3 font-semibold" style={{ color: "#1a1c1c" }}>{int.name}</td>
                 <td className="px-6 py-3" style={{ color: "#4c4546" }}>{int.type}</td>
-                <td className="px-6 py-3 font-semibold" style={{ color: "#16A34A" }}>● {int.status}</td>
+                <td className="px-6 py-3 font-semibold" style={{ color: int.status === "Connected" ? "#16A34A" : "#9CA3AF" }}>● {int.status}</td>
                 <td className="px-6 py-3" style={{ color: "#7e7576" }}>{int.calls}</td>
                 <td className="px-6 py-3" style={{ color: "#7e7576" }}>{int.lastSync}</td>
               </tr>

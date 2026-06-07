@@ -3,51 +3,8 @@
 import { motion } from "framer-motion";
 
 const bsData = {
-  liabilities: [
-    { group: "Capital Account", items: [
-      { name: "Capital Account", amount: 800000 },
-      { name: "Retained Earnings", amount: 177800 },
-      { name: "Net Profit (Current Year)", amount: 524300 },
-    ]},
-    { group: "Loans (Liability)", items: [
-      { name: "SBI Working Capital Loan", amount: 500000 },
-    ]},
-    { group: "Current Liabilities", items: [
-      { name: "Apollo World Shipping (Creditor)", amount: 74000 },
-      { name: "Sakthi Transport (Creditor)", amount: 50000 },
-    ]},
-    { group: "Duties & Taxes", items: [
-      { name: "CGST Payable", amount: 31070 },
-      { name: "SGST Payable", amount: 31070 },
-      { name: "TDS Payable (194C)", amount: 8200 },
-    ]},
-  ],
-  assets: [
-    { group: "Fixed Assets", items: [
-      { name: "Computer Equipment", amount: 120000 },
-      { name: "Office Furniture", amount: 45000 },
-      { name: "Less: Accumulated Depreciation", amount: -32000 },
-    ]},
-    { group: "Bank Accounts", items: [
-      { name: "HDFC Bank CC", amount: 1230800 },
-      { name: "SBI Current Account", amount: 312400 },
-    ]},
-    { group: "Cash-in-Hand", items: [
-      { name: "Cash", amount: 124800 },
-    ]},
-    { group: "Sundry Debtors", items: [
-      { name: "Ravi Exports Pvt Ltd", amount: 96000 },
-      { name: "HDFC Traders", amount: 48000 },
-      { name: "Global Impex Pvt Ltd", amount: 50000 },
-    ]},
-    { group: "Loans & Advances (Asset)", items: [
-      { name: "Advance to Staff", amount: 20000 },
-      { name: "Security Deposits", amount: 60000 },
-    ]},
-    { group: "Stock-in-Trade", items: [
-      { name: "Closing Stock", amount: 0 },
-    ]},
-  ],
+  liabilities: [] as { group: string; items: { name: string; amount: number }[] }[],
+  assets: [] as { group: string; items: { name: string; amount: number }[] }[],
 };
 
 function fmt(n: number) {
@@ -83,6 +40,13 @@ export default function BalanceSheetPage() {
         </div>
       </div>
 
+      {totalLiab === 0 && totalAssets === 0 && (
+        <div className="rounded-xl border p-12 text-center" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+          <span className="material-symbols-outlined mb-3 block" style={{ fontSize: 36, color: "#E5E7EB" }}>balance</span>
+          <p className="text-[13px]" style={{ color: "#9CA3AF" }}>No ledger data yet — add ledgers and vouchers in Accura to generate the Balance Sheet</p>
+        </div>
+      )}
+      {(totalLiab > 0 || totalAssets > 0) && (
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl border overflow-hidden" style={{ borderColor: "#E5E7EB" }}>
         <div className="grid grid-cols-2 divide-x divide-gray-200">
           {/* Left: Liabilities */}
@@ -130,6 +94,7 @@ export default function BalanceSheetPage() {
           </div>
         </div>
       </motion.div>
+      )}
     </div>
   );
 }

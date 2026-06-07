@@ -13,65 +13,7 @@ interface TBEntry {
   isGroup?: boolean;
 }
 
-const tbData: TBEntry[] = [
-  // DEBIT side
-  { group: "Fixed Assets",      ledger: "Fixed Assets",         amount: 320000,  side: "Dr", isGroup: true },
-  { group: "Fixed Assets",      ledger: "Computers & Equipment", amount: 220000, side: "Dr" },
-  { group: "Fixed Assets",      ledger: "Office Furniture",      amount: 100000, side: "Dr" },
-
-  { group: "Current Assets",    ledger: "Cash-in-Hand",          amount: 0,       side: "Dr", isGroup: true },
-  { group: "Current Assets",    ledger: "Cash",                  amount: 124800,  side: "Dr" },
-  { group: "Current Assets",    ledger: "HDFC Bank CC",          amount: 1230800, side: "Dr" },
-  { group: "Current Assets",    ledger: "SBI Current Account",   amount: 312400,  side: "Dr" },
-  { group: "Current Assets",    ledger: "Ravi Exports Pvt Ltd",  amount: 96000,   side: "Dr" },
-  { group: "Current Assets",    ledger: "HDFC Traders",          amount: 48000,   side: "Dr" },
-  { group: "Current Assets",    ledger: "Global Impex Pvt Ltd",  amount: 50000,   side: "Dr" },
-
-  { group: "Direct Expenses",   ledger: "Direct Expenses",       amount: 0,       side: "Dr", isGroup: true },
-  { group: "Direct Expenses",   ledger: "CFS Charges",           amount: 82000,   side: "Dr" },
-  { group: "Direct Expenses",   ledger: "Transport Charges",     amount: 54000,   side: "Dr" },
-  { group: "Direct Expenses",   ledger: "Steamer Freight",       amount: 38000,   side: "Dr" },
-
-  { group: "Indirect Expenses", ledger: "Indirect Expenses",     amount: 0,       side: "Dr", isGroup: true },
-  { group: "Indirect Expenses", ledger: "Office Rent",           amount: 28000,   side: "Dr" },
-  { group: "Indirect Expenses", ledger: "Staff Salary",          amount: 144000,  side: "Dr" },
-  { group: "Indirect Expenses", ledger: "Software Subscription", amount: 18200,   side: "Dr" },
-  { group: "Indirect Expenses", ledger: "Telephone & Internet",  amount: 8400,    side: "Dr" },
-  { group: "Indirect Expenses", ledger: "Depreciation",          amount: 12000,   side: "Dr" },
-
-  // CREDIT side
-  { group: "Capital Account",   ledger: "Capital Account",       amount: 800000,  side: "Cr", isGroup: true },
-  { group: "Capital Account",   ledger: "Capital Account",       amount: 800000,  side: "Cr" },
-
-  { group: "Reserves & Surplus",ledger: "Reserves & Surplus",    amount: 0,       side: "Cr", isGroup: true },
-  { group: "Reserves & Surplus",ledger: "Retained Earnings",     amount: 177800,  side: "Cr" },
-
-  { group: "Loans (Liability)", ledger: "Loans (Liability)",     amount: 0,       side: "Cr", isGroup: true },
-  { group: "Loans (Liability)", ledger: "Term Loan - HDFC",      amount: 250000,  side: "Cr" },
-
-  { group: "Sundry Creditors",  ledger: "Sundry Creditors",      amount: 0,       side: "Cr", isGroup: true },
-  { group: "Sundry Creditors",  ledger: "Apollo World Shipping",  amount: 74000,   side: "Cr" },
-  { group: "Sundry Creditors",  ledger: "Sakthi Transport",      amount: 50000,   side: "Cr" },
-
-  { group: "Duties & Taxes",    ledger: "Duties & Taxes",        amount: 0,       side: "Cr", isGroup: true },
-  { group: "Duties & Taxes",    ledger: "CGST Payable",          amount: 31070,   side: "Cr" },
-  { group: "Duties & Taxes",    ledger: "SGST Payable",          amount: 31070,   side: "Cr" },
-  { group: "Duties & Taxes",    ledger: "TDS Payable (194C)",    amount: 8200,    side: "Cr" },
-
-  { group: "Sales Accounts",    ledger: "Sales Accounts",        amount: 0,       side: "Cr", isGroup: true },
-  { group: "Sales Accounts",    ledger: "Ocean Freight Income",  amount: 418000,  side: "Cr" },
-  { group: "Sales Accounts",    ledger: "Air Freight Income",    amount: 88000,   side: "Cr" },
-
-  { group: "Direct Income",     ledger: "Direct Income",         amount: 0,       side: "Cr", isGroup: true },
-  { group: "Direct Income",     ledger: "Documentation Charges", amount: 12000,   side: "Cr" },
-
-  { group: "Indirect Income",   ledger: "Indirect Income",       amount: 0,       side: "Cr", isGroup: true },
-  { group: "Indirect Income",   ledger: "Miscellaneous Income",  amount: 36000,   side: "Cr" },
-
-  { group: "Provisions",        ledger: "Provisions",            amount: 0,       side: "Cr", isGroup: true },
-  { group: "Provisions",        ledger: "Provision for Tax",     amount: 18000,   side: "Cr" },
-  { group: "Provisions",        ledger: "Salary Payable",        amount: 72360,   side: "Cr" },
-];
+const tbData: TBEntry[] = [];
 
 function fmt(n: number) {
   return "₹" + n.toLocaleString("en-IN");

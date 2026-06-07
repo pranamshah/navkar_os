@@ -2,25 +2,9 @@
 
 import { useState } from "react";
 
-const aging = [
-  { client: "Ravi Exports", b0: 84000, b30: 0, b60: 0, b90: 0 },
-  { client: "HDFC Traders", b0: 48000, b30: 142000, b60: 0, b90: 0 },
-  { client: "Bharat Heavy", b0: 18500, b30: 0, b60: 64000, b90: 0 },
-  { client: "Sunrise Logistics", b0: 0, b30: 28000, b60: 0, b90: 0 },
-  { client: "Sakthi Cargo", b0: 0, b30: 0, b60: 0, b90: 24000 },
-];
-
-const register = [
-  { no: "INV-2026-0142", client: "Ravi Exports", date: "05 Jun 2026", amount: 410640, status: "Sent" },
-  { no: "INV-2026-0141", client: "HDFC Traders", date: "04 Jun 2026", amount: 412000, status: "Paid" },
-  { no: "INV-2026-0140", client: "Global Impex", date: "03 Jun 2026", amount: 80240, status: "Paid" },
-];
-
-const collection = [
-  { date: "04 Jun 2026", client: "HDFC Traders", invoice: "INV-2026-0141", amount: 412000, mode: "NEFT" },
-  { date: "03 Jun 2026", client: "Global Impex", invoice: "INV-2026-0140", amount: 80240, mode: "RTGS" },
-  { date: "02 Jun 2026", client: "Ravi Exports", invoice: "INV-2026-0138", amount: 286400, mode: "Cheque" },
-];
+const aging: { client: string; b0: number; b30: number; b60: number; b90: number }[] = [];
+const register: { no: string; client: string; date: string; amount: number; status: string }[] = [];
+const collection: { date: string; client: string; invoice: string; amount: number; mode: string }[] = [];
 
 export default function BillingPage() {
   const [tab, setTab] = useState<"register" | "collection" | "aging">("aging");
@@ -59,6 +43,7 @@ export default function BillingPage() {
                 <tr>{["Client", "0–30", "31–60", "61–90", "90+", "Total"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
               </thead>
               <tbody>
+                {aging.length === 0 && <tr><td colSpan={6} className="py-10 text-center text-[13px]" style={{ color: "#9CA3AF" }}>No outstanding invoices</td></tr>}
                 {aging.map((a) => (
                   <tr key={a.client} style={{ borderTop: "1px solid #F3F4F6" }}>
                     <td className="py-2.5 px-3 font-semibold" style={{ color: "#111827" }}>{a.client}</td>
@@ -79,7 +64,7 @@ export default function BillingPage() {
         <div className="rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
           <table className="w-full text-[12px]">
             <thead style={{ background: "#F9FAFB" }}><tr>{["Invoice No", "Client", "Date", "Amount", "Status"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr></thead>
-            <tbody>{register.map((r) => (
+            <tbody>{register.length === 0 && <tr><td colSpan={5} className="py-10 text-center text-[13px]" style={{ color: "#9CA3AF" }}>No invoices yet</td></tr>}{register.map((r) => (
               <tr key={r.no} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{r.no}</td>
                 <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{r.client}</td>
@@ -96,7 +81,7 @@ export default function BillingPage() {
         <div className="rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
           <table className="w-full text-[12px]">
             <thead style={{ background: "#F9FAFB" }}><tr>{["Date", "Client", "Invoice", "Amount", "Mode"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr></thead>
-            <tbody>{collection.map((c, i) => (
+            <tbody>{collection.length === 0 && <tr><td colSpan={5} className="py-10 text-center text-[13px]" style={{ color: "#9CA3AF" }}>No collections yet</td></tr>}{collection.map((c, i) => (
               <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3" style={{ color: "#6B7280" }}>{c.date}</td>
                 <td className="py-2.5 px-3 font-medium" style={{ color: "#111827" }}>{c.client}</td>

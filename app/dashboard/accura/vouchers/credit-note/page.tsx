@@ -116,25 +116,13 @@ export default function CreditNotePage() {
     return () => window.removeEventListener("keydown", h);
   }, [handleSave, router]);
 
-  const customerOpts = ledgerOptions.length > 0
-    ? ledgerOptions
-        .filter((l) => ["Sundry Debtors"].includes(l.group?.name ?? ""))
-        .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }))
-    : [
-        { id: "__ravi", label: "Ravi Exports Pvt Ltd", sub: "Sundry Debtors" },
-        { id: "__hdfc_t", label: "HDFC Traders", sub: "Sundry Debtors" },
-        { id: "__global", label: "Global Impex Pvt Ltd", sub: "Sundry Debtors" },
-      ];
+  const customerOpts = ledgerOptions
+    .filter((l) => ["Sundry Debtors"].includes(l.group?.name ?? ""))
+    .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }));
 
-  const incomeOpts = ledgerOptions.length > 0
-    ? ledgerOptions
-        .filter((l) => ["Sales Accounts", "Direct Income", "Indirect Income"].includes(l.group?.name ?? ""))
-        .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }))
-    : [
-        { id: "__ocean", label: "Ocean Freight Income", sub: "Sales Accounts" },
-        { id: "__air", label: "Air Freight Income", sub: "Sales Accounts" },
-        { id: "__doc", label: "Documentation Charges", sub: "Direct Income" },
-      ];
+  const incomeOpts = ledgerOptions
+    .filter((l) => ["Sales Accounts", "Direct Income", "Indirect Income"].includes(l.group?.name ?? ""))
+    .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }));
 
   return (
     <div className="p-6 max-w-2xl" style={{ fontFamily: "Inter, sans-serif" }}>

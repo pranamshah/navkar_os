@@ -114,10 +114,7 @@ export default function ReceiptVoucherPage() {
     .filter((l) => !["Bank Accounts", "Cash-in-Hand"].includes(l.group?.name ?? ""))
     .map((l) => ({ id: l.id, label: l.name, sub: l.group?.name ?? "" }));
 
-  const partyOpts = partyOptions.length > 0 ? partyOptions : [
-    { id: "__ravi", label: "Ravi Exports Pvt Ltd", sub: "Sundry Debtors" },
-    { id: "__ocean", label: "Ocean Freight Income", sub: "Sales Accounts" },
-  ];
+  const partyOpts = partyOptions;
 
   return (
     <div className="p-6 max-w-4xl" style={{ fontFamily: "Inter, sans-serif" }}>

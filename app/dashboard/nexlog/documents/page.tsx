@@ -1,14 +1,6 @@
 "use client";
 
-const docs = [
-  { job: "IMP/2526/089", client: "Ravi Exports", type: "BL", label: "Original BL", date: "15 May 2026", size: "2.4 MB" },
-  { job: "IMP/2526/089", client: "Ravi Exports", type: "PL", label: "Packing List", date: "12 May 2026", size: "180 KB" },
-  { job: "EXP/2526/044", client: "HDFC Traders", type: "CI", label: "Commercial Invoice", date: "20 May 2026", size: "210 KB" },
-  { job: "IMP/2526/088", client: "Sunrise Logistics", type: "BE", label: "Bill of Entry", date: "28 May 2026", size: "340 KB" },
-  { job: "AIR/2526/032", client: "Global Impex", type: "MAWB", label: "MAWB Copy", date: "22 May 2026", size: "150 KB" },
-  { job: "IMP/2526/087", client: "Sakthi Cargo", type: "IC", label: "Insurance Cert", date: "18 May 2026", size: "95 KB" },
-  { job: "EXP/2526/044", client: "HDFC Traders", type: "COO", label: "Cert of Origin", date: "19 May 2026", size: "120 KB" },
-];
+const docs: { job: string; client: string; type: string; label: string; date: string; size: string }[] = [];
 
 export default function DocumentsPage() {
   return (
@@ -29,9 +21,9 @@ export default function DocumentsPage() {
 
       <div className="grid grid-cols-3 gap-4 mb-5">
         {[
-          { label: "Total Documents", value: "142", icon: "folder", color: "#1565C0", bg: "#E3F2FD" },
-          { label: "Shared Links Active", value: "8", icon: "link", color: "#7C3AED", bg: "#F5F3FF" },
-          { label: "Pending Upload", value: "3", icon: "upload_file", color: "#D97706", bg: "#FFFBEB" },
+          { label: "Total Documents", value: docs.length.toString(), icon: "folder", color: "#1565C0", bg: "#E3F2FD" },
+          { label: "Shared Links Active", value: "0", icon: "link", color: "#7C3AED", bg: "#F5F3FF" },
+          { label: "Pending Upload", value: "0", icon: "upload_file", color: "#D97706", bg: "#FFFBEB" },
         ].map((k) => (
           <div key={k.label} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div className="flex items-start justify-between">
@@ -53,6 +45,9 @@ export default function DocumentsPage() {
             <tr>{["Job No", "Client", "Type", "Document", "Date", "Size", ""].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
           </thead>
           <tbody>
+            {docs.length === 0 && (
+              <tr><td colSpan={7} className="py-10 text-center text-[13px]" style={{ color: "#9CA3AF" }}>No documents yet — upload your first document</td></tr>
+            )}
             {docs.map((d, i) => (
               <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
                 <td className="py-2.5 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{d.job}</td>

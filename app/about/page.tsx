@@ -137,10 +137,10 @@ export default function AboutPage() {
         <section className="px-8 py-20 border-t border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
           <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10">
             {[
-              { val: "2024", label: "Founded" },
-              { val: "500+", label: "Businesses Using NavkarOS" },
-              { val: "12k+", label: "Shipments Tracked" },
+              { val: "2026", label: "Founded" },
               { val: "Chennai", label: "Headquartered" },
+              { val: "India", label: "Market" },
+              { val: "6", label: "Products in Suite" },
             ].map((s) => (
               <div key={s.label}>
                 <p
