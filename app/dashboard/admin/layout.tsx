@@ -27,7 +27,7 @@ function AdminSidebar() {
     >
       {/* Logo */}
       <div className="px-4 py-4 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <LogoBrand height={26} onDark href="/" />
+        <LogoBrand height={70} onDark href="/" />
       </div>
 
       {/* Admin badge */}

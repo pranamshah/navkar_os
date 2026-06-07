@@ -160,7 +160,7 @@ export default function LoginPage() {
         />
 
         <div className="relative z-10">
-          <LogoBrand height={28} onDark href="/" />
+          <LogoBrand height={80} onDark href="/" />
         </div>
 
         <div className="relative z-10">
@@ -203,7 +203,7 @@ export default function LoginPage() {
 
           {/* Mobile logo */}
           <div className="lg:hidden mb-12">
-            <LogoBrand height={28} href="/" />
+            <LogoBrand height={80} href="/" />
           </div>
 
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>Welcome back</p>

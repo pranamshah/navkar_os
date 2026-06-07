@@ -52,7 +52,7 @@ function StatusStep({ done, active, label, sub }: { done: boolean; active: boole
 }
 
 export default function StatusPage() {
-  const { data: session, status: sessionStatus } = useSession();
+  const { data: session, status: sessionStatus, update } = useSession();
   const router = useRouter();
   const [userData, setUserData] = useState<UserStatus | null>(null);
   const [copied, setCopied] = useState(false);
@@ -64,10 +64,11 @@ export default function StatusPage() {
       const data = await res.json();
       setUserData(data);
       if (data.status === "ACTIVE") {
-        // Use replace so back-button doesn't return to /status
-        router.replace("/dashboard");
-        // Hard fallback in case router.replace stalls (e.g. middleware race)
-        setTimeout(() => { window.location.href = "/dashboard"; }, 1500);
+        // Refresh the JWT so the server-side session reflects ACTIVE status
+        // This prevents a stale-token redirect loop (/dashboard → /status → /dashboard)
+        await update();
+        // Hard navigation forces a full session re-read on the server
+        window.location.href = "/dashboard";
       }
     }
     setLoading(false);
@@ -161,7 +162,7 @@ export default function StatusPage() {
       <div className="max-w-lg mx-auto">
         {/* Logo */}
         <div className="mb-12">
-          <LogoBrand height={20} />
+          <LogoBrand height={80} />
         </div>
 
         {/* Status card */}

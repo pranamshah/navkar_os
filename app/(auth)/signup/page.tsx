@@ -124,7 +124,7 @@ export default function SignupPage() {
         />
 
         <div className="relative z-10">
-          <LogoBrand height={28} onDark href="/" />
+          <LogoBrand height={80} onDark href="/" />
         </div>
 
         <div className="relative z-10">
@@ -165,7 +165,7 @@ export default function SignupPage() {
         <div className="max-w-sm w-full mx-auto">
 
           <div className="lg:hidden mb-12">
-            <LogoBrand height={28} href="/" />
+            <LogoBrand height={80} href="/" />
           </div>
 
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>Get started</p>

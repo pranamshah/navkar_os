@@ -150,7 +150,7 @@ export default function NexlogLayout({ children }: { children: React.ReactNode }
         style={{ background: "#0A1628", minWidth: 224 }}
       >
         <div className="px-4 py-3 border-b border-white/10">
-          <LogoBrand height={24} onDark href="/dashboard/client" />
+          <LogoBrand height={70} onDark href="/dashboard/client" />
           <div className="flex items-center gap-1.5 mt-2">
             <span className="material-symbols-outlined text-[#1565C0]" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>
               navigation
