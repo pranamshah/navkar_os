@@ -155,7 +155,7 @@ export default function Navbar() {
             style={{ background: "#1a1c1d" }}
           >
             <div className="flex items-center justify-between px-6 h-20">
-              <LogoBrand height={44} onDark />
+              <LogoBrand height={70} onDark />
               <button onClick={() => setMobileOpen(false)}><X className="w-6 h-6 text-white" /></button>
             </div>
             <div className="flex-1 flex flex-col justify-center px-8 gap-5">
