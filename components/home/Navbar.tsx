@@ -67,7 +67,7 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <LogoBrand height={110} />
+          <LogoBrand height={88} />
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">

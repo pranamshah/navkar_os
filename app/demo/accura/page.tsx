@@ -32,72 +32,114 @@ const TALLY_COMPARE = [
 /* MODULE TABS                                                 */
 /* ─────────────────────────────────────────────────────────── */
 const MODULES = [
-  { id: "dashboard",    label: "Dashboard",       icon: "dashboard" },
-  { id: "income",       label: "Income",          icon: "receipt_long" },
-  { id: "expenses",     label: "Expenses",        icon: "payments" },
-  { id: "gst",          label: "GST",             icon: "account_balance" },
-  { id: "pnl",          label: "P&L",             icon: "trending_up" },
-  { id: "receivables",  label: "Receivables",     icon: "pending_actions" },
-  { id: "jobpnl",       label: "Job P&L",         icon: "route" },
-  { id: "bank",         label: "Bank",            icon: "account_balance_wallet" },
+  { id: "dashboard", label: "Dashboard", icon: "dashboard" },
+  { id: "income",    label: "Income",    icon: "trending_up" },
+  { id: "expenses",  label: "Expenses",  icon: "payments" },
+  { id: "gst",       label: "GST",       icon: "account_balance" },
+  { id: "pnl",       label: "P&L",       icon: "bar_chart" },
+  { id: "bank",      label: "Bank",      icon: "account_balance_wallet" },
 ];
 
 /* ─────────────────────────────────────────────────────────── */
-/* MOCK SCREENS                                                */
+/* MOCK SCREENS — light-themed, matching real software design  */
 /* ─────────────────────────────────────────────────────────── */
+
 function DashboardScreen() {
   const kpis = [
-    { label: "Revenue This Month",     value: "₹8,42,500",  change: "+12%", up: true  },
-    { label: "Expenses This Month",    value: "₹3,18,200",  change: "-4%",  up: false },
-    { label: "Net Profit",             value: "₹5,24,300",  change: "+18%", up: true  },
-    { label: "GST Payable",            value: "₹62,140",    change: "Due 20 Jul", up: false },
-    { label: "Outstanding Receivables",value: "₹1,94,000",  change: "6 invoices", up: false },
-    { label: "Cash Position",          value: "₹12,30,800", change: "3 accounts", up: true  },
+    { label: "Revenue",                value: "₹8,42,500",  icon: "trending_up",         color: "#059669", bg: "#ECFDF5" },
+    { label: "Expenses",               value: "₹3,18,200",  icon: "receipt_long",         color: "#DC2626", bg: "#FEF2F2" },
+    { label: "Net Profit",             value: "₹5,24,300",  icon: "account_balance",      color: "#059669", bg: "#ECFDF5" },
+    { label: "GST Payable",            value: "₹62,140",    icon: "gavel",                color: "#DC2626", bg: "#FEF2F2" },
+    { label: "Outstanding Receivables",value: "₹1,94,000",  icon: "arrow_outward",        color: "#0E7490", bg: "#ECFEFF" },
+    { label: "Cash Position",          value: "₹12,30,800", icon: "savings",              color: "#7C3AED", bg: "#F5F3FF" },
   ];
-  const bars = [42,38,55,60,48,72,65,80,74,68,88,94];
-  const months = ["Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun"];
+  const quickActions = [
+    { label: "New Payment",      shortcut: "F5", icon: "payments",     color: "#0E7490" },
+    { label: "New Receipt",      shortcut: "F6", icon: "receipt",      color: "#059669" },
+    { label: "New Sales Invoice",shortcut: "F8", icon: "description",  color: "#7C3AED" },
+    { label: "Run Payroll",      shortcut: "",   icon: "paid",         color: "#D97706" },
+  ];
+  const txns = [
+    { date: "05 Jul", type: "Sales Invoice", party: "Ravi Exports",      amount: "₹78,500",  bal: "₹78,500",  tc: { text: "#0E7490", bg: "#ECFEFF", border: "#A5F3FC" } },
+    { date: "04 Jul", type: "Receipt",       party: "HDFC Traders",      amount: "₹48,000",  bal: "₹1,26,500",tc: { text: "#059669", bg: "#ECFDF5", border: "#A7F3D0" } },
+    { date: "03 Jul", type: "Payment",       party: "Apollo World",       amount: "₹18,000",  bal: "₹1,08,500",tc: { text: "#DC2626", bg: "#FEF2F2", border: "#FECACA" } },
+    { date: "02 Jul", type: "Sales Invoice", party: "Global Impex",       amount: "₹15,000",  bal: "₹1,23,500",tc: { text: "#0E7490", bg: "#ECFEFF", border: "#A5F3FC" } },
+    { date: "01 Jul", type: "Payment",       party: "Fast Transport",     amount: "₹54,000",  bal: "₹69,500",  tc: { text: "#DC2626", bg: "#FEF2F2", border: "#FECACA" } },
+  ];
 
   return (
-    <div className="h-full overflow-y-auto p-3 space-y-3" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-2">
+        <div>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>Dashboard</p>
+          <p style={{ color: "#6B7280", fontSize: "10px" }}>Navkar Freight Co. · FY 2025–26</p>
+        </div>
+        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#6B7280" }}>calendar_month</span>
+          <span style={{ color: "#374151", fontSize: "10px" }}>01 Jul 2026 – 07 Jul 2026</span>
+          <span className="material-symbols-outlined" style={{ fontSize: 12, color: "#9CA3AF" }}>expand_more</span>
+        </div>
+      </div>
+
       {/* KPI Cards */}
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-2 px-4 pb-2">
         {kpis.map((k) => (
-          <div key={k.label} className="rounded-lg p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-            <p className="mb-1" style={{ color: "#6B7280", fontSize: "8px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{k.label}</p>
-            <p className="font-bold" style={{ fontSize: "13px", color: "#111827" }}>{k.value}</p>
-            <p className="mt-0.5" style={{ color: k.up ? "#059669" : "#D97706", fontSize: "9px" }}>{k.change}</p>
+          <div key={k.label} className="rounded-xl border p-2.5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <p style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500 }}>{k.label}</p>
+                <p className="font-bold mt-1" style={{ fontSize: "13px", color: "#111827" }}>{k.value}</p>
+              </div>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: k.bg }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 14, color: k.color, fontVariationSettings: "'FILL' 1" }}>{k.icon}</span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
-      {/* Bar Chart */}
-      <div className="rounded-lg p-3" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        <p className="font-semibold mb-2" style={{ color: "#111827", fontSize: "10px" }}>Revenue vs Expenses — Last 12 Months</p>
-        <div className="flex items-end gap-1 h-14">
-          {bars.map((h, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
-              <div className="w-full rounded-sm" style={{ height: `${h * 0.55}px`, background: "#0E7490", opacity: i === 11 ? 1 : 0.6 }} />
-              <div className="w-full rounded-sm" style={{ height: `${h * 0.33}px`, background: "#FDA4AF", opacity: i === 11 ? 1 : 0.6 }} />
-              <p style={{ fontSize: "6px", color: "#9CA3AF" }}>{months[i]}</p>
+
+      {/* Quick Actions */}
+      <div className="rounded-xl border mx-4 mb-2 p-2.5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <p className="font-semibold mb-2" style={{ color: "#111827", fontSize: "10px" }}>Quick Actions</p>
+        <div className="flex items-center gap-1.5">
+          {quickActions.map((a) => (
+            <div key={a.label} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg border" style={{ borderColor: a.color + "33", color: a.color, background: a.color + "0D", fontSize: "9px", fontWeight: 500 }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 13, color: a.color, fontVariationSettings: "'FILL' 1" }}>{a.icon}</span>
+              {a.label}
+              {a.shortcut && <kbd className="text-[8px] font-mono px-1 py-0.5 rounded border" style={{ borderColor: a.color + "44", color: a.color, background: a.color + "10" }}>{a.shortcut}</kbd>}
             </div>
           ))}
         </div>
-        <div className="flex gap-4 mt-1.5">
-          <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm" style={{ background: "#0E7490" }}/><p style={{ fontSize: "8px", color: "#6B7280" }}>Revenue</p></div>
-          <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm" style={{ background: "#FDA4AF" }}/><p style={{ fontSize: "8px", color: "#6B7280" }}>Expenses</p></div>
-        </div>
       </div>
-      {/* Alerts */}
-      <div className="space-y-1.5">
-        {[
-          { text: "HDFC Traders — ₹48,000 overdue 42 days", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
-          { text: "GST filing due in 3 days — ₹62,140 payable", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
-          { text: "TDS deposit due 7th July — ₹8,200 under 194C", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
-        ].map((a) => (
-          <div key={a.text} className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: a.bg, border: `1px solid ${a.border}` }}>
-            <div className="w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0" style={{ background: a.color }} />
-            <p style={{ fontSize: "9.5px", color: "#374151" }}>{a.text}</p>
-          </div>
-        ))}
+
+      {/* Recent Transactions */}
+      <div className="rounded-xl border mx-4 mb-4 overflow-hidden" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+        <div className="px-3 py-2 border-b" style={{ borderColor: "#E5E7EB", background: "#F9FAFB" }}>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "10px" }}>Recent Transactions</p>
+        </div>
+        <table className="w-full" style={{ fontSize: "9px" }}>
+          <thead>
+            <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+              {["Date","Type","Party","Amount","Balance"].map(h => (
+                <th key={h} className="px-3 py-1.5 text-left font-semibold text-[9px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {txns.map((t) => (
+              <tr key={t.date + t.party} className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                <td className="px-3 py-2" style={{ color: "#6B7280" }}>{t.date}</td>
+                <td className="px-3 py-2">
+                  <span className="px-1.5 py-0.5 rounded-full font-semibold" style={{ background: t.tc.bg, color: t.tc.text, border: `1px solid ${t.tc.border}`, fontSize: "8px" }}>{t.type}</span>
+                </td>
+                <td className="px-3 py-2 font-medium" style={{ color: "#111827" }}>{t.party}</td>
+                <td className="px-3 py-2 font-mono font-semibold" style={{ color: "#111827" }}>{t.amount}</td>
+                <td className="px-3 py-2 font-mono" style={{ color: "#6B7280" }}>{t.bal}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -105,261 +147,61 @@ function DashboardScreen() {
 
 function IncomeScreen() {
   const rows = [
-    { inv: "INV-2026-0142", job: "NXL/26/0142", client: "Ravi Exports", desc: "Ocean Freight FCL", taxable: "₹66,525", igst: "₹11,975", total: "₹78,500", recd: "₹78,500", bal: "₹0",     status: "Paid",    src: "NEXLOG" },
-    { inv: "INV-2026-0141", job: "NXL/26/0141", client: "HDFC Traders", desc: "Air Freight + CHA", taxable: "₹40,678", igst: "₹7,322",  total: "₹48,000", recd: "₹0",      bal: "₹48,000", status: "Overdue", src: "NEXLOG" },
-    { inv: "INV-2026-0140", job: "BE/26/0341",  client: "Global Impex",  desc: "CHA Service Fee",  taxable: "₹12,712", igst: "₹2,288",  total: "₹15,000", recd: "₹7,500",  bal: "₹7,500",  status: "Partial", src: "ENTRYX" },
-    { inv: "INV-2026-0139", job: "RD/26/0089",  client: "Sakthi Cargo",  desc: "Transport LR",     taxable: "₹8,475",  igst: "₹1,525",  total: "₹10,000", recd: "₹10,000", bal: "₹0",     status: "Paid",    src: "RUNDESK" },
+    { no: "SV-2026-0142", date: "05 Jul", party: "Ravi Exports",      amount: "₹66,525", gst: "₹11,975", total: "₹78,500",  status: "Posted" },
+    { no: "SV-2026-0141", date: "04 Jul", party: "HDFC Traders",      amount: "₹40,678", gst: "₹7,322",  total: "₹48,000",  status: "Posted" },
+    { no: "SV-2026-0140", date: "03 Jul", party: "Global Impex",       amount: "₹12,712", gst: "₹2,288",  total: "₹15,000",  status: "Posted" },
+    { no: "SV-2026-0139", date: "02 Jul", party: "Sakthi Cargo",       amount: "₹8,475",  gst: "₹1,525",  total: "₹10,000",  status: "Posted" },
+    { no: "SV-2026-0138", date: "01 Jul", party: "Sunrise Logistics",  amount: "₹22,034", gst: "₹3,966",  total: "₹26,000",  status: "Draft"  },
   ];
-  const statusColor: Record<string, string> = { Paid: "#22c55e", Overdue: "#ef4444", Partial: "#f59e0b" };
-  const srcColor: Record<string, string> = { NEXLOG: "#1565C0", ENTRYX: "#5B21B6", RUNDESK: "#92400E", DOCKIQ: "#0D7057" };
 
   return (
-    <div className="h-full overflow-auto" style={{ background: "#0f1010" }}>
-      {/* Top bar */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b sticky top-0" style={{ borderColor: "rgba(255,255,255,0.07)", background: "#0f1010" }}>
-        <p className="text-xs font-bold text-white">Income Ledger</p>
-        <div className="ml-auto flex gap-2">
-          {["Filter","Export Excel","+ Add Income"].map((b, i) => (
-            <button key={b} className="text-xs px-2.5 py-1 rounded-lg font-semibold" style={{ background: i === 2 ? "#D4AF37" : "rgba(255,255,255,0.07)", color: i === 2 ? "#1a1c1c" : "rgba(255,255,255,0.6)", fontSize: "9px" }}>{b}</button>
-          ))}
+    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>Sales Vouchers</p>
+          <p style={{ color: "#6B7280", fontSize: "10px" }}>July 2026</p>
         </div>
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#7C3AED", fontSize: "10px", fontWeight: 600 }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>add</span>+ New Sales Invoice
+        </button>
       </div>
+
+      {/* Totals strip */}
+      <div className="grid grid-cols-3 gap-2 px-4 mb-3">
+        {[["Total Sales","₹18.5L","#7C3AED","#F5F3FF"],["IGST Collected","₹2.22L","#0E7490","#ECFEFF"],["Net Receivable","₹20.72L","#059669","#ECFDF5"]].map(([l,v,c,bg]) => (
+          <div key={l} className="rounded-xl border p-2.5" style={{ background: bg as string, borderColor: "#E5E7EB" }}>
+            <p style={{ color: "#6B7280", fontSize: "9px" }}>{l}</p>
+            <p className="font-bold mt-0.5" style={{ color: c as string, fontSize: "13px" }}>{v}</p>
+          </div>
+        ))}
+      </div>
+
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full" style={{ fontSize: "9px" }}>
+      <div className="mx-4 rounded-xl border overflow-hidden mb-4" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+        <table className="w-full" style={{ fontSize: "10px" }}>
           <thead>
-            <tr style={{ borderBottom: "0.5px solid rgba(255,255,255,0.07)" }}>
-              {["Invoice No","Job No","Client","Description","Taxable","IGST","Total","Received","Balance","Status","Source"].map(h => (
-                <th key={h} className="px-3 py-2 text-left font-semibold" style={{ color: "rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>{h}</th>
+            <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+              {["Voucher No","Date","Party (Ledger)","Amount","GST","Total","Status"].map(h => (
+                <th key={h} className="px-3 py-2 text-left font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.inv} style={{ borderBottom: "0.5px solid rgba(255,255,255,0.04)" }}>
-                <td className="px-3 py-2.5 font-mono" style={{ color: "#D4AF37" }}>{r.inv}</td>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.5)" }}>{r.job}</td>
-                <td className="px-3 py-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{r.client}</td>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.45)" }}>{r.desc}</td>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.7)" }}>{r.taxable}</td>
-                <td className="px-3 py-2.5" style={{ color: "#D4AF37" }}>{r.igst}</td>
-                <td className="px-3 py-2.5 font-bold" style={{ color: "#fff" }}>{r.total}</td>
-                <td className="px-3 py-2.5" style={{ color: "#22c55e" }}>{r.recd}</td>
-                <td className="px-3 py-2.5 font-bold" style={{ color: r.bal === "₹0" ? "rgba(255,255,255,0.3)" : "#ef4444" }}>{r.bal}</td>
-                <td className="px-3 py-2.5"><span className="px-2 py-0.5 rounded-full font-bold" style={{ background: `${statusColor[r.status]}18`, color: statusColor[r.status], fontSize: "8px" }}>{r.status}</span></td>
-                <td className="px-3 py-2.5"><span className="px-1.5 py-0.5 rounded font-bold" style={{ background: `${srcColor[r.src]}20`, color: srcColor[r.src], fontSize: "8px" }}>{r.src}</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="px-4 py-3 flex items-center gap-6" style={{ borderTop: "0.5px solid rgba(255,255,255,0.06)" }}>
-        {[["Total Invoiced","₹1,51,500"],["Total Received","₹95,500"],["Outstanding","₹55,500"]].map(([l,v]) => (
-          <div key={l}>
-            <p style={{ fontSize: "8px", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>{l}</p>
-            <p className="font-bold text-xs text-white mt-0.5">{v}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ExpenseScreen() {
-  return (
-    <div className="h-full overflow-y-auto p-4" style={{ background: "#0f1010" }}>
-      <p className="text-xs font-bold text-white mb-3">Add Expense</p>
-      <div className="grid grid-cols-2 gap-3">
-        {[
-          { label: "Date", val: "05 Jul 2026", type: "date" },
-          { label: "Category", val: "CFS Charges ▾", type: "select" },
-          { label: "Vendor Name", val: "Apollo World Connect", type: "text" },
-          { label: "Vendor GSTIN", val: "27AAPCA1234B1Z5", type: "text" },
-          { label: "Payment Mode", val: "NEFT ▾", type: "select" },
-          { label: "Amount (₹)", val: "₹18,000", type: "number" },
-        ].map((f) => (
-          <div key={f.label}>
-            <p style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>{f.label}</p>
-            <div className="rounded-lg px-3 py-2" style={{ background: "rgba(255,255,255,0.05)", border: "0.5px solid rgba(255,255,255,0.1)", fontSize: "10px", color: "rgba(255,255,255,0.8)" }}>{f.val}</div>
-          </div>
-        ))}
-      </div>
-      {/* ITC toggle */}
-      <div className="flex items-center gap-3 mt-3 px-3 py-2.5 rounded-xl" style={{ background: "rgba(212,175,55,0.06)", border: "0.5px solid rgba(212,175,55,0.2)" }}>
-        <div className="w-8 h-4 rounded-full flex items-center px-0.5" style={{ background: "#D4AF37" }}>
-          <div className="w-3 h-3 rounded-full bg-white ml-auto" />
-        </div>
-        <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.7)" }}>GST Input Credit applicable</p>
-        <div className="ml-auto grid grid-cols-3 gap-2">
-          {[["CGST Input","₹1,620"],["SGST Input","₹1,620"],["IGST Input","—"]].map(([l,v]) => (
-            <div key={l} className="text-center">
-              <p style={{ fontSize: "8px", color: "rgba(255,255,255,0.3)" }}>{l}</p>
-              <p style={{ fontSize: "10px", color: "#D4AF37", fontWeight: 600 }}>{v}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* AI scan */}
-      <div className="mt-3 rounded-xl p-3 flex items-center gap-3" style={{ background: "rgba(99,102,241,0.08)", border: "0.5px solid rgba(99,102,241,0.2)" }}>
-        <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#818cf8" }}>document_scanner</span>
-        <div>
-          <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.8)", fontWeight: 600 }}>AI Bill Scanner</p>
-          <p style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}>Upload photo → all fields fill automatically</p>
-        </div>
-        <button className="ml-auto text-xs px-3 py-1 rounded-lg font-semibold" style={{ background: "rgba(99,102,241,0.2)", color: "#818cf8", fontSize: "9px" }}>Upload Bill</button>
-      </div>
-      <div className="flex gap-2 mt-4">
-        <button className="flex-1 py-2.5 rounded-xl font-bold text-xs" style={{ background: "#D4AF37", color: "#1a1c1c" }}>Save Expense</button>
-        <button className="px-4 py-2.5 rounded-xl text-xs" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>Cancel</button>
-      </div>
-    </div>
-  );
-}
-
-function GstScreen() {
-  return (
-    <div className="h-full overflow-y-auto p-4" style={{ background: "#0f1010" }}>
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-xs font-bold text-white">GST Summary — June 2026</p>
-        <div className="flex gap-2">
-          <button className="text-xs px-2.5 py-1 rounded-lg font-semibold" style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.6)", fontSize: "9px" }}>GSTR-1 Export</button>
-          <button className="text-xs px-2.5 py-1 rounded-lg font-semibold" style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.6)", fontSize: "9px" }}>GSTR-3B Export</button>
-        </div>
-      </div>
-      {/* Output tax */}
-      <div className="rounded-xl p-3 mb-3" style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.07)" }}>
-        <p className="text-xs font-semibold mb-2" style={{ color: "#D4AF37", fontSize: "9px", textTransform: "uppercase" }}>Output Tax (Collected)</p>
-        {[["CGST Collected","₹24,820"],["SGST Collected","₹24,820"],["IGST Collected","₹82,460"]].map(([l,v]) => (
-          <div key={l} className="flex justify-between py-1.5 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-            <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.55)" }}>{l}</p>
-            <p style={{ fontSize: "10px", color: "#fff", fontWeight: 600 }}>{v}</p>
-          </div>
-        ))}
-        <div className="flex justify-between pt-2 mt-1">
-          <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.8)", fontWeight: 700 }}>Total Output Tax</p>
-          <p style={{ fontSize: "11px", color: "#D4AF37", fontWeight: 800 }}>₹1,32,100</p>
-        </div>
-      </div>
-      {/* ITC */}
-      <div className="rounded-xl p-3 mb-3" style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.07)" }}>
-        <p className="text-xs font-semibold mb-2" style={{ color: "#22c55e", fontSize: "9px", textTransform: "uppercase" }}>Input Tax Credit (ITC)</p>
-        {[["CGST Input","₹12,400"],["SGST Input","₹12,400"],["IGST Input","₹44,760"]].map(([l,v]) => (
-          <div key={l} className="flex justify-between py-1.5 border-b" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-            <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.55)" }}>{l}</p>
-            <p style={{ fontSize: "10px", color: "#22c55e", fontWeight: 600 }}>{v}</p>
-          </div>
-        ))}
-        <div className="flex justify-between pt-2 mt-1">
-          <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.8)", fontWeight: 700 }}>Total ITC Available</p>
-          <p style={{ fontSize: "11px", color: "#22c55e", fontWeight: 800 }}>₹69,560</p>
-        </div>
-      </div>
-      {/* Net payable */}
-      <div className="rounded-xl p-4 flex items-center justify-between" style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)" }}>
-        <div>
-          <p style={{ fontSize: "9px", color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>Net GST Payable</p>
-          <p style={{ fontSize: "9px", color: "rgba(255,255,255,0.4)", marginTop: "2px" }}>Due by 20 Jul 2026</p>
-        </div>
-        <p style={{ fontSize: "22px", fontWeight: 800, color: "#ef4444" }}>₹62,540</p>
-      </div>
-    </div>
-  );
-}
-
-function PnlScreen() {
-  const rows = [
-    { label: "Service Charges",           val: "₹4,18,000", type: "income" },
-    { label: "Reimbursement Billing",      val: "₹1,92,500", type: "income" },
-    { label: "Air Freight Coordination",   val: "₹88,000",   type: "income" },
-    { label: "Other Income",               val: "₹44,000",   type: "income" },
-    { label: "TOTAL INCOME",               val: "₹7,42,500", type: "total"  },
-    { label: "CFS Charges",                val: "₹82,000",   type: "expense" },
-    { label: "Transport Charges",          val: "₹54,000",   type: "expense" },
-    { label: "Steamer Agent Charges",      val: "₹38,000",   type: "expense" },
-    { label: "GROSS PROFIT",               val: "₹5,68,500", type: "gross"  },
-    { label: "Office Rent",                val: "₹28,000",   type: "indirect" },
-    { label: "Staff Salary",               val: "₹1,44,000", type: "indirect" },
-    { label: "Software & Professional",    val: "₹18,200",   type: "indirect" },
-    { label: "NET PROFIT (Before Tax)",    val: "₹3,78,300", type: "net"    },
-  ];
-  const rowStyle: Record<string, { color: string; fontWeight: number; borderTop?: string }> = {
-    income:   { color: "rgba(255,255,255,0.7)", fontWeight: 400 },
-    expense:  { color: "rgba(255,255,255,0.55)", fontWeight: 400 },
-    indirect: { color: "rgba(255,255,255,0.45)", fontWeight: 400 },
-    total:    { color: "#fff", fontWeight: 700, borderTop: "0.5px solid rgba(255,255,255,0.15)" },
-    gross:    { color: "#22c55e", fontWeight: 700, borderTop: "0.5px solid rgba(255,255,255,0.15)" },
-    net:      { color: "#D4AF37", fontWeight: 800, borderTop: "1px solid rgba(212,175,55,0.4)" },
-  };
-
-  return (
-    <div className="h-full overflow-y-auto" style={{ background: "#0f1010" }}>
-      <div className="flex items-center gap-2 px-4 py-3 border-b sticky top-0" style={{ borderColor: "rgba(255,255,255,0.07)", background: "#0f1010" }}>
-        <p className="text-xs font-bold text-white">Profit & Loss — Apr–Jun 2026</p>
-        <div className="ml-auto flex gap-2">
-          {["Download PDF","Export Excel","Send to CA"].map((b) => (
-            <button key={b} className="text-xs px-2 py-1 rounded-lg" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)", fontSize: "9px" }}>{b}</button>
-          ))}
-        </div>
-      </div>
-      <div className="px-4 py-2">
-        {rows.map((r) => (
-          <div key={r.label} className="flex justify-between py-2 border-b"
-            style={{ borderColor: "rgba(255,255,255,0.05)", ...rowStyle[r.type] }}>
-            <p style={{ fontSize: "10px" }}>{r.label}</p>
-            <p style={{ fontSize: "10px" }}>{r.val}</p>
-          </div>
-        ))}
-        <div className="flex justify-between pt-3 mt-2">
-          <p style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)" }}>Net Margin</p>
-          <p style={{ fontSize: "10px", color: "#22c55e", fontWeight: 700 }}>50.9%</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ReceivablesScreen() {
-  const clients = [
-    { name: "Ravi Exports Pvt Ltd",   invoiced: "₹3,42,000", recd: "₹3,42,000", outstanding: "₹0",      days: 0,  status: "Clear"   },
-    { name: "HDFC Traders",            invoiced: "₹1,94,500", recd: "₹1,46,500", outstanding: "₹48,000", days: 42, status: "Critical" },
-    { name: "Global Impex Solutions",  invoiced: "₹88,000",   recd: "₹80,500",   outstanding: "₹7,500",  days: 18, status: "Overdue"  },
-    { name: "Sunrise Logistics",       invoiced: "₹62,000",   recd: "₹32,000",   outstanding: "₹30,000", days: 8,  status: "Due Soon" },
-  ];
-  const sc: Record<string, string> = { Clear: "#22c55e", Critical: "#ef4444", Overdue: "#f97316", "Due Soon": "#f59e0b" };
-
-  return (
-    <div className="h-full overflow-y-auto" style={{ background: "#0f1010" }}>
-      {/* Aging strip */}
-      <div className="grid grid-cols-4 gap-2 p-4">
-        {[["Current (0-7d)","₹30,000","#6b7280"],["Due Soon (8-30d)","₹37,500","#f59e0b"],["Overdue (31-60d)","₹48,000","#f97316"],["Critical (60d+)","₹0","#ef4444"]].map(([l,v,c]) => (
-          <div key={l} className="rounded-xl p-2.5 text-center" style={{ background: `${c}10`, border: `0.5px solid ${c}30` }}>
-            <p style={{ fontSize: "8px", color: "rgba(255,255,255,0.4)" }}>{l}</p>
-            <p style={{ fontSize: "12px", fontWeight: 700, color: c as string }}>{v}</p>
-          </div>
-        ))}
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full" style={{ fontSize: "9px" }}>
-          <thead>
-            <tr style={{ borderBottom: "0.5px solid rgba(255,255,255,0.07)" }}>
-              {["Client","Total Invoiced","Received","Outstanding","Days Overdue","Status","Actions"].map(h => (
-                <th key={h} className="px-3 py-2 text-left font-semibold" style={{ color: "rgba(255,255,255,0.3)" }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {clients.map((c) => (
-              <tr key={c.name} style={{ borderBottom: "0.5px solid rgba(255,255,255,0.04)" }}>
-                <td className="px-3 py-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{c.name}</td>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.6)" }}>{c.invoiced}</td>
-                <td className="px-3 py-2.5" style={{ color: "#22c55e" }}>{c.recd}</td>
-                <td className="px-3 py-2.5 font-bold" style={{ color: c.outstanding === "₹0" ? "rgba(255,255,255,0.3)" : "#ef4444" }}>{c.outstanding}</td>
-                <td className="px-3 py-2.5" style={{ color: c.days > 30 ? "#ef4444" : "rgba(255,255,255,0.5)" }}>{c.days > 0 ? `${c.days} days` : "—"}</td>
-                <td className="px-3 py-2.5"><span className="px-2 py-0.5 rounded-full font-bold" style={{ background: `${sc[c.status]}18`, color: sc[c.status], fontSize: "8px" }}>{c.status}</span></td>
-                <td className="px-3 py-2.5">
-                  <div className="flex gap-1">
-                    {["Remind","Record"].map(a => <button key={a} className="px-2 py-0.5 rounded text-xs" style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37", fontSize: "8px" }}>{a}</button>)}
-                  </div>
+              <tr key={r.no} className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                <td className="px-3 py-2 font-mono font-medium" style={{ color: "#0E7490" }}>{r.no}</td>
+                <td className="px-3 py-2" style={{ color: "#6B7280" }}>{r.date}</td>
+                <td className="px-3 py-2 font-medium" style={{ color: "#111827" }}>{r.party}</td>
+                <td className="px-3 py-2 font-mono" style={{ color: "#374151" }}>{r.amount}</td>
+                <td className="px-3 py-2 font-mono" style={{ color: "#0E7490" }}>{r.gst}</td>
+                <td className="px-3 py-2 font-mono font-semibold" style={{ color: "#111827" }}>{r.total}</td>
+                <td className="px-3 py-2">
+                  <span className="px-2 py-0.5 rounded-full font-semibold" style={r.status === "Posted"
+                    ? { background: "#ECFDF5", color: "#059669", border: "1px solid #A7F3D0", fontSize: "9px" }
+                    : { background: "#F3F4F6", color: "#6B7280", border: "1px solid #E5E7EB", fontSize: "9px" }}>
+                    {r.status}
+                  </span>
                 </td>
               </tr>
             ))}
@@ -370,48 +212,269 @@ function ReceivablesScreen() {
   );
 }
 
-function JobPnlScreen() {
-  const jobs = [
-    { no: "NXL/26/0142", client: "Ravi Exports",  route: "INNSA → DEHAM", mode: "SEA", rev: "₹78,500",  cost: "₹38,200", margin: "₹40,300", pct: "51.3%",  pos: true },
-    { no: "NXL/26/0141", client: "HDFC Traders",  route: "INMAA → SGSIN", mode: "SEA", rev: "₹48,000",  cost: "₹28,800", margin: "₹19,200", pct: "40.0%",  pos: true },
-    { no: "BE/26/0341",  client: "Global Impex",   route: "JNPT Import",   mode: "SEA", rev: "₹15,000",  cost: "₹6,200",  margin: "₹8,800",  pct: "58.7%",  pos: true },
-    { no: "RD/26/0089",  client: "Sakthi Cargo",   route: "JNPT → Nhava", mode: "ROAD",rev: "₹10,000",  cost: "₹12,400", margin: "-₹2,400", pct: "-24.0%", pos: false },
+function ExpensesScreen() {
+  const rows = [
+    { vendor: "Apollo World Connect", category: "CFS Charges",       date: "05 Jul", amount: "₹82,000",  status: "Posted" },
+    { vendor: "Fast Transport",       category: "Road Freight",       date: "04 Jul", amount: "₹54,000",  status: "Posted" },
+    { vendor: "JNPT Port Trust",      category: "Port Dues",          date: "03 Jul", amount: "₹28,000",  status: "Posted" },
+    { vendor: "Staff Salary July",    category: "Salary & Wages",     date: "01 Jul", amount: "₹1,44,000",status: "Posted" },
   ];
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#0f1010" }}>
-      <div className="grid grid-cols-4 gap-2 p-4">
-        {[["Avg Margin","47.5%","#22c55e"],["Best Lane","INNSA→DEHAM","#D4AF37"],["Total Jobs","4","#fff"],["Loss Jobs","1","#ef4444"]].map(([l,v,c]) => (
-          <div key={l} className="rounded-xl p-2.5" style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.07)" }}>
-            <p style={{ fontSize: "8px", color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>{l}</p>
-            <p style={{ fontSize: "13px", fontWeight: 700, color: c as string, marginTop: "2px" }}>{v}</p>
-          </div>
-        ))}
+    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>Purchase Vouchers</p>
+          <p style={{ color: "#6B7280", fontSize: "10px" }}>July 2026</p>
+        </div>
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#DC2626", fontSize: "10px", fontWeight: 600 }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>add</span>+ New Purchase
+        </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full" style={{ fontSize: "9px" }}>
+
+      {/* Total card */}
+      <div className="mx-4 mb-3 rounded-xl border p-3" style={{ background: "#FEF2F2", borderColor: "#FECACA" }}>
+        <p style={{ color: "#6B7280", fontSize: "10px" }}>Total Expenses — July 2026</p>
+        <p className="font-bold mt-0.5" style={{ color: "#DC2626", fontSize: "18px" }}>₹3,18,200</p>
+      </div>
+
+      {/* Table */}
+      <div className="mx-4 rounded-xl border overflow-hidden mb-4" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+        <table className="w-full" style={{ fontSize: "10px" }}>
           <thead>
-            <tr style={{ borderBottom: "0.5px solid rgba(255,255,255,0.07)" }}>
-              {["Job No","Client","Route","Mode","Revenue","Direct Cost","Gross Margin","Margin %"].map(h => (
-                <th key={h} className="px-3 py-2 text-left font-semibold" style={{ color: "rgba(255,255,255,0.3)" }}>{h}</th>
+            <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+              {["Vendor","Category","Date","Amount","Status"].map(h => (
+                <th key={h} className="px-3 py-2 text-left font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {jobs.map((j) => (
-              <tr key={j.no} style={{ borderBottom: "0.5px solid rgba(255,255,255,0.04)", background: !j.pos ? "rgba(239,68,68,0.04)" : "transparent" }}>
-                <td className="px-3 py-2.5 font-mono" style={{ color: "#D4AF37" }}>{j.no}</td>
-                <td className="px-3 py-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.8)" }}>{j.client}</td>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.45)" }}>{j.route}</td>
-                <td className="px-3 py-2.5"><span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.mode === "SEA" ? "rgba(59,130,246,0.15)" : "rgba(146,64,14,0.2)", color: j.mode === "SEA" ? "#60a5fa" : "#d97706", fontSize: "8px" }}>{j.mode}</span></td>
-                <td className="px-3 py-2.5 font-semibold" style={{ color: "#fff" }}>{j.rev}</td>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.5)" }}>{j.cost}</td>
-                <td className="px-3 py-2.5 font-bold" style={{ color: j.pos ? "#22c55e" : "#ef4444" }}>{j.margin}</td>
-                <td className="px-3 py-2.5 font-black" style={{ color: j.pos ? "#22c55e" : "#ef4444" }}>{j.pct}</td>
+            {rows.map((r) => (
+              <tr key={r.vendor} className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                <td className="px-3 py-2.5 font-medium" style={{ color: "#111827" }}>{r.vendor}</td>
+                <td className="px-3 py-2.5">
+                  <span className="px-2 py-0.5 rounded-full" style={{ background: "#FFFBEB", color: "#D97706", border: "1px solid #FDE68A", fontSize: "9px" }}>{r.category}</span>
+                </td>
+                <td className="px-3 py-2.5" style={{ color: "#6B7280" }}>{r.date}</td>
+                <td className="px-3 py-2.5 font-mono font-semibold" style={{ color: "#DC2626" }}>{r.amount}</td>
+                <td className="px-3 py-2.5">
+                  <span className="px-2 py-0.5 rounded-full font-semibold" style={{ background: "#ECFDF5", color: "#059669", border: "1px solid #A7F3D0", fontSize: "9px" }}>
+                    {r.status}
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr style={{ background: "#F9FAFB", borderTop: "2px solid #E5E7EB" }}>
+              <td colSpan={3} className="px-3 py-2 font-semibold" style={{ color: "#374151", fontSize: "10px" }}>Total (4 entries)</td>
+              <td className="px-3 py-2 font-mono font-bold" style={{ color: "#DC2626", fontSize: "10px" }}>₹3,08,000</td>
+              <td />
+            </tr>
+          </tfoot>
         </table>
+      </div>
+    </div>
+  );
+}
+
+function GstScreen() {
+  const [gstTab, setGstTab] = useState<"summary"|"gstr1"|"gstr3b">("summary");
+
+  return (
+    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>GST Module</p>
+          <p style={{ color: "#6B7280", fontSize: "10px" }}>GSTIN: 33AAACN7890F1Z2 · June 2026</p>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="px-2 py-1 rounded-md border text-[10px]" style={{ borderColor: "#E5E7EB", color: "#374151", background: "#fff" }}>June 2026 ▾</div>
+          <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#0E7490", fontSize: "10px", fontWeight: 600 }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 13 }}>file_upload</span>File on GST Portal
+          </button>
+        </div>
+      </div>
+
+      {/* Tab bar */}
+      <div className="flex rounded-lg border overflow-hidden mx-4 mb-3 w-fit" style={{ borderColor: "#E5E7EB" }}>
+        {[["summary","GST Summary"],["gstr1","GSTR-1"],["gstr3b","GSTR-3B"]].map(([id,label]) => (
+          <button key={id} onClick={() => setGstTab(id as "summary"|"gstr1"|"gstr3b")}
+            className="px-3 py-1.5 text-[11px] font-medium transition-colors"
+            style={{ background: gstTab === id ? "#0E7490" : "#fff", color: gstTab === id ? "#fff" : "#6B7280" }}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {gstTab === "summary" && (
+        <div className="px-4 space-y-3 pb-4">
+          {/* KPI cards */}
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              { label: "Total Outward Supplies", val: "₹8,42,500",   sub: "Sales this period",    color: "#0E7490", bg: "#ECFEFF" },
+              { label: "ITC Available",          val: "₹69,560",     sub: "Input Tax Credit",      color: "#059669", bg: "#ECFDF5" },
+              { label: "GST Payable",            val: "₹62,540",     sub: "IGST after setoff",     color: "#DC2626", bg: "#FEF2F2" },
+              { label: "Filing Due",             val: "20 Jul 2026", sub: "GSTR-3B deadline",      color: "#D97706", bg: "#FFFBEB" },
+            ].map((kpi) => (
+              <div key={kpi.label} className="rounded-xl border p-2.5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+                <p style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500 }}>{kpi.label}</p>
+                <p className="font-bold font-mono mt-1" style={{ color: kpi.color, fontSize: "12px" }}>{kpi.val}</p>
+                <p style={{ color: "#9CA3AF", fontSize: "9px", marginTop: "1px" }}>{kpi.sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* GSTR-3B table */}
+          <div className="rounded-xl border overflow-hidden" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+            <div className="px-3 py-2 border-b" style={{ borderColor: "#E5E7EB", background: "#F9FAFB" }}>
+              <p className="font-semibold" style={{ color: "#111827", fontSize: "11px" }}>GST Liability Summary — June 2026</p>
+            </div>
+            <table className="w-full" style={{ fontSize: "10px" }}>
+              <thead>
+                <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+                  {["","Taxable Amount","CGST","SGST","IGST","Total GST"].map((h) => (
+                    <th key={h} className="px-3 py-2 text-right first:text-left font-semibold text-[9px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                  <td className="px-3 py-2 font-medium" style={{ color: "#111827" }}>Outward Supplies (Sales)</td>
+                  <td className="px-3 py-2 text-right font-mono">₹8,42,500</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#0E7490" }}>₹24,820</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#0E7490" }}>₹24,820</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#7C3AED" }}>₹82,460</td>
+                  <td className="px-3 py-2 text-right font-mono font-semibold">₹1,32,100</td>
+                </tr>
+                <tr className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                  <td className="px-3 py-2 font-medium" style={{ color: "#111827" }}>ITC Available (Purchases)</td>
+                  <td className="px-3 py-2 text-right font-mono">₹3,18,200</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#059669" }}>(₹12,400)</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#059669" }}>(₹12,400)</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#059669" }}>(₹44,760)</td>
+                  <td className="px-3 py-2 text-right font-mono font-semibold" style={{ color: "#059669" }}>(₹69,560)</td>
+                </tr>
+                <tr style={{ background: "#FFFBEB" }}>
+                  <td className="px-3 py-2.5 font-bold" style={{ color: "#111827" }}>Net GST Payable</td>
+                  <td />
+                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#D97706" }}>₹12,420</td>
+                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#D97706" }}>₹12,420</td>
+                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#DC2626" }}>₹37,700</td>
+                  <td className="px-3 py-2.5 text-right font-mono font-bold text-[12px]" style={{ color: "#DC2626" }}>₹62,540</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {gstTab !== "summary" && (
+        <div className="px-4 pb-4">
+          <div className="rounded-xl border p-8 text-center" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+            <span className="material-symbols-outlined block mb-2" style={{ fontSize: 32, color: "#D1D5DB" }}>receipt_long</span>
+            <p style={{ color: "#374151", fontSize: "12px", fontWeight: 500 }}>{gstTab === "gstr1" ? "GSTR-1 — Outward Supplies" : "GSTR-3B — Return Summary"}</p>
+            <p style={{ color: "#9CA3AF", fontSize: "11px", marginTop: "4px" }}>June 2026 · Data ready for download</p>
+            <button className="mt-3 flex items-center gap-1 mx-auto px-3 py-1.5 rounded-md border text-[11px]" style={{ borderColor: "#E5E7EB", color: "#374151" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 13 }}>download</span>Download {gstTab === "gstr1" ? "JSON" : "Excel"}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PnlScreen() {
+  const incomeRows = [
+    { label: "Service Charges",        val: "₹4,18,000" },
+    { label: "Reimbursement Billing",  val: "₹1,92,500" },
+    { label: "Air Freight",            val: "₹88,000"   },
+    { label: "Other Income",           val: "₹44,000"   },
+  ];
+  const directExp = [
+    { label: "CFS Charges",            val: "₹82,000" },
+    { label: "Transport",              val: "₹54,000" },
+    { label: "Steamer Agent",          val: "₹38,000" },
+  ];
+  const indirectExp = [
+    { label: "Rent",                   val: "₹28,000"   },
+    { label: "Salary",                 val: "₹1,44,000" },
+    { label: "Software",               val: "₹18,200"   },
+  ];
+
+  return (
+    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>Profit & Loss Statement</p>
+          <p style={{ color: "#6B7280", fontSize: "10px" }}>April 2026 – July 2026</p>
+        </div>
+        <div className="flex gap-1.5">
+          {["Download PDF","Export Excel","Send to CA"].map(b => (
+            <button key={b} className="px-2 py-1 rounded-md border text-[9px]" style={{ borderColor: "#E5E7EB", color: "#374151", background: "#fff" }}>{b}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 pb-4 space-y-2">
+        {/* Income section */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+          <div className="px-3 py-2 border-b" style={{ borderColor: "#E5E7EB", background: "#ECFDF5" }}>
+            <p className="font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#059669" }}>Income</p>
+          </div>
+          {incomeRows.map(r => (
+            <div key={r.label} className="flex justify-between px-3 py-2 border-b" style={{ borderColor: "#F3F4F6" }}>
+              <span style={{ color: "#374151", fontSize: "11px" }}>{r.label}</span>
+              <span className="font-mono" style={{ color: "#111827", fontSize: "11px" }}>{r.val}</span>
+            </div>
+          ))}
+          <div className="flex justify-between px-3 py-2" style={{ background: "#ECFDF5" }}>
+            <span className="font-bold" style={{ color: "#059669", fontSize: "11px" }}>TOTAL INCOME</span>
+            <span className="font-bold font-mono" style={{ color: "#059669", fontSize: "12px" }}>₹7,42,500</span>
+          </div>
+        </div>
+
+        {/* Direct Expenses */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+          <div className="px-3 py-2 border-b" style={{ borderColor: "#E5E7EB", background: "#FEF2F2" }}>
+            <p className="font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#DC2626" }}>Direct Expenses</p>
+          </div>
+          {directExp.map(r => (
+            <div key={r.label} className="flex justify-between px-3 py-2 border-b" style={{ borderColor: "#F3F4F6" }}>
+              <span style={{ color: "#374151", fontSize: "11px" }}>{r.label}</span>
+              <span className="font-mono" style={{ color: "#DC2626", fontSize: "11px" }}>{r.val}</span>
+            </div>
+          ))}
+          <div className="flex justify-between px-3 py-2" style={{ background: "#ECFDF5" }}>
+            <span className="font-bold" style={{ color: "#059669", fontSize: "11px" }}>GROSS PROFIT</span>
+            <span className="font-bold font-mono" style={{ color: "#059669", fontSize: "12px" }}>₹5,68,500</span>
+          </div>
+        </div>
+
+        {/* Indirect Expenses */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+          <div className="px-3 py-2 border-b" style={{ borderColor: "#E5E7EB", background: "#FFFBEB" }}>
+            <p className="font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#D97706" }}>Indirect Expenses</p>
+          </div>
+          {indirectExp.map(r => (
+            <div key={r.label} className="flex justify-between px-3 py-2 border-b" style={{ borderColor: "#F3F4F6" }}>
+              <span style={{ color: "#374151", fontSize: "11px" }}>{r.label}</span>
+              <span className="font-mono" style={{ color: "#D97706", fontSize: "11px" }}>{r.val}</span>
+            </div>
+          ))}
+          <div className="flex justify-between items-center px-3 py-3" style={{ background: "#F0FDF4", borderTop: "2px solid #A7F3D0" }}>
+            <span className="font-bold" style={{ color: "#059669", fontSize: "12px" }}>NET PROFIT (Before Tax)</span>
+            <span className="font-bold font-mono" style={{ color: "#059669", fontSize: "16px" }}>₹3,78,300</span>
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <span style={{ color: "#6B7280", fontSize: "10px" }}>Net Margin: <strong style={{ color: "#059669" }}>50.9%</strong></span>
+        </div>
       </div>
     </div>
   );
@@ -419,48 +482,74 @@ function JobPnlScreen() {
 
 function BankScreen() {
   const txns = [
-    { date: "03 Jul", desc: "NEFT CR - Ravi Exports",        debit: "",         credit: "₹78,500", matched: "INV-2026-0142", status: "green"  },
-    { date: "02 Jul", desc: "NEFT DR - Apollo World Connect", debit: "₹18,000",  credit: "",        matched: "EXP-2026-0088", status: "green"  },
-    { date: "01 Jul", desc: "RTGS DR - Sakthi Transport",     debit: "₹54,000",  credit: "",        matched: "Possible match", status: "yellow" },
-    { date: "30 Jun", desc: "CR - Bank Interest",             debit: "",         credit: "₹1,240",  matched: "Unmatched",    status: "red"    },
+    { date: "03 Jul", desc: "NEFT CR - Ravi Exports",       debit: "",        credit: "₹78,500", status: "matched"  },
+    { date: "02 Jul", desc: "NEFT DR - Apollo World",        debit: "₹18,000", credit: "",        status: "matched"  },
+    { date: "01 Jul", desc: "RTGS DR - Sakthi Transport",    debit: "₹54,000", credit: "",        status: "possible" },
+    { date: "30 Jun", desc: "CR - Bank Interest",            debit: "",        credit: "₹1,240",  status: "unmatched"},
+    { date: "29 Jun", desc: "NEFT CR - Global Impex",        debit: "",        credit: "₹15,000", status: "matched"  },
   ];
-  const sc: Record<string, string> = { green: "#22c55e", yellow: "#f59e0b", red: "#ef4444" };
+  const statusConfig: Record<string, { text: string; bg: string; border: string; icon: string; label: string }> = {
+    matched:   { text: "#059669", bg: "#ECFDF5", border: "#A7F3D0", icon: "check_circle", label: "Matched"   },
+    possible:  { text: "#D97706", bg: "#FFFBEB", border: "#FDE68A", icon: "help",         label: "Possible"  },
+    unmatched: { text: "#DC2626", bg: "#FEF2F2", border: "#FECACA", icon: "cancel",       label: "Unmatched" },
+  };
 
   return (
-    <div className="h-full overflow-y-auto" style={{ background: "#0f1010" }}>
-      <div className="flex items-center gap-3 p-4 border-b" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
-        <div className="rounded-xl p-3 flex-1" style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.07)" }}>
-          <p style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)" }}>HDFC Current A/C — xxxx4892</p>
-          <p className="font-bold text-base text-white mt-0.5">₹12,30,800</p>
-          <p style={{ fontSize: "8px", color: "#22c55e" }}>● Reconciled till 01 Jul</p>
+    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>Bank Reconciliation</p>
+          <p style={{ color: "#6B7280", fontSize: "10px" }}>HDFC Current – XXXX4521</p>
         </div>
-        <button className="px-3 py-2 rounded-xl text-xs font-semibold" style={{ background: "#D4AF37", color: "#1a1c1c", fontSize: "9px" }}>Import Statement</button>
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md border text-[10px]" style={{ borderColor: "#E5E7EB", color: "#374151", background: "#fff" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>upload_file</span>Import Statement
+        </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full" style={{ fontSize: "9px" }}>
+
+      {/* Balance cards */}
+      <div className="grid grid-cols-3 gap-2 px-4 mb-3">
+        {[
+          ["Bank Balance",    "₹12,30,800", "#111827","#fff"],
+          ["Book Balance",    "₹12,18,560", "#111827","#fff"],
+          ["Difference",      "₹12,240",    "#DC2626","#FEF2F2"],
+        ].map(([l,v,c,bg]) => (
+          <div key={l} className="rounded-xl border p-2.5" style={{ background: bg as string, borderColor: "#E5E7EB" }}>
+            <p style={{ color: "#6B7280", fontSize: "9px" }}>{l}</p>
+            <p className="font-bold font-mono mt-0.5" style={{ color: c as string, fontSize: "13px" }}>{v}</p>
+            {l === "Difference" && <p style={{ color: "#DC2626", fontSize: "9px" }}>unreconciled</p>}
+          </div>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="mx-4 rounded-xl border overflow-hidden mb-4" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
+        <table className="w-full" style={{ fontSize: "10px" }}>
           <thead>
-            <tr style={{ borderBottom: "0.5px solid rgba(255,255,255,0.07)" }}>
-              {["Date","Description","Debit","Credit","Matched Entry","Status"].map(h => (
-                <th key={h} className="px-3 py-2 text-left font-semibold" style={{ color: "rgba(255,255,255,0.3)" }}>{h}</th>
+            <tr style={{ background: "#F9FAFB", borderBottom: "1px solid #E5E7EB" }}>
+              {["Date","Description","Debit","Credit","Status"].map(h => (
+                <th key={h} className="px-3 py-2 text-left font-semibold text-[9px] uppercase tracking-wide" style={{ color: "#6B7280" }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {txns.map((t) => (
-              <tr key={t.desc} style={{ borderBottom: "0.5px solid rgba(255,255,255,0.04)" }}>
-                <td className="px-3 py-2.5" style={{ color: "rgba(255,255,255,0.5)" }}>{t.date}</td>
-                <td className="px-3 py-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.8)" }}>{t.desc}</td>
-                <td className="px-3 py-2.5 font-bold" style={{ color: "#ef4444" }}>{t.debit}</td>
-                <td className="px-3 py-2.5 font-bold" style={{ color: "#22c55e" }}>{t.credit}</td>
-                <td className="px-3 py-2.5" style={{ color: sc[t.status] }}>{t.matched}</td>
-                <td className="px-3 py-2.5">
-                  <div className="flex items-center gap-1">
-                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: sc[t.status] }} />
-                    <span style={{ fontSize: "8px", color: sc[t.status], textTransform: "capitalize" }}>{t.status === "green" ? "Matched" : t.status === "yellow" ? "Review" : "Unmatched"}</span>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {txns.map((t) => {
+              const sc = statusConfig[t.status];
+              return (
+                <tr key={t.desc} className="border-b" style={{ borderColor: "#F3F4F6" }}>
+                  <td className="px-3 py-2.5" style={{ color: "#6B7280" }}>{t.date}</td>
+                  <td className="px-3 py-2.5 font-medium" style={{ color: "#111827" }}>{t.desc}</td>
+                  <td className="px-3 py-2.5 font-mono" style={{ color: t.debit ? "#DC2626" : "#D1D5DB" }}>{t.debit || "—"}</td>
+                  <td className="px-3 py-2.5 font-mono" style={{ color: t.credit ? "#059669" : "#D1D5DB" }}>{t.credit || "—"}</td>
+                  <td className="px-3 py-2.5">
+                    <span className="flex items-center gap-1 w-fit px-2 py-0.5 rounded-full font-semibold" style={{ background: sc.bg, color: sc.text, border: `1px solid ${sc.border}`, fontSize: "9px" }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: 10, color: sc.text, fontVariationSettings: "'FILL' 1" }}>{sc.icon}</span>
+                      {sc.label}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -469,14 +558,12 @@ function BankScreen() {
 }
 
 const SCREENS: Record<string, React.ReactNode> = {
-  dashboard:   <DashboardScreen />,
-  income:      <IncomeScreen />,
-  expenses:    <ExpenseScreen />,
-  gst:         <GstScreen />,
-  pnl:         <PnlScreen />,
-  receivables: <ReceivablesScreen />,
-  jobpnl:      <JobPnlScreen />,
-  bank:        <BankScreen />,
+  dashboard: <DashboardScreen />,
+  income:    <IncomeScreen />,
+  expenses:  <ExpensesScreen />,
+  gst:       <GstScreen />,
+  pnl:       <PnlScreen />,
+  bank:      <BankScreen />,
 };
 
 /* ─────────────────────────────────────────────────────────── */
@@ -501,11 +588,11 @@ const FEATURES = [
 /* FAQ                                                         */
 /* ─────────────────────────────────────────────────────────── */
 const FAQS = [
-  { q: "Does Accura replace Tally completely?", a: "For logistics businesses — yes. Every feature a C&F agent, CHA, or transporter needs from Tally is in Accura, plus 10+ features Tally doesn't have at all (per-job profitability, WhatsApp reminders, AI receipt scanning, cloud access)." },
   { q: "How does auto-population from other modules work?", a: "When you raise an invoice in Nexlog, EntryX, DockIQ, or RunDesk, it automatically creates an income entry in Accura. Your accounting team sees it instantly. Zero double-entry." },
-  { q: "Can I export to Tally if my CA insists on it?", a: "Yes. Accura generates TallyPrime-compatible XML with one click. Your CA imports it in 30 seconds — all entries appear with proper ledger heads." },
+  { q: "Can I export data to my CA's software?", a: "Yes. Accura generates TallyPrime-compatible XML with one click. Your CA imports it in 30 seconds — all entries appear with proper ledger heads. GSTR-1 and GSTR-3B Excel files match the exact GST portal upload template." },
   { q: "Is the GST export CA-ready?", a: "Completely. GSTR-1 and GSTR-3B Excel files match the exact GST portal upload template. Your CA downloads and uploads directly — no re-entry." },
-  { q: "What's the difference between Starter and Pro?", a: "Starter covers up to 50 invoices/month and 1 user. Pro is unlimited invoices, 3 users, all modules including AI receipt scanner, Tally XML, CA collaboration and per-job P&L." },
+  { q: "What accounting modules are included?", a: "Every module is included in the single ₹1,499/mo plan: Invoicing, Income Ledger, Expense Ledger, Bank Reconciliation, GST (GSTR-1, GSTR-3B, GSTR-2A), P&L, Per-Job Profitability, Receivables Tracker, AI Receipt Scanner, CA Login, WhatsApp Reminders, Multi-currency, TDS/TCS." },
+  { q: "Does Accura work without other NavkarOS modules?", a: "Yes — Accura works standalone. You manually enter invoices and expenses. It works best when paired with Nexlog, EntryX, DockIQ, or RunDesk since those auto-populate entries." },
 ];
 
 /* ─────────────────────────────────────────────────────────── */
@@ -543,14 +630,14 @@ export default function AccuraPage() {
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 border"
               style={{ background: "rgba(212,175,55,0.1)", borderColor: "rgba(212,175,55,0.25)", color: "#D4AF37" }}>
               <span className="material-symbols-outlined" style={{ fontSize: 12 }}>account_balance</span>
-              Freight Accounting · Built Better Than Tally
+              Freight Accounting · Built for Indian Logistics
             </span>
             <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-tight">
               Your CA will love you<br />
               <span style={{ color: "#D4AF37" }}>for switching to Accura.</span>
             </h1>
             <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.75 }}>
-              Freight-specific accounting that auto-posts from every NavkarOS invoice, generates GSTR-1 in one click, shows per-job profitability, and costs ₹31,932 less per year than Tally Gold.
+              Freight-specific accounting that auto-posts from every NavkarOS invoice, generates GSTR-1 in one click, and shows real-time per-job profitability — built exclusively for Indian logistics.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mb-14">
               <Link href={ctaHref} className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
@@ -567,10 +654,10 @@ export default function AccuraPage() {
           {/* Stats strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { val: "₹31,932", sub: "Saved/year vs Tally Gold" },
               { val: "1 click", sub: "to GSTR-1 export" },
               { val: "13",      sub: "accounting modules" },
               { val: "0 hrs",   sub: "manual data entry" },
+              { val: "100%",    sub: "GST & TDS compliant" },
             ].map((s) => (
               <div key={s.sub} className="rounded-2xl p-5 text-center" style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.08)" }}>
                 <p className="text-3xl font-black" style={{ color: "#D4AF37" }}>{s.val}</p>
@@ -581,31 +668,30 @@ export default function AccuraPage() {
         </div>
       </section>
 
-      {/* ── VS TALLY ─────────────────────────────────────── */}
+      {/* ── WHY ACCURA ───────────────────────────────────── */}
       <section className="py-20 px-6" style={{ background: "#f9f9f9" }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">The difference</span>
-            <h2 className="text-3xl font-black text-gray-900 mt-2">Tally vs Accura</h2>
-            <p className="text-gray-500 mt-2 text-sm">13 things Tally cannot do. Accura does all of them.</p>
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Built different</span>
+            <h2 className="text-3xl font-black text-gray-900 mt-2">What makes Accura different</h2>
+            <p className="text-gray-500 mt-2 text-sm">Accura is accounting built exclusively for Indian logistics. Generic software doesn't speak your language.</p>
           </div>
-          <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-            {/* Header */}
-            <div className="grid grid-cols-2">
-              <div className="px-6 py-4 font-black text-sm" style={{ background: "#f3f4f6", color: "#6b7280" }}>
-                ❌ Tally Silver / Gold
-              </div>
-              <div className="px-6 py-4 font-black text-sm" style={{ background: "#1a1c1c", color: "#D4AF37" }}>
-                ✅ Accura by NavkarOS
-              </div>
-            </div>
-            {TALLY_COMPARE.map((row, i) => (
-              <div key={i} className="grid grid-cols-2 border-t" style={{ borderColor: "#f0f0f0" }}>
-                <div className="px-6 py-3.5 text-sm flex items-center gap-2" style={{ color: "#9ca3af", background: i % 2 === 0 ? "#fafafa" : "#fff" }}>
-                  <span className="text-red-300 text-xs flex-shrink-0">✕</span> {row.tally}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { icon: "sync", title: "Auto-populated from every module", desc: "Invoices raised in Nexlog, EntryX, DockIQ, or RunDesk auto-post to Accura. Zero double-entry." },
+              { icon: "account_balance", title: "GST-native, not an afterthought", desc: "GSTR-1 & GSTR-3B in one click. GSTR-2A auto-reconciliation. CA-ready export — matches GST portal template exactly." },
+              { icon: "route", title: "Per-job profitability", desc: "See margin on every shipment in real time. Know which clients and routes are profitable, which aren't." },
+              { icon: "phone_iphone", title: "CA collaboration login", desc: "Your CA gets a read-only login. No printing, no emailing, no WhatsApp. They log in, download what they need." },
+              { icon: "smart_toy", title: "AI receipt scanner", desc: "Upload a bill photo — AI fills vendor, amount, GST, date. What takes 5 minutes takes 5 seconds." },
+              { icon: "receipt_long", title: "WhatsApp payment reminders", desc: "One click to send a polite WhatsApp reminder with outstanding invoice details. Collections made effortless." },
+            ].map((f) => (
+              <div key={f.title} className="flex gap-4 p-5 rounded-2xl bg-white border" style={{ borderColor: "#f0f0f0" }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.1)" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D4AF37" }}>{f.icon}</span>
                 </div>
-                <div className="px-6 py-3.5 text-sm flex items-center gap-2 font-medium" style={{ color: "#1a1c1c", background: i % 2 === 0 ? "rgba(212,175,55,0.04)" : "rgba(212,175,55,0.02)" }}>
-                  <Check className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "#D4AF37" }} /> {row.accura}
+                <div>
+                  <p className="font-bold text-sm text-gray-900">{f.title}</p>
+                  <p className="text-sm text-gray-500 mt-1 leading-relaxed">{f.desc}</p>
                 </div>
               </div>
             ))}
@@ -759,60 +845,33 @@ export default function AccuraPage() {
 
       {/* ── PRICING ──────────────────────────────────────── */}
       <section className="py-20 px-6" style={{ background: "#f9f9f9" }}>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Pricing</span>
-            <h2 className="text-3xl font-black text-gray-900 mt-2">Simple, honest pricing</h2>
-            <p className="text-sm text-gray-500 mt-2">Tally Silver = ₹1,500/mo. Knows nothing about freight.<br />Accura Starter = ₹1,499/mo. Built for logistics. Speaks your language.</p>
+            <h2 className="text-3xl font-black text-gray-900 mt-2">One plan. Everything included.</h2>
+            <p className="text-sm text-gray-500 mt-2">No tiers, no hidden add-ons. Every feature from day one.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              {
-                name: "Starter", price: "₹1,499", cycle: "/mo", highlight: false,
-                badge: null,
-                features: ["Up to 50 invoices/month","1 user","Income & Expense Ledger","GST Summary + Export","Basic P&L","Bank Reconciliation","14-day free trial"],
-              },
-              {
-                name: "Pro", price: "₹2,299", cycle: "/mo", highlight: true,
-                badge: "Most Popular",
-                features: ["Unlimited invoices","3 users","All 13 modules","AI receipt scanner","Per-job profitability","CA collaboration login","Tally XML export","Priority support","14-day free trial"],
-              },
-              {
-                name: "Enterprise", price: "Custom", cycle: "", highlight: false,
-                badge: null,
-                features: ["Unlimited users","Multi-GSTIN","Multi-branch","Custom SLA","Dedicated support","On-premise option","Volume discounts"],
-              },
-            ].map((p) => (
-              <div key={p.name} className={`rounded-2xl border p-6 flex flex-col relative ${p.highlight ? "border-[#D4AF37] border-2 shadow-xl" : "border-gray-100 bg-white"}`}
-                style={{ background: p.highlight ? "#1a1c1c" : "#fff" }}>
-                {p.badge && (
-                  <div className="absolute -top-px right-5 bg-[#D4AF37] px-3 py-1 rounded-b-xl">
-                    <span className="text-[#1a1c1c] text-xs font-black uppercase tracking-wider">{p.badge}</span>
-                  </div>
-                )}
-                <p className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: p.highlight ? "rgba(212,175,55,0.7)" : "#9ca3af" }}>{p.name}</p>
-                <div className="flex items-end gap-1 mb-5">
-                  <span className="text-4xl font-black" style={{ color: p.highlight ? "#D4AF37" : "#1a1c1c" }}>{p.price}</span>
-                  <span className="text-sm mb-1.5" style={{ color: p.highlight ? "rgba(255,255,255,0.4)" : "#9ca3af" }}>{p.cycle}</span>
-                </div>
-                <ul className="flex flex-col gap-2.5 flex-1 mb-6">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 mt-0.5 flex-shrink-0" style={{ color: p.highlight ? "#D4AF37" : "#1A237E" }} />
-                      <span style={{ color: p.highlight ? "rgba(255,255,255,0.75)" : "#374151" }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href={p.name === "Enterprise" ? "/contact" : "/pricing"}
-                  className="w-full py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-center transition-all duration-200 block"
-                  style={{
-                    background: p.highlight ? "#D4AF37" : "#1a1c1c",
-                    color: p.highlight ? "#1a1c1c" : "#D4AF37",
-                  }}>
-                  {p.name === "Enterprise" ? "Talk to Sales" : "View Pricing →"}
-                </Link>
+          <div className="rounded-2xl border-2 p-8 flex flex-col md:flex-row gap-8 items-center" style={{ background: "#1a1c1c", borderColor: "#D4AF37" }}>
+            <div className="flex-1">
+              <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(212,175,55,0.7)" }}>Accura</p>
+              <div className="flex items-end gap-1 mb-1">
+                <span className="text-5xl font-black" style={{ color: "#D4AF37" }}>₹1,499</span>
+                <span className="text-base mb-2" style={{ color: "rgba(255,255,255,0.4)" }}>/mo</span>
               </div>
-            ))}
+              <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.4)" }}>14-day free trial · No credit card required</p>
+              <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-200"
+                style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+                Start Free Trial →
+              </Link>
+            </div>
+            <ul className="flex flex-col gap-3 flex-1">
+              {["Unlimited invoices & entries","All 13 accounting modules","AI receipt scanner","Per-job profitability","CA collaboration login","GSTR-1 & GSTR-3B export","Bank reconciliation","WhatsApp payment reminders","Multi-currency support","Tally XML export"].map((f) => (
+                <li key={f} className="flex items-center gap-2.5 text-sm">
+                  <Check className="h-4 w-4 flex-shrink-0" style={{ color: "#D4AF37" }} />
+                  <span style={{ color: "rgba(255,255,255,0.75)" }}>{f}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -838,10 +897,10 @@ export default function AccuraPage() {
       {/* ── BOTTOM CTA ───────────────────────────────────── */}
       <section className="py-20 px-6" style={{ background: "#1a1c1c" }}>
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(212,175,55,0.6)" }}>Ready to switch?</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(212,175,55,0.6)" }}>Ready to get started?</p>
           <h2 className="text-4xl font-black text-white mb-4 leading-tight">
-            Stop fighting Tally.<br />
-            <span style={{ color: "#D4AF37" }}>Start using Accura.</span>
+            Accounting built for<br />
+            <span style={{ color: "#D4AF37" }}>Indian logistics.</span>
           </h2>
           <p className="mb-10 text-base" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
             14-day free trial. No credit card. No setup fee. Your existing data stays yours.
@@ -852,7 +911,7 @@ export default function AccuraPage() {
             {ctaLabel} <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-            Accura Pro · ₹2,299/mo · Tally Gold = ₹4,500/mo and does less.
+            Accura · ₹1,499/mo · All modules included · 14-day free trial
           </p>
         </div>
       </section>

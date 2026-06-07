@@ -13,364 +13,463 @@ import Footer from "@/components/home/Footer";
 /* MODULE TABS                                                 */
 /* ─────────────────────────────────────────────────────────── */
 const MODULES = [
-  { id: "dashboard",   label: "Dashboard",   icon: "dashboard" },
-  { id: "jobdetail",   label: "Job Detail",  icon: "inventory_2" },
-  { id: "jobs",        label: "Jobs List",   icon: "list_alt" },
-  { id: "prealert",    label: "Pre Alert",   icon: "mark_email_read" },
-  { id: "invoicing",   label: "Invoicing",   icon: "receipt_long" },
-  { id: "tracking",    label: "Tracking",    icon: "directions_boat" },
-  { id: "crm",         label: "CRM",         icon: "groups" },
-  { id: "docai",       label: "DocAI",       icon: "auto_awesome" },
+  { id: "dashboard",  label: "Dashboard",  icon: "dashboard" },
+  { id: "jobs",       label: "Jobs",       icon: "work" },
+  { id: "invoices",   label: "Invoices",   icon: "receipt_long" },
+  { id: "tracking",   label: "Tracking",   icon: "gps_fixed" },
+  { id: "pre-alert",  label: "Pre-Alert",  icon: "notifications" },
+  { id: "pnl",        label: "Job P&L",    icon: "trending_up" },
 ];
 
 /* ─────────────────────────────────────────────────────────── */
 /* MOCK SCREENS                                                */
 /* ─────────────────────────────────────────────────────────── */
+
+const SAMPLE_JOBS = [
+  { no: "NXL/26/0142", client: "Ravi Exports Pvt Ltd",  route: "JNPT→DEHAM",  mode: "SEA", type: "EXPORT", stage: "Vessel Sailed",      eta: "15 Jul 2026", stageColor: "#1565C0", stageBg: "#E3F2FD" },
+  { no: "NXL/26/0141", client: "HDFC Traders",          route: "INMAA→SGSIN", mode: "SEA", type: "EXPORT", stage: "At Customs",          eta: "12 Jul 2026", stageColor: "#D97706", stageBg: "#FFFBEB" },
+  { no: "NXL/26/0140", client: "Global Impex",          route: "INBLR→OMKWI", mode: "AIR", type: "EXPORT", stage: "In Transit",          eta: "10 Jul 2026", stageColor: "#1565C0", stageBg: "#E3F2FD" },
+  { no: "NXL/26/0139", client: "Sunrise Logistics",     route: "JNPT→DXBPO",  mode: "SEA", type: "EXPORT", stage: "CFS Destuffed",       eta: "8 Jul 2026",  stageColor: "#7C3AED", stageBg: "#F5F3FF" },
+  { no: "NXL/26/0138", client: "Sakthi Cargo",          route: "INMAA→CNSHA", mode: "SEA", type: "EXPORT", stage: "Booking Confirmed",   eta: "20 Jul 2026", stageColor: "#374151", stageBg: "#F3F4F6" },
+];
+
 function DashboardScreen() {
   const kpis = [
-    { label: "Active Jobs",       value: "24",         change: "+3 today",   up: true  },
-    { label: "Import Jobs",       value: "15",         change: "62% of mix", up: true  },
-    { label: "Export Jobs",       value: "9",          change: "38% of mix", up: true  },
-    { label: "Pending Customs",   value: "6",          change: "2 urgent",   up: false },
-    { label: "Revenue MTD",       value: "₹12,84,500", change: "+18%",       up: true  },
-    { label: "Outstanding",       value: "₹3,42,000",  change: "8 invoices", up: false },
-  ];
-  const bars = [38, 44, 52, 48, 61, 58, 72, 68, 80, 76, 88, 94];
-  const months = ["Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun"];
-
-  return (
-    <div className="h-full overflow-y-auto p-3 space-y-3" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="grid grid-cols-3 gap-2">
-        {kpis.map((k) => (
-          <div key={k.label} className="rounded-lg p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-            <p style={{ color: "#6B7280", fontSize: "8px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{k.label}</p>
-            <p className="font-bold" style={{ fontSize: "13px", color: "#111827" }}>{k.value}</p>
-            <p className="mt-0.5" style={{ color: k.up ? "#059669" : "#D97706", fontSize: "9px" }}>{k.change}</p>
-          </div>
-        ))}
-      </div>
-      <div className="rounded-lg p-3" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        <p className="font-semibold mb-2" style={{ color: "#111827", fontSize: "10px" }}>Jobs Closed — Last 12 Months</p>
-        <div className="flex items-end gap-1 h-14">
-          {bars.map((h, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
-              <div className="w-full rounded-sm" style={{ height: `${h * 0.55}px`, background: "#1565C0", opacity: i === 11 ? 1 : 0.55 }} />
-              <p style={{ fontSize: "6px", color: "#9CA3AF" }}>{months[i]}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="space-y-1.5">
-        {[
-          { text: "IMP/2526/086 stuck at customs > 5 days", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
-          { text: "TCNU8456731 — 1 free day left, detention ₹4500/day", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
-          { text: "Hapag-Lloyd Shanghai-JNPT rate expired 31 May", color: "#1565C0", bg: "#E3F2FD", border: "#BBDEFB" },
-        ].map((a) => (
-          <div key={a.text} className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: a.bg, border: `1px solid ${a.border}` }}>
-            <div className="w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0" style={{ background: a.color }} />
-            <p style={{ fontSize: "9.5px", color: "#374151" }}>{a.text}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function JobDetailScreen() {
-  const fields = [
-    ["Job No", "IMP/2526/089"],
-    ["Client", "Ravi Exports"],
-    ["Mode", "SEA IMPORT"],
-    ["BL No", "HLCUSHA2614832"],
-    ["Vessel", "MV Pacific Ace V.2614E"],
-    ["POL", "CNSHA Shanghai"],
-    ["POD", "INNSA Nhava Sheva"],
-    ["Container", "TCNU8456731 (40HC)"],
-    ["ETA", "30 May 2026"],
-    ["Stage", "AT JNPT"],
-  ];
-  const timeline = [
-    { stage: "Booking Confirmed", date: "12 May", done: true },
-    { stage: "Gate-In Origin", date: "14 May", done: true },
-    { stage: "Vessel Sailed", date: "16 May", done: true },
-    { stage: "In Transit", date: "—", done: true },
-    { stage: "Arrived JNPT", date: "30 May", done: true },
-    { stage: "Customs Cleared", date: "—", done: false },
-    { stage: "CFS Out", date: "—", done: false },
-    { stage: "Delivered", date: "—", done: false },
+    { label: "Active Jobs",        value: "28",         icon: "work",            color: "#1565C0", bg: "#E3F2FD" },
+    { label: "Import Jobs",        value: "16",         icon: "download",        color: "#0D47A1", bg: "#E3F2FD" },
+    { label: "Export Jobs",        value: "12",         icon: "upload",          color: "#7C3AED", bg: "#F5F3FF" },
+    { label: "Pending Customs",    value: "5",          icon: "gavel",           color: "#DC2626", bg: "#FEF2F2" },
+    { label: "Revenue This Month", value: "₹8,42,500",  icon: "trending_up",     color: "#059669", bg: "#ECFDF5" },
+    { label: "Outstanding",        value: "₹1,94,000",  icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
   ];
 
   return (
-    <div className="h-full overflow-y-auto p-3" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="flex items-center justify-between mb-2">
+    <div className="h-full overflow-y-auto p-4" style={{ background: "#F9FAFB", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
         <div>
-          <p className="font-mono font-bold" style={{ fontSize: "11px", color: "#1565C0" }}>IMP/2526/089</p>
-          <p style={{ fontSize: "9px", color: "#6B7280" }}>Ravi Exports · Shanghai → JNPT</p>
+          <h1 className="font-semibold" style={{ color: "#111827", fontSize: "14px" }}>Dashboard</h1>
+          <p style={{ color: "#6B7280", fontSize: "10px", marginTop: "1px" }}>Navkar Freight Co. · FY 2025–26</p>
         </div>
-        <span className="px-2 py-0.5 rounded-full" style={{ background: "#E3F2FD", color: "#1565C0", fontSize: "8px", fontWeight: 700 }}>AT JNPT</span>
-      </div>
-      <div className="grid grid-cols-2 gap-2 mb-2">
-        {fields.map(([k, v]) => (
-          <div key={k} className="rounded-md p-2" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-            <p style={{ fontSize: "7.5px", color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.05em" }}>{k}</p>
-            <p style={{ fontSize: "10px", color: "#111827", fontWeight: 600 }}>{v}</p>
-          </div>
-        ))}
-      </div>
-      <div className="rounded-md p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        <p style={{ fontSize: "9px", color: "#111827", fontWeight: 700, marginBottom: "6px" }}>Timeline</p>
-        <div className="space-y-1.5">
-          {timeline.map((t, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full" style={{ background: t.done ? "#059669" : "#D1D5DB" }} />
-              <p style={{ fontSize: "9px", color: t.done ? "#111827" : "#9CA3AF", fontWeight: t.done ? 600 : 400, flex: 1 }}>{t.stage}</p>
-              <p style={{ fontSize: "8px", color: "#6B7280" }}>{t.date}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function JobsListScreen() {
-  const rows = [
-    { no: "IMP/2526/089", client: "Ravi Exports",     mode: "SEA", stage: "AT JNPT",       eta: "30 May" },
-    { no: "EXP/2526/044", client: "HDFC Traders",     mode: "SEA", stage: "VESSEL SAILED", eta: "12 Jun" },
-    { no: "AIR/2526/032", client: "Global Impex",     mode: "AIR", stage: "IN TRANSIT",    eta: "08 Jun" },
-    { no: "IMP/2526/088", client: "Sunrise Logistics", mode: "SEA", stage: "CUSTOMS",      eta: "29 May" },
-    { no: "IMP/2526/087", client: "Bharat Heavy",     mode: "SEA", stage: "CFS OUT",      eta: "28 May" },
-    { no: "EXP/2526/043", client: "Sakthi Cargo",     mode: "SEA", stage: "GATE-IN",       eta: "15 Jun" },
-  ];
-  const sc: Record<string, string> = {
-    "AT JNPT": "#1565C0", "VESSEL SAILED": "#7C3AED", "IN TRANSIT": "#0891B2",
-    "CUSTOMS": "#D97706", "CFS OUT": "#059669", "GATE-IN": "#475569",
-  };
-
-  return (
-    <div className="h-full overflow-y-auto" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="flex items-center gap-2 px-3 py-2 sticky top-0" style={{ background: "#F8FAFC", borderBottom: "1px solid #E5E7EB" }}>
-        <input placeholder="Search jobs…" className="text-[10px] px-2 py-1 rounded-md flex-1" style={{ background: "#fff", border: "1px solid #E5E7EB" }} readOnly />
-        {["All", "Sea", "Air"].map((f, i) => (
-          <button key={f} className="px-2 py-1 rounded-md" style={{ background: i === 0 ? "#1565C0" : "#fff", color: i === 0 ? "#fff" : "#374151", fontSize: "9px", fontWeight: 600, border: "1px solid #E5E7EB" }}>{f}</button>
-        ))}
-      </div>
-      <table className="w-full" style={{ fontSize: "9px" }}>
-        <thead>
-          <tr style={{ background: "#F9FAFB" }}>
-            {["Job No", "Client", "Mode", "Stage", "ETA"].map((h) => (
-              <th key={h} className="text-left px-3 py-2 font-semibold" style={{ color: "#6B7280", fontSize: "8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.no} style={{ borderTop: "1px solid #F3F4F6", background: "#fff" }}>
-              <td className="px-3 py-2 font-mono font-bold" style={{ color: "#1565C0" }}>{r.no}</td>
-              <td className="px-3 py-2 font-semibold" style={{ color: "#111827" }}>{r.client}</td>
-              <td className="px-3 py-2" style={{ color: "#6B7280" }}>{r.mode}</td>
-              <td className="px-3 py-2"><span className="px-1.5 py-0.5 rounded-full" style={{ background: `${sc[r.stage]}18`, color: sc[r.stage], fontSize: "8px", fontWeight: 700 }}>{r.stage}</span></td>
-              <td className="px-3 py-2" style={{ color: "#6B7280" }}>{r.eta}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function PreAlertScreen() {
-  return (
-    <div className="h-full overflow-y-auto p-3 space-y-2" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="rounded-md p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        <p style={{ fontSize: "9px", color: "#111827", fontWeight: 700, marginBottom: "5px" }}>Select Job</p>
-        <div className="rounded px-2 py-1.5 mb-2" style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", fontSize: "9px", color: "#374151" }}>IMP/2526/089 — Ravi Exports — Shanghai → JNPT ▾</div>
-        <button className="w-full py-1.5 rounded-md font-bold text-white flex items-center justify-center gap-1" style={{ background: "#7C3AED", fontSize: "9px" }}>
-          <span className="material-symbols-outlined" style={{ fontSize: 11 }}>auto_awesome</span>
-          AI: Auto-extract & Generate
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#1565C0", fontSize: "11px" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>add</span>
+          New Job
         </button>
-        <div className="mt-2 p-2 rounded" style={{ background: "#F5F3FF", color: "#5B21B6", fontSize: "8.5px" }}>AI extracted 12 fields from BL · Pre-alert composed · Ready to send</div>
       </div>
-      <div className="rounded-md p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        <p style={{ fontSize: "9px", color: "#111827", fontWeight: 700, marginBottom: "5px" }}>Email Preview</p>
-        <div className="rounded p-2" style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", fontSize: "8.5px", color: "#374151", lineHeight: 1.6 }}>
-          <p style={{ fontWeight: 700, color: "#111827", marginBottom: "4px" }}>Cargo Arrival Notice — IMP/2526/089</p>
-          <p>Dear Ravi Exports,</p>
-          <p className="mt-1">Vessel MV Pacific Ace V.2614E carrying your shipment will arrive JNPT on 30 May 2026.</p>
-          <p className="mt-1">Container: TCNU8456731 (40HC)<br />BL: HLCUSHA2614832<br />Cargo: 120 CTNS / 12,500 kg / 28.5 CBM<br />Free Days: 10 from gate-in</p>
-          <p className="mt-1">Kindly action clearance.</p>
+
+      {/* KPI grid */}
+      <div className="grid grid-cols-3 gap-2.5 mb-4">
+        {kpis.map((k) => (
+          <div key={k.label} className="rounded-xl border p-3" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+            <div className="flex items-start justify-between">
+              <div>
+                <div style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500, marginBottom: "4px" }}>{k.label}</div>
+                <div className="font-bold" style={{ fontSize: "16px", color: "#111827", letterSpacing: "-0.02em" }}>{k.value}</div>
+              </div>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: k.bg }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 14, color: k.color, fontVariationSettings: "'FILL' 1" }}>{k.icon}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Recent Jobs + Alerts */}
+      <div className="grid gap-2.5" style={{ gridTemplateColumns: "1fr 180px" }}>
+        <div className="rounded-xl border" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+          <div className="flex items-center justify-between px-3 py-2.5 border-b" style={{ borderColor: "#E5E7EB" }}>
+            <span className="font-semibold" style={{ color: "#111827", fontSize: "11px" }}>Recent Jobs</span>
+            <span style={{ color: "#1565C0", fontSize: "10px", fontWeight: 500 }}>View all →</span>
+          </div>
+          <table className="w-full" style={{ fontSize: "10px" }}>
+            <thead>
+              <tr style={{ borderBottom: "1px solid #E5E7EB" }}>
+                {["Job No", "Client", "Route", "Mode", "Stage", "ETA"].map((h) => (
+                  <th key={h} className="text-left py-1.5 px-2.5 font-semibold uppercase tracking-wider" style={{ color: "#6B7280", fontSize: "8px" }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {SAMPLE_JOBS.map((j) => (
+                <tr key={j.no} style={{ borderBottom: "1px solid #F3F4F6" }}>
+                  <td className="py-2 px-2.5 font-mono" style={{ color: "#1565C0", fontSize: "9px", fontWeight: 700 }}>{j.no}</td>
+                  <td className="py-2 px-2.5 font-medium" style={{ color: "#111827", fontSize: "9px" }}>{j.client}</td>
+                  <td className="py-2 px-2.5" style={{ color: "#6B7280", fontSize: "9px" }}>{j.route}</td>
+                  <td className="py-2 px-2.5">
+                    <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.mode === "SEA" ? "#DBEAFE" : "#FEF3C7", color: j.mode === "SEA" ? "#1E40AF" : "#92400E", fontSize: "8px" }}>{j.mode}</span>
+                  </td>
+                  <td className="py-2 px-2.5">
+                    <span className="px-1.5 py-0.5 rounded-full font-bold" style={{ background: j.stageBg, color: j.stageColor, fontSize: "8px" }}>{j.stage}</span>
+                  </td>
+                  <td className="py-2 px-2.5" style={{ color: "#6B7280", fontSize: "9px" }}>{j.eta}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="rounded-xl border p-3" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+          <h2 className="font-semibold mb-2.5" style={{ color: "#111827", fontSize: "11px" }}>Alerts</h2>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-start gap-2 p-2 rounded-lg border" style={{ background: "#FFFBEB", borderColor: "#FDE68A" }}>
+              <span className="material-symbols-outlined flex-shrink-0 mt-0.5" style={{ fontSize: 12, color: "#D97706", fontVariationSettings: "'FILL' 1" }}>warning</span>
+              <p style={{ fontSize: "9px", color: "#374151", lineHeight: 1.5 }}>TCNU8456731 — 1 free day remaining</p>
+            </div>
+            <div className="flex items-start gap-2 p-2 rounded-lg border" style={{ background: "#FEF2F2", borderColor: "#FECACA" }}>
+              <span className="material-symbols-outlined flex-shrink-0 mt-0.5" style={{ fontSize: 12, color: "#DC2626", fontVariationSettings: "'FILL' 1" }}>error</span>
+              <p style={{ fontSize: "9px", color: "#374151", lineHeight: 1.5 }}>NXL/26/0141 — Customs query raised</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function InvoicingScreen() {
-  const charges = [
-    { sac: "996521", desc: "Ocean Freight",        amt: "₹1,52,500", gst: "5%" },
-    { sac: "996521", desc: "THC at JNPT",          amt: "₹18,200",   gst: "18%" },
-    { sac: "998540", desc: "CHA Service Fee",      amt: "₹12,000",   gst: "18%" },
-    { sac: "996713", desc: "CFS Handling",         amt: "₹8,400",    gst: "18%" },
-    { sac: "996791", desc: "Transport JNPT→Bhiwandi", amt: "₹14,500", gst: "12%" },
+function JobsScreen() {
+  return (
+    <div className="h-full overflow-y-auto" style={{ background: "#F9FAFB", fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <h1 className="font-semibold" style={{ color: "#111827", fontSize: "14px" }}>All Jobs</h1>
+          <p style={{ color: "#6B7280", fontSize: "10px", marginTop: "1px" }}>5 jobs · 5 active</p>
+        </div>
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#1565C0", fontSize: "11px" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>add</span>
+          New Job
+        </button>
+      </div>
+
+      {/* Filters */}
+      <div className="mx-4 mb-3 rounded-xl border p-2.5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <div className="flex gap-2 items-center">
+          <div className="flex-1 flex items-center gap-1.5 px-2 py-1.5 rounded-md border" style={{ borderColor: "#E5E7EB" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#9CA3AF" }}>search</span>
+            <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Search by job no, client…</span>
+          </div>
+          {["All Modes", "All Types", "All Stages"].map((f) => (
+            <div key={f} className="px-2 py-1.5 rounded-md border flex items-center gap-1" style={{ borderColor: "#E5E7EB", background: "#fff", fontSize: "10px", color: "#374151" }}>
+              {f} <span className="material-symbols-outlined" style={{ fontSize: 12, color: "#9CA3AF" }}>expand_more</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="mx-4 rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <table className="w-full">
+          <thead style={{ background: "#F9FAFB" }}>
+            <tr>
+              {["Job No", "Client", "Route", "Type", "Mode", "Stage", "ETA", ""].map((h) => (
+                <th key={h} className="text-left py-2.5 px-2.5 font-semibold uppercase tracking-wider" style={{ color: "#6B7280", fontSize: "8px" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {SAMPLE_JOBS.map((j) => (
+              <tr key={j.no} style={{ borderTop: "1px solid #F3F4F6" }}>
+                <td className="py-2.5 px-2.5 font-mono font-bold" style={{ color: "#1565C0", fontSize: "9px" }}>{j.no}</td>
+                <td className="py-2.5 px-2.5 font-medium" style={{ color: "#111827", fontSize: "10px" }}>{j.client}</td>
+                <td className="py-2.5 px-2.5" style={{ color: "#6B7280", fontSize: "10px" }}>{j.route}</td>
+                <td className="py-2.5 px-2.5">
+                  <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.type === "IMPORT" ? "#E3F2FD" : "#F5F3FF", color: j.type === "IMPORT" ? "#1565C0" : "#7C3AED", fontSize: "8px" }}>{j.type}</span>
+                </td>
+                <td className="py-2.5 px-2.5">
+                  <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.mode === "SEA" ? "#DBEAFE" : "#FEF3C7", color: j.mode === "SEA" ? "#1E40AF" : "#92400E", fontSize: "8px" }}>{j.mode}</span>
+                </td>
+                <td className="py-2.5 px-2.5">
+                  <span className="px-2 py-0.5 rounded-full font-bold" style={{ background: j.stageBg, color: j.stageColor, fontSize: "8px" }}>{j.stage}</span>
+                </td>
+                <td className="py-2.5 px-2.5" style={{ color: "#6B7280", fontSize: "10px" }}>{j.eta}</td>
+                <td className="py-2.5 px-2.5">
+                  <span className="px-2 py-1 rounded font-semibold" style={{ color: "#1565C0", background: "#E3F2FD", fontSize: "9px" }}>Open</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function InvoicesScreen() {
+  const invoices = [
+    { no: "INV-2026-0142", job: "NXL/26/0142", client: "Ravi Exports Pvt Ltd", date: "2 Jul 2026",  amount: 78500,  gst: 7065,  status: "Paid",    statusColor: "#059669", statusBg: "#ECFDF5" },
+    { no: "INV-2026-0141", job: "NXL/26/0141", client: "HDFC Traders",         date: "30 Jun 2026", amount: 48000,  gst: 4320,  status: "Overdue",  statusColor: "#DC2626", statusBg: "#FEF2F2" },
+    { no: "INV-2026-0140", job: "NXL/26/0140", client: "Global Impex",         date: "28 Jun 2026", amount: 15000,  gst: 1350,  status: "Partial",  statusColor: "#D97706", statusBg: "#FFFBEB" },
+    { no: "INV-2026-0139", job: "NXL/26/0139", client: "Sakthi Cargo",         date: "25 Jun 2026", amount: 10000,  gst: 900,   status: "Paid",    statusColor: "#059669", statusBg: "#ECFDF5" },
   ];
 
   return (
-    <div className="h-full overflow-y-auto p-3" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="flex items-center justify-between mb-2">
+    <div className="h-full overflow-y-auto" style={{ background: "#F9FAFB", fontFamily: "Inter, sans-serif" }}>
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
         <div>
-          <p className="font-mono font-bold" style={{ fontSize: "11px", color: "#1565C0" }}>INV-2026-0142</p>
-          <p style={{ fontSize: "9px", color: "#6B7280" }}>Ravi Exports · IMP/2526/089</p>
+          <h1 className="font-semibold" style={{ color: "#111827", fontSize: "14px" }}>Invoices</h1>
+          <p style={{ color: "#6B7280", fontSize: "10px", marginTop: "1px" }}>4 invoices · FY 2025–26</p>
         </div>
-        <span className="px-2 py-0.5 rounded-full" style={{ background: "#E3F2FD", color: "#1565C0", fontSize: "8px", fontWeight: 700 }}>DRAFT</span>
+        <button className="px-2.5 py-1.5 rounded-md text-white" style={{ background: "#1565C0", fontSize: "11px" }}>+ Create Invoice</button>
       </div>
-      <table className="w-full mb-2" style={{ fontSize: "8.5px", background: "#fff", border: "1px solid #E5E7EB" }}>
-        <thead>
-          <tr style={{ background: "#F9FAFB" }}>
-            {["SAC", "Description", "Amount", "GST"].map((h) => (
-              <th key={h} className="text-left px-2 py-1.5 font-semibold" style={{ color: "#6B7280", fontSize: "7.5px", textTransform: "uppercase" }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {charges.map((c, i) => (
-            <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
-              <td className="px-2 py-1.5 font-mono" style={{ color: "#1565C0" }}>{c.sac}</td>
-              <td className="px-2 py-1.5" style={{ color: "#111827" }}>{c.desc}</td>
-              <td className="px-2 py-1.5 font-bold" style={{ color: "#111827" }}>{c.amt}</td>
-              <td className="px-2 py-1.5" style={{ color: "#6B7280" }}>{c.gst}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="rounded-md p-2.5 space-y-1" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        {[["Taxable", "₹2,05,600"], ["IGST", "₹17,540"], ["Round Off", "—"]].map(([l, v]) => (
-          <div key={l} className="flex justify-between" style={{ fontSize: "9px", color: "#6B7280" }}>
-            <span>{l}</span><span style={{ color: "#111827", fontWeight: 600 }}>{v}</span>
+
+      {/* Summary KPIs */}
+      <div className="grid grid-cols-3 gap-2.5 mx-4 mb-3">
+        {[
+          { l: "Total Invoiced", v: "₹18.5 L", c: "#1565C0", bg: "#E3F2FD" },
+          { l: "Total Collected", v: "₹13.2 L", c: "#059669", bg: "#ECFDF5" },
+          { l: "Outstanding",    v: "₹5.3 L",  c: "#D97706", bg: "#FFFBEB" },
+        ].map((k) => (
+          <div key={k.l} className="rounded-xl border p-3" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+            <div style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500, marginBottom: "3px" }}>{k.l}</div>
+            <div className="font-bold" style={{ fontSize: "16px", color: k.c }}>{k.v}</div>
           </div>
         ))}
-        <div className="flex justify-between pt-1 mt-1" style={{ borderTop: "1px solid #E5E7EB" }}>
-          <span style={{ fontSize: "10px", fontWeight: 700, color: "#111827" }}>Grand Total</span>
-          <span style={{ fontSize: "11px", fontWeight: 800, color: "#1565C0" }}>₹2,23,140</span>
-        </div>
+      </div>
+
+      {/* Tab bar */}
+      <div className="flex gap-0 mx-4 mb-3 border-b" style={{ borderColor: "#E5E7EB" }}>
+        {["All", "Tax Invoice", "Reimbursement", "Debit Note"].map((t, i) => (
+          <div key={t} className="px-3 py-1.5 border-b-2" style={{ borderColor: i === 0 ? "#1565C0" : "transparent", color: i === 0 ? "#1565C0" : "#6B7280", fontSize: "11px", fontWeight: 500 }}>{t}</div>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="mx-4 rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <table className="w-full">
+          <thead style={{ background: "#F9FAFB" }}>
+            <tr>
+              {["Invoice No", "Job No", "Client", "Date", "Amount", "GST", "Total", "Status", ""].map((h) => (
+                <th key={h} className="text-left py-2.5 px-2.5 font-semibold uppercase tracking-wider" style={{ color: "#6B7280", fontSize: "8px" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {invoices.map((inv) => (
+              <tr key={inv.no} style={{ borderTop: "1px solid #F3F4F6" }}>
+                <td className="py-2.5 px-2.5 font-mono font-bold" style={{ color: "#1565C0", fontSize: "9px" }}>{inv.no}</td>
+                <td className="py-2.5 px-2.5 font-mono" style={{ color: "#6B7280", fontSize: "9px" }}>{inv.job}</td>
+                <td className="py-2.5 px-2.5 font-medium" style={{ color: "#111827", fontSize: "10px" }}>{inv.client}</td>
+                <td className="py-2.5 px-2.5" style={{ color: "#6B7280", fontSize: "10px" }}>{inv.date}</td>
+                <td className="py-2.5 px-2.5" style={{ color: "#111827", fontSize: "10px" }}>₹{inv.amount.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-2.5" style={{ color: "#6B7280", fontSize: "10px" }}>₹{inv.gst.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-2.5 font-bold" style={{ color: "#111827", fontSize: "10px" }}>₹{(inv.amount + inv.gst).toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-2.5">
+                  <span className="px-2 py-0.5 rounded-full font-bold" style={{ background: inv.statusBg, color: inv.statusColor, fontSize: "8px" }}>{inv.status}</span>
+                </td>
+                <td className="py-2.5 px-2.5">
+                  <div className="flex gap-1">
+                    <span className="px-1.5 py-1 rounded font-semibold" style={{ background: "#F3F4F6", color: "#374151", fontSize: "8px" }}>Download</span>
+                    <span className="px-1.5 py-1 rounded font-semibold text-white" style={{ background: "#1565C0", fontSize: "8px" }}>Send</span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
 function TrackingScreen() {
-  const ships = [
-    { vessel: "MV Pacific Ace V.2614E", imo: "9234567", pos: "Indian Ocean", eta: "30 May", delay: "+1d",  color: "#D97706" },
-    { vessel: "MV MSC Gulsun",          imo: "9778123", pos: "Suez Canal",    eta: "22 Jun", delay: "+7d",  color: "#DC2626" },
-    { vessel: "MV CMA CGM Marco Polo",  imo: "9454436", pos: "Singapore",     eta: "08 Jun", delay: "On-time", color: "#059669" },
-    { vessel: "MV Maersk Honam",        imo: "9784271", pos: "Red Sea",       eta: "18 Jun", delay: "On-time", color: "#059669" },
+  const shipments = [
+    { job: "NXL/26/0142", vessel: "CMA CGM TAGE",       location: "Suez Canal",   stage: "Vessel Sailed",  eta: "15 Jul", status: "On Time", statusColor: "#059669", statusBg: "#ECFDF5" },
+    { job: "NXL/26/0141", vessel: "MSC MAYA",            location: "JNPT Customs", stage: "At Customs",     eta: "12 Jul", status: "Delayed", statusColor: "#D97706", statusBg: "#FFFBEB" },
+    { job: "NXL/26/0139", vessel: "COSCO STAR",          location: "Dubai Port",   stage: "Transshipment",  eta: "8 Jul",  status: "On Time", statusColor: "#059669", statusBg: "#ECFDF5" },
+    { job: "NXL/26/0138", vessel: "Hapag Lloyd GLOBE",   location: "Chennai Port", stage: "Vessel Sailed",  eta: "20 Jul", status: "On Time", statusColor: "#059669", statusBg: "#ECFDF5" },
   ];
 
   return (
-    <div className="h-full overflow-y-auto p-3 space-y-2" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="flex gap-1 mb-1">
-        {["Sea", "Air", "Surface"].map((m, i) => (
-          <button key={m} className="px-2 py-1 rounded" style={{ background: i === 0 ? "#1565C0" : "#fff", color: i === 0 ? "#fff" : "#374151", fontSize: "9px", fontWeight: 600, border: "1px solid #E5E7EB" }}>{m}</button>
+    <div className="h-full overflow-y-auto" style={{ background: "#F9FAFB", fontFamily: "Inter, sans-serif" }}>
+      <div className="px-4 pt-4 pb-3">
+        <h1 className="font-semibold" style={{ color: "#111827", fontSize: "14px" }}>Live Tracking</h1>
+        <p style={{ color: "#6B7280", fontSize: "10px", marginTop: "1px" }}>Real-time shipment status across all modes</p>
+      </div>
+
+      {/* Mode tabs */}
+      <div className="flex gap-0 mx-4 mb-3 border-b" style={{ borderColor: "#E5E7EB" }}>
+        {[["Sea", 4], ["Air", 1], ["Surface", 0]].map(([label, count], i) => (
+          <div key={label as string} className="px-4 py-1.5 border-b-2" style={{ borderColor: i === 0 ? "#1565C0" : "transparent", color: i === 0 ? "#1565C0" : "#6B7280", fontSize: "11px", fontWeight: 500 }}>
+            {label as string} ({count as number})
+          </div>
         ))}
       </div>
-      {ships.map((s) => (
-        <div key={s.imo} className="rounded-md p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-          <div className="flex items-center justify-between mb-1">
-            <p style={{ fontSize: "10px", color: "#111827", fontWeight: 700 }}>{s.vessel}</p>
-            <span className="px-1.5 py-0.5 rounded-full" style={{ background: `${s.color}18`, color: s.color, fontSize: "8px", fontWeight: 700 }}>{s.delay}</span>
-          </div>
-          <div className="flex items-center gap-3" style={{ fontSize: "8.5px", color: "#6B7280" }}>
-            <span>IMO {s.imo}</span>
-            <span>·</span>
-            <span>{s.pos}</span>
-            <span>·</span>
-            <span>ETA {s.eta}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
 
-function CrmScreen() {
-  const cols = [
-    { name: "New",       count: 4, color: "#6B7280", items: ["Ace Plastics — air to Dubai", "BlueCom — sea LCL ex Hamburg"] },
-    { name: "Qualified", count: 3, color: "#0891B2", items: ["GreenLeaf — 4×40HC monthly", "DesiCart — air ex Chennai"] },
-    { name: "Quoted",    count: 5, color: "#7C3AED", items: ["MetalCo — FCL Hamburg", "TileMart — LCL Antwerp"] },
-    { name: "Won",       count: 2, color: "#059669", items: ["Apex Pharma — ongoing", "Spice King — quarterly"] },
-  ];
-
-  return (
-    <div className="h-full overflow-y-auto p-3" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="grid grid-cols-4 gap-2">
-        {cols.map((c) => (
-          <div key={c.name} className="rounded-md p-2" style={{ background: "#fff", border: "1px solid #E5E7EB", minHeight: "180px" }}>
-            <div className="flex items-center justify-between mb-2">
-              <p style={{ fontSize: "9px", color: c.color, fontWeight: 700, textTransform: "uppercase" }}>{c.name}</p>
-              <span style={{ fontSize: "9px", color: c.color, fontWeight: 700 }}>{c.count}</span>
-            </div>
-            <div className="space-y-1.5">
-              {c.items.map((it) => (
-                <div key={it} className="rounded p-1.5" style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", fontSize: "8.5px", color: "#374151" }}>{it}</div>
+      <div className="mx-4 rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <table className="w-full">
+          <thead style={{ background: "#F9FAFB" }}>
+            <tr>
+              {["Job No", "Mode", "Vessel", "Current Location", "Stage", "ETA", "Status"].map((h) => (
+                <th key={h} className="text-left py-2.5 px-3 font-semibold uppercase tracking-wider" style={{ color: "#6B7280", fontSize: "8px" }}>{h}</th>
               ))}
-            </div>
-          </div>
-        ))}
+            </tr>
+          </thead>
+          <tbody>
+            {shipments.map((s) => (
+              <tr key={s.job} style={{ borderTop: "1px solid #F3F4F6" }}>
+                <td className="py-2.5 px-3 font-mono font-bold" style={{ color: "#1565C0", fontSize: "9px" }}>{s.job}</td>
+                <td className="py-2.5 px-3">
+                  <span className="px-1.5 py-0.5 rounded font-bold uppercase" style={{ background: "#E3F2FD", color: "#1565C0", fontSize: "8px" }}>SEA</span>
+                </td>
+                <td className="py-2.5 px-3 font-medium" style={{ color: "#111827", fontSize: "10px" }}>{s.vessel}</td>
+                <td className="py-2.5 px-3" style={{ color: "#374151", fontSize: "10px" }}>{s.location}</td>
+                <td className="py-2.5 px-3">
+                  <span className="px-2 py-0.5 rounded-full font-bold" style={{ background: "#F3F4F6", color: "#374151", fontSize: "8px" }}>{s.stage}</span>
+                </td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280", fontSize: "10px" }}>{s.eta}</td>
+                <td className="py-2.5 px-3">
+                  <span className="px-2 py-0.5 rounded-full font-bold" style={{ background: s.statusBg, color: s.statusColor, fontSize: "8px" }}>{s.status}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
-function DocAiScreen() {
-  const fields = [
-    ["BL No", "HLCUSHA2614832"],
-    ["Vessel", "MV Pacific Ace"],
-    ["POL", "CNSHA"],
-    ["POD", "INNSA"],
-    ["Container", "TCNU8456731"],
-    ["Seal", "SL789432"],
-    ["Gross Wt", "12,500 kg"],
-    ["CBM", "28.500"],
-    ["Shipper", "Shanghai Electronics"],
-    ["Consignee", "Ravi Exports"],
+function PreAlertScreen() {
+  const rows = [
+    { job: "NXL/26/0142", bl: "CMDU8723419",   vessel: "CMA CGM TAGE",     pol: "JNPT", pod: "DEHAM", eta: "15 Jul", paStatus: "Sent",    paColor: "#059669", paBg: "#ECFDF5" },
+    { job: "NXL/26/0141", bl: "MSCU5634871",   vessel: "MSC MAYA",          pol: "INMAA", pod: "SGSIN", eta: "12 Jul", paStatus: "Sent",    paColor: "#059669", paBg: "#ECFDF5" },
+    { job: "NXL/26/0140", bl: "IATSA7812340",  vessel: "IndiGo 6E-2214",    pol: "INBLR", pod: "OMKWI", eta: "10 Jul", paStatus: "Pending", paColor: "#D97706", paBg: "#FFFBEB" },
+    { job: "NXL/26/0139", bl: "COSU9284612",   vessel: "COSCO STAR",        pol: "JNPT", pod: "DXBPO", eta: "8 Jul",  paStatus: "Sent",    paColor: "#059669", paBg: "#ECFDF5" },
+    { job: "NXL/26/0138", bl: "HLCUSHA984521", vessel: "Hapag Lloyd GLOBE", pol: "INMAA", pod: "CNSHA", eta: "20 Jul", paStatus: "Pending", paColor: "#D97706", paBg: "#FFFBEB" },
   ];
 
   return (
-    <div className="h-full overflow-y-auto p-3 space-y-2" style={{ background: "#F8FAFC", fontFamily: "Inter, sans-serif" }}>
-      <div className="rounded-md border-2 border-dashed p-4 flex flex-col items-center" style={{ borderColor: "#7C3AED", background: "#F5F3FF" }}>
-        <span className="material-symbols-outlined" style={{ fontSize: 28, color: "#7C3AED" }}>document_scanner</span>
-        <p style={{ fontSize: "10px", color: "#111827", fontWeight: 700, marginTop: "4px" }}>Drop BL / Invoice / Packing List</p>
-        <p style={{ fontSize: "8.5px", color: "#6B7280" }}>PDF, JPG, PNG · Up to 25 MB</p>
+    <div className="h-full overflow-y-auto" style={{ background: "#F9FAFB", fontFamily: "Inter, sans-serif" }}>
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <h1 className="font-semibold" style={{ color: "#111827", fontSize: "14px" }}>Pre Alert Generator</h1>
+          <p style={{ color: "#6B7280", fontSize: "10px", marginTop: "1px" }}>Auto-compose and send arrival notice to consignee</p>
+        </div>
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#1565C0", fontSize: "11px" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>add</span>
+          New Pre-Alert
+        </button>
       </div>
-      <div className="rounded-md p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <p style={{ fontSize: "9px", color: "#111827", fontWeight: 700 }}>Extracted Fields</p>
-            <p style={{ fontSize: "8px", color: "#059669" }}>BL_Shanghai.pdf · 98% confidence</p>
+
+      <div className="mx-4 rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <table className="w-full">
+          <thead style={{ background: "#F9FAFB" }}>
+            <tr>
+              {["Job No", "BL No", "Vessel / Flight", "POL", "POD", "ETA", "Pre-Alert Status", ""].map((h) => (
+                <th key={h} className="text-left py-2.5 px-3 font-semibold uppercase tracking-wider" style={{ color: "#6B7280", fontSize: "8px" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.job} style={{ borderTop: "1px solid #F3F4F6" }}>
+                <td className="py-2.5 px-3 font-mono font-bold" style={{ color: "#1565C0", fontSize: "9px" }}>{r.job}</td>
+                <td className="py-2.5 px-3 font-mono" style={{ color: "#374151", fontSize: "9px" }}>{r.bl}</td>
+                <td className="py-2.5 px-3 font-medium" style={{ color: "#111827", fontSize: "10px" }}>{r.vessel}</td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280", fontSize: "10px" }}>{r.pol}</td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280", fontSize: "10px" }}>{r.pod}</td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280", fontSize: "10px" }}>{r.eta}</td>
+                <td className="py-2.5 px-3">
+                  <span className="px-2 py-0.5 rounded-full font-bold" style={{ background: r.paBg, color: r.paColor, fontSize: "8px" }}>{r.paStatus}</span>
+                </td>
+                <td className="py-2.5 px-3">
+                  {r.paStatus === "Pending"
+                    ? <span className="px-2 py-1 rounded font-semibold text-white" style={{ background: "#1565C0", fontSize: "8px" }}>Send</span>
+                    : <span className="px-2 py-1 rounded font-semibold" style={{ background: "#F3F4F6", color: "#374151", fontSize: "8px" }}>Resend</span>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function PnlScreen() {
+  const jobs = [
+    { no: "NXL/26/0142", client: "Ravi Exports Pvt Ltd", mode: "SEA", route: "JNPT→DEHAM",  rev: 125000, cost: 88000,  gp: 37000,  gpPct: 29.6 },
+    { no: "NXL/26/0141", client: "HDFC Traders",         mode: "SEA", route: "INMAA→SGSIN", rev: 82000,  cost: 54000,  gp: 28000,  gpPct: 34.1 },
+    { no: "NXL/26/0140", client: "Global Impex",         mode: "AIR", route: "INBLR→OMKWI", rev: 48000,  cost: 52000,  gp: -4000,  gpPct: -8.3 },
+    { no: "NXL/26/0139", client: "Sunrise Logistics",    mode: "SEA", route: "JNPT→DXBPO",  rev: 67000,  cost: 41000,  gp: 26000,  gpPct: 38.8 },
+    { no: "NXL/26/0138", client: "Sakthi Cargo",         mode: "SEA", route: "INMAA→CNSHA", rev: 95000,  cost: 62000,  gp: 33000,  gpPct: 34.7 },
+  ];
+  const totals = jobs.reduce((acc, j) => ({ rev: acc.rev + j.rev, cost: acc.cost + j.cost, gp: acc.gp + j.gp }), { rev: 0, cost: 0, gp: 0 });
+  const avgGp = ((totals.gp / totals.rev) * 100).toFixed(1);
+
+  return (
+    <div className="h-full overflow-y-auto" style={{ background: "#F9FAFB", fontFamily: "Inter, sans-serif" }}>
+      <div className="flex items-center justify-between px-4 pt-4 pb-3">
+        <div>
+          <h1 className="font-semibold" style={{ color: "#111827", fontSize: "14px" }}>Job-wise P&amp;L</h1>
+          <p style={{ color: "#6B7280", fontSize: "10px", marginTop: "1px" }}>Per-shipment profitability · Last 30 days</p>
+        </div>
+        <button className="px-2.5 py-1.5 rounded-md text-white font-semibold" style={{ background: "#1565C0", fontSize: "11px" }}>Export</button>
+      </div>
+
+      {/* Summary KPIs */}
+      <div className="grid grid-cols-4 gap-2.5 mx-4 mb-3">
+        {[
+          { l: "Total Revenue", v: `₹${(totals.rev / 100000).toFixed(2)} L`, c: "#1565C0", bg: "#E3F2FD" },
+          { l: "Total Cost",    v: `₹${(totals.cost / 100000).toFixed(2)} L`, c: "#D97706", bg: "#FFFBEB" },
+          { l: "Gross Profit",  v: `₹${(totals.gp / 100000).toFixed(2)} L`,  c: "#059669", bg: "#ECFDF5" },
+          { l: "Avg GP %",      v: `${avgGp}%`,                              c: "#7C3AED", bg: "#F5F3FF" },
+        ].map((k) => (
+          <div key={k.l} className="rounded-xl border p-3" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+            <div style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500, marginBottom: "3px" }}>{k.l}</div>
+            <div className="font-bold" style={{ fontSize: "15px", color: k.c }}>{k.v}</div>
           </div>
-          <span className="px-1.5 py-0.5 rounded-full" style={{ background: "#ECFDF5", color: "#059669", fontSize: "7.5px", fontWeight: 700 }}>READY</span>
-        </div>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
-          {fields.map(([k, v]) => (
-            <div key={k}>
-              <p style={{ fontSize: "7.5px", color: "#9CA3AF", textTransform: "uppercase" }}>{k}</p>
-              <p style={{ fontSize: "9px", color: "#111827", fontWeight: 600 }}>{v}</p>
-            </div>
-          ))}
-        </div>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="mx-4 rounded-xl border overflow-hidden" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
+        <table className="w-full">
+          <thead style={{ background: "#F9FAFB" }}>
+            <tr>
+              {["Job No", "Client", "Mode", "Route", "Revenue", "Cost", "GP", "GP %"].map((h) => (
+                <th key={h} className="text-left py-2.5 px-3 font-semibold uppercase tracking-wider" style={{ color: "#6B7280", fontSize: "8px" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {jobs.map((j) => (
+              <tr key={j.no} style={{ borderTop: "1px solid #F3F4F6" }}>
+                <td className="py-2.5 px-3 font-mono font-bold" style={{ color: "#1565C0", fontSize: "9px" }}>{j.no}</td>
+                <td className="py-2.5 px-3 font-medium" style={{ color: "#111827", fontSize: "10px" }}>{j.client}</td>
+                <td className="py-2.5 px-3">
+                  <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.mode === "SEA" ? "#DBEAFE" : "#FEF3C7", color: j.mode === "SEA" ? "#1E40AF" : "#92400E", fontSize: "8px" }}>{j.mode}</span>
+                </td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280", fontSize: "10px" }}>{j.route}</td>
+                <td className="py-2.5 px-3" style={{ color: "#111827", fontSize: "10px" }}>₹{j.rev.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-3" style={{ color: "#6B7280", fontSize: "10px" }}>₹{j.cost.toLocaleString("en-IN")}</td>
+                <td className="py-2.5 px-3 font-bold" style={{ color: j.gp >= 0 ? "#059669" : "#DC2626", fontSize: "10px" }}>₹{Math.abs(j.gp).toLocaleString("en-IN")}{j.gp < 0 ? " (loss)" : ""}</td>
+                <td className="py-2.5 px-3 font-bold" style={{ color: j.gpPct >= 0 ? "#059669" : "#DC2626", fontSize: "10px" }}>{j.gpPct}%</td>
+              </tr>
+            ))}
+            {/* Totals row */}
+            <tr style={{ borderTop: "2px solid #E5E7EB", background: "#F9FAFB" }}>
+              <td className="py-2.5 px-3 font-bold" colSpan={4} style={{ color: "#111827", fontSize: "10px" }}>Total</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#111827", fontSize: "10px" }}>₹{totals.rev.toLocaleString("en-IN")}</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#111827", fontSize: "10px" }}>₹{totals.cost.toLocaleString("en-IN")}</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#059669", fontSize: "10px" }}>₹{totals.gp.toLocaleString("en-IN")}</td>
+              <td className="py-2.5 px-3 font-bold" style={{ color: "#059669", fontSize: "10px" }}>{avgGp}%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
 }
 
 const SCREENS: Record<string, React.ReactNode> = {
-  dashboard: <DashboardScreen />,
-  jobdetail: <JobDetailScreen />,
-  jobs:      <JobsListScreen />,
-  prealert:  <PreAlertScreen />,
-  invoicing: <InvoicingScreen />,
-  tracking:  <TrackingScreen />,
-  crm:       <CrmScreen />,
-  docai:     <DocAiScreen />,
+  dashboard:  <DashboardScreen />,
+  jobs:       <JobsScreen />,
+  invoices:   <InvoicesScreen />,
+  tracking:   <TrackingScreen />,
+  "pre-alert": <PreAlertScreen />,
+  pnl:        <PnlScreen />,
 };
 
 /* ─────────────────────────────────────────────────────────── */
@@ -399,7 +498,7 @@ const FAQS = [
   { q: "How does Nexlog connect to Accura accounting?", a: "When you raise a Nexlog invoice, Accura automatically records the income entry. When you log a vendor charge on a job, Accura creates the expense. Zero double-entry between operations and accounts." },
   { q: "Can clients track their shipments without logging in?", a: "Yes. Every job has a shareable tracking link — clients see stage updates, ETA, documents (if you've enabled sharing) without needing a Nexlog login." },
   { q: "What does the DocAI scanner actually do?", a: "Drop a BL PDF — it extracts BL no, vessel, ports, container, seal, weights, CBM, shipper, consignee, cargo description. 98% accurate on standard carrier BLs. One click pre-fills a new job." },
-  { q: "Is Nexlog billed separately or with NavkarOS suite?", a: "Both options. Nexlog standalone is ₹2,499/mo. Full Suite (Nexlog + Accura + EntryX + DockIQ + RunDesk) is ₹4,999/mo and saves 60%." },
+  { q: "What does the ₹1,799/mo plan include?", a: "Everything — unlimited jobs, all 12 modules, DocAI, vessel tracking, GST invoicing, pre-alerts, client portal, WhatsApp notifications, multi-branch support. No add-ons, no per-user fees. You can also bundle Nexlog + Accura together at ₹2,699/mo and save ₹599/mo." },
 ];
 
 /* ─────────────────────────────────────────────────────────── */
@@ -457,7 +556,7 @@ export default function NexlogDemoPage() {
               { val: "45 min → 30s", sub: "Pre-alert with DocAI" },
               { val: "1 click",      sub: "GST invoice from job" },
               { val: "13 stages",    sub: "Tracked per shipment" },
-              { val: "₹2,499/mo",    sub: "Pro — all 12 modules" },
+              { val: "₹1,799/mo",    sub: "All 12 modules included" },
             ].map((s) => (
               <div key={s.sub} className="rounded-2xl p-5 text-center" style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.08)" }}>
                 <p className="text-3xl font-black" style={{ color: "#60A5FA" }}>{s.val}</p>
@@ -476,6 +575,7 @@ export default function NexlogDemoPage() {
             <h2 className="text-3xl font-black text-white mt-2">See every module live</h2>
             <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Click any tab to preview the real interface with sample data.</p>
           </div>
+          {/* Module tab buttons */}
           <div className="flex flex-wrap gap-2 justify-center mb-6">
             {MODULES.map((m) => (
               <button
@@ -485,7 +585,7 @@ export default function NexlogDemoPage() {
                 style={{
                   background: activeModule === m.id ? "#1565C0" : "rgba(255,255,255,0.06)",
                   color: activeModule === m.id ? "#fff" : "rgba(255,255,255,0.5)",
-                  border: activeModule === m.id ? "none" : "0.5px solid rgba(255,255,255,0.08)",
+                  border: activeModule === m.id ? "1px solid #1565C0" : "1px solid rgba(255,255,255,0.08)",
                 }}
               >
                 <span className="material-symbols-outlined" style={{ fontSize: 14 }}>{m.icon}</span>
@@ -493,41 +593,59 @@ export default function NexlogDemoPage() {
               </button>
             ))}
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
-            <div className="flex items-center gap-3 px-4 py-3" style={{ background: "#060d18", borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
+
+          {/* Browser shell — light themed */}
+          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: "1px solid #E5E7EB" }}>
+            {/* Browser chrome bar */}
+            <div className="flex items-center gap-3 px-4 py-2.5" style={{ background: "#fff", borderBottom: "1px solid #E5E7EB" }}>
               <div className="flex gap-1.5">
-                {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} className="w-3 h-3 rounded-full" style={{ background: c, opacity: 0.8 }} />)}
+                {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} className="w-3 h-3 rounded-full" style={{ background: c, opacity: 0.85 }} />)}
               </div>
               <div className="flex-1 flex justify-center">
-                <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)" }}>
-                  <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
-                  app.navkaros.in/nexlog/{activeModule === "dashboard" ? "" : activeModule}
+                <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs" style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", color: "#6B7280", minWidth: "260px" }}>
+                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#22c55e" }} />
+                  app.navkaros.in/nexlog/{activeModule === "dashboard" ? "dashboard" : activeModule}
                 </div>
               </div>
             </div>
-            <div className="flex" style={{ height: "480px" }}>
-              <div className="flex flex-col gap-1 px-2 py-3" style={{ width: "48px", background: "#040810", borderRight: "0.5px solid rgba(255,255,255,0.06)" }}>
+
+            {/* App area: sidebar + content */}
+            <div className="flex" style={{ height: "520px", background: "#F9FAFB" }}>
+              {/* Mini sidebar */}
+              <div className="flex flex-col py-3 px-2 gap-0.5" style={{ width: "160px", background: "#F9FAFB", borderRight: "1px solid #E5E7EB", flexShrink: 0 }}>
+                {/* Brand */}
+                <div className="flex items-center gap-2 px-2 pb-3 mb-1" style={{ borderBottom: "1px solid #E5E7EB" }}>
+                  <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: "#1565C0" }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#fff", fontVariationSettings: "'FILL' 1" }}>navigation</span>
+                  </div>
+                  <span className="font-bold" style={{ fontSize: "12px", color: "#111827" }}>Nexlog</span>
+                </div>
                 {MODULES.map((m) => (
                   <button
                     key={m.id}
                     onClick={() => setActiveModule(m.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-150"
-                    style={{ background: activeModule === m.id ? "rgba(21,101,192,0.2)" : "transparent" }}
-                    title={m.label}
+                    className="flex items-center gap-2.5 px-2 py-2 rounded-lg w-full text-left transition-all duration-150"
+                    style={{
+                      background: activeModule === m.id ? "#E3F2FD" : "transparent",
+                      color: activeModule === m.id ? "#1565C0" : "#374151",
+                    }}
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: 16, color: activeModule === m.id ? "#60A5FA" : "rgba(255,255,255,0.25)" }}>{m.icon}</span>
+                    <span className="material-symbols-outlined flex-shrink-0" style={{ fontSize: 15, color: activeModule === m.id ? "#1565C0" : "#9CA3AF", fontVariationSettings: activeModule === m.id ? "'FILL' 1" : "'FILL' 0" }}>{m.icon}</span>
+                    <span className="font-medium" style={{ fontSize: "11px" }}>{m.label}</span>
                   </button>
                 ))}
               </div>
-              <div className="flex-1 overflow-hidden">
+
+              {/* Content area */}
+              <div className="flex-1 overflow-hidden" style={{ background: "#F9FAFB" }}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeModule}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
-                    className="h-full"
+                    transition={{ duration: 0.18 }}
+                    className="h-full overflow-y-auto"
                   >
                     {SCREENS[activeModule]}
                   </motion.div>
@@ -604,48 +722,33 @@ export default function NexlogDemoPage() {
 
       {/* PRICING */}
       <section className="py-20 px-6" style={{ background: "#f9f9f9" }}>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Pricing</span>
-            <h2 className="text-3xl font-black text-gray-900 mt-2">Honest pricing for Indian freight</h2>
-            <p className="text-sm text-gray-500 mt-2">Every module included. No hidden add-ons. Start free for 14 days.</p>
+            <h2 className="text-3xl font-black text-gray-900 mt-2">One plan. Everything included.</h2>
+            <p className="text-sm text-gray-500 mt-2">No tiers, no hidden add-ons. Every module from day one.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              { name: "Starter", price: "₹1,499", cycle: "/mo", highlight: false, badge: null,
-                features: ["Up to 25 jobs/month","1 user","Dashboard + Jobs","CRM (Leads/Enquiries)","Documents","Basic Tracking","14-day free trial"] },
-              { name: "Pro", price: "₹2,499", cycle: "/mo", highlight: true, badge: "Most Popular",
-                features: ["Unlimited jobs","5 users","All 12 modules","DocAI + Anomaly detection","Auto Pre-Alert + DSR","Per-job P&L","GST Invoicing","Priority support","14-day free trial"] },
-              { name: "Full Suite", price: "₹4,999", cycle: "/mo", highlight: false, badge: "Save 60%",
-                features: ["Nexlog Pro","Accura accounting","EntryX customs","DockIQ CFS","RunDesk transport","Unified dashboard","Dedicated CSM"] },
-            ].map((p) => (
-              <div key={p.name} className={`rounded-2xl border p-6 flex flex-col relative ${p.highlight ? "border-[#1565C0] border-2 shadow-xl" : "border-gray-100 bg-white"}`}
-                style={{ background: p.highlight ? "#0A1628" : "#fff" }}>
-                {p.badge && (
-                  <div className="absolute -top-px right-5 px-3 py-1 rounded-b-xl" style={{ background: p.highlight ? "#1565C0" : "#0A1628" }}>
-                    <span className="text-xs font-black uppercase tracking-wider" style={{ color: p.highlight ? "#fff" : "#60A5FA" }}>{p.badge}</span>
-                  </div>
-                )}
-                <p className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: p.highlight ? "rgba(96,165,250,0.7)" : "#9ca3af" }}>{p.name}</p>
-                <div className="flex items-end gap-1 mb-5">
-                  <span className="text-4xl font-black" style={{ color: p.highlight ? "#60A5FA" : "#0A1628" }}>{p.price}</span>
-                  <span className="text-sm mb-1.5" style={{ color: p.highlight ? "rgba(255,255,255,0.4)" : "#9ca3af" }}>{p.cycle}</span>
-                </div>
-                <ul className="flex flex-col gap-2.5 flex-1 mb-6">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm">
-                      <Check className="h-4 w-4 mt-0.5 flex-shrink-0" style={{ color: p.highlight ? "#60A5FA" : "#1565C0" }} />
-                      <span style={{ color: p.highlight ? "rgba(255,255,255,0.75)" : "#374151" }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href={p.name === "Full Suite" ? "/pricing" : "/pricing"}
-                  className="w-full py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-center transition-all duration-200 block"
-                  style={{ background: p.highlight ? "#1565C0" : "#0A1628", color: "#fff" }}>
-                  View Pricing →
-                </Link>
+          <div className="rounded-2xl border-2 p-8 flex flex-col md:flex-row gap-8 items-center" style={{ background: "#0A1628", borderColor: "#1565C0" }}>
+            <div className="flex-1">
+              <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(96,165,250,0.7)" }}>Nexlog</p>
+              <div className="flex items-end gap-1 mb-1">
+                <span className="text-5xl font-black" style={{ color: "#60A5FA" }}>₹1,799</span>
+                <span className="text-base mb-2" style={{ color: "rgba(255,255,255,0.4)" }}>/mo</span>
               </div>
-            ))}
+              <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.4)" }}>14-day free trial · No credit card required</p>
+              <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-200"
+                style={{ background: "#1565C0", color: "#fff" }}>
+                Start Free Trial →
+              </Link>
+            </div>
+            <ul className="flex flex-col gap-3 flex-1">
+              {["Unlimited jobs & shipments","All 12 modules included","AI document extraction (DocAI)","Live vessel & flight tracking","GST invoicing in 3 clicks","Pre-alert & DSR automation","Multi-branch support","Client portal with shipment visibility","WhatsApp notifications","Tally XML export"].map((f) => (
+                <li key={f} className="flex items-center gap-2.5 text-sm">
+                  <Check className="h-4 w-4 flex-shrink-0" style={{ color: "#60A5FA" }} />
+                  <span style={{ color: "rgba(255,255,255,0.75)" }}>{f}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -685,7 +788,7 @@ export default function NexlogDemoPage() {
             {ctaLabel} <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-            Nexlog Pro · ₹2,499/mo · 12 modules · 14-day free trial
+            Nexlog · ₹1,799/mo · All 12 modules included · 14-day free trial
           </p>
         </div>
       </section>
