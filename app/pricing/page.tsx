@@ -221,7 +221,7 @@ function ProductCard({ product, cycle, delay = 0 }: { product: Product; cycle: B
       {product.isMain && (
         <div className="absolute -top-px right-5 bg-[#D4AF37] px-3 py-1 rounded-b-xl flex items-center gap-1.5">
           <Star className="h-3 w-3 fill-white text-white" />
-          <span className="text-white text-xs font-bold uppercase tracking-wider">Recommended</span>
+          <span className="text-white text-xs font-bold uppercase tracking-wider">Start Here</span>
         </div>
       )}
 

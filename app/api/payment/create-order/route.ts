@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   // Check individual product
   const productData = PRICING[product as keyof typeof PRICING];
   if (productData) {
-    baseMonthly = plan === "pro" ? productData.pro : productData.starter;
+    baseMonthly = productData.price;
   } else {
     // Check bundle
     const bundleData = BUNDLES[product as keyof typeof BUNDLES];

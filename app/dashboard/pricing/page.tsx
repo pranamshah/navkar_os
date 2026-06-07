@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { PRICING, BUNDLES, getMonthlyEquiv } from "@/lib/pricing";
-import { MODULE_LIST } from "@/lib/modules";
 import RazorpayCheckout from "@/components/payment/RazorpayCheckout";
 
 type Cycle = "monthly" | "quarterly" | "yearly";
@@ -15,7 +14,7 @@ export default function PricingPage() {
   const [tab, setTab] = useState<"products" | "bundles">("products");
 
   const cycleLabel = { monthly: "/mo", quarterly: "/mo equiv", yearly: "/mo equiv" };
-  const cycleSave = { monthly: "", quarterly: "Save 10%", yearly: "Save 20%" };
+  const cycleSave  = { monthly: "", quarterly: "Save 10%", yearly: "Save 20%" };
 
   return (
     <div className="p-6 lg:p-10 max-w-6xl">
@@ -33,10 +32,11 @@ export default function PricingPage() {
             letterSpacing: "-0.02em",
           }}
         >
-          Choose your plan
+          Simple, transparent pricing
         </h1>
         <p className="mt-2 text-sm" style={{ color: "#7e7576" }}>
-          14-day free trial on every plan. No credit card required to start.
+          One plan, all features. ₹1,799/month per product — no tiers, no limits.
+          14-day free trial, no credit card required.
         </p>
       </div>
 
@@ -89,9 +89,7 @@ export default function PricingPage() {
       {tab === "products" && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-14">
           {PRODUCTS.map((product) => {
-            const starterMonthly = getMonthlyEquiv(product.starter, cycle);
-            const proMonthly = getMonthlyEquiv(product.pro, cycle);
-
+            const monthly = getMonthlyEquiv(product.price, cycle);
             return (
               <div
                 key={product.id}
@@ -119,98 +117,52 @@ export default function PricingPage() {
                   </div>
                 </div>
 
-                <div className="p-5 flex-1 flex flex-col gap-5">
-                  {/* Starter tier */}
-                  <div className="rounded-lg border p-4" style={{ borderColor: "rgba(0,0,0,0.07)" }}>
-                    <div className="flex items-end justify-between mb-3">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "#7e7576" }}>Starter</p>
-                        <div className="flex items-end gap-1">
-                          <span className="font-black text-xl" style={{ color: "#1a1c1c" }}>
-                            ₹{starterMonthly.toLocaleString()}
-                          </span>
-                          <span className="text-xs mb-0.5" style={{ color: "#7e7576" }}>{cycleLabel[cycle]}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <ul className="flex flex-col gap-1.5 mb-4">
-                      {product.starterFeatures.map((f) => (
-                        <li key={f} className="flex items-start gap-1.5">
-                          <Check size={11} className="mt-0.5 flex-shrink-0" style={{ color: "#16A34A" }} />
-                          <span className="text-xs" style={{ color: "#4c4546" }}>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <RazorpayCheckout
-                      product={product.id}
-                      plan="starter"
-                      billingCycle={cycle}
-                      productName={`${product.name} Starter`}
-                      amount={product.starter}
-                      displayAmount={getMonthlyEquiv(product.starter, cycle)}
-                    >
-                      {(handleCheckout, loading) => (
-                        <button
-                          onClick={handleCheckout}
-                          disabled={loading}
-                          className="w-full py-2.5 text-xs font-semibold uppercase tracking-widest transition-all"
-                          style={{ background: loading ? "#ccc" : "#f3f4f6", color: "#1a1c1c" }}
-                        >
-                          {loading ? "Processing…" : "Get Starter"}
-                        </button>
-                      )}
-                    </RazorpayCheckout>
+                <div className="p-5 flex-1 flex flex-col">
+                  {/* Price */}
+                  <div className="flex items-end gap-1 mb-1">
+                    <span className="font-black text-3xl" style={{ color: "#1a1c1c" }}>
+                      ₹{monthly.toLocaleString()}
+                    </span>
+                    <span className="text-xs mb-1" style={{ color: "#7e7576" }}>{cycleLabel[cycle]}</span>
                   </div>
+                  <p className="text-xs mb-5" style={{ color: "#9e9596" }}>
+                    {cycle === "monthly" && "billed monthly"}
+                    {cycle === "quarterly" && `₹${(Math.round(product.price * 0.9) * 3).toLocaleString("en-IN")} billed quarterly`}
+                    {cycle === "yearly" && `₹${(Math.round(product.price * 0.8) * 12).toLocaleString("en-IN")} billed yearly`}
+                  </p>
 
-                  {/* Pro tier */}
-                  <div
-                    className="rounded-lg border p-4"
-                    style={{ background: "#1a1c1c", borderColor: "rgba(212,175,55,0.2)" }}
+                  {/* Features */}
+                  <ul className="flex flex-col gap-2 flex-1 mb-6">
+                    {product.features.map((f) => (
+                      <li key={f} className="flex items-start gap-1.5">
+                        <Check size={11} className="mt-0.5 flex-shrink-0" style={{ color: product.color }} />
+                        <span className="text-xs" style={{ color: "#4c4546" }}>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <RazorpayCheckout
+                    product={product.id}
+                    plan="pro"
+                    billingCycle={cycle}
+                    productName={product.name}
+                    amount={product.price}
+                    displayAmount={monthly}
                   >
-                    <div className="flex items-end justify-between mb-3">
-                      <div>
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(212,175,55,0.7)" }}>Pro</p>
-                          <span className="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full" style={{ background: "#D4AF37", color: "#1a1c1c" }}>
-                            Recommended
-                          </span>
-                        </div>
-                        <div className="flex items-end gap-1">
-                          <span className="font-black text-xl" style={{ color: "#D4AF37" }}>
-                            ₹{proMonthly.toLocaleString()}
-                          </span>
-                          <span className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{cycleLabel[cycle]}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <ul className="flex flex-col gap-1.5 mb-4">
-                      {product.proFeatures.map((f) => (
-                        <li key={f} className="flex items-start gap-1.5">
-                          <Check size={11} className="mt-0.5 flex-shrink-0" style={{ color: "#D4AF37" }} />
-                          <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <RazorpayCheckout
-                      product={product.id}
-                      plan="pro"
-                      billingCycle={cycle}
-                      productName={`${product.name} Pro`}
-                      amount={product.pro}
-                      displayAmount={getMonthlyEquiv(product.pro, cycle)}
-                    >
-                      {(handleCheckout, loading) => (
-                        <button
-                          onClick={handleCheckout}
-                          disabled={loading}
-                          className="w-full py-2.5 text-xs font-semibold uppercase tracking-widest transition-all"
-                          style={{ background: loading ? "#ccc" : "#D4AF37", color: "#1a1c1c" }}
-                        >
-                          {loading ? "Processing…" : `Get ${product.name} Pro`}
-                        </button>
-                      )}
-                    </RazorpayCheckout>
-                  </div>
+                    {(handleCheckout, loading) => (
+                      <button
+                        onClick={handleCheckout}
+                        disabled={loading}
+                        className="w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all rounded-lg"
+                        style={{
+                          background: loading ? "#ccc" : "#1a1c1c",
+                          color: "#D4AF37",
+                        }}
+                      >
+                        {loading ? "Processing…" : `Get ${product.name}`}
+                      </button>
+                    )}
+                  </RazorpayCheckout>
                 </div>
               </div>
             );
@@ -224,6 +176,9 @@ export default function PricingPage() {
           {Object.values(BUNDLES).map((bundle) => {
             const monthly = getMonthlyEquiv(bundle.monthly, cycle);
             const isFullSuite = bundle.id === "full_suite";
+            // savings vs buying separately at 1799 each
+            const separateTotal = bundle.includes.length * 1799;
+            const savingsAmt = separateTotal - bundle.monthly;
 
             return (
               <div
@@ -256,7 +211,7 @@ export default function PricingPage() {
                 </div>
 
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="flex items-end gap-1 mb-4">
+                  <div className="flex items-end gap-1 mb-1">
                     <span className="font-black text-3xl" style={{ color: isFullSuite ? "#D4AF37" : "#1a1c1c" }}>
                       ₹{monthly.toLocaleString()}
                     </span>
@@ -264,6 +219,9 @@ export default function PricingPage() {
                       {cycleLabel[cycle]}
                     </span>
                   </div>
+                  <p className="text-xs font-semibold mb-5" style={{ color: "#22c55e" }}>
+                    Save ₹{savingsAmt.toLocaleString("en-IN")}/mo vs buying separately
+                  </p>
 
                   <ul className="flex flex-col gap-2 mb-6 flex-1">
                     {bundle.includes.map((productId) => {
@@ -294,10 +252,10 @@ export default function PricingPage() {
                       <button
                         onClick={handleCheckout}
                         disabled={loading}
-                        className="w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all"
+                        className="w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all rounded-lg"
                         style={{
                           background: loading ? "#ccc" : isFullSuite ? "#D4AF37" : "#1a1c1c",
-                          color: isFullSuite ? "#1a1c1c" : "#fff",
+                          color: isFullSuite ? "#1a1c1c" : "#D4AF37",
                         }}
                       >
                         {loading ? "Processing…" : `Get ${bundle.name}`}
@@ -311,55 +269,31 @@ export default function PricingPage() {
         </div>
       )}
 
-      {/* Module matrix */}
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#7e7576" }}>
-          Module Availability
+      {/* Feature list — all included */}
+      <div className="rounded-xl border p-6" style={{ borderColor: "rgba(0,0,0,0.07)", background: "#fafafa" }}>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#7e7576" }}>
+          Everything included in every plan
         </p>
-        <div style={{ overflowX: "auto" }}>
-          <table className="w-full text-xs" style={{ borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ borderBottom: "0.5px solid rgba(0,0,0,0.1)" }}>
-                <th className="text-left py-3 font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
-                  Module
-                </th>
-                <th className="py-3 font-semibold uppercase tracking-widest text-center" style={{ color: "#7e7576" }}>
-                  Starter
-                </th>
-                <th className="py-3 font-semibold uppercase tracking-widest text-center" style={{ color: "#7e7576" }}>
-                  Pro
-                </th>
-                <th className="py-3 font-semibold uppercase tracking-widest text-center" style={{ color: "#7e7576" }}>
-                  Full Suite
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {MODULE_LIST.map((mod, i) => (
-                <tr
-                  key={mod.id}
-                  style={{
-                    borderBottom: "0.5px solid rgba(0,0,0,0.05)",
-                    background: i % 2 === 0 ? "#fafafa" : "#fff",
-                  }}
-                >
-                  <td className="py-3 pl-2">
-                    <p className="font-semibold" style={{ color: "#1a1c1c" }}>{mod.name}</p>
-                    <p style={{ color: "#7e7576", fontSize: "10px" }}>{mod.tagline}</p>
-                  </td>
-                  {(["starter", "growth", "pro"] as const).map((tier) => (
-                    <td key={tier} className="text-center py-3">
-                      {(mod.plans as readonly string[]).includes(tier) ? (
-                        <Check size={14} className="inline" style={{ color: "#16A34A" }} />
-                      ) : (
-                        <span style={{ color: "#ddd" }}>—</span>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {[
+            "14-day free trial",
+            "No credit card to start",
+            "Unlimited users",
+            "GST-compliant invoicing",
+            "ICEGATE integration",
+            "Tally XML export",
+            "WhatsApp notifications",
+            "Role-based permissions",
+            "Data encrypted at rest",
+            "Priority email support",
+            "Mobile apps included",
+            "Regular updates, free",
+          ].map((f) => (
+            <div key={f} className="flex items-center gap-2">
+              <Check size={12} style={{ color: "#16A34A", flexShrink: 0 }} />
+              <span className="text-xs" style={{ color: "#4c4546" }}>{f}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
