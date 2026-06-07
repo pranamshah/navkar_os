@@ -1,13 +1,13 @@
 import Link from "next/link";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 export default function ConfirmPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-8" style={{ background: "#f9f9f9" }}>
       <div className="max-w-md w-full text-center">
-        <Link href="/" className="inline-flex items-center gap-2 mb-12">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#D4AF37" }}>N</div>
-          <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1c" }}>NavkarOS</span>
-        </Link>
+        <div className="inline-flex mb-12">
+          <LogoBrand height={28} href="/" />
+        </div>
 
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-8" style={{ background: "rgba(212,175,55,0.12)" }}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

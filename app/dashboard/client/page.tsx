@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 /* ── Types ─────────────────────────────────────────── */
 interface Subscription {
@@ -113,18 +114,8 @@ function ClientSidebar({
       style={{ background: "#1a1c1c", borderColor: "rgba(255,255,255,0.05)" }}
     >
       {/* Logo — clicking goes back to homepage */}
-      <div className="px-6 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <Link href="/" className="flex items-center gap-2.5">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
-            style={{ background: "#D4AF37", color: "#1a1c1c" }}
-          >
-            N
-          </div>
-          <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#ffffff" }}>
-            NavkarOS
-          </span>
-        </Link>
+      <div className="px-4 py-4 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <LogoBrand height={26} onDark href="/" />
       </div>
 
       {/* User card */}

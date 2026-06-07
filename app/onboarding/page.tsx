@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Upload, X, Lock } from "lucide-react";
 import Link from "next/link";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 const CITIES = [
   "Chennai", "Mumbai", "JNPT / Nhava Sheva", "Mundra", "Kolkata",
@@ -255,10 +256,9 @@ export default function OnboardingPage() {
             backgroundSize: "50px 50px",
           }}
         />
-        <Link href="/" className="relative z-10 flex items-center gap-3 mb-16">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#D4AF37", color: "#1a1c1c" }}>N</div>
-          <span className="font-black text-sm uppercase tracking-widest text-white">NavkarOS</span>
-        </Link>
+        <div className="relative z-10 mb-16">
+          <LogoBrand height={28} onDark href="/" />
+        </div>
 
         <div className="relative z-10 mb-8">
           <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "rgba(255,255,255,0.4)" }}>Account Setup</p>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 const navSections = [
   {
@@ -148,21 +149,14 @@ export default function NexlogLayout({ children }: { children: React.ReactNode }
         className="flex flex-col h-full overflow-y-auto flex-shrink-0 w-56"
         style={{ background: "#0A1628", minWidth: 224 }}
       >
-        <div className="flex items-center gap-2 px-4 py-4 border-b border-white/10">
-          <span className="material-symbols-outlined text-[#1565C0]" style={{ fontSize: 22, fontVariationSettings: "'FILL' 1" }}>
-            navigation
-          </span>
-          <span className="text-white font-bold text-lg tracking-tight">Nexlog</span>
-        </div>
-
-        <div className="px-3 pt-3 pb-1">
-          <Link
-            href="/dashboard/client"
-            className="flex items-center gap-1 text-xs text-white/40 hover:text-white/70 transition-colors"
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: 14 }}>arrow_back</span>
-            NavkarOS
-          </Link>
+        <div className="px-4 py-3 border-b border-white/10">
+          <LogoBrand height={24} onDark href="/dashboard/client" />
+          <div className="flex items-center gap-1.5 mt-2">
+            <span className="material-symbols-outlined text-[#1565C0]" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>
+              navigation
+            </span>
+            <span className="text-white/60 text-xs font-semibold tracking-wide">Nexlog</span>
+          </div>
         </div>
 
         <nav className="flex-1 px-2 pb-4 mt-1">

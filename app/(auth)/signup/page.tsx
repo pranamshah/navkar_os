@@ -6,6 +6,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Check } from "lucide-react";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 const BENEFITS = [
   "Free 14-day trial on all products",
@@ -122,10 +123,9 @@ export default function SignupPage() {
           }}
         />
 
-        <Link href="/" className="relative z-10 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#D4AF37", color: "#1a1c1c" }}>N</div>
-          <span className="font-black text-sm uppercase tracking-widest text-white">NavkarOS</span>
-        </Link>
+        <div className="relative z-10">
+          <LogoBrand height={28} onDark href="/" />
+        </div>
 
         <div className="relative z-10">
           <h2
@@ -164,10 +164,9 @@ export default function SignupPage() {
       <div className="flex flex-col justify-center px-8 sm:px-16 lg:px-20 py-12 overflow-hidden" style={{ background: "#fafafa" }}>
         <div className="max-w-sm w-full mx-auto">
 
-          <Link href="/" className="lg:hidden flex items-center gap-2 mb-12">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#D4AF37" }}>N</div>
-            <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1c" }}>NavkarOS</span>
-          </Link>
+          <div className="lg:hidden mb-12">
+            <LogoBrand height={28} href="/" />
+          </div>
 
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>Get started</p>
           <h1

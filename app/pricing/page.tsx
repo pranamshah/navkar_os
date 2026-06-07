@@ -46,7 +46,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
   forwarder: [
     {
       id: "nexlog", name: "Nexlog", tagline: "Freight Forwarding",
-      icon: "navigation", color: "#1565C0", monthly: 2999, isMain: true,
+      icon: "navigation", color: "#1565C0", monthly: 1799, isMain: true,
       features: [
         "Unlimited job management", "BL & MBL handling",
         "Live vessel tracking", "GST invoicing in 3 clicks",
@@ -55,7 +55,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
     },
     {
       id: "accura", name: "Accura", tagline: "Freight Accounting",
-      icon: "account_balance", color: "#1A237E", monthly: 2299, isMain: false,
+      icon: "account_balance", color: "#1A237E", monthly: 1799, isMain: false,
       features: [
         "Auto-posts from every module", "GSTR-1 & GSTR-3B ready",
         "P&L in 3 seconds", "Tally sync", "Outstanding tracker",
@@ -65,7 +65,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
   cha: [
     {
       id: "entryx", name: "EntryX", tagline: "Customs Clearance",
-      icon: "gavel", color: "#5B21B6", monthly: 2999, isMain: true,
+      icon: "gavel", color: "#5B21B6", monthly: 1799, isMain: true,
       features: [
         "Unlimited Bill of Entry", "AI BE preparation",
         "ICEGATE auto-sync", "Live CBIC tariff",
@@ -74,7 +74,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
     },
     {
       id: "accura", name: "Accura", tagline: "Freight Accounting",
-      icon: "account_balance", color: "#1A237E", monthly: 2299, isMain: false,
+      icon: "account_balance", color: "#1A237E", monthly: 1799, isMain: false,
       features: [
         "Auto-posts from every module", "GSTR-1 & GSTR-3B ready",
         "P&L in 3 seconds", "Tally sync", "Outstanding tracker",
@@ -84,7 +84,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
   cfs: [
     {
       id: "dockiq", name: "DockIQ", tagline: "CFS & Warehouse",
-      icon: "warehouse", color: "#0D7057", monthly: 3999, isMain: true,
+      icon: "warehouse", color: "#0D7057", monthly: 1799, isMain: true,
       features: [
         "Unlimited container handling", "Auto storage slab billing",
         "Yard 3D view", "Mobile gate app",
@@ -93,7 +93,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
     },
     {
       id: "accura", name: "Accura", tagline: "Freight Accounting",
-      icon: "account_balance", color: "#1A237E", monthly: 2299, isMain: false,
+      icon: "account_balance", color: "#1A237E", monthly: 1799, isMain: false,
       features: [
         "Auto-posts from every module", "GSTR-1 & GSTR-3B ready",
         "P&L in 3 seconds", "Tally sync", "Outstanding tracker",
@@ -103,7 +103,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
   transporter: [
     {
       id: "rundesk", name: "RunDesk", tagline: "Transport & Fleet",
-      icon: "local_shipping", color: "#92400E", monthly: 2299, isMain: true,
+      icon: "local_shipping", color: "#92400E", monthly: 1799, isMain: true,
       features: [
         "Unlimited LRs & builty", "Trip management",
         "GPS via driver app", "Auto e-way bill",
@@ -112,7 +112,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
     },
     {
       id: "accura", name: "Accura", tagline: "Freight Accounting",
-      icon: "account_balance", color: "#1A237E", monthly: 2299, isMain: false,
+      icon: "account_balance", color: "#1A237E", monthly: 1799, isMain: false,
       features: [
         "Auto-posts from every module", "GSTR-1 & GSTR-3B ready",
         "P&L in 3 seconds", "Tally sync", "Outstanding tracker",
@@ -122,7 +122,7 @@ const PRODUCTS_BY_ROLE: Record<RoleId, Product[]> = {
   trader: [
     {
       id: "tradepilot", name: "TradePilot", tagline: "Trade Intelligence",
-      icon: "public", color: "#004D40", monthly: 1499, isMain: true,
+      icon: "public", color: "#004D40", monthly: 1799, isMain: true,
       features: [
         "AI landed cost calculator", "Auto FTA eligibility",
         "RoDTEP tracker", "CEPA compliance",
@@ -147,10 +147,10 @@ interface Bundle {
 }
 
 const BUNDLE_BY_ROLE: Partial<Record<RoleId, Bundle>> = {
-  forwarder:   { name: "Forwarder Bundle", subtitle: "Nexlog + Accura",      icon: "navigation",    color: "#1565C0", monthly: 4499, products: ["Nexlog", "Accura"],       saving: "Save ₹800/mo vs separate" },
-  cha:         { name: "CHA Bundle",        subtitle: "EntryX + Accura",      icon: "gavel",         color: "#5B21B6", monthly: 4499, products: ["EntryX", "Accura"],       saving: "Save ₹800/mo vs separate" },
-  cfs:         { name: "CFS Bundle",        subtitle: "DockIQ + Accura",      icon: "warehouse",     color: "#0D7057", monthly: 5499, products: ["DockIQ", "Accura"],       saving: "Save ₹799/mo vs separate" },
-  transporter: { name: "Transporter Bundle",subtitle: "RunDesk + Accura",     icon: "local_shipping", color: "#92400E", monthly: 3799, products: ["RunDesk", "Accura"],     saving: "Save ₹799/mo vs separate" },
+  forwarder:   { name: "Forwarder Bundle", subtitle: "Nexlog + Accura",      icon: "navigation",    color: "#1565C0", monthly: 2999, products: ["Nexlog", "Accura"],       saving: "Save ₹599/mo vs separate" },
+  cha:         { name: "CHA Bundle",        subtitle: "EntryX + Accura",      icon: "gavel",         color: "#5B21B6", monthly: 2999, products: ["EntryX", "Accura"],       saving: "Save ₹599/mo vs separate" },
+  cfs:         { name: "CFS Bundle",        subtitle: "DockIQ + Accura",      icon: "warehouse",     color: "#0D7057", monthly: 2999, products: ["DockIQ", "Accura"],       saving: "Save ₹599/mo vs separate" },
+  transporter: { name: "Transporter Bundle",subtitle: "RunDesk + Accura",     icon: "local_shipping", color: "#92400E", monthly: 2999, products: ["RunDesk", "Accura"],     saving: "Save ₹599/mo vs separate" },
 };
 
 const ALL_BUNDLES: Bundle[] = [
@@ -159,15 +159,15 @@ const ALL_BUNDLES: Bundle[] = [
     subtitle: "All 6 products — complete logistics OS",
     icon: "workspaces",
     color: "#D4AF37",
-    monthly: 12999,
+    monthly: 7999,
     products: ["Nexlog", "EntryX", "DockIQ", "RunDesk", "Accura", "TradePilot"],
-    saving: "Save ₹2,096/mo vs individual",
+    saving: "Save ₹2,795/mo vs individual",
     isHighlight: true,
   },
-  { name: "Forwarder Bundle", subtitle: "Nexlog + Accura",  icon: "navigation",    color: "#1565C0", monthly: 4499,  products: ["Nexlog", "Accura"],       saving: "Save ₹800/mo" },
-  { name: "CHA Bundle",       subtitle: "EntryX + Accura",  icon: "gavel",         color: "#5B21B6", monthly: 4499,  products: ["EntryX", "Accura"],       saving: "Save ₹800/mo" },
-  { name: "CFS Bundle",       subtitle: "DockIQ + Accura",  icon: "warehouse",     color: "#0D7057", monthly: 5499,  products: ["DockIQ", "Accura"],       saving: "Save ₹799/mo" },
-  { name: "Transporter Bundle",subtitle: "RunDesk + Accura",icon: "local_shipping", color: "#92400E", monthly: 3799, products: ["RunDesk", "Accura"],      saving: "Save ₹799/mo" },
+  { name: "Forwarder Bundle", subtitle: "Nexlog + Accura",  icon: "navigation",    color: "#1565C0", monthly: 2999, products: ["Nexlog", "Accura"],       saving: "Save ₹599/mo" },
+  { name: "CHA Bundle",       subtitle: "EntryX + Accura",  icon: "gavel",         color: "#5B21B6", monthly: 2999, products: ["EntryX", "Accura"],       saving: "Save ₹599/mo" },
+  { name: "CFS Bundle",       subtitle: "DockIQ + Accura",  icon: "warehouse",     color: "#0D7057", monthly: 2999, products: ["DockIQ", "Accura"],       saving: "Save ₹599/mo" },
+  { name: "Transporter Bundle",subtitle: "RunDesk + Accura",icon: "local_shipping", color: "#92400E", monthly: 2999, products: ["RunDesk", "Accura"],      saving: "Save ₹599/mo" },
 ];
 
 const FAQS = [

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 const NAV = [
   { href: "/dashboard/admin", label: "Overview", icon: "dashboard" },
@@ -25,18 +26,8 @@ function AdminSidebar() {
       style={{ background: "#1a1c1c", borderColor: "rgba(255,255,255,0.06)" }}
     >
       {/* Logo */}
-      <div className="px-6 py-5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        <Link href="/" className="flex items-center gap-2.5">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
-            style={{ background: "#D4AF37", color: "#1a1c1c" }}
-          >
-            N
-          </div>
-          <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#ffffff" }}>
-            NavkarOS
-          </span>
-        </Link>
+      <div className="px-4 py-4 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <LogoBrand height={26} onDark href="/" />
       </div>
 
       {/* Admin badge */}

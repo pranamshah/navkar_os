@@ -2,37 +2,59 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
-  href?     : string;
-  className?: string;
-  /** Height of the wordmark in px */
-  height?   : number;
+  href?      : string;
+  className? : string;
+  /** Height of the logo in px (width scales automatically) */
+  height?    : number;
+  /**
+   * Set to true when the logo sits on a dark/coloured background.
+   * This wraps the image in a white rounded pill so the white logo
+   * background blends cleanly with the container instead of the page.
+   */
+  onDark?    : boolean;
 }
 
 /**
- * Official logo mark + wordmark.
- * Use only on LIGHT backgrounds (#f9f9f9 / white) — both source images
- * have white backgrounds that blend naturally with light pages.
+ * Official NavkarOS logo — Gemini-generated combined mark + wordmark.
+ * White background; use `onDark` prop when placing on dark sidebars/headers.
  */
-export default function LogoBrand({ href = "/", className = "", height = 44 }: Props) {
-  const markPx = Math.round(height * 2.1);
+export default function LogoBrand({
+  href      = "/",
+  className = "",
+  height    = 36,
+  onDark    = false,
+}: Props) {
+  // natural aspect ratio of the image is ~600×195 ≈ 3.08 : 1
+  const width = Math.round(height * 3.08);
+
+  const img = (
+    <Image
+      src="/navkaros-logo.png"
+      alt="NavkarOS"
+      width={width}
+      height={height}
+      style={{ width, height, objectFit: "contain" }}
+      priority
+    />
+  );
+
   return (
-    <Link href={href} className={`flex items-center gap-2.5 ${className}`}>
-      <Image
-        src="/logo-mark.jpg"
-        alt=""
-        width={markPx}
-        height={markPx}
-        style={{ width: markPx, height: markPx, objectFit: "contain", borderRadius: 3 }}
-        priority
-      />
-      <Image
-        src="/brandname.png"
-        alt="NavkarOS"
-        width={130}
-        height={height}
-        style={{ height: height, width: "auto", objectFit: "contain" }}
-        priority
-      />
+    <Link href={href} className={`inline-flex items-center ${className}`}>
+      {onDark ? (
+        <span
+          style={{
+            display       : "inline-flex",
+            alignItems    : "center",
+            background    : "#ffffff",
+            borderRadius  : 6,
+            padding       : "3px 8px",
+          }}
+        >
+          {img}
+        </span>
+      ) : (
+        img
+      )}
     </Link>
   );
 }

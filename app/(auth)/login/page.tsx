@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 type Tab = "google" | "email" | "otp";
 
@@ -158,10 +159,9 @@ export default function LoginPage() {
           }}
         />
 
-        <Link href="/" className="relative z-10 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#D4AF37", color: "#1a1c1c" }}>N</div>
-          <span className="font-black text-sm uppercase tracking-widest text-white">NavkarOS</span>
-        </Link>
+        <div className="relative z-10">
+          <LogoBrand height={28} onDark href="/" />
+        </div>
 
         <div className="relative z-10">
           <h2
@@ -202,10 +202,9 @@ export default function LoginPage() {
         <div className="max-w-sm w-full mx-auto">
 
           {/* Mobile logo */}
-          <Link href="/" className="lg:hidden flex items-center gap-2 mb-12">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#D4AF37" }}>N</div>
-            <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1c" }}>NavkarOS</span>
-          </Link>
+          <div className="lg:hidden mb-12">
+            <LogoBrand height={28} href="/" />
+          </div>
 
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>Welcome back</p>
           <h1

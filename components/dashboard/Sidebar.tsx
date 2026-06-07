@@ -7,6 +7,7 @@ import { MODULE_LIST, type ModuleId } from "@/lib/modules";
 import {
   LayoutDashboard, Compass, CreditCard, LogOut, ChevronRight, Zap,
 } from "lucide-react";
+import LogoBrand from "@/components/ui/LogoBrand";
 
 interface SidebarProps {
   userEmail?: string;
@@ -50,11 +51,8 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
       style={{ background: "#fafafa", borderColor: "rgba(0,0,0,0.08)" }}
     >
       {/* Logo */}
-      <div className="px-6 py-5 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#D4AF37" }}>N</div>
-          <span className="font-black text-sm uppercase tracking-widest" style={{ color: "#1a1c1c" }}>NavkarOS</span>
-        </Link>
+      <div className="px-5 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+        <LogoBrand height={26} href="/" />
       </div>
 
       {/* User info */}
