@@ -54,12 +54,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             };
           }
 
-          // ── Password sign-in flow ───────────────────────────────────────
+          // ── Password sign-in flow (email OR clientId) ──────────────────
           if (!credentials.password) return null;
 
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email as string },
-          });
+          const identifier = credentials.email as string;
+          const user = identifier.includes("@")
+            ? await prisma.user.findUnique({ where: { email: identifier } })
+            : await prisma.user.findFirst({ where: { clientId: identifier.toUpperCase() } });
 
           if (!user || !user.hashedPassword) return null;
 

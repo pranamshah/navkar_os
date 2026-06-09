@@ -7,7 +7,9 @@ function getResend() {
   return new Resend(key);
 }
 
-const FROM = "NavkarOS <noreply@navkaros.com>";
+// Use Resend's shared sender (works without domain verification).
+// Once navkaros.in is verified in Resend, set RESEND_FROM env var.
+const FROM = process.env.RESEND_FROM ?? "NavkarOS <onboarding@resend.dev>";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://navkaros.in";
 
 // ── Shared layout wrapper ────────────────────────────────────────────────────

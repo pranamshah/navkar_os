@@ -97,46 +97,54 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // Call Gemini REST API directly — no SDK, no version mismatches
     const geminiMessages = (messages as { role: string; content: string }[]).map((m) => ({
       role: m.role === "user" ? "user" : "model",
       parts: [{ text: m.content }],
     }));
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: geminiMessages,
-          generationConfig: { maxOutputTokens: 512 },
-        }),
-      }
-    );
+    const body = JSON.stringify({
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: geminiMessages,
+      generationConfig: { maxOutputTokens: 512 },
+    });
 
-    if (!geminiRes.ok) {
-      const errBody = await geminiRes.text();
-      console.error("[NavkarBot] Gemini API error:", geminiRes.status, errBody);
-      return new Response(
-        `API error ${geminiRes.status} — please check your Gemini API key and quota.`,
-        { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
-      );
+    // Try gemini-2.0-flash, retry once on 429, then fallback to gemini-1.5-flash
+    const models = ["gemini-2.0-flash", "gemini-1.5-flash"];
+    let lastError = "";
+
+    for (const model of models) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+      let res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+
+      // On 429 wait 2 seconds and retry once
+      if (res.status === 429) {
+        await new Promise((r) => setTimeout(r, 2000));
+        res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+      }
+
+      if (res.ok) {
+        const data = await res.json();
+        const text: string =
+          data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+          "Sorry, I got an empty response. Please try again.";
+        return new Response(text, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+      }
+
+      lastError = `${res.status}`;
+      console.error(`[NavkarBot] ${model} failed:`, res.status, await res.text().catch(() => ""));
     }
 
-    const data = await geminiRes.json();
-    const text: string =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ??
-      "Sorry, I got an empty response. Please try again.";
+    // Both models failed
+    const msg = lastError === "429"
+      ? "I'm receiving too many questions right now. Please try again in a minute!"
+      : `Sorry, I'm having trouble right now (${lastError}). Please email hello@navkaros.in for help.`;
+    return new Response(msg, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 
-    return new Response(text, {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
-    });
   } catch (err) {
     console.error("[NavkarBot] error:", err);
     return new Response(
-      `Error: ${err instanceof Error ? err.message : "Unknown error"} — please try again.`,
+      "Sorry, something went wrong. Please try again.",
       { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
     );
   }
