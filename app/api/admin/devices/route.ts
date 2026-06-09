@@ -21,18 +21,6 @@ export async function GET(req: Request) {
   if (token) {
     const device = await prisma.adminDevice.findUnique({ where: { token } });
     if (!device) return NextResponse.json(null, { status: 404 });
-
-    // If device is pending but the requester is an admin — auto-approve now
-    if (device.status === "PENDING") {
-      const session = await auth();
-      const role = session?.user?.role;
-      if (role === "ADMIN" || role === "SUPERADMIN") {
-        await prisma.adminDevice.update({ where: { token }, data: { status: "APPROVED", lastSeenAt: new Date() } });
-        return NextResponse.json({ status: "APPROVED", name: device.name });
-      }
-    }
-
-    // Update last seen
     await prisma.adminDevice.update({ where: { token }, data: { lastSeenAt: new Date() } }).catch(() => {});
     return NextResponse.json({ status: device.status, name: device.name });
   }
@@ -52,19 +40,13 @@ export async function POST(req: Request) {
   const existing = await prisma.adminDevice.findUnique({ where: { token } });
   if (existing) return NextResponse.json({ status: existing.status });
 
-  // Auto-approve if:
-  // 1. The registering user is already signed in as ADMIN/SUPERADMIN, OR
-  // 2. Bootstrap token env var matches (for first-time setup without a session)
-  const session = await auth();
-  const role = session?.user?.role;
-  const isAdminUser = role === "ADMIN" || role === "SUPERADMIN";
-  const isBootstrap = BOOTSTRAP && token === BOOTSTRAP;
-  const autoApprove = isAdminUser || isBootstrap;
+  // Auto-approve only if bootstrap token matches (env var for emergencies)
+  const autoApprove = BOOTSTRAP && token === BOOTSTRAP;
 
   const device = await prisma.adminDevice.create({
     data: {
       token,
-      name: name || (session?.user?.name ? `${session.user.name}'s Device` : "Unnamed Device"),
+      name: name || "Unnamed Device",
       status: autoApprove ? "APPROVED" : "PENDING",
     },
   });
