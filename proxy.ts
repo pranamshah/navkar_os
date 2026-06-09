@@ -5,11 +5,18 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
   const user = req.auth?.user;
 
-  // Admin routes
+  // Admin routes — also check device cookie
   if (pathname.startsWith("/dashboard/admin")) {
     if (!user) return NextResponse.redirect(new URL("/login", req.url));
     if (user.role !== "SUPERADMIN" && user.role !== "ADMIN") {
       return NextResponse.redirect(new URL("/dashboard/client", req.url));
+    }
+    // Device allowlist: must have device cookie to proceed
+    const deviceToken = req.cookies.get("navkar_admin_device")?.value;
+    if (!deviceToken) {
+      const url = new URL("/admin-device", req.url);
+      url.searchParams.set("from", pathname);
+      return NextResponse.redirect(url);
     }
   }
 
