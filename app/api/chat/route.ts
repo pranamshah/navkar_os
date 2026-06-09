@@ -108,8 +108,8 @@ export async function POST(req: Request) {
       generationConfig: { maxOutputTokens: 512 },
     });
 
-    // Try gemini-2.0-flash, retry once on 429, then fallback to gemini-1.5-flash
-    const models = ["gemini-2.0-flash", "gemini-1.5-flash"];
+    // Try models in order — gemini-1.5-flash-latest is most reliable on free keys
+    const models = ["gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-pro"];
     let lastError = "";
 
     for (const model of models) {

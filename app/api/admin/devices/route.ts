@@ -41,13 +41,19 @@ export async function POST(req: Request) {
   const existing = await prisma.adminDevice.findUnique({ where: { token } });
   if (existing) return NextResponse.json({ status: existing.status });
 
-  // Auto-approve if bootstrap token matches
-  const autoApprove = BOOTSTRAP && token === BOOTSTRAP;
+  // Auto-approve if:
+  // 1. The registering user is already signed in as ADMIN/SUPERADMIN, OR
+  // 2. Bootstrap token env var matches (for first-time setup without a session)
+  const session = await auth();
+  const role = session?.user?.role;
+  const isAdminUser = role === "ADMIN" || role === "SUPERADMIN";
+  const isBootstrap = BOOTSTRAP && token === BOOTSTRAP;
+  const autoApprove = isAdminUser || isBootstrap;
 
   const device = await prisma.adminDevice.create({
     data: {
       token,
-      name: name || "Unnamed Device",
+      name: name || (session?.user?.name ? `${session.user.name}'s Device` : "Unnamed Device"),
       status: autoApprove ? "APPROVED" : "PENDING",
     },
   });

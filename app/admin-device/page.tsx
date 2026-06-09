@@ -61,10 +61,17 @@ function AdminDeviceContent() {
       body: JSON.stringify({ token, name: deviceName }),
     });
     if (!res.ok) { setError("Registration failed. Try again."); return; }
+    const data = await res.json();
     // Set cookie (1 year)
     document.cookie = `navkar_admin_device=${token}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Strict`;
     setDeviceToken(token);
-    setStatus("pending");
+    // If server auto-approved (admin session), go straight in
+    if (data.status === "APPROVED") {
+      setStatus("approved");
+      setTimeout(() => { window.location.href = from; }, 800);
+    } else {
+      setStatus("pending");
+    }
   };
 
   return (
