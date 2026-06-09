@@ -1,4 +1,4 @@
-import { google } from "@ai-sdk/google";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { streamText } from "ai";
 
 export const maxDuration = 30;
@@ -84,17 +84,27 @@ All plans come with a 14-day free trial. No credit card required to start. Price
 - The company is headquartered in Chennai, Mannady`;
 
 export async function POST(req: Request) {
-  if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+  // Accept key under either common env var name
+  const apiKey =
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
+    process.env.GEMINI_API_KEY ||
+    process.env.GOOGLE_AI_API_KEY;
+
+  if (!apiKey) {
     return new Response(
       "Hi! I'm NavkarBot. The AI service isn't configured yet — please email hello@navkaros.in or call +91 90807 67398 and we'll help you right away.",
       { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
     );
   }
+
   try {
     const { messages } = await req.json();
 
+    // Instantiate with explicit key so it works regardless of env var name
+    const googleAI = createGoogleGenerativeAI({ apiKey });
+
     const result = streamText({
-      model: google("gemini-1.5-flash"),
+      model: googleAI("gemini-1.5-flash"),
       system: SYSTEM_PROMPT,
       messages,
       maxOutputTokens: 512,

@@ -8,12 +8,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import LogoBrand from "@/components/ui/LogoBrand";
 
-type Tab = "google" | "email" | "otp";
+type Tab = "email" | "otp";
 
 export default function LoginPage() {
   const router = useRouter();
   const { status } = useSession();
-  const [tab, setTab] = useState<Tab>("google");
+  const [tab, setTab] = useState<Tab>("email");
 
   // Already logged in → skip login page entirely
   useEffect(() => {
@@ -36,12 +36,6 @@ export default function LoginPage() {
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // ── Handlers ─────────────────────────────────────────────────────
-
-  const handleGoogle = async () => {
-    setLoading(true);
-    // Go to /dashboard — server-side routing handles: ACTIVE→/dashboard/client, PENDING→/status
-    await signIn("google", { callbackUrl: "/dashboard" });
-  };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,14 +106,25 @@ export default function LoginPage() {
     });
     const data = await res.json();
     if (!res.ok) { setError(data.error); setLoading(false); return; }
-    // OTP verified — sign in with email (no password needed via magic token approach)
+
+    // Use the one-time sign-in token to create a real NextAuth session
+    const signInResult = await signIn("credentials", {
+      email: data.email,
+      signInToken: data.signInToken,
+      redirect: false,
+    });
+
+    if (signInResult?.error) {
+      setError("Sign-in failed — the token may have expired. Please try again.");
+      setLoading(false);
+      return;
+    }
+
     router.replace(data.redirectUrl ?? "/dashboard");
-    router.refresh();
   };
 
   // ── Tab configs ───────────────────────────────────────────────────
   const TABS: { id: Tab; label: string }[] = [
-    { id: "google", label: "Google" },
     { id: "email", label: "Email" },
     { id: "otp", label: "Client ID" },
   ];
@@ -241,31 +246,6 @@ export default function LoginPage() {
           )}
 
           <AnimatePresence mode="wait">
-            {/* ── Google tab ──────────────────────────────────────── */}
-            {tab === "google" && (
-              <motion.div key="google" {...slideVariants}>
-                <button
-                  onClick={handleGoogle}
-                  disabled={loading}
-                  className="w-full flex items-center justify-center gap-3 py-4 border text-sm font-semibold transition-all duration-200"
-                  style={{ borderColor: "rgba(0,0,0,0.15)", borderWidth: "0.5px", color: "#1a1c1c", background: "#fff" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#D4AF37"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)"; }}
-                >
-                  <svg width="18" height="18" viewBox="0 0 18 18">
-                    <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
-                    <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
-                    <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
-                    <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
-                  </svg>
-                  {loading ? "Redirecting…" : "Continue with Google"}
-                </button>
-                <p className="mt-4 text-center text-xs" style={{ color: "#7e7576" }}>
-                  Fastest — uses your existing Google account
-                </p>
-              </motion.div>
-            )}
-
             {/* ── Email + Password tab ─────────────────────────── */}
             {tab === "email" && (
               <motion.div key="email" {...slideVariants}>

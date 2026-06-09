@@ -15,16 +15,20 @@ export async function POST(req: Request) {
     if (new Date() > user.otpExpiry) return NextResponse.json({ error: "OTP expired. Request a new one." }, { status: 400 });
     if (user.otpCode !== otp) return NextResponse.json({ error: "Incorrect OTP" }, { status: 400 });
 
-    // Clear OTP
+    // Generate a one-time sign-in token valid for 3 minutes.
+    // The credentials provider accepts this instead of a password.
+    const signInToken = `otp_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+    const tokenExpiry = new Date(Date.now() + 3 * 60 * 1000);
+
     await prisma.user.update({
       where: { id: user.id },
-      data: { otpCode: null, otpExpiry: null },
+      data: { otpCode: signInToken, otpExpiry: tokenExpiry },
     });
 
-    // Return user email so client can sign in via Credentials
     return NextResponse.json({
       success: true,
       email: user.email,
+      signInToken,
       redirectUrl: user.status === "ACTIVE" ? "/dashboard/client" : "/status",
     });
   } catch (err) {

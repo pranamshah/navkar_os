@@ -22,10 +22,40 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        signInToken: { label: "Sign-in Token", type: "text" }, // OTP flow
       },
       async authorize(credentials) {
         try {
-          if (!credentials?.email || !credentials?.password) return null;
+          if (!credentials?.email) return null;
+
+          // ── OTP sign-in token flow ──────────────────────────────────────
+          if (credentials.signInToken) {
+            const user = await prisma.user.findFirst({
+              where: {
+                email: credentials.email as string,
+                otpCode: credentials.signInToken as string,
+              },
+            });
+            if (!user || !user.otpExpiry || new Date() > user.otpExpiry) return null;
+            // One-time use — clear immediately
+            await prisma.user.update({
+              where: { id: user.id },
+              data: { otpCode: null, otpExpiry: null },
+            });
+            return {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              image: user.image,
+              role: user.role,
+              status: user.status,
+              clientId: user.clientId,
+              businessType: user.businessType,
+            };
+          }
+
+          // ── Password sign-in flow ───────────────────────────────────────
+          if (!credentials.password) return null;
 
           const user = await prisma.user.findUnique({
             where: { email: credentials.email as string },
@@ -40,7 +70,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           if (!isValid) return null;
 
-          // Return a sanitized object (never leak hashedPassword into the token)
           return {
             id: user.id,
             email: user.email,
@@ -52,8 +81,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             businessType: user.businessType,
           };
         } catch (err) {
-          // A thrown error here surfaces as a vague "Configuration" error to the
-          // client — log it and return null so the user sees "incorrect password"
           console.error("[auth] authorize failed:", err);
           return null;
         }
