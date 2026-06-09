@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import LogoBrand from "@/components/ui/LogoBrand";
 
@@ -11,7 +11,7 @@ function uuid() {
   });
 }
 
-export default function AdminDevicePage() {
+function AdminDeviceContent() {
   const params = useSearchParams();
   const from = params.get("from") ?? "/dashboard/admin";
 
@@ -158,5 +158,17 @@ export default function AdminDevicePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function AdminDevicePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#fafafa" }}>
+        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+      </div>
+    }>
+      <AdminDeviceContent />
+    </Suspense>
   );
 }
