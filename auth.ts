@@ -119,9 +119,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             where: { email: user.email! },
           });
           if (!existing) {
-            // Use timestamp-based suffix to avoid clientId collisions
-            const suffix = Date.now().toString(36).toUpperCase().slice(-5);
-            const clientId = `NVK-${new Date().getFullYear()}-${suffix}`;
+            // Generate clientId: 3 letters from name + 5 digits, no hyphens
+            const prefix = (user.name ?? "")
+              .replace(/[^a-zA-Z]/g, "")
+              .toUpperCase()
+              .slice(0, 3)
+              .padEnd(3, "X");
+            let clientId = `${prefix}${Math.floor(10000 + Math.random() * 90000)}`;
+            // Ensure uniqueness
+            let attempts = 0;
+            while (await prisma.user.findUnique({ where: { clientId } })) {
+              clientId = `${prefix}${Math.floor(10000 + Math.random() * 90000)}`;
+              if (++attempts > 10) throw new Error("Could not generate unique client ID");
+            }
             await prisma.user.create({
               data: {
                 clientId,
@@ -129,24 +139,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 email: user.email!,
                 image: user.image,
                 role: "CLIENT",
-                // New users must upload documents and fill details before admin activates them
                 status: "PENDING_VERIFICATION",
               },
             });
           }
         } catch (err) {
-          // Log but never block sign-in — user may already exist or adapter handles it
           console.error("[auth] google user upsert:", err);
         }
       }
       return true;
     },
     async redirect({ url, baseUrl }) {
-      // After sign-in, go to /dashboard — the dashboard middleware handles
-      // role-based routing (admin → /dashboard/admin, pending → /status, active client → /dashboard/client)
-      if (url === baseUrl || url === `${baseUrl}/`) return `${baseUrl}/dashboard`;
+      // Always honour same-origin callback URLs (covers sign-out callbackUrl: "/",
+      // Google sign-in callbackUrl: "/status", etc.)
       if (url.startsWith(baseUrl)) return url;
-      return `${baseUrl}/dashboard`;
+      // External URLs — send to base, routing continues from there
+      return baseUrl;
     },
   },
   pages: {

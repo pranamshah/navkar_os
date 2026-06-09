@@ -5,14 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, Check } from "lucide-react";
+import { Eye, EyeOff, Check } from "lucide-react"; // Check still used in checkbox + password strength
 import LogoBrand from "@/components/ui/LogoBrand";
-
-const BENEFITS = [
-  "Free 14-day trial on all products",
-  "Account verified within 48 hours",
-  "No credit card to start",
-];
 
 function PasswordStrength({ password }: { password: string }) {
   const checks = [
@@ -145,20 +139,13 @@ export default function SignupPage() {
               lineHeight: 1.15,
             }}
           >
-            Join 1,200+
+            Freight software built
             <br />
-            <span style={{ color: "#D4AF37" }}>logistics professionals.</span>
+            <span style={{ color: "#D4AF37" }}>for India&apos;s trade.</span>
           </h2>
-          <div className="flex flex-col gap-4 mt-8">
-            {BENEFITS.map((b) => (
-              <div key={b} className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.2)" }}>
-                  <Check size={11} style={{ color: "#D4AF37" }} />
-                </div>
-                <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>{b}</span>
-              </div>
-            ))}
-          </div>
+          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, marginTop: "16px" }}>
+            Nexlog, EntryX, DockIQ, RunDesk, Accura, TradePilot — everything your logistics business needs, fully integrated.
+          </p>
         </div>
 
         <p className="relative z-10 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>

@@ -10,12 +10,6 @@ import LogoBrand from "@/components/ui/LogoBrand";
 
 type Tab = "google" | "email" | "otp";
 
-const STATS = [
-  { val: "1,200+", label: "Logistics firms" },
-  { val: "4L+",    label: "Shipments tracked" },
-  { val: "₹500Cr+", label: "Billed through platform" },
-];
-
 export default function LoginPage() {
   const router = useRouter();
   const { status } = useSession();
@@ -185,17 +179,9 @@ export default function LoginPage() {
             <br />
             <span style={{ color: "#D4AF37" }}>NavkarOS.</span>
           </h2>
-          <p className="mb-10" style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>
-            India&apos;s complete logistics operating system.
+          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>
+            India&apos;s complete logistics operating system — freight forwarding, customs, CFS, transport, and accounting in one platform.
           </p>
-          <div className="grid grid-cols-3 gap-8">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <p className="font-bold text-xl" style={{ color: "#D4AF37" }}>{s.val}</p>
-                <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         <p className="relative z-10 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
@@ -347,7 +333,7 @@ export default function LoginPage() {
                       <label className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>Client ID or Email</label>
                       <input
                         type="text"
-                        placeholder="NVK-2026-XXXXX"
+                        placeholder="e.g. RAJ12345"
                         value={identifier}
                         onChange={(e) => setIdentifier(e.target.value)}
                         className="outline-none bg-transparent pb-2 w-full"

@@ -12,10 +12,15 @@ const schema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-function generateClientId() {
-  const year = new Date().getFullYear();
-  const rand = Math.floor(10000 + Math.random() * 90000);
-  return `NVK-${year}-${rand}`;
+function generateClientId(name: string) {
+  // Format: 3 uppercase letters from name + 5 random digits — no hyphens
+  const prefix = name
+    .replace(/[^a-zA-Z]/g, "")
+    .toUpperCase()
+    .slice(0, 3)
+    .padEnd(3, "X");
+  const digits = Math.floor(10000 + Math.random() * 90000);
+  return `${prefix}${digits}`;
 }
 
 export async function POST(req: Request) {
@@ -58,10 +63,10 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    let clientId = generateClientId();
+    let clientId = generateClientId(name);
     let attempts = 0;
     while (await prisma.user.findUnique({ where: { clientId } })) {
-      clientId = generateClientId();
+      clientId = generateClientId(name);
       if (++attempts > 10) throw new Error("Could not generate unique client ID");
     }
 

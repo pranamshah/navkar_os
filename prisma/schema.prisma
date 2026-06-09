@@ -460,6 +460,7 @@ model NexJob {
   gateOutDate     DateTime?
   deliveryDate    DateTime?
   internalNotes   String?
+  clientAccessPin String?   // 6-digit PIN for external client shipment tracking
   isLocked        Boolean   @default(false)
   containers      NexContainer[]
   documents       NexDocument[]

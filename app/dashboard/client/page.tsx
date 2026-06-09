@@ -606,27 +606,42 @@ export default function ClientDashboardPage() {
   const { data: session, status } = useSession();
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [subsLoading, setSubsLoading] = useState(true);
+  // Read status directly from DB (not stale JWT) to avoid PendingView loop after admin approval
+  const [dbStatus, setDbStatus] = useState<string | null>(null);
 
   const role = (session?.user as { role?: string })?.role;
   const isAdmin = role === "ADMIN" || role === "SUPERADMIN";
 
   useEffect(() => {
-    if (isAdmin) { setSubsLoading(false); return; }
-    async function loadSubs() {
+    if (status !== "authenticated") return;
+    if (isAdmin) { setSubsLoading(false); setDbStatus("ACTIVE"); return; }
+
+    async function loadData() {
       try {
-        const res = await fetch("/api/client/subscriptions");
-        if (res.ok) {
-          const data = await res.json();
-          setSubscriptions(data.subscriptions || []);
+        // Fetch status + subscriptions in parallel
+        const [statusRes, subsRes] = await Promise.allSettled([
+          fetch("/api/user/status"),
+          fetch("/api/client/subscriptions"),
+        ]);
+        if (statusRes.status === "fulfilled" && statusRes.value.ok) {
+          const d = await statusRes.value.json();
+          setDbStatus(d.status);
+        } else {
+          // Fall back to JWT status so we never get stuck loading
+          setDbStatus((session?.user as { status?: string })?.status ?? "PENDING_VERIFICATION");
+        }
+        if (subsRes.status === "fulfilled" && subsRes.value.ok) {
+          const d = await subsRes.value.json();
+          setSubscriptions(d.subscriptions || []);
         }
       } catch {
-        // no subs yet
+        setDbStatus((session?.user as { status?: string })?.status ?? "PENDING_VERIFICATION");
       } finally {
         setSubsLoading(false);
       }
     }
-    if (status === "authenticated") loadSubs();
-  }, [status, isAdmin]);
+    loadData();
+  }, [status, isAdmin, session?.user]);
 
   if (status === "loading" || subsLoading) {
     return (
@@ -640,7 +655,9 @@ export default function ClientDashboardPage() {
   }
 
   const user = session?.user;
-  const isVerified = user?.status === "ACTIVE" || user?.status === "VERIFIED";
+  // Use fresh DB status — falls back to JWT status if API call failed
+  const isVerified = (dbStatus ?? (user?.status as string)) === "ACTIVE" ||
+                     (dbStatus ?? (user?.status as string)) === "VERIFIED";
   const activeSubs = subscriptions.filter((s) => ["ACTIVE", "TRIAL"].includes(s.status));
 
   // Determine which view to show
