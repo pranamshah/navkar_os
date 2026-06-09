@@ -216,7 +216,7 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
       >
         {/* Logo */}
         <div className="px-4 py-3 border-b border-white/10">
-          <LogoBrand height={70} onDark href="/dashboard/client" />
+          <LogoBrand height={120} onDark href="/dashboard/client" />
           <div className="flex items-center gap-1.5 mt-2">
             <span className="material-symbols-outlined text-[#0E7490]" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>
               account_balance

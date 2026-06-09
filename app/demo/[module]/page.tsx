@@ -26,7 +26,7 @@ export default async function DemoPage({ params }: Props) {
         style={{ background: "#1a1c1c", borderColor: "rgba(255,255,255,0.08)" }}
       >
         <div className="flex items-center gap-4">
-          <LogoBrand height={70} onDark href="/" />
+          <LogoBrand height={120} onDark href="/" />
           <div className="hidden sm:flex items-center gap-2">
             <span className="w-1 h-1 rounded-full" style={{ background: "rgba(255,255,255,0.3)" }} />
             <span className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)" }}>Live Demo</span>

@@ -52,7 +52,7 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
     >
       {/* Logo */}
       <div className="px-5 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-        <LogoBrand height={70} href="/" />
+        <LogoBrand height={120} href="/" />
       </div>
 
       {/* User info */}

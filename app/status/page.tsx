@@ -162,7 +162,7 @@ export default function StatusPage() {
       <div className="max-w-lg mx-auto">
         {/* Logo */}
         <div className="mb-12">
-          <LogoBrand height={80} />
+          <LogoBrand height={120} />
         </div>
 
         {/* Status card */}

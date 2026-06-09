@@ -6,7 +6,7 @@ export default function ConfirmPage() {
     <div className="min-h-screen flex items-center justify-center px-8" style={{ background: "#f9f9f9" }}>
       <div className="max-w-md w-full text-center">
         <div className="inline-flex mb-12">
-          <LogoBrand height={80} href="/" />
+          <LogoBrand height={120} href="/" />
         </div>
 
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-8" style={{ background: "rgba(212,175,55,0.12)" }}>

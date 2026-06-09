@@ -43,7 +43,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:max-w-xs">
             <div className="mb-5">
-              <LogoBrand height={80} />
+              <LogoBrand height={120} />
             </div>
             <p className="text-sm mb-6" style={{ color: "#4c4546", lineHeight: 1.7, fontWeight: 300 }}>
               The Operating System for Indian Logistics. Built for C&F agents,

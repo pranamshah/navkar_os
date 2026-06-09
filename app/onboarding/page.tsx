@@ -257,7 +257,7 @@ export default function OnboardingPage() {
           }}
         />
         <div className="relative z-10 mb-16">
-          <LogoBrand height={80} onDark href="/" />
+          <LogoBrand height={120} onDark href="/" />
         </div>
 
         <div className="relative z-10 mb-8">
