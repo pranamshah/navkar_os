@@ -100,24 +100,28 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // Instantiate with explicit key so it works regardless of env var name
     const googleAI = createGoogleGenerativeAI({ apiKey });
 
     const result = streamText({
-      model: googleAI("gemini-1.5-flash"),
+      model: googleAI("gemini-2.0-flash"),
       system: SYSTEM_PROMPT,
       messages,
       maxOutputTokens: 512,
     });
 
-    // Stream raw text tokens — avoids AI SDK SSE formatting that breaks plain-text readers
+    const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
-        const encoder = new TextEncoder();
         try {
           for await (const chunk of result.textStream) {
             controller.enqueue(encoder.encode(chunk));
           }
+        } catch (streamErr) {
+          // Surface the error as text so the widget shows it instead of hanging
+          console.error("[NavkarBot] stream error:", streamErr);
+          controller.enqueue(
+            encoder.encode("Sorry, I'm having trouble connecting right now. Please try again in a moment.")
+          );
         } finally {
           controller.close();
         }
@@ -130,7 +134,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("[NavkarBot] error:", err);
     return new Response(
-      "Hi! I'm NavkarBot. Having a small issue right now — please email hello@navkaros.in or call +91 90807 67398.",
+      "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
       { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
     );
   }
