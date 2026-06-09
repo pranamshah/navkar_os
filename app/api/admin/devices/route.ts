@@ -21,6 +21,17 @@ export async function GET(req: Request) {
   if (token) {
     const device = await prisma.adminDevice.findUnique({ where: { token } });
     if (!device) return NextResponse.json(null, { status: 404 });
+
+    // If device is pending but the requester is an admin — auto-approve now
+    if (device.status === "PENDING") {
+      const session = await auth();
+      const role = session?.user?.role;
+      if (role === "ADMIN" || role === "SUPERADMIN") {
+        await prisma.adminDevice.update({ where: { token }, data: { status: "APPROVED", lastSeenAt: new Date() } });
+        return NextResponse.json({ status: "APPROVED", name: device.name });
+      }
+    }
+
     // Update last seen
     await prisma.adminDevice.update({ where: { token }, data: { lastSeenAt: new Date() } }).catch(() => {});
     return NextResponse.json({ status: device.status, name: device.name });
