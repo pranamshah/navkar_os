@@ -5,32 +5,35 @@ import { prisma } from "@/lib/prisma";
 export default async function DashboardPage() {
   const session = await auth();
 
-  if (!session) {
+  if (!session?.user) {
     redirect("/login");
   }
 
-  const role = (session.user as { role?: string; id?: string })?.role;
-  const userId = (session.user as { id?: string })?.id;
+  const user = session.user as { role?: string; id?: string; userId?: string };
+  const role = user.role;
+  // NextAuth JWT sets token.userId; the session callback maps it to session.user.id
+  // Use the first non-null value we find
+  const userId = user.id || user.userId;
 
   if (role === "ADMIN" || role === "SUPERADMIN") {
     redirect("/dashboard/admin");
   }
 
-  // Always read status directly from DB (not JWT) to avoid stale-token loops
-  if (userId) {
-    const dbUser = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { status: true },
-    });
-
-    // Not yet approved by admin → show verification progress
-    if (!dbUser || dbUser.status === "PENDING_VERIFICATION") {
-      redirect("/status");
-    }
+  if (!userId) {
+    // Session exists but no userId — shouldn't happen, but safe fallback
+    redirect("/login");
   }
 
-  // ACTIVE → go straight to client dashboard
-  // Subscription upsell is shown as a banner inside the dashboard, not as a hard gate
-  // (hard gate caused /dashboard → /dashboard/pricing → /dashboard loop)
+  // Read status directly from DB — never trust stale JWT for routing decisions
+  const dbUser = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { status: true },
+  });
+
+  if (!dbUser || dbUser.status === "PENDING_VERIFICATION") {
+    redirect("/status");
+  }
+
+  // ACTIVE or VERIFIED → client dashboard
   redirect("/dashboard/client");
 }

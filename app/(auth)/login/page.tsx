@@ -39,7 +39,8 @@ export default function LoginPage() {
 
   const handleGoogle = async () => {
     setLoading(true);
-    await signIn("google", { callbackUrl: "/status" });
+    // Go to /dashboard — server-side routing handles: ACTIVE→/dashboard/client, PENDING→/status
+    await signIn("google", { callbackUrl: "/dashboard" });
   };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
@@ -55,8 +56,8 @@ export default function LoginPage() {
       setError(msg);
       setLoading(false);
     } else {
-      router.replace("/status");
-      router.refresh();
+      // /dashboard routes: ACTIVE users → /dashboard/client, PENDING → /status
+      router.replace("/dashboard");
     }
   };
 
@@ -112,7 +113,7 @@ export default function LoginPage() {
     const data = await res.json();
     if (!res.ok) { setError(data.error); setLoading(false); return; }
     // OTP verified — sign in with email (no password needed via magic token approach)
-    router.replace(data.redirectUrl ?? "/status");
+    router.replace(data.redirectUrl ?? "/dashboard");
     router.refresh();
   };
 

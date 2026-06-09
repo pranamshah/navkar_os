@@ -65,18 +65,12 @@ export default function StatusPage() {
         const data = await res.json();
         setUserData(data);
         if (data.status === "ACTIVE") {
-          // Refresh JWT so dashboard/client shows ACTIVE view (not stale PENDING).
-          // Race with 3s timeout — redirect happens regardless.
-          try {
-            await Promise.race([
-              update(),
-              new Promise<void>((resolve) => setTimeout(resolve, 3000)),
-            ]);
-          } catch {
-            // ignore — we redirect no matter what
-          }
-          window.location.replace("/dashboard");
-          return; // stop — we're navigating away
+          // Go directly to /dashboard/client — skips dashboard/page.tsx entirely
+          // so there is NO extra server redirect that could loop back to /status.
+          // Fire update() in background to refresh the JWT, but never await it.
+          update().catch(() => {});
+          window.location.replace("/dashboard/client");
+          return; // stop — navigating away
         }
       } else if (res.status === 401) {
         // Session expired / signed out — let the sessionStatus effect handle redirect
@@ -111,12 +105,13 @@ export default function StatusPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionStatus]);
 
-  // If ACTIVE status is detected, trigger a hard redirect immediately
-  // (handles edge case where fetchStatus sets state but window.location hasn't fired)
+  // If ACTIVE status is detected, go directly to /dashboard/client
   useEffect(() => {
     if (userData?.status === "ACTIVE") {
-      window.location.replace("/dashboard");
+      update().catch(() => {});
+      window.location.replace("/dashboard/client");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.status]);
 
   const copyClientId = () => {
@@ -152,7 +147,7 @@ export default function StatusPage() {
           <h2 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "32px", color: "#1a1c1c" }}>Account Activated!</h2>
           <p className="mt-2 text-sm" style={{ color: "#7e7576" }}>Redirecting to your dashboard…</p>
           <a
-            href="/dashboard"
+            href="/dashboard/client"
             className="inline-block mt-6 px-6 py-3 text-sm font-semibold rounded-lg"
             style={{ background: "#1a1c1c", color: "#D4AF37" }}
           >
