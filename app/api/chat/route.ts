@@ -1,6 +1,3 @@
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { streamText } from "ai";
-
 export const maxDuration = 30;
 
 const SYSTEM_PROMPT = `You are NavkarBot, the friendly AI assistant for NavkarOS — India's first logistics operating system built exclusively for the Indian trade and logistics industry.
@@ -100,41 +97,46 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    const googleAI = createGoogleGenerativeAI({ apiKey });
+    // Call Gemini REST API directly — no SDK, no version mismatches
+    const geminiMessages = (messages as { role: string; content: string }[]).map((m) => ({
+      role: m.role === "user" ? "user" : "model",
+      parts: [{ text: m.content }],
+    }));
 
-    const result = streamText({
-      model: googleAI("gemini-2.0-flash"),
-      system: SYSTEM_PROMPT,
-      messages,
-      maxOutputTokens: 512,
-    });
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: geminiMessages,
+          generationConfig: { maxOutputTokens: 512 },
+        }),
+      }
+    );
 
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of result.textStream) {
-            controller.enqueue(encoder.encode(chunk));
-          }
-        } catch (streamErr) {
-          // Surface the error as text so the widget shows it instead of hanging
-          console.error("[NavkarBot] stream error:", streamErr);
-          controller.enqueue(
-            encoder.encode("Sorry, I'm having trouble connecting right now. Please try again in a moment.")
-          );
-        } finally {
-          controller.close();
-        }
-      },
-    });
+    if (!geminiRes.ok) {
+      const errBody = await geminiRes.text();
+      console.error("[NavkarBot] Gemini API error:", geminiRes.status, errBody);
+      return new Response(
+        `API error ${geminiRes.status} — please check your Gemini API key and quota.`,
+        { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+      );
+    }
 
-    return new Response(stream, {
+    const data = await geminiRes.json();
+    const text: string =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "Sorry, I got an empty response. Please try again.";
+
+    return new Response(text, {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
   } catch (err) {
     console.error("[NavkarBot] error:", err);
     return new Response(
-      "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
+      `Error: ${err instanceof Error ? err.message : "Unknown error"} — please try again.`,
       { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } }
     );
   }
