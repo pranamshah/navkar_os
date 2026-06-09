@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { MODULE_LIST, type ModuleId } from "@/lib/modules";
 import {
   LayoutDashboard, Compass, CreditCard, LogOut, ChevronRight, Zap,
@@ -18,14 +18,6 @@ interface SidebarProps {
 
 export default function Sidebar({ userEmail, userName, subscribedModules = [], plan }: SidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
-  };
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
@@ -138,8 +130,8 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
       {/* Logout */}
       <div className="px-3 pb-5 border-t pt-4" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
         <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200 rounded cursor-none"
+          onClick={() => signOut({ callbackUrl: "/" })}
+          className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200 rounded"
           style={{ color: "#7e7576" }}
           onMouseEnter={(e) => (e.currentTarget.style.color = "#EF4444")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "#7e7576")}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { LogOut } from "lucide-react";
 import LogoBrand from "@/components/ui/LogoBrand";
 
 const NAV = [
@@ -80,12 +81,12 @@ function AdminSidebar() {
       <div className="p-4 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
-          className="flex items-center gap-2 w-full px-3 py-2 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
+          className="flex items-center gap-2 w-full px-3 py-2.5 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
           style={{ color: "rgba(255,255,255,0.4)" }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#EF4444")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 16 }}>
-            logout
-          </span>
+          <LogOut size={14} strokeWidth={1.8} />
           Sign Out
         </button>
       </div>

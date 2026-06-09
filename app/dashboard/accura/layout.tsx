@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import { LogOut } from "lucide-react";
 import LogoBrand from "@/components/ui/LogoBrand";
 
 const navSections = [
@@ -301,9 +302,19 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
 
         {/* Bottom company info */}
         <div className="px-4 py-3 border-t border-white/10">
-          <div className="text-[10px] text-white/30 leading-relaxed">
+          <div className="text-[10px] text-white/30 leading-relaxed mb-3">
             <div className="font-medium text-white/50">Navkar Freight Co.</div>
           </div>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="flex items-center gap-2 w-full px-3 py-2 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
+            style={{ color: "rgba(255,255,255,0.35)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#EF4444")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+          >
+            <LogOut size={13} strokeWidth={1.8} />
+            Sign Out
+          </button>
         </div>
 
         {/* Financial Year selector */}
