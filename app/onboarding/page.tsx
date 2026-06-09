@@ -228,7 +228,7 @@ export default function OnboardingPage() {
     const data = await res.json();
     setLoading(false);
     if (!res.ok) { setError(data.error); return; }
-    router.push("/status");
+    router.replace("/status");
     router.refresh();
   };
 

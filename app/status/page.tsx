@@ -68,14 +68,14 @@ export default function StatusPage() {
         // This prevents a stale-token redirect loop (/dashboard → /status → /dashboard)
         await update();
         // Hard navigation forces a full session re-read on the server
-        window.location.href = "/dashboard";
+        window.location.replace("/dashboard");
       }
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    if (sessionStatus === "unauthenticated") { router.push("/login"); return; }
+    if (sessionStatus === "unauthenticated") { router.replace("/login"); return; }
     if (sessionStatus === "authenticated") {
       // Admins/superadmins skip the status screen and go straight to the admin panel
       const role = (session?.user as { role?: string } | undefined)?.role;

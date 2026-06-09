@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useRef, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,7 +18,13 @@ const STATS = [
 
 export default function LoginPage() {
   const router = useRouter();
+  const { status } = useSession();
   const [tab, setTab] = useState<Tab>("google");
+
+  // Already logged in → skip login page entirely
+  useEffect(() => {
+    if (status === "authenticated") router.replace("/dashboard");
+  }, [status, router]);
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,7 +61,7 @@ export default function LoginPage() {
       setError(msg);
       setLoading(false);
     } else {
-      router.push("/status");
+      router.replace("/status");
       router.refresh();
     }
   };
@@ -112,7 +118,7 @@ export default function LoginPage() {
     const data = await res.json();
     if (!res.ok) { setError(data.error); setLoading(false); return; }
     // OTP verified — sign in with email (no password needed via magic token approach)
-    router.push(data.redirectUrl ?? "/status");
+    router.replace(data.redirectUrl ?? "/status");
     router.refresh();
   };
 

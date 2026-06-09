@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Check } from "lucide-react";
 import LogoBrand from "@/components/ui/LogoBrand";
@@ -45,7 +45,13 @@ function PasswordStrength({ password }: { password: string }) {
 
 export default function SignupPage() {
   const router = useRouter();
+  const { status } = useSession();
   const [showPass, setShowPass] = useState(false);
+
+  // Already logged in → skip signup page entirely
+  useEffect(() => {
+    if (status === "authenticated") router.replace("/dashboard");
+  }, [status, router]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -89,7 +95,7 @@ export default function SignupPage() {
       redirect: false,
     });
 
-    router.push("/onboarding");
+    router.replace("/onboarding");
     router.refresh();
   };
 
