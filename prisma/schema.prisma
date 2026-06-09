@@ -660,6 +660,15 @@ model NexEnquiry {
   @@index([userId])
 }
 
+model AdminDevice {
+  id          String   @id @default(cuid())
+  token       String   @unique          // UUID stored in browser cookie
+  name        String?                   // friendly name set by admin
+  status      String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  lastSeenAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+}
+
 model ContactMessage {
   id        String   @id @default(cuid())
   name      String

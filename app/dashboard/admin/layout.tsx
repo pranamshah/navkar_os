@@ -14,6 +14,7 @@ const NAV = [
   { href: "/dashboard/admin/messages", label: "Messages", icon: "mail" },
   { href: "/dashboard/admin/tickets", label: "Tickets", icon: "support_agent" },
   { href: "/dashboard/admin/billing", label: "Billing", icon: "receipt_long" },
+  { href: "/dashboard/admin/devices", label: "Devices", icon: "devices" },
 ];
 
 function AdminSidebar() {
@@ -114,7 +115,37 @@ function AdminSidebar() {
   );
 }
 
+function useDeviceGuard() {
+  const [ok, setOk] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = document.cookie.split(";").find((c) => c.trim().startsWith("navkar_admin_device="))?.split("=")[1]?.trim();
+    if (!token) { setOk(false); return; }
+    fetch(`/api/admin/devices?token=${token}`)
+      .then((r) => r.json())
+      .then((d) => setOk(d?.status === "APPROVED"))
+      .catch(() => setOk(false));
+  }, []);
+
+  return ok;
+}
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const deviceOk = useDeviceGuard();
+
+  if (deviceOk === null) {
+    return (
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "#f9f9f9" }}>
+        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+      </div>
+    );
+  }
+
+  if (!deviceOk) {
+    if (typeof window !== "undefined") window.location.replace("/admin-device");
+    return null;
+  }
+
   return (
     <div className="flex min-h-screen" style={{ background: "#f9f9f9" }}>
       <AdminSidebar />

@@ -44,7 +44,74 @@ const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }>
   SUSPENDED: { bg: "rgba(156,163,175,0.15)", text: "#6b7280", label: "Suspended" },
 };
 
+function DocViewer({ label, url, onClose }: { label: string; url: string; onClose: () => void }) {
+  const isPdf = url.includes("application/pdf") || url.toLowerCase().endsWith(".pdf");
+  // Convert data: URL to blob URL so browser renders it properly
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  useEffect(() => {
+    if (url.startsWith("data:")) {
+      const arr = url.split(",");
+      const mime = arr[0].match(/:(.*?);/)?.[1] ?? "application/octet-stream";
+      const bstr = atob(arr[1]);
+      const u8 = new Uint8Array(bstr.length);
+      for (let i = 0; i < bstr.length; i++) u8[i] = bstr.charCodeAt(i);
+      const blob = new Blob([u8], { type: mime });
+      const objUrl = URL.createObjectURL(blob);
+      setBlobUrl(objUrl);
+      return () => URL.revokeObjectURL(objUrl);
+    } else {
+      setBlobUrl(url);
+    }
+  }, [url]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-6"
+      style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+      onClick={onClose}
+    >
+      <div
+        className="relative flex flex-col rounded-lg overflow-hidden shadow-2xl"
+        style={{ width: "min(860px, 96vw)", height: "90vh", background: "#1a1c1c" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <span className="text-sm font-semibold" style={{ color: "#D4AF37" }}>{label}</span>
+          <div className="flex items-center gap-3">
+            {blobUrl && (
+              <a
+                href={blobUrl}
+                download={`${label.replace(/\s+/g, "_")}.${isPdf ? "pdf" : "jpg"}`}
+                className="text-xs px-3 py-1.5 rounded font-semibold transition-colors"
+                style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}
+              >
+                Download
+              </a>
+            )}
+            <button onClick={onClose} className="text-xs px-3 py-1.5 rounded font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}>
+              Close ✕
+            </button>
+          </div>
+        </div>
+        {/* Content */}
+        <div className="flex-1 overflow-auto flex items-center justify-center p-4">
+          {!blobUrl ? (
+            <div className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</div>
+          ) : isPdf ? (
+            <iframe src={blobUrl} className="w-full h-full rounded" style={{ border: "none", minHeight: "600px" }} title={label} />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={blobUrl} alt={label} className="max-w-full max-h-full object-contain rounded" />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DocLink({ label, url }: { label: string; url?: string }) {
+  const [open, setOpen] = useState(false);
   if (!url) return (
     <div className="flex items-center gap-2 py-2 px-3 rounded border" style={{ borderColor: "rgba(0,0,0,0.08)", background: "#f9f9f9" }}>
       <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#b0a8a9" }}>attach_file</span>
@@ -52,17 +119,18 @@ function DocLink({ label, url }: { label: string; url?: string }) {
     </div>
   );
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-2 py-2 px-3 rounded border transition-colors hover:border-[#D4AF37]"
-      style={{ borderColor: "rgba(0,0,0,0.08)", background: "#f9f9f9" }}
-    >
-      <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#D4AF37" }}>open_in_new</span>
-      <span className="text-xs font-semibold" style={{ color: "#1a1c1c" }}>{label}</span>
-      <span className="text-xs ml-auto" style={{ color: "#7e7576" }}>View →</span>
-    </a>
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="w-full flex items-center gap-2 py-2 px-3 rounded border transition-colors hover:border-[#D4AF37]"
+        style={{ borderColor: "rgba(0,0,0,0.08)", background: "#f9f9f9" }}
+      >
+        <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#D4AF37" }}>description</span>
+        <span className="text-xs font-semibold" style={{ color: "#1a1c1c" }}>{label}</span>
+        <span className="text-xs ml-auto" style={{ color: "#7e7576" }}>View →</span>
+      </button>
+      {open && <DocViewer label={label} url={url} onClose={() => setOpen(false)} />}
+    </>
   );
 }
 
