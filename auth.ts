@@ -61,8 +61,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
+        // Initial sign-in: populate token from DB
         try {
           const dbUser = await prisma.user.findUnique({
             where: { email: user.email! },
@@ -77,6 +78,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         } catch (err) {
           console.error("[auth] jwt callback failed:", err);
+        }
+      } else if (trigger === "update") {
+        // update() called from client (e.g. after admin approves account)
+        // Re-read latest status from DB so the JWT reflects current state
+        const userId = token.userId as string | undefined;
+        if (userId) {
+          try {
+            const dbUser = await prisma.user.findUnique({
+              where: { id: userId },
+              select: { role: true, status: true, clientId: true, businessType: true },
+            });
+            if (dbUser) {
+              token.role = dbUser.role;
+              token.status = dbUser.status;
+              token.clientId = dbUser.clientId;
+              token.businessType = dbUser.businessType;
+            }
+          } catch (err) {
+            console.error("[auth] jwt refresh on update failed:", err);
+          }
         }
       }
       return token;

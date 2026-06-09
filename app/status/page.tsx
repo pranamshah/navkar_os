@@ -59,19 +59,34 @@ export default function StatusPage() {
   const [loading, setLoading] = useState(true);
 
   const fetchStatus = async () => {
-    const res = await fetch("/api/user/status");
-    if (res.ok) {
-      const data = await res.json();
-      setUserData(data);
-      if (data.status === "ACTIVE") {
-        // Refresh the JWT so the server-side session reflects ACTIVE status
-        // This prevents a stale-token redirect loop (/dashboard → /status → /dashboard)
-        await update();
-        // Hard navigation forces a full session re-read on the server
-        window.location.replace("/dashboard");
+    try {
+      const res = await fetch("/api/user/status");
+      if (res.ok) {
+        const data = await res.json();
+        setUserData(data);
+        if (data.status === "ACTIVE") {
+          // Refresh JWT so dashboard/client shows ACTIVE view (not stale PENDING).
+          // Race with 3s timeout — redirect happens regardless.
+          try {
+            await Promise.race([
+              update(),
+              new Promise<void>((resolve) => setTimeout(resolve, 3000)),
+            ]);
+          } catch {
+            // ignore — we redirect no matter what
+          }
+          window.location.replace("/dashboard");
+          return; // stop — we're navigating away
+        }
+      } else if (res.status === 401) {
+        // Session expired / signed out — let the sessionStatus effect handle redirect
+        return;
       }
+    } catch {
+      // Network error — silently ignore, will retry on next poll
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -86,13 +101,23 @@ export default function StatusPage() {
       fetchStatus();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionStatus, session]);
+  }, [sessionStatus]);
 
-  // Poll every 60 seconds
+  // Poll every 60 seconds — only when authenticated
   useEffect(() => {
+    if (sessionStatus !== "authenticated") return;
     const interval = setInterval(fetchStatus, 60000);
     return () => clearInterval(interval);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionStatus]);
+
+  // If ACTIVE status is detected, trigger a hard redirect immediately
+  // (handles edge case where fetchStatus sets state but window.location hasn't fired)
+  useEffect(() => {
+    if (userData?.status === "ACTIVE") {
+      window.location.replace("/dashboard");
+    }
+  }, [userData?.status]);
 
   const copyClientId = () => {
     if (!userData?.clientId) return;
@@ -103,7 +128,9 @@ export default function StatusPage() {
 
   const docCount = [userData?.gstCertPath, userData?.panCopyPath, userData?.licenceCopyPath].filter(Boolean).length;
 
-  if (loading || sessionStatus === "loading") {
+  // Show spinner while session is loading OR while we're fetching user status.
+  // Also show it while unauthenticated (redirect to /login is in flight).
+  if (loading || sessionStatus === "loading" || sessionStatus === "unauthenticated") {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#fafafa" }}>
         <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }} />
