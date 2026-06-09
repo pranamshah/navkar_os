@@ -37,13 +37,22 @@ function AdminDeviceContent() {
 
   const checkStatus = async (token: string) => {
     setStatus("checking");
+
+    // Try to self-approve via PATCH — succeeds silently if user is admin, 403 if not
+    await fetch("/api/admin/devices", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, status: "APPROVED" }),
+    }).catch(() => {});
+
+    // Now check actual status
     const res = await fetch(`/api/admin/devices?token=${token}`);
     if (!res.ok) { setStatus("registering"); return; }
     const data = await res.json();
     if (!data) { setStatus("registering"); return; }
     if (data.status === "APPROVED") {
       setStatus("approved");
-      setTimeout(() => { window.location.href = from; }, 1200);
+      setTimeout(() => { window.location.href = from; }, 800);
     } else if (data.status === "REJECTED") {
       setStatus("rejected");
     } else {

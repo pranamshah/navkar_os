@@ -4,32 +4,43 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env.ADMIN_EMAIL ?? "pranam@navkaros.com";
-  const hashedPassword = await bcrypt.hash("Admin@NavkarOS2026", 12);
-
+  // ── SUPERADMIN ────────────────────────────────────────────────────
+  const superAdminPassword = await bcrypt.hash("NavkarSuper@2025", 12);
   await prisma.user.upsert({
-    where: { email: adminEmail },
-    update: {},
+    where: { email: "superadmin@navkaros.in" },
+    update: { hashedPassword: superAdminPassword, role: "SUPERADMIN", status: "ACTIVE" },
     create: {
-      clientId: "NVK-ADMIN-00001",
-      name: "NavkarOS Admin",
-      email: adminEmail,
-      hashedPassword,
+      clientId: "NVKSUPER001",
+      name: "Pranam Shah",
+      email: "superadmin@navkaros.in",
+      hashedPassword: superAdminPassword,
       role: "SUPERADMIN",
       status: "ACTIVE",
       businessName: "NavkarOS",
       businessType: "CF_AGENT",
     },
   });
+  console.log("✅ SUPERADMIN seeded: superadmin@navkaros.in / NavkarSuper@2025");
 
-  console.log("✅ Admin seeded:", adminEmail);
+  // ── ADMIN ─────────────────────────────────────────────────────────
+  const adminPassword = await bcrypt.hash("NavkarAdmin@2025", 12);
+  await prisma.user.upsert({
+    where: { email: "admin@navkaros.in" },
+    update: { hashedPassword: adminPassword, role: "ADMIN", status: "ACTIVE" },
+    create: {
+      clientId: "NVKADMIN001",
+      name: "NavkarOS Admin",
+      email: "admin@navkaros.in",
+      hashedPassword: adminPassword,
+      role: "ADMIN",
+      status: "ACTIVE",
+      businessName: "NavkarOS",
+      businessType: "CF_AGENT",
+    },
+  });
+  console.log("✅ ADMIN seeded:      admin@navkaros.in     / NavkarAdmin@2025");
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .catch((e) => { console.error(e); process.exit(1); })
+  .finally(async () => { await prisma.$disconnect(); });

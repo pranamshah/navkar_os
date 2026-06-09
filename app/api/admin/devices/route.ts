@@ -72,12 +72,14 @@ export async function POST(req: Request) {
 }
 
 // PATCH /api/admin/devices — approve / reject / rename (admin only)
+// Accepts either { id } or { token } as the device identifier
 export async function PATCH(req: Request) {
   if (!(await isAdmin())) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  const { id, status, name } = await req.json();
-  if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
+  const { id, token: deviceToken, status, name } = await req.json();
+  if (!id && !deviceToken) return NextResponse.json({ error: "Missing id or token" }, { status: 400 });
+  const where = id ? { id } : { token: deviceToken as string };
   const updated = await prisma.adminDevice.update({
-    where: { id },
+    where,
     data: { ...(status && { status }), ...(name && { name }) },
   });
   return NextResponse.json(updated);
