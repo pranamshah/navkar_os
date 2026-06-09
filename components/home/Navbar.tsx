@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Menu } from "lucide-react";
+import { X, Menu, LayoutDashboard, LogOut, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -18,6 +18,8 @@ const links = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled]     = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const router   = useRouter();
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -34,6 +36,17 @@ export default function Navbar() {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const handleAnchorLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!href.startsWith("/#")) return;
@@ -57,7 +70,7 @@ export default function Navbar() {
         className="fixed top-5 left-0 right-0 z-50 px-5"
       >
         <div
-          className="max-w-5xl mx-auto rounded-full px-6 h-18 flex items-center justify-between transition-all duration-300 overflow-hidden"
+          className="max-w-5xl mx-auto rounded-full px-6 h-18 flex items-center justify-between transition-all duration-300"
           style={{
             background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.92)",
             backdropFilter: "blur(24px)",
@@ -86,32 +99,76 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTAs — session-aware */}
+          {/* CTAs */}
           <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
-              <>
-                {/* Avatar + name */}
-                <div className="flex items-center gap-2">
+              /* ── Logged-in: avatar dropdown ── */
+              <div ref={dropdownRef} className="relative">
+                <button
+                  onClick={() => setDropdownOpen((v) => !v)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-200"
+                  style={{ background: "rgba(212,175,55,0.08)", border: "0.5px solid rgba(212,175,55,0.25)" }}
+                >
                   <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
-                    style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.3)" }}
+                    className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
+                    style={{ background: "rgba(212,175,55,0.2)", color: "#D4AF37" }}
                   >
                     {(user?.name || user?.email || "U").charAt(0).toUpperCase()}
                   </div>
                   <span className="text-xs font-semibold" style={{ color: "#444748" }}>
                     {user?.name?.split(" ")[0] || "Account"}
                   </span>
-                </div>
-                <Link
-                  href="/dashboard"
-                  className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200"
-                  style={{ background: "#1a1c1d", color: "#D4AF37" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1d"; e.currentTarget.style.color = "#D4AF37"; }}
-                >
-                  My Dashboard
-                </Link>
-              </>
+                  <ChevronDown
+                    size={12}
+                    style={{
+                      color: "#888",
+                      transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.2s",
+                    }}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {dropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 4, scale: 0.97 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-2 w-44 rounded-xl overflow-hidden"
+                      style={{
+                        background: "#fff",
+                        border: "0.5px solid rgba(0,0,0,0.1)",
+                        boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                        zIndex: 100,
+                      }}
+                    >
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-3 text-xs font-semibold uppercase tracking-widest transition-colors duration-150"
+                        style={{ color: "#1a1c1c" }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(212,175,55,0.08)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        <LayoutDashboard size={13} />
+                        Dashboard
+                      </Link>
+                      <div style={{ height: "0.5px", background: "rgba(0,0,0,0.07)" }} />
+                      <button
+                        onClick={() => { setDropdownOpen(false); signOut({ callbackUrl: "/" }); }}
+                        className="flex items-center gap-2.5 w-full px-4 py-3 text-xs font-semibold uppercase tracking-widest transition-colors duration-150"
+                        style={{ color: "#EF4444" }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(239,68,68,0.06)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        <LogOut size={13} />
+                        Sign Out
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : (
               <>
                 <Link

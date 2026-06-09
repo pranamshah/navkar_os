@@ -27,23 +27,10 @@ export default async function DashboardPage() {
     if (!dbUser || dbUser.status === "PENDING_VERIFICATION") {
       redirect("/status");
     }
-
-    // Admin approved (ACTIVE) → check if they have an active subscription
-    // If not, gate them at pricing so they choose a plan before accessing modules
-    if (dbUser.status === "ACTIVE") {
-      const activeSub = await prisma.subscription.findFirst({
-        where: {
-          userId,
-          status: { in: ["TRIAL", "ACTIVE"] },
-        },
-        select: { id: true },
-      });
-
-      if (!activeSub) {
-        redirect("/dashboard/pricing");
-      }
-    }
   }
 
+  // ACTIVE → go straight to client dashboard
+  // Subscription upsell is shown as a banner inside the dashboard, not as a hard gate
+  // (hard gate caused /dashboard → /dashboard/pricing → /dashboard loop)
   redirect("/dashboard/client");
 }
