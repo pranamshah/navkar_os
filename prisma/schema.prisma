@@ -660,6 +660,17 @@ model NexEnquiry {
   @@index([userId])
 }
 
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  company   String?
+  email     String
+  phone     String?
+  message   String
+  status    String   @default("UNREAD") // UNREAD | READ | ARCHIVED
+  createdAt DateTime @default(now())
+}
+
 model NexQuotation {
   id          String       @id @default(cuid())
   userId      String

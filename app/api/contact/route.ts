@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
@@ -8,6 +9,11 @@ export async function POST(req: Request) {
     if (!name || !email || !message) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
     }
+
+    // Always save to DB so admin can see it regardless of email config
+    await prisma.contactMessage.create({
+      data: { name, company: company || null, email, phone: phone || null, message },
+    });
 
     if (!process.env.RESEND_API_KEY) {
       console.warn("[contact] RESEND_API_KEY not set — email skipped");

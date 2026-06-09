@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { LogOut } from "lucide-react";
 import LogoBrand from "@/components/ui/LogoBrand";
+import { useEffect, useState } from "react";
 
 const NAV = [
   { href: "/dashboard/admin", label: "Overview", icon: "dashboard" },
   { href: "/dashboard/admin/verifications", label: "Verifications", icon: "verified_user" },
   { href: "/dashboard/admin/users", label: "All Users", icon: "group" },
+  { href: "/dashboard/admin/messages", label: "Messages", icon: "mail" },
   { href: "/dashboard/admin/tickets", label: "Tickets", icon: "support_agent" },
   { href: "/dashboard/admin/billing", label: "Billing", icon: "receipt_long" },
 ];
@@ -17,6 +19,16 @@ const NAV = [
 function AdminSidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const [unread, setUnread] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/admin/messages")
+      .then((r) => r.json())
+      .then((msgs) => {
+        if (Array.isArray(msgs)) setUnread(msgs.filter((m: { status: string }) => m.status === "UNREAD").length);
+      })
+      .catch(() => {});
+  }, [pathname]); // re-check when navigating
 
   const isActive = (href: string) =>
     href === "/dashboard/admin" ? pathname === href : pathname.startsWith(href);
@@ -71,7 +83,15 @@ function AdminSidebar() {
               >
                 {icon}
               </span>
-              {label}
+              <span className="flex-1">{label}</span>
+              {href === "/dashboard/admin/messages" && unread > 0 && (
+                <span
+                  className="text-xs font-black px-1.5 py-0.5 rounded-full"
+                  style={{ background: active ? "rgba(26,28,28,0.2)" : "#D4AF37", color: active ? "#1a1c1c" : "#1a1c1c", fontSize: "10px", lineHeight: 1 }}
+                >
+                  {unread}
+                </span>
+              )}
             </Link>
           );
         })}
