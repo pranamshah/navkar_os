@@ -115,25 +115,31 @@ function AdminSidebar() {
   );
 }
 
-function useDeviceGuard() {
+function useDeviceGuard(role: string | undefined) {
   const [ok, setOk] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // SUPERADMIN bypasses device check entirely
+    if (role === "SUPERADMIN") { setOk(true); return; }
+
     const token = document.cookie.split(";").find((c) => c.trim().startsWith("navkar_admin_device="))?.split("=")[1]?.trim();
     if (!token) { setOk(false); return; }
     fetch(`/api/admin/devices?token=${token}`)
       .then((r) => r.json())
       .then((d) => setOk(d?.status === "APPROVED"))
       .catch(() => setOk(false));
-  }, []);
+  }, [role]);
 
   return ok;
 }
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const deviceOk = useDeviceGuard();
+  const { data: session, status } = useSession();
+  const role = session?.user?.role;
+  const deviceOk = useDeviceGuard(role);
 
-  if (deviceOk === null) {
+  // Wait for session to load before checking device
+  if (status === "loading" || deviceOk === null) {
     return (
       <div className="flex min-h-screen items-center justify-center" style={{ background: "#f9f9f9" }}>
         <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
