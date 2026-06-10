@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   const {
     razorpay_order_id, razorpay_payment_id, razorpay_signature,
-    product, plan, billingCycle, amount,
+    product, plan, billingCycle, amount, referralCode,
   } = await req.json();
 
   const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -56,6 +56,22 @@ export async function POST(req: Request) {
       paidAt: now,
     },
   });
+
+  // Mark referral code as used
+  if (referralCode) {
+    await prisma.referralCode.updateMany({
+      where: {
+        code: referralCode.trim().toUpperCase(),
+        usedBy: null,
+      },
+      data: {
+        usedBy: session.user.id,
+        usedAt: now,
+      },
+    }).catch(() => {
+      // Non-critical — don't fail payment if this update fails
+    });
+  }
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
