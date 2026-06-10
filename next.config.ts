@@ -29,13 +29,21 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  compress: true,
   images: {
     remotePatterns: [
+      { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "logo.clearbit.com" },
+      { protocol: "https", hostname: "ui-avatars.com" },
       { protocol: "https", hostname: "www.icegate.gov.in" },
       { protocol: "https", hostname: "gst.gov.in" },
     ],
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 86400,
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
   },
   async headers() {
     return [

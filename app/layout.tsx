@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import { EB_Garamond } from "next/font/google";
 import "./globals.css";
 import AuthSessionProvider from "@/components/providers/SessionProvider";
 import ClientGlobalProviders from "@/components/providers/ClientGlobalProviders";
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-eb-garamond",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
   title: "NavkarOS — The Operating System for Indian Logistics",
@@ -22,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en" className={`${GeistSans.variable} ${ebGaramond.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

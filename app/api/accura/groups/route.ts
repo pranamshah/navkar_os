@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
       _count: { select: { ledgers: true } },
     },
     orderBy: { name: "asc" },
+    take: 200,
   });
 
   return NextResponse.json(groups);

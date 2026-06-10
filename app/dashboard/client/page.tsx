@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import LogoBrand from "@/components/ui/LogoBrand";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 /* ── Types ─────────────────────────────────────────── */
 interface Subscription {
@@ -645,11 +646,17 @@ export default function ClientDashboardPage() {
 
   if (status === "loading" || subsLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div
-          className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
-        />
+      <div className="min-h-screen p-8">
+        <div className="mb-8 flex items-center gap-4">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <div>
+            <Skeleton className="h-5 w-48 mb-2" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-48" />)}
+        </div>
       </div>
     );
   }

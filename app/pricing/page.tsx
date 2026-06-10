@@ -140,7 +140,8 @@ export default function PricingPage() {
             const price = calcPrice(p.monthly, cycle);
             return (
               <motion.div key={p.id}
-                initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 className="rounded-2xl border bg-white flex flex-col"
                 style={{ borderColor: "#e5e7eb" }}>

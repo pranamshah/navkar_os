@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 interface Stats {
   totalUsers: number;
@@ -117,15 +118,17 @@ export default function AdminOverviewPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full min-h-[60vh]">
-        <div className="flex flex-col items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
-          />
-          <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
-            Loading
-          </p>
+      <div className="p-8">
+        <div className="mb-8">
+          <Skeleton className="h-8 w-64 mb-2" />
+          <Skeleton className="h-4 w-40" />
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-28" />)}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <Skeleton className="h-64" />
+          <Skeleton className="h-64" />
         </div>
       </div>
     );

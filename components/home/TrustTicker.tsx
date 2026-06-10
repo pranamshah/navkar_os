@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const LOGOS: { name: string; src: string; bg: string }[] = [
   { name: "MAERSK",       src: "/logos/maersk.svg",    bg: "#42B0D5" },
   { name: "HAPAG-LLOYD",  src: "/logos/hapag.svg",     bg: "#003A70" },
@@ -33,13 +35,12 @@ function LogoItem({ item }: { item: typeof LOGOS[number] }) {
           flexShrink: 0,
         }}
       >
-        <img
+        <Image
           src={item.src}
           alt={item.name}
           width={32}
           height={32}
-          loading="lazy"
-          style={{ objectFit: "contain", width: 32, height: 32 }}
+          style={{ objectFit: "contain" }}
         />
       </div>
       <span
