@@ -45,24 +45,34 @@ const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }>
 };
 
 function DocViewer({ label, url, onClose }: { label: string; url: string; onClose: () => void }) {
-  const isPdf = url.includes("application/pdf") || url.toLowerCase().endsWith(".pdf");
-  // Convert data: URL to blob URL so browser renders it properly
+  const isPdf = url.includes("application/pdf") || url.toLowerCase().includes(".pdf");
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
+
   useEffect(() => {
+    let revoke: string | null = null;
     if (url.startsWith("data:")) {
+      // Convert base64 data: URL → blob URL
       const arr = url.split(",");
       const mime = arr[0].match(/:(.*?);/)?.[1] ?? "application/octet-stream";
       const bstr = atob(arr[1]);
       const u8 = new Uint8Array(bstr.length);
       for (let i = 0; i < bstr.length; i++) u8[i] = bstr.charCodeAt(i);
       const blob = new Blob([u8], { type: mime });
-      const objUrl = URL.createObjectURL(blob);
-      setBlobUrl(objUrl);
-      return () => URL.revokeObjectURL(objUrl);
+      revoke = URL.createObjectURL(blob);
+      setBlobUrl(revoke);
     } else {
+      // External URL (Cloudinary etc.) — use directly
       setBlobUrl(url);
     }
+    return () => { if (revoke) URL.revokeObjectURL(revoke); };
   }, [url]);
+
+  // For PDFs: blob: URLs work in iframes; external URLs need Google Docs Viewer
+  const iframeSrc = blobUrl
+    ? blobUrl.startsWith("blob:")
+      ? blobUrl
+      : `https://docs.google.com/viewer?url=${encodeURIComponent(blobUrl)}&embedded=true`
+    : null;
 
   return (
     <div
@@ -79,16 +89,27 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
         <div className="flex items-center justify-between px-5 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <span className="text-sm font-semibold" style={{ color: "#D4AF37" }}>{label}</span>
           <div className="flex items-center gap-3">
-            {blobUrl && (
-              <a
-                href={blobUrl}
-                download={`${label.replace(/\s+/g, "_")}.${isPdf ? "pdf" : "jpg"}`}
-                className="text-xs px-3 py-1.5 rounded font-semibold transition-colors"
-                style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}
-              >
-                Download
-              </a>
-            )}
+            {/* Download — always fetches the original URL */}
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="text-xs px-3 py-1.5 rounded font-semibold transition-colors"
+              style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}
+            >
+              Download
+            </a>
+            {/* Open in new tab */}
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs px-3 py-1.5 rounded font-semibold transition-colors"
+              style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}
+            >
+              Open ↗
+            </a>
             <button onClick={onClose} className="text-xs px-3 py-1.5 rounded font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}>
               Close ✕
             </button>
@@ -97,9 +118,17 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
         {/* Content */}
         <div className="flex-1 overflow-auto flex items-center justify-center p-4">
           {!blobUrl ? (
-            <div className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</div>
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(255,255,255,0.1)", borderTopColor: "#D4AF37" }} />
+              <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</p>
+            </div>
           ) : isPdf ? (
-            <iframe src={blobUrl} className="w-full h-full rounded" style={{ border: "none", minHeight: "600px" }} title={label} />
+            <iframe
+              src={iframeSrc!}
+              className="w-full h-full rounded"
+              style={{ border: "none", minHeight: "600px", background: "#fff" }}
+              title={label}
+            />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={blobUrl} alt={label} className="max-w-full max-h-full object-contain rounded" />
