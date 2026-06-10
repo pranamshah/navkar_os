@@ -728,3 +728,417 @@ model NexQuotation {
   createdAt   DateTime     @default(now())
   @@index([userId])
 }
+
+// ─── EntryX CHA Module ────────────────────────────────────────
+
+model EntryClient {
+  id          String     @id @default(cuid())
+  userId      String
+  companyName String
+  contactName String
+  phone       String
+  email       String?
+  address     String?
+  gstin       String?
+  pan         String?
+  iecCode     String?
+  type        String     @default("IMPORTER")  // IMPORTER / EXPORTER / BOTH
+  kycVerified Boolean    @default(false)
+  jobs        EntryJob[]
+  createdAt   DateTime   @default(now())
+  @@index([userId])
+}
+
+model EntryJob {
+  id             String       @id @default(cuid())
+  userId         String
+  jobNo          String       @unique
+  jobType        String       // IMPORT / EXPORT
+  mode           String       // SEA / AIR / LAND
+  clientId       String
+  client         EntryClient  @relation(fields: [clientId], references: [id])
+  stage          String       @default("JOB_CREATED")
+  // Cargo
+  commodity      String?
+  hsCode         String?
+  packages       Int?
+  grossWeight    Float?
+  netWeight      Float?
+  cbm            Float?
+  countryOrigin  String?
+  portLoading    String?
+  portDischarge  String?
+  // Vessel/Flight
+  shippingLine   String?
+  vessel         String?
+  voyage         String?
+  blNo           String?
+  mblNo          String?
+  awbNo          String?
+  flightNo       String?
+  igmNo          String?
+  igmDate        DateTime?
+  arrivalDate    DateTime?
+  // Valuation
+  invoiceValue   Float?
+  invoiceCurrency String?
+  incoterms      String?
+  freight        Float?
+  insurance      Float?
+  assessValue    BigInt?
+  exchangeRate   Float?
+  // Duty
+  bcRate         Float?
+  igstRate       Float?
+  totalDuty      BigInt?
+  dutyPaidDate   DateTime?
+  // Filing
+  beNo           String?
+  beDate         DateTime?
+  sbNo           String?
+  sbDate         DateTime?
+  examType       String?       // RMS / YELLOW / RED
+  oocDate        DateTime?
+  leoDate         DateTime?
+  // Finance
+  professionalFee Int?
+  disbursements   Int          @default(0)
+  internalNotes   String?
+  documents       EntryDocument[]
+  charges         EntryCharge[]
+  invoices        EntryInvoice[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  @@index([userId])
+}
+
+model EntryDocument {
+  id          String   @id @default(cuid())
+  jobId       String
+  job         EntryJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  type        String
+  label       String
+  fileUrl     String
+  irnNumber   String?
+  uploadedBy  String
+  createdAt   DateTime @default(now())
+}
+
+model EntryCharge {
+  id        String   @id @default(cuid())
+  jobId     String
+  job       EntryJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  category  String
+  vendor    String
+  amount    Int
+  isPaid    Boolean  @default(false)
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model EntryInvoice {
+  id          String   @id @default(cuid())
+  userId      String
+  invoiceNo   String   @unique
+  jobId       String?
+  job         EntryJob? @relation(fields: [jobId], references: [id])
+  clientId    String
+  amount      Int
+  cgst        Int      @default(0)
+  sgst        Int      @default(0)
+  igst        Int      @default(0)
+  status      String   @default("DRAFT")
+  paidAt      DateTime?
+  createdAt   DateTime @default(now())
+  @@index([userId])
+}
+
+// ─── DockIQ CFS/Warehouse Module ─────────────────────────────
+
+model DockClient {
+  id          String          @id @default(cuid())
+  userId      String
+  companyName String
+  contactName String
+  phone       String
+  email       String?
+  gstin       String?
+  type        String          @default("IMPORTER") // IMPORTER / EXPORTER / CHA / SHIPPING_LINE
+  containers  DockContainer[]
+  invoices    DockInvoice[]
+  createdAt   DateTime        @default(now())
+  @@index([userId])
+}
+
+model DockStorageSlab {
+  id           String @id @default(cuid())
+  userId       String
+  shippingLine String
+  containerSize String // 20FT / 40FT / 40HC
+  freeDays     Int
+  slabs        Json   // [{ from, to, ratePerDay }]
+  createdAt    DateTime @default(now())
+  @@index([userId])
+}
+
+model DockContainer {
+  id              String       @id @default(cuid())
+  userId          String
+  containerNo     String
+  sealNo          String?
+  size            String       // 20FT / 40FT / 40HC
+  containerType   String       @default("DC")
+  shippingLine    String?
+  blNo            String?
+  igmNo           String?
+  vesselName      String?
+  voyage          String?
+  grossWeight     Float?
+  clientId        String?
+  client          DockClient?  @relation(fields: [clientId], references: [id])
+  chaName         String?
+  deliveryMode    String       @default("FCL") // FCL / LCL
+  freeDays        Int          @default(10)
+  gateInDate      DateTime
+  gateInGps       String?
+  sealIntact      Boolean      @default(true)
+  condition       String       @default("GOOD")
+  conditionPhotos Json?
+  // Stages
+  status          String       @default("IN_YARD") // IN_YARD / UNDER_EXAM / OOC / DESTUFFED / GATED_OUT
+  examChannel     String?      // RMS / YELLOW / RED
+  examDate        DateTime?
+  examOfficer     String?
+  examRemarks     String?
+  oocDate         DateTime?
+  beNo            String?
+  destuffDate     DateTime?
+  gateOutDate     DateTime?
+  // Storage
+  storageStartDate DateTime    @default(now())
+  storageStopDate  DateTime?
+  invoices         DockInvoice[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  @@index([userId])
+}
+
+model DockInvoice {
+  id          String         @id @default(cuid())
+  userId      String
+  invoiceNo   String         @unique
+  containerId String?
+  container   DockContainer? @relation(fields: [containerId], references: [id])
+  clientId    String?
+  client      DockClient?    @relation(fields: [clientId], references: [id])
+  blNo        String?
+  items       Json
+  subtotal    Int
+  cgst        Int            @default(0)
+  sgst        Int            @default(0)
+  igst        Int            @default(0)
+  totalAmount Int
+  status      String         @default("DRAFT")
+  paidAt      DateTime?
+  createdAt   DateTime       @default(now())
+  @@index([userId])
+}
+
+// ─── RunDesk Transport Module ─────────────────────────────────
+
+model RunClient {
+  id          String       @id @default(cuid())
+  userId      String
+  companyName String
+  contactName String
+  phone       String
+  email       String?
+  address     String?
+  gstin       String?
+  creditDays  Int          @default(0)
+  type        String       @default("CONSIGNOR") // CONSIGNOR / CONSIGNEE / BOTH
+  bookings    RunBooking[]
+  createdAt   DateTime     @default(now())
+  @@index([userId])
+}
+
+model RunVehicle {
+  id           String    @id @default(cuid())
+  userId       String
+  vehicleNo    String
+  vehicleType  String    // TRAILER / 20FT / 40FT / LCV / HCV
+  make         String?
+  model        String?
+  year         Int?
+  ownerType    String    @default("OWN") // OWN / HIRED
+  ownerName    String?
+  kmpl         Float?
+  rcExpiry     DateTime?
+  fitnessExpiry DateTime?
+  permitExpiry  DateTime?
+  insuranceExpiry DateTime?
+  isActive     Boolean   @default(true)
+  trips        RunTrip[]
+  createdAt    DateTime  @default(now())
+  @@index([userId])
+}
+
+model RunDriver {
+  id            String    @id @default(cuid())
+  userId        String
+  name          String
+  phone         String
+  licenceNo     String?
+  licenceExpiry DateTime?
+  isActive      Boolean   @default(true)
+  trips         RunTrip[]
+  createdAt     DateTime  @default(now())
+  @@index([userId])
+}
+
+model RunBooking {
+  id              String     @id @default(cuid())
+  userId          String
+  bookingNo       String     @unique
+  bookingType     String     @default("FTL") // FTL / PTL / ODC
+  bookingSource   String     @default("WALK_IN")
+  consignorId     String?
+  consignor       RunClient? @relation(fields: [consignorId], references: [id])
+  consigneeName   String?
+  consigneePhone  String?
+  fromLocation    String
+  toLocation      String
+  distanceKm      Float?
+  goodsDesc       String?
+  hsCode          String?
+  packages        Int?
+  weightKg        Float?
+  consignValue    Int?
+  freightAmount   Int
+  paymentTerms    String     @default("PAID") // PAID / TO_PAY / TBB
+  expectedDelivery DateTime?
+  specialInstr    String?
+  lrs             RunLR[]
+  createdAt       DateTime   @default(now())
+  @@index([userId])
+}
+
+model RunLR {
+  id          String     @id @default(cuid())
+  userId      String
+  lrNo        String     @unique
+  bookingId   String
+  booking     RunBooking @relation(fields: [bookingId], references: [id])
+  tripId      String?
+  trip        RunTrip?   @relation(fields: [tripId], references: [id])
+  status      String     @default("PENDING") // PENDING / IN_TRANSIT / DELIVERED / BILLED
+  deliveredAt DateTime?
+  epodUrl     String?
+  createdAt   DateTime   @default(now())
+  @@index([userId])
+}
+
+model RunTrip {
+  id             String     @id @default(cuid())
+  userId         String
+  tripNo         String     @unique
+  vehicleId      String?
+  vehicle        RunVehicle? @relation(fields: [vehicleId], references: [id])
+  driverId       String?
+  driver         RunDriver?  @relation(fields: [driverId], references: [id])
+  fromLocation   String
+  toLocation     String
+  status         String     @default("PLANNED") // PLANNED / LOADING / IN_TRANSIT / UNLOADING / DELIVERED / CLOSED
+  startTime      DateTime?
+  endTime        DateTime?
+  startOdometer  Int?
+  endOdometer    Int?
+  // GPS
+  trackingToken  String?    @unique
+  lastLat        Float?
+  lastLng        Float?
+  lastUpdated    DateTime?
+  // Costs
+  fuelLitres     Float?
+  fuelCost       Int?
+  tollCost       Int?
+  driverAllowance Int?
+  loadingCharges  Int?
+  otherCosts      Int?
+  totalCost       Int?
+  freightEarned   Int?
+  netMargin       Int?
+  lrs             RunLR[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  @@index([userId])
+}
+
+// ─── TradePilot Import/Export Intelligence ────────────────────
+
+model TradeSupplier {
+  id           String         @id @default(cuid())
+  userId       String
+  name         String
+  country      String
+  contactName  String?
+  email        String?
+  phone        String?
+  website      String?
+  hsCodesSupplied Json?
+  paymentTerms String?
+  shipments    TradeShipment[]
+  createdAt    DateTime       @default(now())
+  @@index([userId])
+}
+
+model TradeShipment {
+  id             String         @id @default(cuid())
+  userId         String
+  type           String         // IMPORT / EXPORT
+  poNumber       String?
+  supplierId     String?
+  supplier       TradeSupplier? @relation(fields: [supplierId], references: [id])
+  buyerName      String?
+  invoiceValue   Float?
+  invoiceCurrency String?
+  hsCode         String?
+  commodity      String?
+  incoterms      String?
+  portLoading    String?
+  portDischarge  String?
+  shippingLine   String?
+  vessel         String?
+  blNo           String?
+  eta            DateTime?
+  beNo           String?
+  sbNo           String?
+  dutyPaid       Int?
+  cfsCharges     Int?
+  freightCost    Int?
+  agentFee       Int?
+  totalLandedCost Int?
+  rodtepCredit   Int?
+  drawbackAmt    Int?
+  status         String         @default("ENQUIRY")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  @@index([userId])
+}
+
+model TradeBuyer {
+  id            String   @id @default(cuid())
+  userId        String
+  companyName   String
+  country       String
+  city          String?
+  hsCodesBuy    Json?
+  importVolume  String?
+  contactEmail  String?
+  contactPhone  String?
+  linkedIn      String?
+  status        String   @default("LEAD") // LEAD / CONTACTED / ACTIVE / CONVERTED
+  notes         String?
+  createdAt     DateTime @default(now())
+  @@index([userId])
+}
