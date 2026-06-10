@@ -1,7 +1,5 @@
-import { createGroq } from "@ai-sdk/groq";
-import { streamText } from "ai";
-
 export const maxDuration = 30;
+export const runtime = "edge";
 
 const SYSTEM_PROMPT = `You are NavkarBot, the friendly AI assistant for NavkarOS — India's first logistics operating system built exclusively for the Indian trade and logistics industry.
 
@@ -74,30 +72,85 @@ export async function POST(req: Request) {
   const apiKey = process.env.GROQ_API_KEY;
 
   if (!apiKey) {
-    return new Response(
-      JSON.stringify({ error: "Chat service not configured. Please contact navkaros.co@gmail.com" }),
-      { status: 503, headers: { "Content-Type": "application/json" } }
-    );
+    return new Response("Chat service not configured. Please contact navkaros.co@gmail.com", {
+      status: 503,
+      headers: { "Content-Type": "text/plain" },
+    });
   }
 
   try {
     const { messages } = await req.json();
 
-    const groq = createGroq({ apiKey });
-
-    const result = await streamText({
-      model: groq("llama3-8b-8192"),
-      system: SYSTEM_PROMPT,
-      messages,
-      maxOutputTokens: 400,
+    // Call Groq's OpenAI-compatible API directly — no SDK wrapper, guaranteed streaming
+    const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "llama3-8b-8192",
+        stream: true,
+        max_tokens: 400,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages,
+        ],
+      }),
     });
 
-    return result.toTextStreamResponse();
+    if (!groqRes.ok || !groqRes.body) {
+      const errText = await groqRes.text().catch(() => "Unknown error");
+      console.error("[NavkarBot] Groq error:", groqRes.status, errText);
+      return new Response("AI service temporarily unavailable. Please try again.", {
+        status: 502,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+
+    // Parse SSE chunks from Groq and stream only the plain text content to the client
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = groqRes.body!.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() ?? "";
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed.startsWith("data:")) continue;
+              const data = trimmed.slice(5).trim();
+              if (data === "[DONE]") { controller.close(); return; }
+              try {
+                const json = JSON.parse(data);
+                const text = json.choices?.[0]?.delta?.content ?? "";
+                if (text) controller.enqueue(new TextEncoder().encode(text));
+              } catch { /* skip malformed chunks */ }
+            }
+          }
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
+
   } catch (err) {
     console.error("[NavkarBot] error:", err);
-    return new Response(
-      JSON.stringify({ error: "Chat service unavailable. Please try again." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    return new Response("Chat service unavailable. Please try again.", {
+      status: 500,
+      headers: { "Content-Type": "text/plain" },
+    });
   }
 }

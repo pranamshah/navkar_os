@@ -61,7 +61,10 @@ export default function ChatWidget() {
         signal: abortRef.current.signal,
       });
 
-      if (!res.ok || !res.body) throw new Error("API error");
+      if (!res.ok || !res.body) {
+        const errText = await res.text().catch(() => "");
+        throw new Error(errText || "API error");
+      }
 
       const reader  = res.body.getReader();
       const decoder = new TextDecoder();
