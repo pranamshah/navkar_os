@@ -51,7 +51,6 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
   useEffect(() => {
     let revoke: string | null = null;
     if (url.startsWith("data:")) {
-      // Convert base64 data: URL → blob URL
       const arr = url.split(",");
       const mime = arr[0].match(/:(.*?);/)?.[1] ?? "application/octet-stream";
       const bstr = atob(arr[1]);
@@ -61,18 +60,10 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
       revoke = URL.createObjectURL(blob);
       setBlobUrl(revoke);
     } else {
-      // External URL (Cloudinary etc.) — use directly
       setBlobUrl(url);
     }
     return () => { if (revoke) URL.revokeObjectURL(revoke); };
   }, [url]);
-
-  // For PDFs: blob: URLs work in iframes; external URLs need Google Docs Viewer
-  const iframeSrc = blobUrl
-    ? blobUrl.startsWith("blob:")
-      ? blobUrl
-      : `https://docs.google.com/viewer?url=${encodeURIComponent(blobUrl)}&embedded=true`
-    : null;
 
   return (
     <div
@@ -89,26 +80,14 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
         <div className="flex items-center justify-between px-5 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <span className="text-sm font-semibold" style={{ color: "#D4AF37" }}>{label}</span>
           <div className="flex items-center gap-3">
-            {/* Download — always fetches the original URL */}
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              download
-              className="text-xs px-3 py-1.5 rounded font-semibold transition-colors"
+              className="text-xs px-3 py-1.5 rounded font-semibold"
               style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}
             >
-              Download
-            </a>
-            {/* Open in new tab */}
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs px-3 py-1.5 rounded font-semibold transition-colors"
-              style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}
-            >
-              Open ↗
+              Open in new tab ↗
             </a>
             <button onClick={onClose} className="text-xs px-3 py-1.5 rounded font-semibold" style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}>
               Close ✕
@@ -123,12 +102,21 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
               <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</p>
             </div>
           ) : isPdf ? (
-            <iframe
-              src={iframeSrc!}
-              className="w-full h-full rounded"
-              style={{ border: "none", minHeight: "600px", background: "#fff" }}
-              title={label}
-            />
+            /* PDF: render in iframe using blob URL (works for data: uploads) or open-in-tab for Cloudinary */
+            blobUrl.startsWith("blob:") ? (
+              <iframe src={blobUrl} className="w-full h-full rounded" style={{ border: "none", minHeight: "600px", background: "#fff" }} title={label} />
+            ) : (
+              <div className="flex flex-col items-center gap-5 text-center">
+                <span className="material-symbols-outlined" style={{ fontSize: 48, color: "rgba(212,175,55,0.5)" }}>picture_as_pdf</span>
+                <p className="text-sm font-semibold" style={{ color: "#D4AF37" }}>{label}</p>
+                <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>PDF preview unavailable in this browser</p>
+                <a href={url} target="_blank" rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded text-xs font-semibold uppercase tracking-widest"
+                  style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+                  Open PDF ↗
+                </a>
+              </div>
+            )
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={blobUrl} alt={label} className="max-w-full max-h-full object-contain rounded" />

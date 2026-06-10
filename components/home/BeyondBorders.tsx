@@ -39,29 +39,11 @@ export default function BeyondBorders() {
             }}
           />
 
-          {/* Static gold ribbons — CSS animation, no JS frame cost */}
+          {/* Static gold ribbons */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.2 }}>
-            <path
-              d="M-100,260 Q360,200 720,260 Q1080,320 1540,260"
-              stroke="#D4AF37" strokeWidth="0.8" fill="none"
-              style={{ animation: "ribbonA 7s ease-in-out infinite" }}
-            />
-            <path
-              d="M-100,290 Q400,235 760,290 Q1100,345 1540,290"
-              stroke="#D4AF37" strokeWidth="0.4" fill="none"
-              style={{ animation: "ribbonB 9s ease-in-out 1.5s infinite" }}
-            />
+            <path d="M-100,260 Q360,200 720,260 Q1080,320 1540,260" stroke="#D4AF37" strokeWidth="0.8" fill="none" />
+            <path d="M-100,290 Q400,235 760,290 Q1100,345 1540,290" stroke="#D4AF37" strokeWidth="0.4" fill="none" />
           </svg>
-          <style>{`
-            @keyframes ribbonA {
-              0%,100% { d: path("M-100,260 Q360,200 720,260 Q1080,320 1540,260"); }
-              50%      { d: path("M-100,280 Q360,220 720,245 Q1080,290 1540,280"); }
-            }
-            @keyframes ribbonB {
-              0%,100% { d: path("M-100,290 Q400,235 760,290 Q1100,345 1540,290"); }
-              50%      { d: path("M-100,305 Q400,255 760,275 Q1100,310 1540,305"); }
-            }
-          `}</style>
 
           {/* Content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-8">
