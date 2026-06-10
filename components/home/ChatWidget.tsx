@@ -80,11 +80,12 @@ export default function ChatWidget() {
       }
     } catch (err: unknown) {
       if (err instanceof Error && err.name === "AbortError") return;
+      const msg = err instanceof Error && err.message && err.message !== "API error"
+        ? err.message
+        : "Sorry, I couldn't connect to NavkarBot. Please try again in a moment.";
       setMessages((prev) =>
         prev.map((m) =>
-          m.id === assistantId
-            ? { ...m, content: "Sorry, I ran into an issue. Please try again." }
-            : m
+          m.id === assistantId ? { ...m, content: msg } : m
         )
       );
     } finally {
