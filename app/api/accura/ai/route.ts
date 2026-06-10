@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { google } from "@ai-sdk/google";
+import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";
 
 export async function POST(req: NextRequest) {
@@ -35,9 +35,13 @@ Rules:
 
 Return ONLY the JSON, no explanation.`;
 
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) return NextResponse.json({ error: "AI service not configured" }, { status: 503 });
+
   try {
+    const groq = createGroq({ apiKey });
     const { text: result } = await generateText({
-      model: google("gemini-1.5-flash"),
+      model: groq("llama3-8b-8192"),
       prompt,
       maxOutputTokens: 500,
     });

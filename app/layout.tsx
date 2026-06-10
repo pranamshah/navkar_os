@@ -4,6 +4,9 @@ import { EB_Garamond } from "next/font/google";
 import "./globals.css";
 import AuthSessionProvider from "@/components/providers/SessionProvider";
 import ClientGlobalProviders from "@/components/providers/ClientGlobalProviders";
+import dynamic from "next/dynamic";
+
+const ChatWidget = dynamic(() => import("@/components/home/ChatWidget"), { ssr: false });
 
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
@@ -43,6 +46,7 @@ export default function RootLayout({
         <AuthSessionProvider>
           <ClientGlobalProviders />
           {children}
+          <ChatWidget />
         </AuthSessionProvider>
       </body>
     </html>

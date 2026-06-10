@@ -27,12 +27,10 @@ export default function ChatWidget() {
   const inputRef   = useRef<HTMLInputElement>(null);
   const abortRef   = useRef<AbortController | null>(null);
 
-  // Auto-scroll
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Focus on open
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 180);
@@ -52,15 +50,10 @@ export default function ChatWidget() {
     setMessages((prev) => [...prev, userMsg, assistantMsg]);
     setInput("");
     setLoading(true);
-
     abortRef.current = new AbortController();
 
     try {
-      const history = [...messages, userMsg].map((m) => ({
-        role: m.role,
-        content: m.content,
-      }));
-
+      const history = [...messages, userMsg].map((m) => ({ role: m.role, content: m.content }));
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,9 +71,8 @@ export default function ChatWidget() {
         const { done, value } = await reader.read();
         if (done) break;
         accumulated += decoder.decode(value, { stream: true });
-        const current = accumulated;
         setMessages((prev) =>
-          prev.map((m) => m.id === assistantId ? { ...m, content: current } : m)
+          prev.map((m) => m.id === assistantId ? { ...m, content: accumulated } : m)
         );
       }
     } catch (err: unknown) {
@@ -101,6 +93,8 @@ export default function ChatWidget() {
     e.preventDefault();
     sendMessage(input);
   };
+
+  const sendSuggestion = (text: string) => sendMessage(text);
 
   return (
     <>
@@ -137,6 +131,7 @@ export default function ChatWidget() {
           className="relative w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform duration-200 hover:scale-105 active:scale-95"
           style={{ background: open ? "#1a1c1c" : "#D4AF37" }}
           aria-label="Open NavkarBot"
+          type="button"
         >
           <AnimatePresence mode="wait">
             {open ? (
@@ -182,7 +177,7 @@ export default function ChatWidget() {
               <div className="flex-1 min-w-0">
                 <p className="text-white text-sm font-bold leading-tight">NavkarBot</p>
                 <p className="text-xs leading-tight" style={{ color: "rgba(255,255,255,0.38)" }}>
-                  Powered by Gemini · Always free
+                  Powered by Groq · Always free
                 </p>
               </div>
               <button
@@ -209,8 +204,9 @@ export default function ChatWidget() {
                     {SUGGESTED.map((s) => (
                       <button
                         key={s}
-                        onClick={() => sendMessage(s)}
+                        onClick={() => sendSuggestion(s)}
                         disabled={loading}
+                        type="button"
                         className="text-left text-xs px-3 py-2 rounded-xl border transition-all duration-150 hover:border-[#D4AF37] hover:text-[#1a1c1c] font-medium disabled:opacity-50"
                         style={{ background: "#fff", borderColor: "#e5e7eb", color: "#4b5563" }}
                       >
