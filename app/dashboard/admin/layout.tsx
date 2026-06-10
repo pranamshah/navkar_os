@@ -14,6 +14,7 @@ const NAV = [
   { href: "/dashboard/admin/messages", label: "Messages", icon: "mail" },
   { href: "/dashboard/admin/tickets", label: "Tickets", icon: "support_agent" },
   { href: "/dashboard/admin/billing", label: "Billing", icon: "receipt_long" },
+  { href: "/dashboard/admin/referrals", label: "Referrals", icon: "confirmation_number" },
   { href: "/dashboard/admin/devices", label: "Devices", icon: "devices" },
 ];
 

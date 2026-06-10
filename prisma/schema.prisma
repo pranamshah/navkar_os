@@ -696,6 +696,19 @@ model ContactMessage {
   createdAt DateTime @default(now())
 }
 
+model ReferralCode {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  discountPercent Int       // e.g. 10 = 10% off
+  description     String?   // optional note like "for Rajesh @ ABC Logistics"
+  expiresAt       DateTime
+  usedBy          String?   // userId who redeemed it
+  usedAt          DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@index([code])
+}
+
 model NexQuotation {
   id          String       @id @default(cuid())
   userId      String
