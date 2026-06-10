@@ -149,6 +149,10 @@ export function CobeGlobe({ markers = [], arcs = [], className = "" }: GlobeProp
       }))
     }
 
+    // Pause RAF when tab is not visible — saves GPU when user switches tabs
+    const onVisibility = () => { paused.current = document.hidden; }
+    document.addEventListener("visibilitychange", onVisibility)
+
     if (canvas.offsetWidth > 0) {
       init()
     } else {
@@ -156,12 +160,13 @@ export function CobeGlobe({ markers = [], arcs = [], className = "" }: GlobeProp
         if (entries[0]?.contentRect.width > 0) { ro.disconnect(); init() }
       })
       ro.observe(canvas)
-      return () => ro.disconnect()
+      return () => { ro.disconnect(); document.removeEventListener("visibilitychange", onVisibility) }
     }
 
     return () => {
       cancelAnimationFrame(rafId)
       globe?.destroy()
+      document.removeEventListener("visibilitychange", onVisibility)
     }
   // markers/arcs are static config; eslint-disable is intentional
   // eslint-disable-next-line react-hooks/exhaustive-deps

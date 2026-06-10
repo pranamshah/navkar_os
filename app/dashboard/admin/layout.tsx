@@ -23,13 +23,17 @@ function AdminSidebar() {
   const [unread, setUnread] = useState(0);
 
   useEffect(() => {
-    fetch("/api/admin/messages")
-      .then((r) => r.json())
-      .then((msgs) => {
-        if (Array.isArray(msgs)) setUnread(msgs.filter((m: { status: string }) => m.status === "UNREAD").length);
-      })
-      .catch(() => {});
-  }, [pathname]); // re-check when navigating
+    const check = () =>
+      fetch("/api/admin/messages")
+        .then((r) => r.json())
+        .then((msgs) => {
+          if (Array.isArray(msgs)) setUnread(msgs.filter((m: { status: string }) => m.status === "UNREAD").length);
+        })
+        .catch(() => {});
+    check(); // on mount
+    const t = setInterval(check, 60_000); // re-check every 60s, not on every navigation
+    return () => clearInterval(t);
+  }, []); // run once
 
   const isActive = (href: string) =>
     href === "/dashboard/admin" ? pathname === href : pathname.startsWith(href);

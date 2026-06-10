@@ -18,8 +18,13 @@ export default function TestimonialsCarousel() {
   const prev = useCallback(() => go((current - 1 + testimonials.length) % testimonials.length), [current, go]);
 
   useEffect(() => {
-    const t = setInterval(next, 5500);
-    return () => clearInterval(t);
+    let t: ReturnType<typeof setInterval>;
+    const start = () => { t = setInterval(next, 5500); };
+    const stop  = () => clearInterval(t);
+    const onVisibility = () => document.hidden ? stop() : start();
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => { stop(); document.removeEventListener("visibilitychange", onVisibility); };
   }, [next]);
 
   return (

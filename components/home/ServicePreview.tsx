@@ -96,8 +96,13 @@ function ServiceDemo() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setActive((s) => (s + 1) % services.length), 3800);
-    return () => clearInterval(t);
+    let t: ReturnType<typeof setInterval>;
+    const start = () => { t = setInterval(() => setActive((s) => (s + 1) % services.length), 3800); };
+    const stop  = () => clearInterval(t);
+    const onVisibility = () => document.hidden ? stop() : start();
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => { stop(); document.removeEventListener("visibilitychange", onVisibility); };
   }, []);
 
   const svc = services[active];

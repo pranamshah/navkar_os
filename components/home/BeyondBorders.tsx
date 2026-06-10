@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // still used for whileInView reveals
 import Image from "next/image";
 
 export default function BeyondBorders() {
@@ -39,29 +39,29 @@ export default function BeyondBorders() {
             }}
           />
 
-          {/* Animated gold ribbons */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.25 }}>
-            <motion.path
+          {/* Static gold ribbons — CSS animation, no JS frame cost */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.2 }}>
+            <path
               d="M-100,260 Q360,200 720,260 Q1080,320 1540,260"
               stroke="#D4AF37" strokeWidth="0.8" fill="none"
-              animate={{ d: [
-                "M-100,260 Q360,200 720,260 Q1080,320 1540,260",
-                "M-100,280 Q360,220 720,245 Q1080,290 1540,280",
-                "M-100,260 Q360,200 720,260 Q1080,320 1540,260",
-              ]}}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              style={{ animation: "ribbonA 7s ease-in-out infinite" }}
             />
-            <motion.path
+            <path
               d="M-100,290 Q400,235 760,290 Q1100,345 1540,290"
               stroke="#D4AF37" strokeWidth="0.4" fill="none"
-              animate={{ d: [
-                "M-100,290 Q400,235 760,290 Q1100,345 1540,290",
-                "M-100,305 Q400,255 760,275 Q1100,310 1540,305",
-                "M-100,290 Q400,235 760,290 Q1100,345 1540,290",
-              ]}}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              style={{ animation: "ribbonB 9s ease-in-out 1.5s infinite" }}
             />
           </svg>
+          <style>{`
+            @keyframes ribbonA {
+              0%,100% { d: path("M-100,260 Q360,200 720,260 Q1080,320 1540,260"); }
+              50%      { d: path("M-100,280 Q360,220 720,245 Q1080,290 1540,280"); }
+            }
+            @keyframes ribbonB {
+              0%,100% { d: path("M-100,290 Q400,235 760,290 Q1100,345 1540,290"); }
+              50%      { d: path("M-100,305 Q400,255 760,275 Q1100,310 1540,305"); }
+            }
+          `}</style>
 
           {/* Content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-8">
