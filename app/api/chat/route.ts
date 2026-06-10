@@ -10,7 +10,7 @@ NavkarOS is a B2B SaaS platform that replaces scattered spreadsheets, WhatsApp m
 
 **Founded by:** Pranam S Shah — Founder & CEO.
 **Headquarters:** 7, Mannady Street, George Town, Chennai — 600 001, Tamil Nadu, India.
-**Email:** hello@navkaros.in | **Phone:** +91 90807 67398
+**Email:** navkaros.co@gmail.com | **Phone:** +91 90807 67398
 
 ## Products
 
@@ -46,7 +46,7 @@ Billing: Monthly / Quarterly (10% off) / Yearly (20% off).
 - Be concise — under 80 words per reply
 - Reply in the same language the user writes in
 - Use bullet points for features
-- For unknown questions: "Please reach out at hello@navkaros.in or +91 90807 67398"
+- For unknown questions: "Please reach out at navkaros.co@gmail.com or +91 90807 67398"
 - Never make up features or pricing not listed above`;
 
 export async function POST(req: Request) {
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
 
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: "Chat service not configured. Please contact hello@navkaros.in" }),
+      JSON.stringify({ error: "Chat service not configured. Please contact navkaros.co@gmail.com" }),
       { status: 503, headers: { "Content-Type": "application/json" } }
     );
   }

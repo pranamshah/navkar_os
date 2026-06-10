@@ -16,7 +16,7 @@ If you cancel during the free trial, you will not be charged. Your account will 
   },
   {
     title: "2. Subscription Cancellations",
-    content: `You may cancel your NavkarOS subscription at any time from your account settings or by contacting us at billing@navkaros.in.
+    content: `You may cancel your NavkarOS subscription at any time from your account settings or by contacting us at navkaros.co@gmail.com.
 
 **Monthly Plans:** Cancellation takes effect at the end of the current billing month. You retain access until the end of the paid period.
 
@@ -35,13 +35,13 @@ If you subscribe to NavkarOS for the first time and are not satisfied with the p
 • You have not exceeded the fair usage limits for your plan
 • Your request is submitted within 30 days of the first charge
 
-To request a refund under this guarantee, email billing@navkaros.in with your account email and reason for the request.
+To request a refund under this guarantee, email navkaros.co@gmail.com with your account email and reason for the request.
 
 **Service Disruptions:**
 If NavkarOS experiences unplanned downtime exceeding 4 continuous hours that materially impacts your operations, you may be eligible for a proportional credit applied to your next invoice. Credits are calculated based on the downtime duration relative to your monthly plan cost. Refunds are not issued for service disruptions; only credits.
 
 **Billing Errors:**
-If you were charged incorrectly (e.g., double-billed or charged after cancellation), please contact us immediately at billing@navkaros.in. Verified billing errors will be refunded within 7 business days to the original payment method.`,
+If you were charged incorrectly (e.g., double-billed or charged after cancellation), please contact us immediately at navkaros.co@gmail.com. Verified billing errors will be refunded within 7 business days to the original payment method.`,
   },
   {
     title: "4. Non-Refundable Situations",
@@ -78,7 +78,7 @@ Razorpay, our payment processor, may have additional processing timelines that a
 • Dispute the chargeback with evidence of service delivery
 • Charge a dispute-processing fee if the chargeback is found to be unjustified
 
-We strongly encourage you to contact us at billing@navkaros.in before initiating any chargeback.`,
+We strongly encourage you to contact us at navkaros.co@gmail.com before initiating any chargeback.`,
   },
   {
     title: "8. GST on Refunds",
@@ -88,7 +88,7 @@ We strongly encourage you to contact us at billing@navkaros.in before initiating
     title: "9. Contact for Billing Issues",
     content: `For any billing or refund queries:
 
-**Email:** billing@navkaros.in
+**Email:** navkaros.co@gmail.com
 **Phone:** +91 90807 67398 (Mon–Sat, 9am–7pm IST)
 **Address:** NavkarOS Logistics Pvt. Ltd., 7, Mannady Street, George Town, Chennai — 600 001
 
@@ -128,7 +128,7 @@ export default function RefundPage() {
             <div className="mt-6 p-5" style={{ background: "rgba(212,175,55,0.07)", border: "0.5px solid rgba(212,175,55,0.3)" }}>
               <p className="text-sm font-semibold mb-1" style={{ color: "#1a1c1c" }}>30-Day Money-Back Guarantee</p>
               <p className="text-sm" style={{ color: "#4c4546", lineHeight: 1.7 }}>
-                Not happy in the first 30 days of your paid subscription? Get a full refund — no questions asked. Email us at <a href="mailto:billing@navkaros.in" style={{ color: "#D4AF37" }}>billing@navkaros.in</a>.
+                Not happy in the first 30 days of your paid subscription? Get a full refund — no questions asked. Email us at <a href="mailto:navkaros.co@gmail.com" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com</a>.
               </p>
             </div>
           </div>

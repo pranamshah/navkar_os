@@ -61,7 +61,7 @@ export async function POST(
                 </div>
                 <p style="font-size:13px;color:#7e7576;">
                   Please reply to this email with the requested documents, or contact us at
-                  <a href="mailto:support@navkaros.com" style="color:#D4AF37;">support@navkaros.com</a>
+                  <a href="mailto:navkaros.co@gmail.com" style="color:#D4AF37;">navkaros.co@gmail.com</a>
                 </p>
               </div>
             </div>`,

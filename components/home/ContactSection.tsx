@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 const contactDetails = [
-  { label: "Email", value: "hello@navkaros.in", Icon: Mail },
+  { label: "Email", value: "navkaros.co@gmail.com", Icon: Mail },
   { label: "Phone", value: "+91 90807 67398", Icon: Phone },
   { label: "Office", value: "7, Mannady Street, George Town, Chennai — 600 001", Icon: MapPin },
   { label: "Support Hours", value: "Mon–Sat, 9am–7pm IST", Icon: Clock },

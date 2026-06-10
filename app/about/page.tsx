@@ -166,17 +166,17 @@ export default function AboutPage() {
                 </h3>
                 <p className="text-sm mb-1" style={{ color: "#4c4546" }}>7, Mannady Street, George Town</p>
                 <p className="text-sm mb-1" style={{ color: "#4c4546" }}>Chennai — 600 001, Tamil Nadu, India</p>
-                <p className="text-sm mb-6" style={{ color: "#4c4546" }}>+91 90807 67398 · hello@navkaros.in</p>
+                <p className="text-sm mb-6" style={{ color: "#4c4546" }}>+91 90807 67398 · navkaros.co@gmail.com</p>
                 <p className="text-sm italic" style={{ color: "#D4AF37" }}>Built in Chennai. Made for the world.</p>
               </div>
               <div className="flex flex-col gap-3">
                 <a
-                  href="mailto:hello@navkaros.in"
+                  href="mailto:navkaros.co@gmail.com"
                   className="flex items-center justify-between px-5 py-4 border transition-all duration-200"
                   style={{ borderColor: "rgba(0,0,0,0.1)", borderWidth: "0.5px" }}
                 >
                   <span className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>Email us</span>
-                  <span className="text-xs" style={{ color: "#D4AF37" }}>hello@navkaros.in →</span>
+                  <span className="text-xs" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com →</span>
                 </a>
                 <a
                   href="tel:+919080767398"

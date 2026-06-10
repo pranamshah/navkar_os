@@ -85,7 +85,7 @@ export default function RazorpayCheckout({
         if (result.success) {
           router.push(result.redirectUrl ?? "/dashboard/client");
         } else {
-          alert("Payment verification failed. Contact support@navkaros.com");
+          alert("Payment verification failed. Contact navkaros.co@gmail.com");
           setLoading(false);
         }
       },

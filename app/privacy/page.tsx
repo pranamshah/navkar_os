@@ -84,7 +84,7 @@ While we take every reasonable precaution, no method of internet transmission is
 • **Portability:** Receive your data in a machine-readable format.
 • **Withdrawal of Consent:** Withdraw consent for marketing communications at any time.
 
-To exercise these rights, email us at privacy@navkaros.in. We will respond within 30 days.`,
+To exercise these rights, email us at navkaros.co@gmail.com. We will respond within 30 days.`,
   },
   {
     title: "8. Cookies",
@@ -115,7 +115,7 @@ You can control cookies through your browser settings. Disabling essential cooki
 Attn: Privacy Officer
 7, Mannady Street, George Town
 Chennai — 600 001, Tamil Nadu, India
-Email: privacy@navkaros.in
+Email: navkaros.co@gmail.com
 Phone: +91 90807 67398`,
   },
 ];

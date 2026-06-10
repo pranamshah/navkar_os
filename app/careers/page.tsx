@@ -43,13 +43,13 @@ export default function CareersPage() {
                 We&apos;re not actively hiring at the moment, but we&apos;re always interested in talking to exceptional people who are passionate about logistics and technology.
               </p>
               <a
-                href="mailto:careers@navkaros.in"
+                href="mailto:navkaros.co@gmail.com"
                 className="inline-block px-8 py-3 text-xs font-semibold uppercase tracking-widest"
                 style={{ background: "#1a1c1c", color: "#D4AF37" }}
               >
                 Send a Speculative Application →
               </a>
-              <p className="text-xs mt-4" style={{ color: "#7e7576" }}>careers@navkaros.in</p>
+              <p className="text-xs mt-4" style={{ color: "#7e7576" }}>navkaros.co@gmail.com</p>
             </div>
 
             {/* Perks */}

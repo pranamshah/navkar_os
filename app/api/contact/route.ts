@@ -95,7 +95,7 @@ export async function POST(req: Request) {
             </a>
           </div>
           <p style="font-size: 11px; color: #b0b0b0; text-align: center; margin-top: 28px;">
-            NavkarOS · 7, Mannady Street, George Town, Chennai — 600 001 · hello@navkaros.in
+            NavkarOS · 7, Mannady Street, George Town, Chennai — 600 001 · navkaros.co@gmail.com
           </p>
         </div>
       `,

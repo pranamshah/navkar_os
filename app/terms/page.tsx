@@ -125,7 +125,7 @@ For consumer disputes, users may also approach the appropriate consumer forum un
 **NavkarOS Logistics Pvt. Ltd.**
 7, Mannady Street, George Town
 Chennai — 600 001, Tamil Nadu, India
-Email: legal@navkaros.in
+Email: navkaros.co@gmail.com
 Phone: +91 90807 67398`,
   },
 ];

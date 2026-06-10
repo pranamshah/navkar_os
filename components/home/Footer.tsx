@@ -27,7 +27,7 @@ const LEGAL: { label: string; href: string }[] = [
 
 const CONTACT: { label: string; href: string }[] = [
   { label: "Book a Demo",      href: "/#contact" },
-  { label: "Technical Support", href: "mailto:support@navkaros.in" },
+  { label: "Technical Support", href: "mailto:navkaros.co@gmail.com" },
   { label: "Enterprise Sales", href: "/#contact" },
 ];
 
@@ -51,7 +51,7 @@ export default function Footer() {
               Indian logistics ecosystem.
             </p>
             <div className="flex flex-col gap-2">
-              <a href="mailto:hello@navkaros.in" className="text-xs hover:text-[#D4AF37] transition-colors" style={{ color: "#7e7576" }}>hello@navkaros.in</a>
+              <a href="mailto:navkaros.co@gmail.com" className="text-xs hover:text-[#D4AF37] transition-colors" style={{ color: "#7e7576" }}>navkaros.co@gmail.com</a>
               <a href="tel:+919080767398" className="text-xs hover:text-[#D4AF37] transition-colors" style={{ color: "#7e7576" }}>+91 90807 67398</a>
               <p className="text-xs" style={{ color: "#7e7576" }}>7, Mannady Street, George Town</p>
               <p className="text-xs" style={{ color: "#7e7576" }}>Chennai — 600 001, Tamil Nadu</p>

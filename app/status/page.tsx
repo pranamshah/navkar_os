@@ -168,7 +168,7 @@ export default function StatusPage() {
           <h2 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "28px", color: "#1a1c1c" }}>Application Not Approved</h2>
           <p className="mt-3 text-sm" style={{ color: "#7e7576" }}>
             Your account was not approved. Please contact{" "}
-            <a href="mailto:support@navkaros.com" style={{ color: "#D4AF37" }}>support@navkaros.com</a>{" "}
+            <a href="mailto:navkaros.co@gmail.com" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com</a>{" "}
             for assistance.
           </p>
           <Link href="/" className="inline-block mt-8 text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
@@ -341,12 +341,12 @@ export default function StatusPage() {
               <span className="text-sm font-semibold">WhatsApp Us</span>
             </a>
             <a
-              href="mailto:support@navkaros.com"
+              href="mailto:navkaros.co@gmail.com"
               className="flex items-center gap-3 py-3 px-4 border transition-all duration-200"
               style={{ borderColor: "rgba(0,0,0,0.1)", borderWidth: "0.5px", color: "#1a1c1c" }}
             >
               <Mail size={14} style={{ color: "#D4AF37" }} />
-              <span className="text-sm font-semibold">support@navkaros.com</span>
+              <span className="text-sm font-semibold">navkaros.co@gmail.com</span>
             </a>
           </div>
         </div>
