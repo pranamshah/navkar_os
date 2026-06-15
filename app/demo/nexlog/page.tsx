@@ -27,9 +27,9 @@ const MODULES = [
 
 const SAMPLE_JOBS = [
   { no: "NXL/26/0142", client: "Ravi Exports Pvt Ltd",  route: "JNPT→DEHAM",  mode: "SEA", type: "EXPORT", stage: "Vessel Sailed",      eta: "15 Jul 2026", stageColor: "#1565C0", stageBg: "#E3F2FD" },
-  { no: "NXL/26/0141", client: "HDFC Traders",          route: "INMAA→SGSIN", mode: "SEA", type: "EXPORT", stage: "At Customs",          eta: "12 Jul 2026", stageColor: "#D97706", stageBg: "#FFFBEB" },
+  { no: "NXL/26/0141", client: "HDFC Traders",          route: "INMAA→SGSIN", mode: "SEA", type: "EXPORT", stage: "At Customs",          eta: "12 Jul 2026", stageColor: "#1E40AF", stageBg: "#FFFBEB" },
   { no: "NXL/26/0140", client: "Global Impex",          route: "INBLR→OMKWI", mode: "AIR", type: "EXPORT", stage: "In Transit",          eta: "10 Jul 2026", stageColor: "#1565C0", stageBg: "#E3F2FD" },
-  { no: "NXL/26/0139", client: "Sunrise Logistics",     route: "JNPT→DXBPO",  mode: "SEA", type: "EXPORT", stage: "CFS Destuffed",       eta: "8 Jul 2026",  stageColor: "#7C3AED", stageBg: "#F5F3FF" },
+  { no: "NXL/26/0139", client: "Sunrise Logistics",     route: "JNPT→DXBPO",  mode: "SEA", type: "EXPORT", stage: "CFS Destuffed",       eta: "8 Jul 2026",  stageColor: "#1E40AF", stageBg: "#F5F3FF" },
   { no: "NXL/26/0138", client: "Sakthi Cargo",          route: "INMAA→CNSHA", mode: "SEA", type: "EXPORT", stage: "Booking Confirmed",   eta: "20 Jul 2026", stageColor: "#374151", stageBg: "#F3F4F6" },
 ];
 
@@ -37,10 +37,10 @@ function DashboardScreen() {
   const kpis = [
     { label: "Active Jobs",        value: "28",         icon: "work",            color: "#1565C0", bg: "#E3F2FD" },
     { label: "Import Jobs",        value: "16",         icon: "download",        color: "#0D47A1", bg: "#E3F2FD" },
-    { label: "Export Jobs",        value: "12",         icon: "upload",          color: "#7C3AED", bg: "#F5F3FF" },
+    { label: "Export Jobs",        value: "12",         icon: "upload",          color: "#1E40AF", bg: "#F5F3FF" },
     { label: "Pending Customs",    value: "5",          icon: "gavel",           color: "#DC2626", bg: "#FEF2F2" },
     { label: "Revenue This Month", value: "₹8,42,500",  icon: "trending_up",     color: "#059669", bg: "#ECFDF5" },
-    { label: "Outstanding",        value: "₹1,94,000",  icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
+    { label: "Outstanding",        value: "₹1,94,000",  icon: "pending_actions", color: "#1E40AF", bg: "#FFFBEB" },
   ];
 
   return (
@@ -112,7 +112,7 @@ function DashboardScreen() {
           <h2 className="font-semibold mb-2.5" style={{ color: "#111827", fontSize: "11px" }}>Alerts</h2>
           <div className="flex flex-col gap-2">
             <div className="flex items-start gap-2 p-2 rounded-lg border" style={{ background: "#FFFBEB", borderColor: "#FDE68A" }}>
-              <span className="material-symbols-outlined flex-shrink-0 mt-0.5" style={{ fontSize: 12, color: "#D97706", fontVariationSettings: "'FILL' 1" }}>warning</span>
+              <span className="material-symbols-outlined flex-shrink-0 mt-0.5" style={{ fontSize: 12, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}>warning</span>
               <p style={{ fontSize: "9px", color: "#374151", lineHeight: 1.5 }}>TCNU8456731 — 1 free day remaining</p>
             </div>
             <div className="flex items-start gap-2 p-2 rounded-lg border" style={{ background: "#FEF2F2", borderColor: "#FECACA" }}>
@@ -173,7 +173,7 @@ function JobsScreen() {
                 <td className="py-2.5 px-2.5 font-medium" style={{ color: "#111827", fontSize: "10px" }}>{j.client}</td>
                 <td className="py-2.5 px-2.5" style={{ color: "#6B7280", fontSize: "10px" }}>{j.route}</td>
                 <td className="py-2.5 px-2.5">
-                  <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.type === "IMPORT" ? "#E3F2FD" : "#F5F3FF", color: j.type === "IMPORT" ? "#1565C0" : "#7C3AED", fontSize: "8px" }}>{j.type}</span>
+                  <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.type === "IMPORT" ? "#E3F2FD" : "#F5F3FF", color: j.type === "IMPORT" ? "#1565C0" : "#1E40AF", fontSize: "8px" }}>{j.type}</span>
                 </td>
                 <td className="py-2.5 px-2.5">
                   <span className="px-1.5 py-0.5 rounded font-bold" style={{ background: j.mode === "SEA" ? "#DBEAFE" : "#FEF3C7", color: j.mode === "SEA" ? "#1E40AF" : "#92400E", fontSize: "8px" }}>{j.mode}</span>
@@ -198,7 +198,7 @@ function InvoicesScreen() {
   const invoices = [
     { no: "INV-2026-0142", job: "NXL/26/0142", client: "Ravi Exports Pvt Ltd", date: "2 Jul 2026",  amount: 78500,  gst: 7065,  status: "Paid",    statusColor: "#059669", statusBg: "#ECFDF5" },
     { no: "INV-2026-0141", job: "NXL/26/0141", client: "HDFC Traders",         date: "30 Jun 2026", amount: 48000,  gst: 4320,  status: "Overdue",  statusColor: "#DC2626", statusBg: "#FEF2F2" },
-    { no: "INV-2026-0140", job: "NXL/26/0140", client: "Global Impex",         date: "28 Jun 2026", amount: 15000,  gst: 1350,  status: "Partial",  statusColor: "#D97706", statusBg: "#FFFBEB" },
+    { no: "INV-2026-0140", job: "NXL/26/0140", client: "Global Impex",         date: "28 Jun 2026", amount: 15000,  gst: 1350,  status: "Partial",  statusColor: "#1E40AF", statusBg: "#FFFBEB" },
     { no: "INV-2026-0139", job: "NXL/26/0139", client: "Sakthi Cargo",         date: "25 Jun 2026", amount: 10000,  gst: 900,   status: "Paid",    statusColor: "#059669", statusBg: "#ECFDF5" },
   ];
 
@@ -217,7 +217,7 @@ function InvoicesScreen() {
         {[
           { l: "Total Invoiced", v: "₹18.5 L", c: "#1565C0", bg: "#E3F2FD" },
           { l: "Total Collected", v: "₹13.2 L", c: "#059669", bg: "#ECFDF5" },
-          { l: "Outstanding",    v: "₹5.3 L",  c: "#D97706", bg: "#FFFBEB" },
+          { l: "Outstanding",    v: "₹5.3 L",  c: "#1E40AF", bg: "#FFFBEB" },
         ].map((k) => (
           <div key={k.l} className="rounded-xl border p-3" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500, marginBottom: "3px" }}>{k.l}</div>
@@ -274,7 +274,7 @@ function InvoicesScreen() {
 function TrackingScreen() {
   const shipments = [
     { job: "NXL/26/0142", vessel: "CMA CGM TAGE",       location: "Suez Canal",   stage: "Vessel Sailed",  eta: "15 Jul", status: "On Time", statusColor: "#059669", statusBg: "#ECFDF5" },
-    { job: "NXL/26/0141", vessel: "MSC MAYA",            location: "JNPT Customs", stage: "At Customs",     eta: "12 Jul", status: "Delayed", statusColor: "#D97706", statusBg: "#FFFBEB" },
+    { job: "NXL/26/0141", vessel: "MSC MAYA",            location: "JNPT Customs", stage: "At Customs",     eta: "12 Jul", status: "Delayed", statusColor: "#1E40AF", statusBg: "#FFFBEB" },
     { job: "NXL/26/0139", vessel: "COSCO STAR",          location: "Dubai Port",   stage: "Transshipment",  eta: "8 Jul",  status: "On Time", statusColor: "#059669", statusBg: "#ECFDF5" },
     { job: "NXL/26/0138", vessel: "Hapag Lloyd GLOBE",   location: "Chennai Port", stage: "Vessel Sailed",  eta: "20 Jul", status: "On Time", statusColor: "#059669", statusBg: "#ECFDF5" },
   ];
@@ -333,9 +333,9 @@ function PreAlertScreen() {
   const rows = [
     { job: "NXL/26/0142", bl: "CMDU8723419",   vessel: "CMA CGM TAGE",     pol: "JNPT", pod: "DEHAM", eta: "15 Jul", paStatus: "Sent",    paColor: "#059669", paBg: "#ECFDF5" },
     { job: "NXL/26/0141", bl: "MSCU5634871",   vessel: "MSC MAYA",          pol: "INMAA", pod: "SGSIN", eta: "12 Jul", paStatus: "Sent",    paColor: "#059669", paBg: "#ECFDF5" },
-    { job: "NXL/26/0140", bl: "IATSA7812340",  vessel: "IndiGo 6E-2214",    pol: "INBLR", pod: "OMKWI", eta: "10 Jul", paStatus: "Pending", paColor: "#D97706", paBg: "#FFFBEB" },
+    { job: "NXL/26/0140", bl: "IATSA7812340",  vessel: "IndiGo 6E-2214",    pol: "INBLR", pod: "OMKWI", eta: "10 Jul", paStatus: "Pending", paColor: "#1E40AF", paBg: "#FFFBEB" },
     { job: "NXL/26/0139", bl: "COSU9284612",   vessel: "COSCO STAR",        pol: "JNPT", pod: "DXBPO", eta: "8 Jul",  paStatus: "Sent",    paColor: "#059669", paBg: "#ECFDF5" },
-    { job: "NXL/26/0138", bl: "HLCUSHA984521", vessel: "Hapag Lloyd GLOBE", pol: "INMAA", pod: "CNSHA", eta: "20 Jul", paStatus: "Pending", paColor: "#D97706", paBg: "#FFFBEB" },
+    { job: "NXL/26/0138", bl: "HLCUSHA984521", vessel: "Hapag Lloyd GLOBE", pol: "INMAA", pod: "CNSHA", eta: "20 Jul", paStatus: "Pending", paColor: "#1E40AF", paBg: "#FFFBEB" },
   ];
 
   return (
@@ -412,9 +412,9 @@ function PnlScreen() {
       <div className="grid grid-cols-4 gap-2.5 mx-4 mb-3">
         {[
           { l: "Total Revenue", v: `₹${(totals.rev / 100000).toFixed(2)} L`, c: "#1565C0", bg: "#E3F2FD" },
-          { l: "Total Cost",    v: `₹${(totals.cost / 100000).toFixed(2)} L`, c: "#D97706", bg: "#FFFBEB" },
+          { l: "Total Cost",    v: `₹${(totals.cost / 100000).toFixed(2)} L`, c: "#1E40AF", bg: "#FFFBEB" },
           { l: "Gross Profit",  v: `₹${(totals.gp / 100000).toFixed(2)} L`,  c: "#059669", bg: "#ECFDF5" },
-          { l: "Avg GP %",      v: `${avgGp}%`,                              c: "#7C3AED", bg: "#F5F3FF" },
+          { l: "Avg GP %",      v: `${avgGp}%`,                              c: "#1E40AF", bg: "#F5F3FF" },
         ].map((k) => (
           <div key={k.l} className="rounded-xl border p-3" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500, marginBottom: "3px" }}>{k.l}</div>
@@ -523,7 +523,7 @@ export default function NexlogDemoPage() {
       <Navbar />
 
       {/* HERO */}
-      <section className="pt-28 pb-20 px-6 relative overflow-hidden" style={{ background: "#0A1628" }}>
+      <section className="pt-28 pb-20 px-6 relative overflow-hidden" style={{ background: "#0F2C6F" }}>
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{ backgroundImage: "linear-gradient(rgba(21,101,192,1) 1px,transparent 1px),linear-gradient(90deg,rgba(21,101,192,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="max-w-5xl mx-auto text-center relative">
@@ -568,7 +568,7 @@ export default function NexlogDemoPage() {
       </section>
 
       {/* LIVE DEMO */}
-      <section id="demo" className="py-20 px-6" style={{ background: "#0A1628" }}>
+      <section id="demo" className="py-20 px-6" style={{ background: "#0F2C6F" }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(96,165,250,0.7)" }}>Interactive demo</span>
@@ -694,7 +694,7 @@ export default function NexlogDemoPage() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-20 px-6" style={{ background: "#0A1628" }}>
+      <section className="py-20 px-6" style={{ background: "#0F2C6F" }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
             <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(96,165,250,0.7)" }}>Zero learning curve</span>
@@ -728,7 +728,7 @@ export default function NexlogDemoPage() {
             <h2 className="text-3xl font-black text-gray-900 mt-2">One plan. Everything included.</h2>
             <p className="text-sm text-gray-500 mt-2">No tiers, no hidden add-ons. Every module from day one.</p>
           </div>
-          <div className="rounded-2xl border-2 p-8 flex flex-col md:flex-row gap-8 items-center" style={{ background: "#0A1628", borderColor: "#1565C0" }}>
+          <div className="rounded-2xl border-2 p-8 flex flex-col md:flex-row gap-8 items-center" style={{ background: "#0F2C6F", borderColor: "#1565C0" }}>
             <div className="flex-1">
               <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(96,165,250,0.7)" }}>Nexlog</p>
               <div className="flex items-end gap-1 mb-1">
@@ -772,7 +772,7 @@ export default function NexlogDemoPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6" style={{ background: "#0A1628" }}>
+      <section className="py-20 px-6" style={{ background: "#0F2C6F" }}>
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(96,165,250,0.6)" }}>Ready to switch?</p>
           <h2 className="text-4xl font-black text-white mb-4 leading-tight">

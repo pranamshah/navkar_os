@@ -22,8 +22,8 @@ export default function DocumentsPage() {
       <div className="grid grid-cols-3 gap-4 mb-5">
         {[
           { label: "Total Documents", value: docs.length.toString(), icon: "folder", color: "#1565C0", bg: "#E3F2FD" },
-          { label: "Shared Links Active", value: "0", icon: "link", color: "#7C3AED", bg: "#F5F3FF" },
-          { label: "Pending Upload", value: "0", icon: "upload_file", color: "#D97706", bg: "#FFFBEB" },
+          { label: "Shared Links Active", value: "0", icon: "link", color: "#1E40AF", bg: "#F5F3FF" },
+          { label: "Pending Upload", value: "0", icon: "upload_file", color: "#1E40AF", bg: "#FFFBEB" },
         ].map((k) => (
           <div key={k.label} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div className="flex items-start justify-between">

@@ -4,12 +4,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const kpis = [
-  { label: "Active Trips", value: "0", icon: "my_location", color: "#7C3AED", bg: "#F5F3FF" },
+  { label: "Active Trips", value: "0", icon: "my_location", color: "#1E40AF", bg: "#F5F3FF" },
   { label: "Bookings Today", value: "0", icon: "today", color: "#1565C0", bg: "#E3F2FD" },
-  { label: "LRs Pending Delivery", value: "0", icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
+  { label: "LRs Pending Delivery", value: "0", icon: "pending_actions", color: "#1E40AF", bg: "#FFFBEB" },
   { label: "Fleet Utilisation %", value: "0%", icon: "directions_truck", color: "#059669", bg: "#ECFDF5" },
   { label: "Freight Revenue This Month", value: "₹0", icon: "payments", color: "#059669", bg: "#ECFDF5" },
-  { label: "Trip Margin %", value: "0%", icon: "trending_up", color: "#0D9488", bg: "#F0FDFA" },
+  { label: "Trip Margin %", value: "0%", icon: "trending_up", color: "#1E40AF", bg: "#F0FDFA" },
 ];
 
 const recentTrips: {
@@ -46,7 +46,7 @@ export default function RunDeskDashboard() {
           <Link
             href="/dashboard/rundesk/bookings/new"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-            style={{ background: "#7C3AED" }}
+            style={{ background: "#1E40AF" }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
             New Booking
@@ -91,7 +91,7 @@ export default function RunDeskDashboard() {
         <div className="col-span-2 rounded-xl border p-5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold" style={{ color: "#111827" }}>Recent Trips</h2>
-            <Link href="/dashboard/rundesk/trips" className="text-[11px] font-medium" style={{ color: "#7C3AED" }}>
+            <Link href="/dashboard/rundesk/trips" className="text-[11px] font-medium" style={{ color: "#1E40AF" }}>
               View all →
             </Link>
           </div>
@@ -119,7 +119,7 @@ export default function RunDeskDashboard() {
               ) : (
                 recentTrips.map((t) => (
                   <tr key={t.tripNo} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                    <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#7C3AED" }}>{t.tripNo}</td>
+                    <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#1E40AF" }}>{t.tripNo}</td>
                     <td className="py-2.5 px-2 font-medium" style={{ color: "#111827" }}>{t.vehicle}</td>
                     <td className="py-2.5 px-2" style={{ color: "#6B7280" }}>{t.driver}</td>
                     <td className="py-2.5 px-2" style={{ color: "#6B7280" }}>{t.from} → {t.to}</td>

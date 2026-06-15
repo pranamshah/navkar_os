@@ -153,7 +153,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
       // Very subtle ocean tint
       context.beginPath();
       context.arc(cx, cy, curScale, 0, 2 * Math.PI);
-      context.fillStyle = "rgba(212,175,55,0.03)";
+      context.fillStyle = "rgba(30,64,175,0.03)";
       context.fill();
 
       if (landFeatures) {
@@ -167,7 +167,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
         // Land fill
         context.beginPath();
         landFeatures.features.forEach((f: unknown) => path(f as Parameters<typeof path>[0]));
-        context.fillStyle = "rgba(212,175,55,0.09)";
+        context.fillStyle = "rgba(30,64,175,0.09)";
         context.fill();
 
         // Land outline
@@ -183,7 +183,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
           if (!pt) return;
           context.beginPath();
           context.arc(pt[0], pt[1], 1.05, 0, 2 * Math.PI);
-          context.fillStyle = "rgba(212,175,55,0.55)";
+          context.fillStyle = "rgba(30,64,175,0.55)";
           context.fill();
         });
 
@@ -223,8 +223,8 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
               const grd = context.createRadialGradient(pos[0], pos[1], 0, pos[0], pos[1], 11);
               grd.addColorStop(0,    "rgba(255,230,80,1.0)");
               grd.addColorStop(0.35, "rgba(255,200,40,0.6)");
-              grd.addColorStop(0.7,  "rgba(212,175,55,0.2)");
-              grd.addColorStop(1,    "rgba(212,175,55,0)");
+              grd.addColorStop(0.7,  "rgba(30,64,175,0.2)");
+              grd.addColorStop(1,    "rgba(30,64,175,0)");
               context.beginPath();
               context.arc(pos[0], pos[1], 11, 0, 2 * Math.PI);
               context.fillStyle = grd;
@@ -249,8 +249,8 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
           if (!pt) return;
           // Soft glow
           const grd = context.createRadialGradient(pt[0], pt[1], 0, pt[0], pt[1], 6);
-          grd.addColorStop(0, "rgba(212,175,55,0.85)");
-          grd.addColorStop(1, "rgba(212,175,55,0)");
+          grd.addColorStop(0, "rgba(30,64,175,0.85)");
+          grd.addColorStop(1, "rgba(30,64,175,0)");
           context.beginPath();
           context.arc(pt[0], pt[1], 6, 0, 2 * Math.PI);
           context.fillStyle = grd;
@@ -258,7 +258,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
           // Solid core
           context.beginPath();
           context.arc(pt[0], pt[1], 2, 0, 2 * Math.PI);
-          context.fillStyle = "#D4AF37";
+          context.fillStyle = "#1E40AF";
           context.fill();
         });
       }
@@ -268,7 +268,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
       // Sphere ring
       context.beginPath();
       context.arc(cx, cy, curScale, 0, 2 * Math.PI);
-      context.strokeStyle = "rgba(212,175,55,0.22)";
+      context.strokeStyle = "rgba(30,64,175,0.22)";
       context.lineWidth   = 1;
       context.stroke();
     };
@@ -351,7 +351,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
 
   if (error) return (
     <div className={`flex items-center justify-center ${className}`}>
-      <p className="text-sm" style={{ color: "rgba(212,175,55,0.5)" }}>Globe unavailable</p>
+      <p className="text-sm" style={{ color: "rgba(30,64,175,0.5)" }}>Globe unavailable</p>
     </div>
   );
 
@@ -361,7 +361,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <div
             className="w-8 h-8 rounded-full border-2 animate-spin"
-            style={{ borderColor: "rgba(212,175,55,0.25)", borderTopColor: "#D4AF37" }}
+            style={{ borderColor: "rgba(30,64,175,0.25)", borderTopColor: "#1E40AF" }}
           />
         </div>
       )}

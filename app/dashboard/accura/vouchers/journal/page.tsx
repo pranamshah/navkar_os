@@ -132,7 +132,7 @@ export default function JournalVoucherPage() {
           </button>
           <div>
             <h1 className="text-lg font-semibold flex items-center gap-2" style={{ color: "#111827" }}>
-              <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: "#F5F3FF", color: "#7C3AED" }}>F7</span>
+              <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: "#F5F3FF", color: "#1E40AF" }}>F7</span>
               Journal Voucher
             </h1>
             <p className="text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{voucherNo}</p>
@@ -152,7 +152,7 @@ export default function JournalVoucherPage() {
           </div>
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Date *</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#7C3AED]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
         </div>
 
@@ -177,13 +177,13 @@ export default function JournalVoucherPage() {
                 />
                 <div className="relative">
                   <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[12px]" style={{ color: "#059669" }}>₹</span>
-                  <input type="number" placeholder="0.00" value={line.drAmount} onChange={(e) => updateLine(line.id, "drAmount", e.target.value)} className="w-full pl-6 pr-2 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#7C3AED]" style={{ borderColor: "#E5E7EB", color: "#059669" }} />
+                  <input type="number" placeholder="0.00" value={line.drAmount} onChange={(e) => updateLine(line.id, "drAmount", e.target.value)} className="w-full pl-6 pr-2 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#059669" }} />
                 </div>
                 <div className="relative">
                   <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[12px]" style={{ color: "#DC2626" }}>₹</span>
-                  <input type="number" placeholder="0.00" value={line.crAmount} onChange={(e) => updateLine(line.id, "crAmount", e.target.value)} className="w-full pl-6 pr-2 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#7C3AED]" style={{ borderColor: "#E5E7EB", color: "#DC2626" }} />
+                  <input type="number" placeholder="0.00" value={line.crAmount} onChange={(e) => updateLine(line.id, "crAmount", e.target.value)} className="w-full pl-6 pr-2 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#DC2626" }} />
                 </div>
-                <input type="text" placeholder="Narration" value={line.narration} onChange={(e) => updateLine(line.id, "narration", e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#7C3AED]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+                <input type="text" placeholder="Narration" value={line.narration} onChange={(e) => updateLine(line.id, "narration", e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
                 <button onClick={() => removeLine(line.id)} disabled={lines.length <= 2} className="p-2 rounded-md hover:bg-red-50 disabled:opacity-30 transition-colors">
                   <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#DC2626" }}>remove_circle</span>
                 </button>
@@ -191,7 +191,7 @@ export default function JournalVoucherPage() {
             ))}
           </div>
 
-          <button onClick={addLine} className="mt-3 flex items-center gap-1 text-[12px] px-2 py-1 rounded-md hover:bg-gray-50 transition-colors" style={{ color: "#7C3AED", border: "1px dashed #7C3AED" }}>
+          <button onClick={addLine} className="mt-3 flex items-center gap-1 text-[12px] px-2 py-1 rounded-md hover:bg-gray-50 transition-colors" style={{ color: "#1E40AF", border: "1px dashed #1E40AF" }}>
             <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>Add Line
           </button>
 
@@ -206,7 +206,7 @@ export default function JournalVoucherPage() {
             </div>
             <div>
               {!balanced && totalDr > 0 && (
-                <span className="text-[11px] flex items-center gap-1" style={{ color: "#D97706" }}>
+                <span className="text-[11px] flex items-center gap-1" style={{ color: "#1E40AF" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: 14 }}>warning</span>
                   Difference: ₹{Math.abs(totalDr - totalCr).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                 </span>
@@ -222,7 +222,7 @@ export default function JournalVoucherPage() {
 
           <div className="mt-4">
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Voucher Narration</label>
-            <textarea rows={2} placeholder="Being journal entry for..." value={narration} onChange={(e) => setNarration(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none resize-none focus:border-[#7C3AED]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <textarea rows={2} placeholder="Being journal entry for..." value={narration} onChange={(e) => setNarration(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none resize-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
         </div>
 
@@ -239,7 +239,7 @@ export default function JournalVoucherPage() {
               onClick={handleSave}
               disabled={saving || saved}
               className="flex items-center gap-2 px-5 py-2 rounded-md text-[13px] font-medium text-white transition-colors disabled:opacity-70"
-              style={{ background: saved ? "#059669" : "#7C3AED" }}
+              style={{ background: saved ? "#059669" : "#1E40AF" }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 15 }}>
                 {saved ? "check_circle" : "save"}

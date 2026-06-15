@@ -142,7 +142,7 @@ export default function SuiteSection() {
   }, [openId]);
 
   const openProduct = suite.find((p) => p.id === openId);
-  const openColor   = openId ? (COLORS[openId] ?? "#D4AF37") : "#D4AF37";
+  const openColor   = openId ? (COLORS[openId] ?? "#1E40AF") : "#1E40AF";
   const OpenIconComp = openId ? (ICONS[openId] ?? Globe) : Globe;
   const openFeats   = openId ? (FEATURES[openId] ?? []) : [];
 
@@ -159,7 +159,7 @@ export default function SuiteSection() {
           className="mb-16 flex flex-col md:flex-row gap-10 items-start justify-between"
         >
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#1E40AF" }}>
               The NavkarOS Suite
             </p>
             <h2
@@ -174,7 +174,7 @@ export default function SuiteSection() {
             >
               Six Products.
               <br />
-              <span style={{ color: "#D4AF37" }}>Every Role Covered.</span>
+              <span style={{ color: "#1E40AF" }}>Every Role Covered.</span>
             </h2>
           </div>
           <div className="md:max-w-sm">
@@ -185,7 +185,7 @@ export default function SuiteSection() {
               href="#whoisfor"
               className="inline-flex items-center gap-2 mt-6 text-xs font-semibold uppercase tracking-widest border-b pb-0.5 transition-colors duration-200"
               style={{ borderColor: "#1a1c1c", color: "#1a1c1c" }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#D4AF37"; e.currentTarget.style.borderColor = "#D4AF37"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#1E40AF"; e.currentTarget.style.borderColor = "#1E40AF"; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "#1a1c1c"; e.currentTarget.style.borderColor = "#1a1c1c"; }}
             >
               Who uses each product →
@@ -196,7 +196,7 @@ export default function SuiteSection() {
         {/* 3×2 card grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {suite.map((product, i) => {
-            const color = COLORS[product.id] ?? "#D4AF37";
+            const color = COLORS[product.id] ?? "#1E40AF";
             const IconComp = ICONS[product.id] ?? Globe;
             const chip  = STAT_CHIPS[product.id] ?? "";
 
@@ -273,9 +273,9 @@ export default function SuiteSection() {
                   <Link
                     href="/pricing"
                     className="text-xs font-semibold uppercase tracking-widest transition-colors duration-200"
-                    style={{ color: "#D4AF37" }}
+                    style={{ color: "#1E40AF" }}
                     onMouseEnter={(e) => { e.currentTarget.style.color = "#1a1c1c"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "#D4AF37"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "#1E40AF"; }}
                   >
                     Get Pricing →
                   </Link>
@@ -336,7 +336,7 @@ export default function SuiteSection() {
               {/* Modal header */}
               <div
                 className="flex items-center justify-between px-8 py-6 flex-shrink-0"
-                style={{ background: "#1a1c1c", borderBottom: `3px solid ${openColor}` }}
+                style={{ background: "#1E40AF", borderBottom: `3px solid ${openColor}` }}
               >
                 <div className="flex items-center gap-5">
                   <div
@@ -403,9 +403,9 @@ export default function SuiteSection() {
                       <Link
                         href={`/demo/${openProduct.id}`}
                         className="flex items-center justify-center gap-2 py-3.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-                        style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                        style={{ background: "#fff", color: "#1E40AF" }}
                         onMouseEnter={(e) => { e.currentTarget.style.background = openColor; e.currentTarget.style.color = "#fff"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#D4AF37"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#1E40AF"; }}
                         onClick={() => setOpenId(null)}
                       >
                         <Play size={14} />

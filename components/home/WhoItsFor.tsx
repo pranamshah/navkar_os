@@ -109,7 +109,7 @@ export default function WhoItsFor() {
           >
             Built for every corner of
             <br />
-            <span style={{ color: "#D4AF37" }}>Indian logistics.</span>
+            <span style={{ color: "#1E40AF" }}>Indian logistics.</span>
           </motion.h2>
         </motion.div>
 
@@ -130,7 +130,7 @@ export default function WhoItsFor() {
               onMouseEnter={(e) => { e.currentTarget.style.background = "#fafafa"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; }}
             >
-              <div style={{ color: "#D4AF37" }}>{p.icon}</div>
+              <div style={{ color: "#1E40AF" }}>{p.icon}</div>
               <div>
                 <h3 className="font-semibold text-sm mb-2" style={{ color: "#1a1c1c" }}>{p.title}</h3>
                 <p className="text-sm" style={{ color: "#7e7576", lineHeight: 1.65 }}>{p.desc}</p>

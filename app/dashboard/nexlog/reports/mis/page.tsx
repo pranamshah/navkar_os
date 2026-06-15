@@ -32,9 +32,9 @@ export default function MisPage() {
       <div className="grid grid-cols-4 gap-4 mb-5">
         {[
           { l: "Total Revenue", v: `₹${(chartData.reduce((s, d) => s + d.rev, 0) / 100).toFixed(1)} L`, c: "#1565C0" },
-          { l: "Total Cost", v: `₹${(chartData.reduce((s, d) => s + d.cost, 0) / 100).toFixed(1)} L`, c: "#D97706" },
+          { l: "Total Cost", v: `₹${(chartData.reduce((s, d) => s + d.cost, 0) / 100).toFixed(1)} L`, c: "#1E40AF" },
           { l: "Gross Profit", v: `₹${(chartData.reduce((s, d) => s + d.gp, 0) / 100).toFixed(1)} L`, c: "#059669" },
-          { l: "Avg GP %", v: chartData.reduce((s, d) => s + d.rev, 0) === 0 ? "0.0%" : `${((chartData.reduce((s, d) => s + d.gp, 0) / chartData.reduce((s, d) => s + d.rev, 0)) * 100).toFixed(1)}%`, c: "#7C3AED" },
+          { l: "Avg GP %", v: chartData.reduce((s, d) => s + d.rev, 0) === 0 ? "0.0%" : `${((chartData.reduce((s, d) => s + d.gp, 0) / chartData.reduce((s, d) => s + d.rev, 0)) * 100).toFixed(1)}%`, c: "#1E40AF" },
         ].map((k) => (
           <div key={k.l} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div className="text-[11px] font-medium" style={{ color: "#6B7280" }}>{k.l}</div>
@@ -60,7 +60,7 @@ export default function MisPage() {
               <Tooltip />
               <Legend />
               <Bar dataKey="rev" fill="#1565C0" name="Revenue" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="cost" fill="#D97706" name="Cost" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="cost" fill="#1E40AF" name="Cost" radius={[3, 3, 0, 0]} />
               <Bar dataKey="gp" fill="#059669" name="GP" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>

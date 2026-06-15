@@ -124,7 +124,7 @@ function ClientSidebar({
         <div className="flex items-center gap-3 mb-3">
           <div
             className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-black flex-shrink-0"
-            style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.25)" }}
+            style={{ background: "rgba(30,64,175,0.15)", color: "#1E40AF", border: "1px solid rgba(30,64,175,0.25)" }}
           >
             {(name || email || "U").charAt(0).toUpperCase()}
           </div>
@@ -136,10 +136,10 @@ function ClientSidebar({
         {clientId && (
           <div
             className="flex items-center gap-1.5 px-2 py-1.5 rounded"
-            style={{ background: "rgba(212,175,55,0.08)", border: "1px solid rgba(212,175,55,0.15)" }}
+            style={{ background: "rgba(30,64,175,0.08)", border: "1px solid rgba(30,64,175,0.15)" }}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: 12, color: "#D4AF37" }}>badge</span>
-            <span className="font-mono text-xs font-semibold" style={{ color: "#D4AF37" }}>{clientId}</span>
+            <span className="material-symbols-outlined" style={{ fontSize: 12, color: "#1E40AF" }}>badge</span>
+            <span className="font-mono text-xs font-semibold" style={{ color: "#1E40AF" }}>{clientId}</span>
           </div>
         )}
       </div>
@@ -155,12 +155,12 @@ function ClientSidebar({
               className="flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
               style={{
                 color: active ? "#1a1c1c" : "rgba(255,255,255,0.45)",
-                background: active ? "#D4AF37" : "transparent",
+                background: active ? "#1E40AF" : "transparent",
               }}
             >
               <span
                 className="material-symbols-outlined"
-                style={{ fontSize: 15, color: active ? "#1a1c1c" : "rgba(212,175,55,0.5)" }}
+                style={{ fontSize: 15, color: active ? "#1a1c1c" : "rgba(30,64,175,0.5)" }}
               >
                 {icon}
               </span>
@@ -180,7 +180,7 @@ function ClientSidebar({
             <div
               key={s.id}
               className="flex items-center gap-2 px-3 py-2 rounded mb-0.5"
-              style={{ background: "rgba(212,175,55,0.05)" }}
+              style={{ background: "rgba(30,64,175,0.05)" }}
             >
               <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
               <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)" }}>
@@ -245,8 +245,8 @@ function ActiveProductCard({ product, subscription }: { product: Product; subscr
         <span
           className="text-xs font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full"
           style={{
-            background: isActive ? "rgba(34,197,94,0.1)" : "rgba(212,175,55,0.12)",
-            color: isActive ? "#16a34a" : "#D4AF37",
+            background: isActive ? "rgba(34,197,94,0.1)" : "rgba(30,64,175,0.12)",
+            color: isActive ? "#16a34a" : "#1E40AF",
           }}
         >
           {subscription.status === "TRIAL" ? "Trial" : "Active"}
@@ -281,7 +281,7 @@ function ActiveProductCard({ product, subscription }: { product: Product; subscr
         <Link
           href={product.appHref}
           className="flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90"
-          style={{ background: "#1a1c1c", color: "#D4AF37" }}
+          style={{ background: "#1a1c1c", color: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
           Open {product.name}
@@ -326,7 +326,7 @@ function ExploreProductCard({ product }: { product: Product }) {
           <Link
             href="/dashboard/pricing"
             className="flex-1 py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90"
-            style={{ background: "#1a1c1c", color: "#D4AF37" }}
+            style={{ background: "#1a1c1c", color: "#1E40AF" }}
           >
             Get Started
           </Link>
@@ -352,13 +352,13 @@ function PendingView({ name, clientId, products }: { name?: string; clientId?: s
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-8 p-6 rounded-2xl border flex items-start gap-4"
-        style={{ background: "rgba(212,175,55,0.05)", borderColor: "rgba(212,175,55,0.3)" }}
+        style={{ background: "rgba(30,64,175,0.05)", borderColor: "rgba(30,64,175,0.3)" }}
       >
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-          style={{ background: "rgba(212,175,55,0.12)" }}
+          style={{ background: "rgba(30,64,175,0.12)" }}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#D4AF37" }}>schedule</span>
+          <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#1E40AF" }}>schedule</span>
         </div>
         <div className="flex-1">
           <p className="font-black text-base mb-1" style={{ color: "#1a1c1c" }}>
@@ -369,14 +369,14 @@ function PendingView({ name, clientId, products }: { name?: string; clientId?: s
           </p>
           {clientId && (
             <p className="text-xs mt-2" style={{ color: "#7e7576" }}>
-              Your Client ID: <span className="font-mono font-black" style={{ color: "#D4AF37" }}>{clientId}</span> — keep this safe, you can always log in with it.
+              Your Client ID: <span className="font-mono font-black" style={{ color: "#1E40AF" }}>{clientId}</span> — keep this safe, you can always log in with it.
             </p>
           )}
         </div>
         <Link
           href="/status"
           className="flex-shrink-0 text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-lg transition-all"
-          style={{ background: "rgba(212,175,55,0.12)", color: "#D4AF37" }}
+          style={{ background: "rgba(30,64,175,0.12)", color: "#1E40AF" }}
         >
           View Status
         </Link>
@@ -432,17 +432,17 @@ function ActiveNoSubsView({ name, products }: { name?: string; products: typeof 
       {/* Subtle CTA */}
       <div
         className="mb-8 p-6 rounded-2xl border flex items-center justify-between gap-6"
-        style={{ background: "#1a1c1c", borderColor: "rgba(212,175,55,0.15)" }}
+        style={{ background: "#1a1c1c", borderColor: "rgba(30,64,175,0.15)" }}
       >
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "rgba(212,175,55,0.6)" }}>Get Started</p>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "rgba(30,64,175,0.6)" }}>Get Started</p>
           <p className="font-black text-base" style={{ color: "#fff" }}>Choose a plan that fits your workflow</p>
           <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>Individual products or bundle plans — all at free beta pricing</p>
         </div>
         <Link
           href="/dashboard/pricing"
           className="flex-shrink-0 px-5 py-3 rounded-xl text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90"
-          style={{ background: "#D4AF37", color: "#1a1c1c" }}
+          style={{ background: "#1E40AF", color: "#1a1c1c" }}
         >
           View Plans →
         </Link>
@@ -512,7 +512,7 @@ function ActiveWithSubsView({
           style={{ background: "#ffffff", borderColor: "rgba(0,0,0,0.07)" }}
         >
           <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#7e7576" }}>Billing</p>
-          <Link href="/dashboard/pricing" className="font-black text-sm" style={{ color: "#D4AF37" }}>
+          <Link href="/dashboard/pricing" className="font-black text-sm" style={{ color: "#1E40AF" }}>
             Manage →
           </Link>
         </div>
@@ -558,7 +558,7 @@ function AdminView({ name, products }: { name?: string; products: typeof PRODUCT
   return (
     <main className="flex-1 overflow-auto p-8">
       <div className="mb-8">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#D4AF37" }}>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#1E40AF" }}>
           Admin Access
         </p>
         <h1 className="text-2xl font-black uppercase tracking-widest" style={{ color: "#1a1c1c" }}>

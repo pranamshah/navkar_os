@@ -4,11 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const ACCENT = "#15803D";
+const ACCENT = "#1E40AF";
 
 const sectionStyle = { background: "#fff", borderColor: "#E5E7EB" };
 const labelCls = "block text-[11px] font-medium mb-1";
-const inputCls = "w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#15803D]";
+const inputCls = "w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -49,7 +49,7 @@ export default function NewEntryXJobPage() {
       {toast && (
         <div
           className="fixed top-5 right-5 z-50 px-5 py-3 rounded-lg shadow-lg text-[13px] font-medium text-white flex items-center gap-2"
-          style={{ background: "#15803D" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 16 }}>info</span>
           Coming soon — Job creation will be available shortly
@@ -93,7 +93,7 @@ export default function NewEntryXJobPage() {
               <div className="flex gap-3 mt-1">
                 {["Import", "Export"].map((t) => (
                   <label key={t} className="flex items-center gap-1.5 text-[13px] cursor-pointer" style={{ color: "#374151" }}>
-                    <input type="radio" name="jobType" value={t} defaultChecked={t === "Import"} className="accent-[#15803D]" />
+                    <input type="radio" name="jobType" value={t} defaultChecked={t === "Import"} className="accent-[#1E40AF]" />
                     {t}
                   </label>
                 ))}
@@ -103,7 +103,7 @@ export default function NewEntryXJobPage() {
               <div className="flex gap-3 mt-1">
                 {["Sea", "Air", "Land"].map((m) => (
                   <label key={m} className="flex items-center gap-1.5 text-[13px] cursor-pointer" style={{ color: "#374151" }}>
-                    <input type="radio" name="mode" value={m} defaultChecked={m === "Sea"} className="accent-[#15803D]" />
+                    <input type="radio" name="mode" value={m} defaultChecked={m === "Sea"} className="accent-[#1E40AF]" />
                     {m}
                   </label>
                 ))}

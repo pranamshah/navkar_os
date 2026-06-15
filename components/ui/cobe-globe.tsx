@@ -12,7 +12,7 @@ interface GlobeProps {
   className?: string
 }
 
-// NavkarOS palette  #D4AF37 → rgb(212,175,55) → [0.831, 0.686, 0.216]
+// NavkarOS palette  #1E40AF → rgb(212,175,55) → [0.831, 0.686, 0.216]
 const GOLD : [number,number,number] = [0.831, 0.686, 0.216]
 const CREAM: [number,number,number] = [0.97,  0.93,  0.84 ]
 const LAND : [number,number,number] = [0.96,  0.94,  0.89 ]   // warm off-white land

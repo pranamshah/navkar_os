@@ -26,9 +26,9 @@ interface Voucher {
 const voucherTypeColors: Record<string, { text: string; bg: string; border: string }> = {
   PAYMENT:    { text: "#DC2626", bg: "#FEF2F2",  border: "#FECACA" },
   RECEIPT:    { text: "#059669", bg: "#ECFDF5",  border: "#A7F3D0" },
-  JOURNAL:    { text: "#7C3AED", bg: "#F5F3FF",  border: "#DDD6FE" },
+  JOURNAL:    { text: "#1E40AF", bg: "#F5F3FF",  border: "#DDD6FE" },
   SALES:      { text: "#0E7490", bg: "#ECFEFF",  border: "#A5F3FC" },
-  PURCHASE:   { text: "#D97706", bg: "#FFFBEB",  border: "#FDE68A" },
+  PURCHASE:   { text: "#1E40AF", bg: "#FFFBEB",  border: "#FDE68A" },
   CONTRA:     { text: "#374151", bg: "#F3F4F6",  border: "#E5E7EB" },
   DEBIT_NOTE: { text: "#B45309", bg: "#FFF7ED",  border: "#FED7AA" },
   CREDIT_NOTE:{ text: "#0891B2", bg: "#F0FDFA",  border: "#99F6E4" },

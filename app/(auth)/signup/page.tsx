@@ -105,7 +105,7 @@ export default function SignupPage() {
           className="absolute inset-0 opacity-5"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(212,175,55,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.5) 1px, transparent 1px)",
+              "linear-gradient(rgba(30,64,175,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(30,64,175,0.5) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
@@ -113,7 +113,7 @@ export default function SignupPage() {
           className="absolute pointer-events-none"
           style={{
             width: "400px", height: "400px", borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(30,64,175,0.12) 0%, transparent 70%)",
             bottom: "20%", right: "10%",
           }}
         />
@@ -136,7 +136,7 @@ export default function SignupPage() {
           >
             Freight software built
             <br />
-            <span style={{ color: "#D4AF37" }}>for India&apos;s trade.</span>
+            <span style={{ color: "#1E40AF" }}>for India&apos;s trade.</span>
           </h2>
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, marginTop: "16px" }}>
             Nexlog, EntryX, DockIQ, RunDesk, Accura, TradePilot — everything your logistics business needs, fully integrated.
@@ -156,7 +156,7 @@ export default function SignupPage() {
             <LogoBrand height={120} href="/" />
           </div>
 
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>Get started</p>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#1E40AF" }}>Get started</p>
           <h1
             className="mb-8"
             style={{
@@ -189,7 +189,7 @@ export default function SignupPage() {
                 onChange={set("name")}
                 className="outline-none bg-transparent pb-2 w-full"
                 style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
               />
             </div>
@@ -205,7 +205,7 @@ export default function SignupPage() {
                 onChange={set("email")}
                 className="outline-none bg-transparent pb-2 w-full"
                 style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
               />
             </div>
@@ -221,7 +221,7 @@ export default function SignupPage() {
                 onChange={set("phone")}
                 className="outline-none bg-transparent pb-2 w-full"
                 style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
               />
             </div>
@@ -238,7 +238,7 @@ export default function SignupPage() {
                   onChange={set("password")}
                   className="outline-none bg-transparent pb-2 w-full pr-8"
                   style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                  onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                  onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                   onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                 />
                 <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-0 bottom-2" style={{ color: "#7e7576" }}>
@@ -264,7 +264,7 @@ export default function SignupPage() {
                     color: "#1a1c1c",
                     fontSize: "15px",
                   }}
-                  onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                  onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                   onBlur={(e) => (e.currentTarget.style.borderBottomColor = form.confirm && form.confirm !== form.password ? "#EF4444" : "rgba(0,0,0,0.2)")}
                 />
                 <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-0 bottom-2" style={{ color: "#7e7576" }}>
@@ -280,9 +280,9 @@ export default function SignupPage() {
                 onClick={() => setAgreed(!agreed)}
                 className="w-4 h-4 flex-shrink-0 border mt-0.5 flex items-center justify-center transition-all duration-200"
                 style={{
-                  borderColor: agreed ? "#D4AF37" : "rgba(0,0,0,0.25)",
+                  borderColor: agreed ? "#1E40AF" : "rgba(0,0,0,0.25)",
                   borderWidth: "0.5px",
-                  background: agreed ? "#D4AF37" : "transparent",
+                  background: agreed ? "#1E40AF" : "transparent",
                 }}
               >
                 {agreed && <Check size={10} style={{ color: "#1a1c1c" }} />}

@@ -14,11 +14,11 @@ export default function FinalCTA() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="glass rounded-[40px] p-14 md:p-20 text-center relative overflow-hidden"
         >
-          {/* Gold glow bg */}
+          {/* Blue glow bg */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse at 50% 120%, rgba(212,160,23,0.1) 0%, transparent 65%)",
+              background: "radial-gradient(ellipse at 50% 120%, rgba(30,64,175,0.08) 0%, transparent 65%)",
             }}
           />
 
@@ -26,9 +26,9 @@ export default function FinalCTA() {
             <span
               className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6"
               style={{
-                background: "rgba(246,190,57,0.12)",
-                color: "#B8860B",
-                border: "1px solid rgba(212,160,23,0.25)",
+                background: "rgba(30,64,175,0.08)",
+                color: "#1E40AF",
+                border: "1px solid rgba(30,64,175,0.2)",
               }}
             >
               Get Started Today
@@ -40,7 +40,7 @@ export default function FinalCTA() {
             >
               Ready to Run Your Logistics
               <br />
-              <span style={{ color: "#D4A017" }}>Business Like an OS?</span>
+              <span style={{ color: "#1E40AF" }}>Business Like an OS?</span>
             </h2>
 
             <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "#5d5f5f", lineHeight: 1.7 }}>
@@ -51,15 +51,13 @@ export default function FinalCTA() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 className="flex items-center justify-center gap-2 px-9 py-4 rounded-full font-semibold group transition-all duration-200"
-                style={{ background: "#1a1c1d", color: "#fff" }}
+                style={{ background: "#1E40AF", color: "#fff" }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#D4A017";
-                  e.currentTarget.style.color = "#1a1c1d";
-                  e.currentTarget.style.boxShadow = "0 0 30px rgba(212,160,23,0.4)";
+                  e.currentTarget.style.background = "#1565C0";
+                  e.currentTarget.style.boxShadow = "0 0 30px rgba(30,64,175,0.35)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#1a1c1d";
-                  e.currentTarget.style.color = "#fff";
+                  e.currentTarget.style.background = "#1E40AF";
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
@@ -68,14 +66,14 @@ export default function FinalCTA() {
               </button>
               <button
                 className="px-9 py-4 rounded-full font-semibold border transition-all duration-200"
-                style={{ border: "1px solid #c4c7c8", color: "#1a1c1d" }}
+                style={{ border: "1px solid rgba(30,64,175,0.3)", color: "#1E40AF" }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#D4A017";
-                  e.currentTarget.style.color = "#D4A017";
+                  e.currentTarget.style.borderColor = "#1E40AF";
+                  e.currentTarget.style.background = "rgba(30,64,175,0.06)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "#c4c7c8";
-                  e.currentTarget.style.color = "#1a1c1d";
+                  e.currentTarget.style.borderColor = "rgba(30,64,175,0.3)";
+                  e.currentTarget.style.background = "transparent";
                 }}
               >
                 Schedule a Demo
@@ -89,7 +87,7 @@ export default function FinalCTA() {
                 "Built for Indian GST",
               ].map((t) => (
                 <div key={t} className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#D4A017" }} />
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#1E40AF" }} />
                   <span className="text-sm" style={{ color: "#5d5f5f" }}>{t}</span>
                 </div>
               ))}

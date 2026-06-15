@@ -7,8 +7,8 @@ type Lead = { name: string; lane: string; followUp: string; value: string; overd
 const cols: { id: string; label: string; color: string; bg: string; leads: Lead[] }[] = [
   { id: "new", label: "New", color: "#6B7280", bg: "#F3F4F6", leads: [] },
   { id: "contacted", label: "Contacted", color: "#1565C0", bg: "#E3F2FD", leads: [] },
-  { id: "qualified", label: "Qualified", color: "#7C3AED", bg: "#F5F3FF", leads: [] },
-  { id: "quoted", label: "Quoted", color: "#D97706", bg: "#FFFBEB", leads: [] },
+  { id: "qualified", label: "Qualified", color: "#1E40AF", bg: "#F5F3FF", leads: [] },
+  { id: "quoted", label: "Quoted", color: "#1E40AF", bg: "#FFFBEB", leads: [] },
   { id: "won", label: "Won", color: "#059669", bg: "#ECFDF5", leads: [] },
   { id: "lost", label: "Lost", color: "#DC2626", bg: "#FEF2F2", leads: [] },
 ];

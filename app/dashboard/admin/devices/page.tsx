@@ -24,7 +24,7 @@ function timeAgo(d: string) {
 
 const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
   APPROVED: { bg: "rgba(34,197,94,0.1)", text: "#16a34a" },
-  PENDING:  { bg: "rgba(212,175,55,0.12)", text: "#92660a" },
+  PENDING:  { bg: "rgba(30,64,175,0.12)", text: "#92660a" },
   REJECTED: { bg: "rgba(239,68,68,0.1)", text: "#dc2626" },
 };
 
@@ -75,7 +75,7 @@ export default function DevicesPage() {
     <div className="p-8 max-w-4xl">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#D4AF37" }}>Security</p>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#1E40AF" }}>Security</p>
           <h1 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "32px", fontWeight: 400, color: "#1a1c1c" }}>
             Allowed Devices
           </h1>
@@ -98,8 +98,8 @@ export default function DevicesPage() {
       {pending.length > 0 && (
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#D4AF37" }} />
-            <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#1E40AF" }} />
+            <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>
               {pending.length} Awaiting Approval
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function DevicesPage() {
       {/* All other devices */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+          <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#1E40AF" }} />
         </div>
       ) : rest.length === 0 && pending.length === 0 ? (
         <div className="flex flex-col items-center py-20 gap-4" style={{ color: "#7e7576" }}>
@@ -184,9 +184,9 @@ function DeviceRow({
               onChange={(e) => setEditName(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") onRename(); if (e.key === "Escape") setEditId(null); }}
               className="text-sm font-semibold outline-none border-b bg-transparent"
-              style={{ color: "#1a1c1c", borderColor: "#D4AF37" }}
+              style={{ color: "#1a1c1c", borderColor: "#1E40AF" }}
             />
-            <button onClick={onRename} className="text-xs px-2 py-1 rounded" style={{ background: "rgba(212,175,55,0.1)", color: "#92660a" }}>Save</button>
+            <button onClick={onRename} className="text-xs px-2 py-1 rounded" style={{ background: "rgba(30,64,175,0.1)", color: "#92660a" }}>Save</button>
             <button onClick={() => setEditId(null)} className="text-xs" style={{ color: "#7e7576" }}>Cancel</button>
           </div>
         ) : (

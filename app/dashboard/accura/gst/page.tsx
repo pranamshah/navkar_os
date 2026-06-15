@@ -61,7 +61,7 @@ export default function GSTPage() {
                 { label: "Total Outward Supplies", val: "₹0", sub: "No sales vouchers yet", color: "#0E7490", bg: "#ECFEFF" },
                 { label: "ITC Available", val: "₹0", sub: "Input Tax Credit", color: "#059669", bg: "#ECFDF5" },
                 { label: "GST Payable", val: "₹0", sub: "IGST after setoff", color: "#DC2626", bg: "#FEF2F2" },
-                { label: "Filing Due", val: "20 Jul 2026", sub: "GSTR-3B deadline", color: "#D97706", bg: "#FFFBEB" },
+                { label: "Filing Due", val: "20 Jul 2026", sub: "GSTR-3B deadline", color: "#1E40AF", bg: "#FFFBEB" },
               ].map((kpi) => (
                 <div key={kpi.label} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
                   <div className="text-[11px] font-medium mb-1" style={{ color: "#6B7280" }}>{kpi.label}</div>
@@ -87,7 +87,7 @@ export default function GSTPage() {
                       <td className="px-3 py-2.5 text-right font-mono">{fmt(0)}</td>
                       <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(0)}</td>
                       <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#0E7490" }}>{fmt(0)}</td>
-                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#7C3AED" }}>{fmt(0)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono" style={{ color: "#1E40AF" }}>{fmt(0)}</td>
                       <td className="px-3 py-2.5 text-right font-mono font-semibold">{fmt(0)}</td>
                     </tr>
                     <tr className="border-b" style={{ borderColor: "#F3F4F6" }}>
@@ -101,8 +101,8 @@ export default function GSTPage() {
                     <tr style={{ background: "#FFFBEB" }}>
                       <td className="px-3 py-3 font-bold" style={{ color: "#111827" }}>Net GST Payable</td>
                       <td />
-                      <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#D97706" }}>{fmt(0)}</td>
-                      <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#D97706" }}>{fmt(0)}</td>
+                      <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#1E40AF" }}>{fmt(0)}</td>
+                      <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#1E40AF" }}>{fmt(0)}</td>
                       <td className="px-3 py-3 text-right font-mono font-bold" style={{ color: "#DC2626" }}>{fmt(0)}</td>
                       <td className="px-3 py-3 text-right font-mono font-bold text-[14px]" style={{ color: "#DC2626" }}>{fmt(0)}</td>
                     </tr>
@@ -157,7 +157,7 @@ export default function GSTPage() {
                     <span className="text-right font-mono">{fmt(row.taxable)}</span>
                     <span className="text-right font-mono" style={{ color: "#0E7490" }}>{fmt(row.cgst)}</span>
                     <span className="text-right font-mono" style={{ color: "#0E7490" }}>{fmt(row.sgst)}</span>
-                    <span className="text-right font-mono" style={{ color: "#7C3AED" }}>{fmt(row.igst)}</span>
+                    <span className="text-right font-mono" style={{ color: "#1E40AF" }}>{fmt(row.igst)}</span>
                   </div>
                 ))}
               </div>
@@ -169,7 +169,7 @@ export default function GSTPage() {
                 <span className="font-mono font-semibold" style={{ color: "#059669" }}>{fmt(0)}</span>
               </div>
               <div className="mt-4 p-4 rounded-lg border" style={{ background: "#FFFBEB", borderColor: "#FDE68A" }}>
-                <div className="font-semibold text-[14px] flex justify-between" style={{ color: "#D97706" }}>
+                <div className="font-semibold text-[14px] flex justify-between" style={{ color: "#1E40AF" }}>
                   <span>Net Tax Payable after ITC</span>
                   <span className="font-mono">{fmt(0)}</span>
                 </div>

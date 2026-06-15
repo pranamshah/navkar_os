@@ -56,7 +56,7 @@ function vouchersToOutstanding(vouchers: Voucher[]): OutstandingItem[] {
 
 const ageBuckets = (age: number) => {
   if (age <= 0) return { label: "Not due", color: "#059669", bg: "#ECFDF5" };
-  if (age <= 30) return { label: "1–30 days", color: "#D97706", bg: "#FFFBEB" };
+  if (age <= 30) return { label: "1–30 days", color: "#1E40AF", bg: "#FFFBEB" };
   if (age <= 60) return { label: "31–60 days", color: "#DC2626", bg: "#FEF2F2" };
   return { label: "60+ days", color: "#7F1D1D", bg: "#FEE2E2" };
 };

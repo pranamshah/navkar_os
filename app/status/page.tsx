@@ -29,14 +29,14 @@ function StatusStep({ done, active, label, sub }: { done: boolean; active: boole
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
           style={{
-            background: done ? "#D4AF37" : active ? "rgba(212,175,55,0.15)" : "rgba(0,0,0,0.06)",
-            border: active ? "1px solid rgba(212,175,55,0.4)" : "none",
+            background: done ? "#1E40AF" : active ? "rgba(30,64,175,0.15)" : "rgba(0,0,0,0.06)",
+            border: active ? "1px solid rgba(30,64,175,0.4)" : "none",
           }}
         >
           {done ? (
             <Check size={14} style={{ color: "#1a1c1c" }} />
           ) : active ? (
-            <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: "#D4AF37" }} />
+            <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: "#1E40AF" }} />
           ) : (
             <div className="w-2 h-2 rounded-full" style={{ background: "rgba(0,0,0,0.2)" }} />
           )}
@@ -128,7 +128,7 @@ export default function StatusPage() {
   if (loading || sessionStatus === "loading" || sessionStatus === "unauthenticated") {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#fafafa" }}>
-        <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }} />
+        <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }} />
       </div>
     );
   }
@@ -149,7 +149,7 @@ export default function StatusPage() {
           <a
             href="/dashboard/client"
             className="inline-block mt-6 px-6 py-3 text-sm font-semibold rounded-lg"
-            style={{ background: "#1a1c1c", color: "#D4AF37" }}
+            style={{ background: "#1a1c1c", color: "#1E40AF" }}
           >
             Go to Dashboard →
           </a>
@@ -168,7 +168,7 @@ export default function StatusPage() {
           <h2 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "28px", color: "#1a1c1c" }}>Application Not Approved</h2>
           <p className="mt-3 text-sm" style={{ color: "#7e7576" }}>
             Your account was not approved. Please contact{" "}
-            <a href="mailto:navkaros.co@gmail.com" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com</a>{" "}
+            <a href="mailto:navkaros.co@gmail.com" style={{ color: "#1E40AF" }}>navkaros.co@gmail.com</a>{" "}
             for assistance.
           </p>
           <Link href="/" className="inline-block mt-8 text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
@@ -190,11 +190,11 @@ export default function StatusPage() {
         {/* Status card */}
         <div className="p-8 mb-6" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)", boxShadow: "0 4px 24px rgba(0,0,0,0.04)" }}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(212,175,55,0.12)" }}>
-              <Clock size={18} style={{ color: "#D4AF37" }} />
+            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(30,64,175,0.12)" }}>
+              <Clock size={18} style={{ color: "#1E40AF" }} />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>Status</p>
+              <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>Status</p>
               <p className="font-semibold text-sm" style={{ color: "#1a1c1c" }}>Account Under Verification</p>
             </div>
           </div>
@@ -209,7 +209,7 @@ export default function StatusPage() {
               <button
                 onClick={copyClientId}
                 className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-                style={{ color: copied ? "#10B981" : "#D4AF37" }}
+                style={{ color: copied ? "#10B981" : "#1E40AF" }}
               >
                 {copied ? <Check size={12} /> : <Copy size={12} />}
                 {copied ? "Copied!" : "Copy"}
@@ -293,7 +293,7 @@ export default function StatusPage() {
                   <Link
                     href="/onboarding"
                     className="flex items-center justify-center gap-2 w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-                    style={{ background: "#D4AF37", color: "#1a1c1c" }}
+                    style={{ background: "#1E40AF", color: "#1a1c1c" }}
                   >
                     Complete Business Profile →
                   </Link>
@@ -307,11 +307,11 @@ export default function StatusPage() {
         {/* Important notice */}
         <div
           className="p-5 mb-6 flex gap-3"
-          style={{ background: "rgba(212,175,55,0.07)", border: "0.5px solid rgba(212,175,55,0.3)" }}
+          style={{ background: "rgba(30,64,175,0.07)", border: "0.5px solid rgba(30,64,175,0.3)" }}
         >
-          <FileText size={16} style={{ color: "#D4AF37", flexShrink: 0, marginTop: "2px" }} />
+          <FileText size={16} style={{ color: "#1E40AF", flexShrink: 0, marginTop: "2px" }} />
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#D4AF37" }}>Save Your Client ID</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#1E40AF" }}>Save Your Client ID</p>
             <p className="text-sm" style={{ color: "#4c4546", lineHeight: 1.6 }}>
               <strong style={{ fontFamily: "monospace" }}>{userData?.clientId ?? session?.user?.clientId}</strong> — Screenshot this page or write it down. You can use this to log in at any time.
             </p>
@@ -327,7 +327,7 @@ export default function StatusPage() {
               className="flex items-center gap-3 py-3 px-4 border transition-all duration-200"
               style={{ borderColor: "rgba(0,0,0,0.1)", borderWidth: "0.5px", color: "#1a1c1c" }}
             >
-              <Phone size={14} style={{ color: "#D4AF37" }} />
+              <Phone size={14} style={{ color: "#1E40AF" }} />
               <span className="text-sm font-semibold">Call Us: +91-XXXXXXXXXX</span>
             </a>
             <a
@@ -345,7 +345,7 @@ export default function StatusPage() {
               className="flex items-center gap-3 py-3 px-4 border transition-all duration-200"
               style={{ borderColor: "rgba(0,0,0,0.1)", borderWidth: "0.5px", color: "#1a1c1c" }}
             >
-              <Mail size={14} style={{ color: "#D4AF37" }} />
+              <Mail size={14} style={{ color: "#1E40AF" }} />
               <span className="text-sm font-semibold">navkaros.co@gmail.com</span>
             </a>
           </div>

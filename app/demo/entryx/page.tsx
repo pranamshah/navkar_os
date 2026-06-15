@@ -12,7 +12,7 @@ import Footer from "@/components/home/Footer";
 /* CONSTANTS                                                   */
 /* ─────────────────────────────────────────────────────────── */
 const P = "#5B21B6";   // primary purple
-const PL = "#7C3AED";  // light purple
+const PL = "#1E40AF";  // light purple
 const PA = "#A78BFA";  // accent purple
 
 /* ─────────────────────────────────────────────────────────── */
@@ -49,7 +49,7 @@ function DashboardScreen() {
 
   const statusColor: Record<string, string> = {
     "Filed": "#6B7280",
-    "Under Assessment": "#D97706",
+    "Under Assessment": "#1E40AF",
     "Examination Ordered": "#DC2626",
     "Out of Charge": "#059669",
     "Duty Paid": "#5B21B6",
@@ -63,7 +63,7 @@ function DashboardScreen() {
           <div key={k.label} className="rounded-lg p-2.5" style={{ background: "#fff", border: "1px solid #E5E7EB" }}>
             <p style={{ color: "#6B7280", fontSize: "7.5px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{k.label}</p>
             <p className="font-bold mt-0.5" style={{ fontSize: "13px", color: "#111827" }}>{k.value}</p>
-            <p className="mt-0.5" style={{ color: k.up ? "#059669" : "#D97706", fontSize: "9px" }}>{k.change}</p>
+            <p className="mt-0.5" style={{ color: k.up ? "#059669" : "#1E40AF", fontSize: "9px" }}>{k.change}</p>
           </div>
         ))}
       </div>
@@ -72,7 +72,7 @@ function DashboardScreen() {
       <div className="space-y-1.5">
         {[
           { text: "TCNU8456731 — Examination order received. Action required within 24 hrs.", color: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
-          { text: "BE/2026/0341 — Duty payment pending ₹1,82,400. Due by today 17:00 IST.", color: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
+          { text: "BE/2026/0341 — Duty payment pending ₹1,82,400. Due by today 17:00 IST.", color: "#1E40AF", bg: "#FFFBEB", border: "#FDE68A" },
         ].map((a) => (
           <div key={a.text} className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: a.bg, border: `1px solid ${a.border}` }}>
             <div className="w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0" style={{ background: a.color }} />
@@ -195,7 +195,7 @@ function ICEGATEScreen() {
 
   const statusColor: Record<string, string> = {
     "Filed": "#6B7280",
-    "Under Assessment": "#D97706",
+    "Under Assessment": "#1E40AF",
     "Examination Ordered": "#DC2626",
     "Out of Charge": "#059669",
     "Duty Paid": P,
@@ -312,7 +312,7 @@ function DrawbackScreen() {
     { sb: "SB/2026/0098", date: "28 Apr 2026", fob: "₹14,22,000", rate: "1.5%", amount: "₹21,330",  status: "Pending"   },
   ];
 
-  const statusColor: Record<string, string> = { Received: "#059669", Filed: "#D97706", Pending: "#6B7280" };
+  const statusColor: Record<string, string> = { Received: "#059669", Filed: "#1E40AF", Pending: "#6B7280" };
 
   return (
     <div className="h-full overflow-y-auto" style={{ background: "#0D0A1A", fontFamily: "Inter, sans-serif" }}>
@@ -325,7 +325,7 @@ function DrawbackScreen() {
       <div className="grid grid-cols-3 gap-2 p-3">
         {[
           { label: "Total Outstanding", value: "₹1,08,634", color: "#ef4444" },
-          { label: "Filed (Processing)", value: "₹65,984",  color: "#D97706" },
+          { label: "Filed (Processing)", value: "₹65,984",  color: "#1E40AF" },
           { label: "Received This Month", value: "₹27,630", color: "#22c55e" },
         ].map((s) => (
           <div key={s.label} className="rounded-lg p-2.5 text-center" style={{ background: `${s.color}10`, border: `0.5px solid ${s.color}30` }}>

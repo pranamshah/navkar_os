@@ -54,7 +54,7 @@ function AdminSidebar() {
         <div className="flex items-center gap-2">
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black"
-            style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.3)" }}
+            style={{ background: "rgba(30,64,175,0.15)", color: "#1E40AF", border: "1px solid rgba(30,64,175,0.3)" }}
           >
             {(session?.user?.name || session?.user?.email || "A").charAt(0).toUpperCase()}
           </div>
@@ -62,7 +62,7 @@ function AdminSidebar() {
             <p className="text-xs font-semibold truncate" style={{ color: "#ffffff" }}>
               {session?.user?.name || "Admin"}
             </p>
-            <p className="text-xs" style={{ color: "#D4AF37" }}>
+            <p className="text-xs" style={{ color: "#1E40AF" }}>
               {session?.user?.role || "ADMIN"}
             </p>
           </div>
@@ -80,12 +80,12 @@ function AdminSidebar() {
               className="flex items-center gap-3 px-3 py-2.5 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
               style={{
                 color: active ? "#1a1c1c" : "rgba(255,255,255,0.5)",
-                background: active ? "#D4AF37" : "transparent",
+                background: active ? "#1E40AF" : "transparent",
               }}
             >
               <span
                 className="material-symbols-outlined"
-                style={{ fontSize: 16, color: active ? "#1a1c1c" : "rgba(212,175,55,0.6)" }}
+                style={{ fontSize: 16, color: active ? "#1a1c1c" : "rgba(30,64,175,0.6)" }}
               >
                 {icon}
               </span>
@@ -93,7 +93,7 @@ function AdminSidebar() {
               {href === "/dashboard/admin/messages" && unread > 0 && (
                 <span
                   className="text-xs font-black px-1.5 py-0.5 rounded-full"
-                  style={{ background: active ? "rgba(26,28,28,0.2)" : "#D4AF37", color: active ? "#1a1c1c" : "#1a1c1c", fontSize: "10px", lineHeight: 1 }}
+                  style={{ background: active ? "rgba(26,28,28,0.2)" : "#1E40AF", color: active ? "#1a1c1c" : "#1a1c1c", fontSize: "10px", lineHeight: 1 }}
                 >
                   {unread}
                 </span>
@@ -147,7 +147,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (status === "loading" || deviceOk === null) {
     return (
       <div className="flex min-h-screen items-center justify-center" style={{ background: "#f9f9f9" }}>
-        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#1E40AF" }} />
       </div>
     );
   }

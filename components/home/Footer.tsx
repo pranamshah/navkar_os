@@ -51,11 +51,11 @@ export default function Footer() {
               Indian logistics ecosystem.
             </p>
             <div className="flex flex-col gap-2">
-              <a href="mailto:navkaros.co@gmail.com" className="text-xs hover:text-[#D4AF37] transition-colors" style={{ color: "#7e7576" }}>navkaros.co@gmail.com</a>
-              <a href="tel:+919080767398" className="text-xs hover:text-[#D4AF37] transition-colors" style={{ color: "#7e7576" }}>+91 90807 67398</a>
+              <a href="mailto:navkaros.co@gmail.com" className="text-xs hover:text-[#1E40AF] transition-colors" style={{ color: "#7e7576" }}>navkaros.co@gmail.com</a>
+              <a href="tel:+919080767398" className="text-xs hover:text-[#1E40AF] transition-colors" style={{ color: "#7e7576" }}>+91 90807 67398</a>
               <p className="text-xs" style={{ color: "#7e7576" }}>7, Mannady Street, George Town</p>
               <p className="text-xs" style={{ color: "#7e7576" }}>Chennai — 600 001, Tamil Nadu</p>
-              <p className="text-xs italic mt-1" style={{ color: "#D4AF37" }}>
+              <p className="text-xs italic mt-1" style={{ color: "#1E40AF" }}>
                 Built in Chennai. Made for the world.
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function Footer() {
                       href={item.href}
                       className="text-xs transition-colors duration-200"
                       style={{ color: "#7e7576" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#D4AF37")}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "#1E40AF")}
                       onMouseLeave={(e) => (e.currentTarget.style.color = "#7e7576")}
                     >
                       {item.label}
@@ -97,7 +97,7 @@ export default function Footer() {
                       href={item.href}
                       className="text-xs transition-colors duration-200"
                       style={{ color: "#7e7576" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#D4AF37")}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "#1E40AF")}
                       onMouseLeave={(e) => (e.currentTarget.style.color = "#7e7576")}
                     >
                       {item.label}
@@ -119,7 +119,7 @@ export default function Footer() {
                       href={item.href}
                       className="text-xs transition-colors duration-200"
                       style={{ color: "#7e7576" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#D4AF37")}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "#1E40AF")}
                       onMouseLeave={(e) => (e.currentTarget.style.color = "#7e7576")}
                     >
                       {item.label}
@@ -141,7 +141,7 @@ export default function Footer() {
                       href={item.href}
                       className="text-xs transition-colors duration-200"
                       style={{ color: "#7e7576" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "#D4AF37")}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "#1E40AF")}
                       onMouseLeave={(e) => (e.currentTarget.style.color = "#7e7576")}
                     >
                       {item.label}
@@ -162,7 +162,7 @@ export default function Footer() {
             © {new Date().getFullYear()} NavkarOS Logistics Pvt. Ltd. · GSTIN: 33AAACN1234J1Z5
           </p>
           <div className="flex items-center gap-4">
-            <span className="text-xs px-3 py-1" style={{ background: "rgba(212,175,55,0.1)", color: "#B8860B", border: "0.5px solid rgba(212,175,55,0.3)" }}>
+            <span className="text-xs px-3 py-1" style={{ background: "rgba(30,64,175,0.1)", color: "#1565C0", border: "0.5px solid rgba(30,64,175,0.3)" }}>
               🇮🇳 Made in India
             </span>
             <span className="text-xs" style={{ color: "#7e7576" }}>

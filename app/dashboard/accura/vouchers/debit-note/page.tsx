@@ -160,11 +160,11 @@ export default function DebitNotePage() {
             </div>
             <div>
               <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Date *</label>
-              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
             </div>
             <div>
               <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Original Bill Ref</label>
-              <input type="text" placeholder="PUR/25-26/..." value={originalInvoice} onChange={(e) => setOriginalInvoice(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+              <input type="text" placeholder="PUR/25-26/..." value={originalInvoice} onChange={(e) => setOriginalInvoice(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
             </div>
           </div>
 
@@ -177,7 +177,7 @@ export default function DebitNotePage() {
             <div className="flex rounded-md overflow-hidden border" style={{ borderColor: "#E5E7EB" }}>
               {(["intra", "inter"] as const).map((t) => (
                 <button key={t} onClick={() => setSupplyType(t)} className="px-4 py-1.5 text-[12px] font-medium transition-colors"
-                  style={{ background: supplyType === t ? "#D97706" : "#fff", color: supplyType === t ? "#fff" : "#6B7280" }}>
+                  style={{ background: supplyType === t ? "#1E40AF" : "#fff", color: supplyType === t ? "#fff" : "#6B7280" }}>
                   {t === "intra" ? "Intra-State" : "Inter-State"}
                 </button>
               ))}
@@ -189,7 +189,7 @@ export default function DebitNotePage() {
               <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Base Amount *</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#9CA3AF" }}>₹</span>
-                <input type="number" placeholder="0.00" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full pl-7 pr-3 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+                <input type="number" placeholder="0.00" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full pl-7 pr-3 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
               </div>
             </div>
             <div>
@@ -199,7 +199,7 @@ export default function DebitNotePage() {
               </select>
             </div>
             <div className="rounded-md p-3 border" style={{ borderColor: "#FDE68A", background: "#FFFBEB" }}>
-              <div className="text-[11px] mb-1" style={{ color: "#D97706" }}>
+              <div className="text-[11px] mb-1" style={{ color: "#1E40AF" }}>
                 GST: ₹{gstAmt.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </div>
               <div className="text-base font-bold" style={{ color: "#111827" }}>
@@ -210,7 +210,7 @@ export default function DebitNotePage() {
 
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Reason for Debit Note</label>
-            <textarea rows={2} placeholder="Short deduction / return reason..." value={reason} onChange={(e) => setReason(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none resize-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <textarea rows={2} placeholder="Short deduction / return reason..." value={reason} onChange={(e) => setReason(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none resize-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
         </div>
 

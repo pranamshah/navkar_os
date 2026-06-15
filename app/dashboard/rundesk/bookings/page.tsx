@@ -39,7 +39,7 @@ export default function BookingsPage() {
         <Link
           href="/dashboard/rundesk/bookings/new"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#7C3AED" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
           New Booking
@@ -56,7 +56,7 @@ export default function BookingsPage() {
               className="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all"
               style={{
                 background: activeFilter === f ? "#fff" : "transparent",
-                color: activeFilter === f ? "#7C3AED" : "#6B7280",
+                color: activeFilter === f ? "#1E40AF" : "#6B7280",
                 boxShadow: activeFilter === f ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
               }}
             >
@@ -115,7 +115,7 @@ export default function BookingsPage() {
                     <Link
                       href="/dashboard/rundesk/bookings/new"
                       className="mt-2 px-4 py-1.5 rounded-md text-[13px] text-white"
-                      style={{ background: "#7C3AED" }}
+                      style={{ background: "#1E40AF" }}
                     >
                       + New Booking
                     </Link>
@@ -125,7 +125,7 @@ export default function BookingsPage() {
             ) : (
               bookings.map((b) => (
                 <tr key={b.bookingNo} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                  <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#7C3AED" }}>{b.bookingNo}</td>
+                  <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#1E40AF" }}>{b.bookingNo}</td>
                   <td className="py-3 px-4" style={{ color: "#6B7280" }}>{b.date}</td>
                   <td className="py-3 px-4 font-medium" style={{ color: "#111827" }}>{b.consignor}</td>
                   <td className="py-3 px-4" style={{ color: "#6B7280" }}>{b.from}</td>

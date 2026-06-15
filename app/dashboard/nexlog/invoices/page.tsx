@@ -34,7 +34,7 @@ export default function InvoicesPage() {
         {[
           { l: "Total Invoiced", v: `₹${(totalInvoiced / 100000).toFixed(2)} L`, c: "#1565C0", bg: "#E3F2FD" },
           { l: "Total Collected", v: `₹${(totalCollected / 100000).toFixed(2)} L`, c: "#059669", bg: "#ECFDF5" },
-          { l: "Outstanding", v: `₹${(outstanding / 100000).toFixed(2)} L`, c: "#D97706", bg: "#FFFBEB" },
+          { l: "Outstanding", v: `₹${(outstanding / 100000).toFixed(2)} L`, c: "#1E40AF", bg: "#FFFBEB" },
         ].map((k) => (
           <div key={k.l} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div className="flex items-start justify-between">

@@ -14,7 +14,7 @@ export default function PressPage() {
       <main style={{ background: "#f9f9f9" }}>
         <section className="pt-40 pb-24 px-8">
           <div className="max-w-4xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#D4AF37" }}>Press</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#1E40AF" }}>Press</p>
             <h1
               style={{
                 fontFamily: "'EB Garamond', Georgia, serif",
@@ -67,7 +67,7 @@ export default function PressPage() {
               <h2 className="text-sm font-semibold uppercase tracking-widest mb-5" style={{ color: "rgba(255,255,255,0.4)" }}>Press Contact</h2>
               <p className="text-sm mb-1" style={{ color: "#fff" }}>Pranam S Shah — Founder & CEO</p>
               <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.6)" }}>NavkarOS Logistics Pvt. Ltd.</p>
-              <a href="mailto:navkaros.co@gmail.com" className="text-sm" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com</a>
+              <a href="mailto:navkaros.co@gmail.com" className="text-sm" style={{ color: "#1E40AF" }}>navkaros.co@gmail.com</a>
               <p className="text-xs mt-4" style={{ color: "rgba(255,255,255,0.35)" }}>
                 We aim to respond to press enquiries within 4 hours during business hours (Mon–Sat, 9am–7pm IST).
               </p>

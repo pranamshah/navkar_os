@@ -113,7 +113,7 @@ export default function FtaCheckerPage() {
               placeholder="e.g. 73044900"
               className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all"
               style={{ borderColor: "#E5E7EB", color: "#111827" }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
               onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
             />
           </div>
@@ -124,7 +124,7 @@ export default function FtaCheckerPage() {
               onChange={(e) => setOriginCountry(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all bg-white"
               style={{ borderColor: "#E5E7EB", color: originCountry ? "#111827" : "#9CA3AF" }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
               onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
             >
               <option value="">Select country</option>
@@ -135,9 +135,9 @@ export default function FtaCheckerPage() {
         <button
           onClick={checkFta}
           className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-colors"
-          style={{ background: "#0D9488" }}
+          style={{ background: "#1E40AF" }}
           onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#0F766E")}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#0D9488")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#1E40AF")}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 18 }}>public</span>
           Check FTA
@@ -155,7 +155,7 @@ export default function FtaCheckerPage() {
             className="rounded-xl border p-5 mb-6"
             style={{
               background: result ? "#F0FDFA" : "#FFF7ED",
-              borderColor: result ? "#0D9488" : "#FCD34D",
+              borderColor: result ? "#1E40AF" : "#FCD34D",
             }}
           >
             <div className="flex items-start gap-4">
@@ -163,7 +163,7 @@ export default function FtaCheckerPage() {
                 <span
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold"
                   style={{
-                    background: result ? "#0D9488" : "#EF4444",
+                    background: result ? "#1E40AF" : "#EF4444",
                     color: "#fff",
                   }}
                 >
@@ -177,7 +177,7 @@ export default function FtaCheckerPage() {
                 {result ? (
                   <div className="space-y-3">
                     <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: "#0D9488" }}>Agreement</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: "#1E40AF" }}>Agreement</span>
                       <p className="text-sm font-semibold mt-0.5" style={{ color: "#111827" }}>{result.ftaName}</p>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -224,7 +224,7 @@ export default function FtaCheckerPage() {
               style={{ background: "#fff", borderColor: "#E5E7EB" }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ background: "#F0FDFA", color: "#0D9488" }}>{fta.abbr}</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ background: "#F0FDFA", color: "#1E40AF" }}>{fta.abbr}</span>
                 <span className="text-[9px]" style={{ color: "#9CA3AF" }}>Since {fta.year}</span>
               </div>
               <div className="text-[11px] font-semibold leading-tight mb-1" style={{ color: "#111827" }}>{fta.name}</div>

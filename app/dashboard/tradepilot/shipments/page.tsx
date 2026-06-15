@@ -40,7 +40,7 @@ export default function ShipmentsPage() {
         </div>
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#0D9488" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
           New Shipment
@@ -56,7 +56,7 @@ export default function ShipmentsPage() {
             className="px-4 py-1.5 rounded-md text-[13px] font-medium transition-all"
             style={{
               background: activeTab === tab ? "#fff" : "transparent",
-              color: activeTab === tab ? "#0D9488" : "#6B7280",
+              color: activeTab === tab ? "#1E40AF" : "#6B7280",
               boxShadow: activeTab === tab ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
             }}
           >
@@ -100,7 +100,7 @@ export default function ShipmentsPage() {
               </tr>
             ) : filtered.map((s) => (
               <tr key={s.id} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                <td className="py-2.5 px-4 font-mono text-[11px]" style={{ color: "#0D9488" }}>{s.id}</td>
+                <td className="py-2.5 px-4 font-mono text-[11px]" style={{ color: "#1E40AF" }}>{s.id}</td>
                 <td className="py-2.5 px-4">
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{
                     background: s.type === "Import" ? "#DBEAFE" : "#DCFCE7",

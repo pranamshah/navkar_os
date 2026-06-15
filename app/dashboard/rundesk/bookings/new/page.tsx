@@ -39,7 +39,7 @@ export default function NewBookingPage() {
       placeholder={placeholder}
       className="w-full px-3 py-2 rounded-lg border text-[13px] outline-none focus:ring-2"
       style={{ borderColor: "#E5E7EB", color: "#111827", background: "#fff" }}
-      onFocus={(e) => (e.currentTarget.style.borderColor = "#7C3AED")}
+      onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
       onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
       {...rest}
     />
@@ -63,9 +63,9 @@ export default function NewBookingPage() {
             onClick={() => onChange(opt)}
             className="px-3 py-1.5 rounded-lg border text-[12px] font-medium transition-all"
             style={{
-              background: value === opt ? "#7C3AED" : "#fff",
+              background: value === opt ? "#1E40AF" : "#fff",
               color: value === opt ? "#fff" : "#374151",
-              borderColor: value === opt ? "#7C3AED" : "#E5E7EB",
+              borderColor: value === opt ? "#1E40AF" : "#E5E7EB",
             }}
           >
             {opt}
@@ -84,7 +84,7 @@ export default function NewBookingPage() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           className="fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-lg text-white text-[13px] font-medium"
-          style={{ background: "#7C3AED" }}
+          style={{ background: "#1E40AF" }}
         >
           Coming soon — booking creation is under development.
         </motion.div>
@@ -231,7 +231,7 @@ export default function NewBookingPage() {
                 rows={3}
                 className="w-full px-3 py-2 rounded-lg border text-[13px] outline-none resize-none"
                 style={{ borderColor: "#E5E7EB", color: "#111827", background: "#fff" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#7C3AED")}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               />
             </div>
@@ -242,7 +242,7 @@ export default function NewBookingPage() {
           <button
             type="submit"
             className="px-6 py-2.5 rounded-lg text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "#7C3AED" }}
+            style={{ background: "#1E40AF" }}
           >
             Create Booking
           </button>

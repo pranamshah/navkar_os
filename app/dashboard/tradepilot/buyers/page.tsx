@@ -3,62 +3,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const sampleBuyers = [
-  {
-    id: 1,
-    name: "Greenleaf Trading Co.",
-    country: "🇺🇸 United States",
-    products: "Cotton yarn, Woven fabrics, Apparel",
-    lastActive: "2 days ago",
-    importVolume: "$2.4M / year",
-    category: "Textiles",
-  },
-  {
-    id: 2,
-    name: "Yamamoto Industries",
-    country: "🇯🇵 Japan",
-    products: "Stainless steel pipes, Industrial fittings",
-    lastActive: "1 week ago",
-    importVolume: "$5.1M / year",
-    category: "Metal Products",
-  },
-  {
-    id: 3,
-    name: "EuroBuild GmbH",
-    country: "🇩🇪 Germany",
-    products: "Granite tiles, Marble slabs, Stone products",
-    lastActive: "3 days ago",
-    importVolume: "$1.8M / year",
-    category: "Stone & Minerals",
-  },
-  {
-    id: 4,
-    name: "Pacific Spice Imports",
-    country: "🇦🇺 Australia",
-    products: "Spices, Condiments, Processed foods",
-    lastActive: "Today",
-    importVolume: "$900K / year",
-    category: "Food & Agri",
-  },
-  {
-    id: 5,
-    name: "AlRashid Trading LLC",
-    country: "🇦🇪 UAE",
-    products: "Pharmaceuticals, Chemicals, Dyes",
-    lastActive: "5 days ago",
-    importVolume: "$3.2M / year",
-    category: "Chemicals",
-  },
-  {
-    id: 6,
-    name: "Seoul Electronics Hub",
-    country: "🇰🇷 South Korea",
-    products: "Electronic components, PCBs, Semiconductors",
-    lastActive: "Yesterday",
-    importVolume: "$7.6M / year",
-    category: "Electronics",
-  },
-];
+type Buyer = {
+  id: number;
+  name: string;
+  country: string;
+  products: string;
+  lastActive: string;
+  importVolume: string;
+  category: string;
+};
 
 const categories = ["All", "Textiles", "Metal Products", "Stone & Minerals", "Food & Agri", "Chemicals", "Electronics"];
 const countryOptions = ["All Countries", "United States", "Japan", "Germany", "Australia", "UAE", "South Korea"];
@@ -68,8 +21,9 @@ export default function FindBuyersPage() {
   const [category, setCategory] = useState("All");
   const [country, setCountry] = useState("All Countries");
   const [saved, setSaved] = useState<Set<number>>(new Set());
+  const [buyers] = useState<Buyer[]>([]);
 
-  const filtered = sampleBuyers.filter((b) => {
+  const filtered = buyers.filter((b) => {
     const matchSearch = !search || b.name.toLowerCase().includes(search.toLowerCase()) || b.products.toLowerCase().includes(search.toLowerCase());
     const matchCategory = category === "All" || b.category === category;
     const matchCountry = country === "All Countries" || b.country.includes(country);
@@ -91,7 +45,7 @@ export default function FindBuyersPage() {
           Find Buyers
         </h1>
         <div className="flex items-center gap-2">
-          <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold" style={{ background: "#CCFBF1", color: "#0D9488" }}>
+          <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold" style={{ background: "#CCFBF1", color: "#1E40AF" }}>
             1,000+ verified importers across 50+ countries
           </span>
         </div>
@@ -108,7 +62,7 @@ export default function FindBuyersPage() {
             placeholder="Search by company name or product..."
             className="w-full pl-8 pr-3 py-2 rounded-lg border text-[13px] outline-none transition-all"
             style={{ borderColor: "#E5E7EB", color: "#111827" }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+            onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
             onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
           />
         </div>
@@ -117,7 +71,7 @@ export default function FindBuyersPage() {
           onChange={(e) => setCountry(e.target.value)}
           className="px-3 py-2 rounded-lg border text-[13px] outline-none bg-white min-w-36"
           style={{ borderColor: "#E5E7EB", color: "#111827" }}
-          onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+          onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
           onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
         >
           {countryOptions.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -129,9 +83,9 @@ export default function FindBuyersPage() {
               onClick={() => setCategory(c)}
               className="px-3 py-1.5 rounded-lg text-[11px] font-medium border transition-all"
               style={{
-                background: category === c ? "#0D9488" : "#fff",
+                background: category === c ? "#1E40AF" : "#fff",
                 color: category === c ? "#fff" : "#6B7280",
-                borderColor: category === c ? "#0D9488" : "#E5E7EB",
+                borderColor: category === c ? "#1E40AF" : "#E5E7EB",
               }}
             >
               {c}
@@ -153,7 +107,7 @@ export default function FindBuyersPage() {
           >
             <div className="flex items-start justify-between mb-3">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "#F0FDFA" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: 22, color: "#0D9488", fontVariationSettings: "'FILL' 1" }}>business</span>
+                <span className="material-symbols-outlined" style={{ fontSize: 22, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}>business</span>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: "#F3F4F6", color: "#6B7280" }}>
                 {buyer.category}
@@ -168,7 +122,7 @@ export default function FindBuyersPage() {
             </div>
             <div className="text-[11px] mb-1" style={{ color: "#374151" }}>
               <span className="font-medium" style={{ color: "#6B7280" }}>Import Volume: </span>
-              <span className="font-semibold" style={{ color: "#0D9488" }}>{buyer.importVolume}</span>
+              <span className="font-semibold" style={{ color: "#1E40AF" }}>{buyer.importVolume}</span>
             </div>
             <div className="text-[10px] mb-4" style={{ color: "#9CA3AF" }}>
               Last active: {buyer.lastActive}
@@ -179,8 +133,8 @@ export default function FindBuyersPage() {
               className="mt-auto flex items-center justify-center gap-1.5 w-full py-2 rounded-lg text-[12px] font-semibold border transition-all"
               style={{
                 background: saved.has(buyer.id) ? "#F0FDFA" : "#fff",
-                color: saved.has(buyer.id) ? "#0D9488" : "#374151",
-                borderColor: saved.has(buyer.id) ? "#0D9488" : "#E5E7EB",
+                color: saved.has(buyer.id) ? "#1E40AF" : "#374151",
+                borderColor: saved.has(buyer.id) ? "#1E40AF" : "#E5E7EB",
               }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 15, fontVariationSettings: saved.has(buyer.id) ? "'FILL' 1" : "'FILL' 0" }}>
@@ -195,8 +149,7 @@ export default function FindBuyersPage() {
       {filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 rounded-xl border" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
           <span className="material-symbols-outlined mb-3" style={{ fontSize: 44, color: "#e5e7eb" }}>person_search</span>
-          <p className="text-sm font-medium" style={{ color: "#1a1c1c" }}>No buyers match your filters</p>
-          <p className="text-[11px] mt-1" style={{ color: "#6B7280" }}>Try adjusting your search or filter criteria</p>
+          <p className="text-sm font-medium" style={{ color: "#1a1c1c" }}>No buyers found. Add your first buyer to get started.</p>
         </div>
       )}
     </div>

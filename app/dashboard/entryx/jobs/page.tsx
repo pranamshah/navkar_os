@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const ACCENT = "#15803D";
+const ACCENT = "#1E40AF";
 
 type Job = {
   no: string;
@@ -25,7 +25,7 @@ const stageColors: Record<string, { bg: string; fg: string }> = {
   BE_FILED: { bg: "#DBEAFE", fg: "#1E40AF" },
   ASSESSMENT: { bg: "#FEF3C7", fg: "#92400E" },
   EXAMINATION: { bg: "#FFEDD5", fg: "#9A3412" },
-  OOC_GRANTED: { bg: "#DCFCE7", fg: "#15803D" },
+  OOC_GRANTED: { bg: "#DCFCE7", fg: "#1E40AF" },
   JOB_CLOSED: { bg: "#F3F4F6", fg: "#374151" },
 };
 
@@ -160,7 +160,7 @@ export default function EntryXJobsList() {
                       className="px-1.5 py-0.5 rounded text-[10px] font-bold"
                       style={{
                         background: j.type === "IMPORT" ? "#DCFCE7" : "#F5F3FF",
-                        color: j.type === "IMPORT" ? "#15803D" : "#7C3AED",
+                        color: j.type === "IMPORT" ? "#1E40AF" : "#1E40AF",
                       }}
                     >
                       {j.type}

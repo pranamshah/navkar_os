@@ -15,9 +15,9 @@ export default function PricingSection() {
           <span
             className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
             style={{
-              background: "rgba(246,190,57,0.12)",
-              color: "#B8860B",
-              border: "1px solid rgba(212,160,23,0.25)",
+              background: "rgba(30,64,175,0.12)",
+              color: "#1565C0",
+              border: "1px solid rgba(30,64,175,0.25)",
             }}
           >
             Transparent Pricing
@@ -27,7 +27,7 @@ export default function PricingSection() {
             style={{ fontSize: "clamp(28px, 3.5vw, 44px)", color: "#1a1c1d", letterSpacing: "-0.03em" }}
           >
             No Hidden Fees.{" "}
-            <span style={{ color: "#D4A017" }}>Scale with Volume.</span>
+            <span style={{ color: "#1E40AF" }}>Scale with Volume.</span>
           </h2>
           <p className="text-lg mb-8" style={{ color: "#5d5f5f" }}>
             14-day free trial. No credit card required.
@@ -65,16 +65,16 @@ export default function PricingSection() {
               className="rounded-3xl overflow-hidden relative"
               style={{
                 background: plan.highlight ? "#1a1c1d" : "rgba(255,255,255,0.8)",
-                border: plan.highlight ? "2px solid #f6be39" : "1px solid rgba(196,199,200,0.4)",
+                border: plan.highlight ? "2px solid #60A5FA" : "1px solid rgba(196,199,200,0.4)",
                 backdropFilter: "blur(20px)",
                 transform: plan.highlight ? "scale(1.04)" : "scale(1)",
-                boxShadow: plan.highlight ? "0 20px 60px rgba(212,160,23,0.18)" : "none",
+                boxShadow: plan.highlight ? "0 20px 60px rgba(30,64,175,0.18)" : "none",
               }}
             >
               {plan.badge && (
                 <div
                   className="text-center py-2 text-xs font-black uppercase tracking-widest"
-                  style={{ background: "#f6be39", color: "#1a1c1d" }}
+                  style={{ background: "#60A5FA", color: "#1a1c1d" }}
                 >
                   {plan.badge}
                 </div>
@@ -99,7 +99,7 @@ export default function PricingSection() {
                       className="font-black"
                       style={{
                         fontSize: "38px",
-                        color: plan.highlight ? "#f6be39" : "#1a1c1d",
+                        color: plan.highlight ? "#60A5FA" : "#1a1c1d",
                         letterSpacing: "-0.03em",
                       }}
                     >
@@ -110,7 +110,7 @@ export default function PricingSection() {
                     </span>
                   </div>
                   {annual && (
-                    <p className="text-xs mt-0.5" style={{ color: plan.highlight ? "#f6be39" : "#D4A017" }}>
+                    <p className="text-xs mt-0.5" style={{ color: plan.highlight ? "#60A5FA" : "#1E40AF" }}>
                       ₹{plan.annual.toLocaleString("en-IN")} billed annually
                     </p>
                   )}
@@ -121,7 +121,7 @@ export default function PricingSection() {
                     <div key={f} className="flex items-start gap-2.5">
                       <CheckCircle2
                         className="w-4 h-4 flex-shrink-0 mt-0.5"
-                        style={{ color: plan.highlight ? "#f6be39" : "#16A34A" }}
+                        style={{ color: plan.highlight ? "#60A5FA" : "#16A34A" }}
                       />
                       <span
                         className="text-sm"
@@ -136,12 +136,12 @@ export default function PricingSection() {
                 <button
                   className="w-full py-3.5 rounded-full font-semibold text-sm mt-2 transition-all duration-200"
                   style={{
-                    background: plan.highlight ? "#f6be39" : "#1a1c1d",
+                    background: plan.highlight ? "#60A5FA" : "#1a1c1d",
                     color: plan.highlight ? "#1a1c1d" : "#fff",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "scale(1.02)";
-                    e.currentTarget.style.boxShadow = "0 0 24px rgba(212,160,23,0.3)";
+                    e.currentTarget.style.boxShadow = "0 0 24px rgba(30,64,175,0.3)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = "scale(1)";
@@ -157,7 +157,7 @@ export default function PricingSection() {
 
         <p className="text-center text-sm mt-8" style={{ color: "#5d5f5f" }}>
           Need unlimited users and custom integrations?{" "}
-          <button className="font-semibold underline" style={{ color: "#D4A017" }}>
+          <button className="font-semibold underline" style={{ color: "#1E40AF" }}>
             Talk to our Enterprise team →
           </button>
         </p>

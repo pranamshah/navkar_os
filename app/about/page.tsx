@@ -49,7 +49,7 @@ export default function AboutPage() {
             >
               Logistics runs on
               <br />
-              <span style={{ color: "#D4AF37" }}>people and process.</span>
+              <span style={{ color: "#1E40AF" }}>people and process.</span>
             </h1>
             <p className="max-w-2xl text-lg" style={{ color: "#4c4546", lineHeight: 1.75, fontWeight: 300 }}>
               NavkarOS was born out of frustration — too many tabs, too many WhatsApp groups, too much manual data entry. We&apos;re building the operating system that Indian freight businesses actually deserve.
@@ -72,7 +72,7 @@ export default function AboutPage() {
             >
               &ldquo;The goal is simple — if you run a freight business in India, NavkarOS should be the only software you need.&rdquo;
             </p>
-            <p className="mt-5 text-sm" style={{ color: "#D4AF37", letterSpacing: "0.05em" }}>— Pranam S Shah, Founder & CEO</p>
+            <p className="mt-5 text-sm" style={{ color: "#1E40AF", letterSpacing: "0.05em" }}>— Pranam S Shah, Founder & CEO</p>
           </div>
         </section>
 
@@ -83,7 +83,7 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-3 gap-12">
               {values.map((v) => (
                 <div key={v.title}>
-                  <div className="w-8 h-0.5 mb-6" style={{ background: "#D4AF37" }} />
+                  <div className="w-8 h-0.5 mb-6" style={{ background: "#1E40AF" }} />
                   <h3 className="mb-3 font-semibold text-base" style={{ color: "#1a1c1c" }}>{v.title}</h3>
                   <p className="text-sm" style={{ color: "#7e7576", lineHeight: 1.7 }}>{v.body}</p>
                 </div>
@@ -102,30 +102,30 @@ export default function AboutPage() {
                 <div key={t.name} className="md:col-span-1">
                   <div
                     className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-black mb-5"
-                    style={{ background: "rgba(212,175,55,0.12)", color: "#D4AF37" }}
+                    style={{ background: "rgba(30,64,175,0.12)", color: "#1E40AF" }}
                   >
                     {t.name[0]}
                   </div>
                   <p className="font-semibold text-sm mb-0.5" style={{ color: "#1a1c1c" }}>{t.name}</p>
-                  <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>{t.role}</p>
+                  <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#1E40AF" }}>{t.role}</p>
                   <p className="text-sm" style={{ color: "#7e7576", lineHeight: 1.7 }}>{t.bio}</p>
                 </div>
               ))}
 
               {/* Hiring card */}
-              <div className="p-6 border" style={{ border: "0.5px dashed rgba(212,175,55,0.4)", background: "rgba(212,175,55,0.02)" }}>
+              <div className="p-6 border" style={{ border: "0.5px dashed rgba(30,64,175,0.4)", background: "rgba(30,64,175,0.02)" }}>
                 <div
                   className="w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-5"
-                  style={{ background: "rgba(212,175,55,0.08)" }}
+                  style={{ background: "rgba(30,64,175,0.08)" }}
                 >
                   +
                 </div>
                 <p className="font-semibold text-sm mb-1" style={{ color: "#1a1c1c" }}>We&apos;re Hiring</p>
-                <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>Join the Team</p>
+                <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#1E40AF" }}>Join the Team</p>
                 <p className="text-sm mb-5" style={{ color: "#7e7576", lineHeight: 1.7 }}>
                   Passionate about logistics, software, or both? We&apos;re looking for great people to help build the future of Indian freight.
                 </p>
-                <Link href="/careers" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>
+                <Link href="/careers" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>
                   View Open Roles →
                 </Link>
               </div>
@@ -167,7 +167,7 @@ export default function AboutPage() {
                 <p className="text-sm mb-1" style={{ color: "#4c4546" }}>7, Mannady Street, George Town</p>
                 <p className="text-sm mb-1" style={{ color: "#4c4546" }}>Chennai — 600 001, Tamil Nadu, India</p>
                 <p className="text-sm mb-6" style={{ color: "#4c4546" }}>+91 90807 67398 · navkaros.co@gmail.com</p>
-                <p className="text-sm italic" style={{ color: "#D4AF37" }}>Built in Chennai. Made for the world.</p>
+                <p className="text-sm italic" style={{ color: "#1E40AF" }}>Built in Chennai. Made for the world.</p>
               </div>
               <div className="flex flex-col gap-3">
                 <a
@@ -176,7 +176,7 @@ export default function AboutPage() {
                   style={{ borderColor: "rgba(0,0,0,0.1)", borderWidth: "0.5px" }}
                 >
                   <span className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>Email us</span>
-                  <span className="text-xs" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com →</span>
+                  <span className="text-xs" style={{ color: "#1E40AF" }}>navkaros.co@gmail.com →</span>
                 </a>
                 <a
                   href="tel:+919080767398"
@@ -184,7 +184,7 @@ export default function AboutPage() {
                   style={{ borderColor: "rgba(0,0,0,0.1)", borderWidth: "0.5px" }}
                 >
                   <span className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>Call us</span>
-                  <span className="text-xs" style={{ color: "#D4AF37" }}>+91 90807 67398 →</span>
+                  <span className="text-xs" style={{ color: "#1E40AF" }}>+91 90807 67398 →</span>
                 </a>
                 <Link
                   href="/#contact"
@@ -192,7 +192,7 @@ export default function AboutPage() {
                   style={{ background: "#1a1c1c" }}
                 >
                   <span className="text-sm font-semibold" style={{ color: "#fff" }}>Send a message</span>
-                  <span className="text-xs" style={{ color: "#D4AF37" }}>Contact form →</span>
+                  <span className="text-xs" style={{ color: "#1E40AF" }}>Contact form →</span>
                 </Link>
               </div>
             </div>

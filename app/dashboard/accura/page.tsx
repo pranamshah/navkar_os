@@ -46,8 +46,8 @@ function getLastFYRange() {
 const quickActions = [
   { label: "New Payment", shortcut: "F5", href: "/dashboard/accura/vouchers/payment", icon: "payments", color: "#0E7490" },
   { label: "New Receipt", shortcut: "F6", href: "/dashboard/accura/vouchers/receipt", icon: "receipt", color: "#059669" },
-  { label: "New Sales Invoice", shortcut: "F8", href: "/dashboard/accura/vouchers/sales", icon: "description", color: "#7C3AED" },
-  { label: "Run Payroll", shortcut: "", href: "/dashboard/accura/payroll?tab=run", icon: "paid", color: "#D97706" },
+  { label: "New Sales Invoice", shortcut: "F8", href: "/dashboard/accura/vouchers/sales", icon: "description", color: "#1E40AF" },
+  { label: "Run Payroll", shortcut: "", href: "/dashboard/accura/payroll?tab=run", icon: "paid", color: "#1E40AF" },
 ];
 
 const alerts: {
@@ -118,11 +118,11 @@ export default function AccuraDashboard() {
 
   const kpiCards = [
     { label: "Revenue", value: fmt(kpiData.revenue), icon: "trending_up", color: "#059669", bg: "#ECFDF5" },
-    { label: "Expenses", value: fmt(kpiData.expenses), icon: "receipt_long", color: "#D97706", bg: "#FFFBEB" },
+    { label: "Expenses", value: fmt(kpiData.expenses), icon: "receipt_long", color: "#1E40AF", bg: "#FFFBEB" },
     { label: "Net Profit", value: fmt(kpiData.netProfit), icon: "account_balance", color: kpiData.netProfit >= 0 ? "#059669" : "#DC2626", bg: kpiData.netProfit >= 0 ? "#ECFDF5" : "#FEF2F2" },
     { label: "GST Payable", value: fmt(kpiData.gstPayable), icon: "gavel", color: "#DC2626", bg: "#FEF2F2" },
     { label: "Outstanding Receivables", value: fmt(kpiData.receivables), icon: "arrow_outward", color: "#0E7490", bg: "#ECFEFF" },
-    { label: "Cash Position", value: fmt(kpiData.cash), icon: "savings", color: "#7C3AED", bg: "#F5F3FF" },
+    { label: "Cash Position", value: fmt(kpiData.cash), icon: "savings", color: "#1E40AF", bg: "#F5F3FF" },
   ];
 
   function applyPreset(preset: string) {

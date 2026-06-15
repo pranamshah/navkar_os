@@ -22,8 +22,8 @@ export default function PreAlertPage() {
             <div>
               <label className="text-[11px] font-medium" style={{ color: "#374151" }}>Select Job</label>
               <select className="w-full mt-1 px-3 py-2 rounded-md border text-[13px] outline-none" style={{ borderColor: "#E5E7EB" }}>
-                <option>IMP/2526/089 — Ravi Exports — Shanghai → JNPT</option>
-                <option>IMP/2526/088 — Sunrise Logistics — Singapore → Chennai</option>
+                <option value="">Select job...</option>
+                {/* jobs loaded from API */}
               </select>
             </div>
             <div>
@@ -36,7 +36,7 @@ export default function PreAlertPage() {
             </div>
             <div>
               <label className="text-[11px] font-medium" style={{ color: "#374151" }}>Subject</label>
-              <input defaultValue="Cargo Arrival Notice — IMP/2526/089 — MV Pacific Ace" className="w-full mt-1 px-3 py-2 rounded-md border text-[13px] outline-none" style={{ borderColor: "#E5E7EB" }} />
+              <input className="w-full mt-1 px-3 py-2 rounded-md border text-[13px] outline-none" style={{ borderColor: "#E5E7EB" }} />
             </div>
             <div>
               <label className="text-[11px] font-medium" style={{ color: "#374151" }}>Body</label>

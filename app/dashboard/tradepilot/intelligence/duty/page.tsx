@@ -112,7 +112,7 @@ export default function DutyCalculatorPage() {
                 placeholder="e.g. 73044900"
                 className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all"
                 style={{ borderColor: "#E5E7EB", color: "#111827" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               />
             </div>
@@ -124,7 +124,7 @@ export default function DutyCalculatorPage() {
                 onChange={(e) => setCountry(e.target.value)}
                 className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all bg-white"
                 style={{ borderColor: "#E5E7EB", color: country ? "#111827" : "#9CA3AF" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               >
                 <option value="">Select country</option>
@@ -141,7 +141,7 @@ export default function DutyCalculatorPage() {
                 placeholder="e.g. 500000"
                 className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all"
                 style={{ borderColor: "#E5E7EB", color: "#111827" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               />
             </div>
@@ -155,9 +155,9 @@ export default function DutyCalculatorPage() {
                     onClick={() => setIncoterm(t)}
                     className="px-3 py-1.5 rounded-lg text-[12px] font-semibold border transition-all"
                     style={{
-                      background: incoterm === t ? "#0D9488" : "#fff",
+                      background: incoterm === t ? "#1E40AF" : "#fff",
                       color: incoterm === t ? "#fff" : "#6B7280",
-                      borderColor: incoterm === t ? "#0D9488" : "#E5E7EB",
+                      borderColor: incoterm === t ? "#1E40AF" : "#E5E7EB",
                     }}
                   >
                     {t}
@@ -175,7 +175,7 @@ export default function DutyCalculatorPage() {
                 placeholder="e.g. 25000"
                 className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all"
                 style={{ borderColor: "#E5E7EB", color: "#111827" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               />
             </div>
@@ -189,7 +189,7 @@ export default function DutyCalculatorPage() {
                 placeholder="e.g. 2500"
                 className="w-full px-3 py-2.5 rounded-lg border text-[13px] outline-none transition-all"
                 style={{ borderColor: "#E5E7EB", color: "#111827" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               />
             </div>
@@ -197,9 +197,9 @@ export default function DutyCalculatorPage() {
             <button
               onClick={calculate}
               className="w-full py-3 rounded-lg text-sm font-semibold text-white transition-colors mt-2"
-              style={{ background: "#0D9488" }}
+              style={{ background: "#1E40AF" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#0F766E")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#0D9488")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#1E40AF")}
             >
               <span className="flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined" style={{ fontSize: 18 }}>calculate</span>
@@ -235,7 +235,7 @@ export default function DutyCalculatorPage() {
               style={{ background: "#fff", borderColor: "#E5E7EB" }}
             >
               <div className="px-5 py-4 border-b" style={{ borderColor: "#E5E7EB", background: "#F0FDFA" }}>
-                <h2 className="text-sm font-semibold" style={{ color: "#0D9488" }}>Landed Cost Breakdown</h2>
+                <h2 className="text-sm font-semibold" style={{ color: "#1E40AF" }}>Landed Cost Breakdown</h2>
                 <p className="text-[11px] mt-0.5" style={{ color: "#6B7280" }}>BCD @ 7.5% · IGST @ 18% · SWS @ 10%</p>
               </div>
               <div className="overflow-auto">
@@ -256,9 +256,9 @@ export default function DutyCalculatorPage() {
                           background: row.teal ? "#F0FDFA" : row.highlight ? "#FFFBEB" : "transparent",
                         }}
                       >
-                        <td className="py-2.5 px-4" style={{ fontWeight: row.bold ? 700 : 400, color: row.teal ? "#0D9488" : "#111827" }}>{row.label}</td>
+                        <td className="py-2.5 px-4" style={{ fontWeight: row.bold ? 700 : 400, color: row.teal ? "#1E40AF" : "#111827" }}>{row.label}</td>
                         <td className="py-2.5 px-4 text-[11px]" style={{ color: "#6B7280" }}>{row.calc}</td>
-                        <td className="py-2.5 px-4 text-right font-mono" style={{ fontWeight: row.bold ? 700 : 400, color: row.teal ? "#0D9488" : "#111827" }}>{row.amount}</td>
+                        <td className="py-2.5 px-4 text-right font-mono" style={{ fontWeight: row.bold ? 700 : 400, color: row.teal ? "#1E40AF" : "#111827" }}>{row.amount}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -4,21 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-const stages = [
-  { name: "Job Created", date: "", notes: "", done: false },
-  { name: "Cargo Ready", date: "", notes: "", done: false },
-  { name: "Booking Confirmed", date: "", notes: "", done: false },
-  { name: "Container Stuffed", date: "", notes: "", done: false },
-  { name: "Vessel Sailed", date: "", notes: "", done: false },
-  { name: "In Transit", date: "", notes: "", done: false },
-  { name: "Arrived Port", date: "", notes: "", done: false },
-  { name: "At Customs", date: "", notes: "", done: false },
-  { name: "Customs Cleared", date: "", notes: "", done: false },
-  { name: "CFS Destuffed", date: "", notes: "", done: false },
-  { name: "Out for Delivery", date: "", notes: "", done: false },
-  { name: "Delivered", date: "", notes: "", done: false },
-  { name: "POD Received", date: "", notes: "", done: false },
-];
+const stages: { name: string; date: string; notes: string; done: boolean }[] = [];
 
 const documents: { type: string; label: string; size: string; date: string }[] = [];
 

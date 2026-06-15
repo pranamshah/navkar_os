@@ -162,7 +162,7 @@ export default function PurchaseVoucherPage() {
           </button>
           <div>
             <h1 className="text-lg font-semibold flex items-center gap-2" style={{ color: "#111827" }}>
-              <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: "#FFFBEB", color: "#D97706" }}>F9</span>
+              <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ background: "#FFFBEB", color: "#1E40AF" }}>F9</span>
               Purchase Voucher
             </h1>
             <p className="text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{voucherNo}</p>
@@ -182,16 +182,16 @@ export default function PurchaseVoucherPage() {
           </div>
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Date *</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
           <TypeAheadInput label="Vendor *" placeholder="Select vendor..." options={vendorOpts} value={vendorLedgerId} onChange={setVendorLedgerId} required />
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Vendor Bill Ref</label>
-            <input type="text" placeholder="Vendor invoice no." value={billRef} onChange={(e) => setBillRef(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <input type="text" placeholder="Vendor invoice no." value={billRef} onChange={(e) => setBillRef(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
           <div>
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Bill Date</label>
-            <input type="date" value={billDate} onChange={(e) => setBillDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <input type="date" value={billDate} onChange={(e) => setBillDate(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
         </div>
 
@@ -200,7 +200,7 @@ export default function PurchaseVoucherPage() {
           <div className="flex rounded-md overflow-hidden border" style={{ borderColor: "#E5E7EB" }}>
             {(["intra", "inter"] as const).map((t) => (
               <button key={t} onClick={() => setSupplyType(t)} className="px-4 py-1.5 text-[12px] font-medium transition-colors"
-                style={{ background: supplyType === t ? "#D97706" : "#fff", color: supplyType === t ? "#fff" : "#6B7280" }}>
+                style={{ background: supplyType === t ? "#1E40AF" : "#fff", color: supplyType === t ? "#fff" : "#6B7280" }}>
                 {t === "intra" ? "Intra-State" : "Inter-State"}
               </button>
             ))}
@@ -215,8 +215,8 @@ export default function PurchaseVoucherPage() {
             {lines.map((line) => (
               <div key={line.id} className="grid gap-3 items-start" style={{ gridTemplateColumns: "2fr 1fr 120px 80px auto" }}>
                 <TypeAheadInput placeholder="Expense ledger..." options={expenseOpts} value={line.ledgerId} onChange={(val) => updateLine(line.id, "ledgerId", val)} />
-                <input type="text" placeholder="996511" value={line.hsn} onChange={(e) => updateLine(line.id, "hsn", e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] font-mono outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
-                <input type="number" placeholder="0.00" value={line.amount} onChange={(e) => updateLine(line.id, "amount", e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+                <input type="text" placeholder="996511" value={line.hsn} onChange={(e) => updateLine(line.id, "hsn", e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] font-mono outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+                <input type="number" placeholder="0.00" value={line.amount} onChange={(e) => updateLine(line.id, "amount", e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] text-right outline-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
                 <select value={line.gstRate} onChange={(e) => updateLine(line.id, "gstRate", e.target.value)} className="w-full px-2 py-2 rounded-md border text-[13px] outline-none" style={{ borderColor: "#E5E7EB", color: "#111827" }}>
                   {["0", "5", "12", "18", "28"].map((r) => <option key={r} value={r}>{r}%</option>)}
                 </select>
@@ -226,7 +226,7 @@ export default function PurchaseVoucherPage() {
               </div>
             ))}
           </div>
-          <button onClick={addLine} className="mt-3 flex items-center gap-1 text-[12px] px-2 py-1 rounded-md hover:bg-gray-50 transition-colors" style={{ color: "#D97706", border: "1px dashed #D97706" }}>
+          <button onClick={addLine} className="mt-3 flex items-center gap-1 text-[12px] px-2 py-1 rounded-md hover:bg-gray-50 transition-colors" style={{ color: "#1E40AF", border: "1px dashed #1E40AF" }}>
             <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>Add Line
           </button>
 
@@ -235,14 +235,14 @@ export default function PurchaseVoucherPage() {
               <div className="flex justify-between"><span style={{ color: "#6B7280" }}>Subtotal</span><span className="font-mono font-medium">₹{fmt(subtotal)}</span></div>
               <div className="flex justify-between"><span style={{ color: "#6B7280" }}>{supplyType === "intra" ? "CGST + SGST" : "IGST"}</span><span className="font-mono">₹{fmt(gstTotal)}</span></div>
               <div className="flex justify-between pt-2 border-t font-bold text-base" style={{ borderColor: "#E5E7EB" }}>
-                <span>Grand Total</span><span className="font-mono" style={{ color: "#D97706" }}>₹{fmt(grandTotal)}</span>
+                <span>Grand Total</span><span className="font-mono" style={{ color: "#1E40AF" }}>₹{fmt(grandTotal)}</span>
               </div>
             </div>
           </div>
 
           <div className="mt-4">
             <label className="block text-[11px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#6B7280" }}>Narration</label>
-            <textarea rows={2} placeholder="Being purchase of services from..." value={narration} onChange={(e) => setNarration(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none resize-none focus:border-[#D97706]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
+            <textarea rows={2} placeholder="Being purchase of services from..." value={narration} onChange={(e) => setNarration(e.target.value)} className="w-full px-3 py-2 rounded-md border text-[13px] outline-none resize-none focus:border-[#1E40AF]" style={{ borderColor: "#E5E7EB", color: "#111827" }} />
           </div>
         </div>
 
@@ -259,7 +259,7 @@ export default function PurchaseVoucherPage() {
               onClick={handleSave}
               disabled={saving || saved}
               className="flex items-center gap-2 px-5 py-2 rounded-md text-[13px] font-medium text-white transition-colors disabled:opacity-70"
-              style={{ background: saved ? "#059669" : "#D97706" }}
+              style={{ background: saved ? "#059669" : "#1E40AF" }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 15 }}>
                 {saved ? "check_circle" : "save"}

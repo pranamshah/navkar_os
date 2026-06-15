@@ -28,8 +28,8 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
       className="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200 rounded"
       style={{
         color: isActive(href) ? "#1a1c1c" : "#7e7576",
-        background: isActive(href) ? "rgba(212,175,55,0.12)" : "transparent",
-        borderLeft: isActive(href) ? "2px solid #D4AF37" : "2px solid transparent",
+        background: isActive(href) ? "rgba(30,64,175,0.12)" : "transparent",
+        borderLeft: isActive(href) ? "2px solid #1E40AF" : "2px solid transparent",
       }}
     >
       <Icon size={14} strokeWidth={1.8} />
@@ -50,7 +50,7 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
       {/* User info */}
       <div className="px-5 py-4 border-b" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#D4AF37" }}>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black" style={{ background: "#1a1c1c", color: "#1E40AF" }}>
             {(userName || userEmail || "U").charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
@@ -60,8 +60,8 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
         </div>
         {plan && (
           <div className="mt-3 flex items-center gap-1.5">
-            <Zap size={11} style={{ color: "#D4AF37" }} />
-            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>
+            <Zap size={11} style={{ color: "#1E40AF" }} />
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>
               {plan} Plan
             </span>
           </div>
@@ -92,8 +92,8 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
                     href={href}
                     className="flex items-center justify-between px-4 py-2.5 rounded transition-all duration-200"
                     style={{
-                      background: isActive(href) ? "rgba(212,175,55,0.1)" : "transparent",
-                      borderLeft: isActive(href) ? "2px solid #D4AF37" : "2px solid transparent",
+                      background: isActive(href) ? "rgba(30,64,175,0.1)" : "transparent",
+                      borderLeft: isActive(href) ? "2px solid #1E40AF" : "2px solid transparent",
                     }}
                   >
                     <div>
@@ -112,7 +112,7 @@ export default function Sidebar({ userEmail, userName, subscribedModules = [], p
 
         {subscribedModules.length === 0 && (
           <div className="mt-2 mx-1">
-            <div className="p-4" style={{ background: "rgba(212,175,55,0.08)", border: "0.5px solid rgba(212,175,55,0.2)" }}>
+            <div className="p-4" style={{ background: "rgba(30,64,175,0.08)", border: "0.5px solid rgba(30,64,175,0.2)" }}>
               <p className="text-xs font-semibold mb-2" style={{ color: "#1a1c1c" }}>Unlock Your Modules</p>
               <p className="text-xs mb-3" style={{ color: "#7e7576", lineHeight: 1.5 }}>Subscribe to access FreightOps, DocAI, BillGen, and more.</p>
               <Link

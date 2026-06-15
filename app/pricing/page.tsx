@@ -56,7 +56,7 @@ const BUNDLES = [
   { name: "CHA Bundle",       subtitle: "EntryX + Accura",  icon: "gavel",         color: "#5B21B6", monthly: 2799, products: ["EntryX", "Accura"], separate: 3398 },
   { name: "CFS Bundle",       subtitle: "DockIQ + Accura",  icon: "warehouse",     color: "#0D7057", monthly: 2499, products: ["DockIQ", "Accura"], separate: 3098 },
   { name: "Transporter Bundle", subtitle: "RunDesk + Accura", icon: "local_shipping", color: "#92400E", monthly: 2299, products: ["RunDesk", "Accura"], separate: 2898 },
-  { name: "Full Suite", subtitle: "All 6 products", icon: "workspaces", color: "#D4AF37", monthly: 7499, products: ["Nexlog", "EntryX", "DockIQ", "RunDesk", "Accura", "TradePilot"], separate: 9894, highlight: true },
+  { name: "Full Suite", subtitle: "All 6 products", icon: "workspaces", color: "#1E40AF", monthly: 7499, products: ["Nexlog", "EntryX", "DockIQ", "RunDesk", "Accura", "TradePilot"], separate: 9894, highlight: true },
 ];
 
 const FAQS = [
@@ -87,7 +87,7 @@ export default function PricingPage() {
   const handleCycleChange = (c: BillingCycle) => {
     setCycle(c);
     if (c === "yearly") {
-      confetti({ particleCount: 55, spread: 65, origin: { x: 0.5, y: 0.45 }, colors: ["#D4AF37", "#f6be39", "#1a1c1c", "#ffffff"], ticks: 200, gravity: 1.2, decay: 0.93, startVelocity: 26 });
+      confetti({ particleCount: 55, spread: 65, origin: { x: 0.5, y: 0.45 }, colors: ["#1E40AF", "#60A5FA", "#1a1c1c", "#ffffff"], ticks: 200, gravity: 1.2, decay: 0.93, startVelocity: 26 });
     }
   };
 
@@ -99,7 +99,7 @@ export default function PricingPage() {
       <div className="pt-32 pb-12 text-center px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5 border"
-            style={{ background: "rgba(212,175,55,0.08)", borderColor: "rgba(212,175,55,0.25)", color: "#D4AF37" }}>
+            style={{ background: "rgba(30,64,175,0.08)", borderColor: "rgba(30,64,175,0.25)", color: "#1E40AF" }}>
             <span className="material-symbols-outlined" style={{ fontSize: 13 }}>star</span>
             14-day free trial · no credit card
           </span>
@@ -119,11 +119,11 @@ export default function PricingPage() {
             const badge = c === "quarterly" ? "Save 10%" : c === "yearly" ? "Save 20%" : null;
             return (
               <button key={c} onClick={() => handleCycleChange(c)}
-                className={`relative px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2 ${cycle === c ? "bg-[#1a1c1c] text-[#D4AF37] shadow" : "text-gray-500 hover:text-gray-800"}`}>
+                className={`relative px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2 ${cycle === c ? "bg-[#1a1c1c] text-[#1E40AF] shadow" : "text-gray-500 hover:text-gray-800"}`}>
                 <span className="capitalize">{c}</span>
                 {badge && (
                   <span className="text-[10px] font-black px-1.5 py-0.5 rounded-full"
-                    style={{ background: cycle === c ? "rgba(212,175,55,0.2)" : "#dcfce7", color: cycle === c ? "#D4AF37" : "#16a34a" }}>
+                    style={{ background: cycle === c ? "rgba(30,64,175,0.2)" : "#dcfce7", color: cycle === c ? "#1E40AF" : "#16a34a" }}>
                     {badge}
                   </span>
                 )}
@@ -185,7 +185,7 @@ export default function PricingPage() {
 
                   <Link href="/signup"
                     className="w-full py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-center transition-all duration-200 block"
-                    style={{ background: "#1a1c1c", color: "#D4AF37" }}>
+                    style={{ background: "#1a1c1c", color: "#1E40AF" }}>
                     Start Free Trial
                   </Link>
                 </div>
@@ -213,18 +213,18 @@ export default function PricingPage() {
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ duration: 0.45 }}
                 className="rounded-2xl border p-5 flex flex-col relative"
-                style={{ background: isHL ? "#1a1c1c" : "#fff", borderColor: isHL ? "rgba(212,175,55,0.35)" : "#e5e7eb", borderWidth: isHL ? 2 : 1 }}>
+                style={{ background: isHL ? "#1a1c1c" : "#fff", borderColor: isHL ? "rgba(30,64,175,0.35)" : "#e5e7eb", borderWidth: isHL ? 2 : 1 }}>
 
                 {isHL && (
-                  <div className="absolute -top-px right-4 bg-[#D4AF37] px-3 py-1 rounded-b-xl">
+                  <div className="absolute -top-px right-4 bg-[#1E40AF] px-3 py-1 rounded-b-xl">
                     <span className="text-[#1a1c1c] text-xs font-black uppercase tracking-wider">Best Value</span>
                   </div>
                 )}
 
                 <div className="flex items-center gap-2.5 mb-4">
                   <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: isHL ? "rgba(212,175,55,0.15)" : `${bundle.color}10`, border: isHL ? "1px solid rgba(212,175,55,0.3)" : `1px solid ${bundle.color}25` }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: 16, color: isHL ? "#D4AF37" : bundle.color }}>{bundle.icon}</span>
+                    style={{ background: isHL ? "rgba(30,64,175,0.15)" : `${bundle.color}10`, border: isHL ? "1px solid rgba(30,64,175,0.3)" : `1px solid ${bundle.color}25` }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 16, color: isHL ? "#1E40AF" : bundle.color }}>{bundle.icon}</span>
                   </div>
                   <div>
                     <p className="font-black text-sm" style={{ color: isHL ? "#fff" : "#1a1c1c" }}>{bundle.name}</p>
@@ -233,7 +233,7 @@ export default function PricingPage() {
                 </div>
 
                 <div className="flex items-end gap-1 mb-0.5">
-                  <span className="text-2xl font-black" style={{ color: isHL ? "#D4AF37" : "#1a1c1c" }}>
+                  <span className="text-2xl font-black" style={{ color: isHL ? "#1E40AF" : "#1a1c1c" }}>
                     ₹<NumberFlow value={price} transformTiming={{ duration: 380, easing: "ease-out" }} willChange />
                   </span>
                   <span className="text-xs mb-1" style={{ color: isHL ? "rgba(255,255,255,0.4)" : "#9ca3af" }}>/mo</span>
@@ -243,7 +243,7 @@ export default function PricingPage() {
                 <div className="flex flex-wrap gap-1 mb-5 flex-1">
                   {bundle.products.map((pr) => (
                     <span key={pr} className="text-[10px] px-2 py-0.5 rounded-md font-semibold"
-                      style={{ background: isHL ? "rgba(212,175,55,0.12)" : "#f3f4f6", color: isHL ? "#D4AF37" : "#4b5563" }}>
+                      style={{ background: isHL ? "rgba(30,64,175,0.12)" : "#f3f4f6", color: isHL ? "#1E40AF" : "#4b5563" }}>
                       {pr}
                     </span>
                   ))}
@@ -251,7 +251,7 @@ export default function PricingPage() {
 
                 <Link href="/signup"
                   className="w-full py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-center transition-all duration-200 block"
-                  style={{ background: isHL ? "#D4AF37" : "#1a1c1c", color: isHL ? "#1a1c1c" : "#D4AF37" }}>
+                  style={{ background: isHL ? "#1E40AF" : "#1a1c1c", color: isHL ? "#1a1c1c" : "#1E40AF" }}>
                   Get Bundle
                 </Link>
               </motion.div>
@@ -263,9 +263,9 @@ export default function PricingPage() {
       {/* Enterprise */}
       <div className="max-w-6xl mx-auto px-6 mb-20">
         <div className="rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border"
-          style={{ background: "#1a1c1c", borderColor: "rgba(212,175,55,0.2)" }}>
+          style={{ background: "#1a1c1c", borderColor: "rgba(30,64,175,0.2)" }}>
           <div>
-            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(212,175,55,0.7)" }}>Enterprise</span>
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(30,64,175,0.7)" }}>Enterprise</span>
             <h3 className="text-2xl font-black text-white mt-1">Custom pricing for large operations</h3>
             <p className="text-sm mt-2" style={{ color: "rgba(255,255,255,0.45)" }}>
               Multiple branches, custom SLAs, dedicated success manager, on-premise and volume discounts.
@@ -273,14 +273,14 @@ export default function PricingPage() {
             <div className="flex flex-wrap gap-4 mt-4">
               {["Custom SLA", "Dedicated support", "On-premise option", "Volume discounts", "Multi-branch"].map((f) => (
                 <span key={f} className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: "rgba(255,255,255,0.55)" }}>
-                  <Check className="h-3 w-3" style={{ color: "#D4AF37" }} /> {f}
+                  <Check className="h-3 w-3" style={{ color: "#1E40AF" }} /> {f}
                 </span>
               ))}
             </div>
           </div>
           <Link href="/contact"
             className="flex-shrink-0 px-7 py-3.5 rounded-xl text-sm font-bold uppercase tracking-wider whitespace-nowrap hover:opacity-90 transition-opacity"
-            style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+            style={{ background: "#1E40AF", color: "#1a1c1c" }}>
             Talk to Sales →
           </Link>
         </div>
@@ -292,11 +292,11 @@ export default function PricingPage() {
         <div className="flex flex-col gap-2">
           {FAQS.map((faq, i) => (
             <div key={i} className="rounded-xl border bg-white overflow-hidden"
-              style={{ borderColor: openFaq === i ? "rgba(212,175,55,0.4)" : "#e5e7eb" }}>
+              style={{ borderColor: openFaq === i ? "rgba(30,64,175,0.4)" : "#e5e7eb" }}>
               <button className="w-full px-5 py-4 flex items-center justify-between text-left"
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                 <span className="font-semibold text-sm text-gray-800">{faq.q}</span>
-                <span className="material-symbols-outlined flex-shrink-0" style={{ fontSize: 18, color: openFaq === i ? "#D4AF37" : "#9ca3af" }}>
+                <span className="material-symbols-outlined flex-shrink-0" style={{ fontSize: 18, color: openFaq === i ? "#1E40AF" : "#9ca3af" }}>
                   {openFaq === i ? "expand_less" : "expand_more"}
                 </span>
               </button>

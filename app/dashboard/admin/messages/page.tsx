@@ -26,7 +26,7 @@ function timeAgo(dateStr: string) {
 }
 
 const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }> = {
-  UNREAD:   { bg: "rgba(212,175,55,0.12)", text: "#92660a", label: "Unread" },
+  UNREAD:   { bg: "rgba(30,64,175,0.12)", text: "#92660a", label: "Unread" },
   READ:     { bg: "rgba(16,185,129,0.1)",  text: "#065f46", label: "Read" },
   ARCHIVED: { bg: "rgba(0,0,0,0.06)",      text: "#7e7576", label: "Archived" },
 };
@@ -94,7 +94,7 @@ export default function MessagesPage() {
             <div>
               <h1 className="text-base font-bold" style={{ color: "#1a1c1c" }}>Messages</h1>
               {unreadCount > 0 && (
-                <p className="text-xs mt-0.5" style={{ color: "#D4AF37" }}>{unreadCount} unread</p>
+                <p className="text-xs mt-0.5" style={{ color: "#1E40AF" }}>{unreadCount} unread</p>
               )}
             </div>
             <button
@@ -117,7 +117,7 @@ export default function MessagesPage() {
                 className="flex-1 py-1.5 text-xs font-semibold uppercase tracking-wider rounded transition-all duration-150"
                 style={{
                   background: filter === f ? "#1a1c1c" : "transparent",
-                  color: filter === f ? "#D4AF37" : "#7e7576",
+                  color: filter === f ? "#1E40AF" : "#7e7576",
                 }}
               >
                 {f === "ALL" ? `All (${messages.length})` : f === "UNREAD" ? `New (${unreadCount})` : f.charAt(0) + f.slice(1).toLowerCase()}
@@ -130,7 +130,7 @@ export default function MessagesPage() {
         <div className="flex-1 overflow-y-auto">
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+              <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#1E40AF" }} />
             </div>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 px-6 text-center gap-3">
@@ -145,7 +145,7 @@ export default function MessagesPage() {
                 className="w-full text-left px-5 py-4 border-b transition-all duration-150 relative"
                 style={{
                   borderColor: "rgba(0,0,0,0.06)",
-                  background: selected?.id === msg.id ? "rgba(212,175,55,0.06)" : "transparent",
+                  background: selected?.id === msg.id ? "rgba(30,64,175,0.06)" : "transparent",
                 }}
                 onMouseEnter={(e) => { if (selected?.id !== msg.id) e.currentTarget.style.background = "#fafafa"; }}
                 onMouseLeave={(e) => { if (selected?.id !== msg.id) e.currentTarget.style.background = "transparent"; }}
@@ -154,7 +154,7 @@ export default function MessagesPage() {
                 {msg.status === "UNREAD" && (
                   <span
                     className="absolute top-5 right-4 w-2 h-2 rounded-full"
-                    style={{ background: "#D4AF37" }}
+                    style={{ background: "#1E40AF" }}
                   />
                 )}
                 <div className="flex items-start justify-between gap-2 mb-1">
@@ -169,7 +169,7 @@ export default function MessagesPage() {
                   </span>
                 </div>
                 {msg.company && (
-                  <p className="text-xs mb-1 truncate" style={{ color: "#D4AF37" }}>{msg.company}</p>
+                  <p className="text-xs mb-1 truncate" style={{ color: "#1E40AF" }}>{msg.company}</p>
                 )}
                 <p className="text-xs line-clamp-2" style={{ color: "#7e7576" }}>{msg.message}</p>
               </button>
@@ -217,7 +217,7 @@ export default function MessagesPage() {
                     title="Archive"
                     className="p-2 rounded transition-colors duration-150"
                     style={{ color: "#7e7576" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#D4AF37")}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#1E40AF")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "#7e7576")}
                   >
                     <Archive size={16} />
@@ -254,7 +254,7 @@ export default function MessagesPage() {
             <div className="flex items-start gap-5 mb-8">
               <div
                 className="w-12 h-12 rounded-full flex items-center justify-center text-base font-black flex-shrink-0"
-                style={{ background: "rgba(212,175,55,0.12)", color: "#D4AF37", border: "1px solid rgba(212,175,55,0.3)" }}
+                style={{ background: "rgba(30,64,175,0.12)", color: "#1E40AF", border: "1px solid rgba(30,64,175,0.3)" }}
               >
                 {selected.name.charAt(0).toUpperCase()}
               </div>
@@ -264,7 +264,7 @@ export default function MessagesPage() {
                   <a
                     href={`mailto:${selected.email}`}
                     className="flex items-center gap-1.5 text-xs transition-colors duration-150"
-                    style={{ color: "#D4AF37" }}
+                    style={{ color: "#1E40AF" }}
                   >
                     <Mail size={12} />
                     {selected.email}
@@ -308,7 +308,7 @@ export default function MessagesPage() {
               style={{
                 background: "#fff",
                 border: "0.5px solid rgba(0,0,0,0.08)",
-                borderLeft: "3px solid #D4AF37",
+                borderLeft: "3px solid #1E40AF",
               }}
             >
               <p style={{ fontSize: "15px", color: "#1a1c1c", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>
@@ -322,7 +322,7 @@ export default function MessagesPage() {
               className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
               style={{ background: "#1a1c1c", color: "#fff" }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#D4AF37";
+                e.currentTarget.style.background = "#1E40AF";
                 e.currentTarget.style.color = "#1a1c1c";
               }}
               onMouseLeave={(e) => {

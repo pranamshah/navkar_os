@@ -57,7 +57,7 @@ const tagColors: Record<string, string> = {
   GST: "#1565C0",
   Trade: "#0D7057",
   Operations: "#92400E",
-  Compliance: "#D4AF37",
+  Compliance: "#1E40AF",
   Industry: "#1a1c1c",
 };
 
@@ -68,7 +68,7 @@ export default function BlogPage() {
       <main style={{ background: "#f9f9f9" }}>
         <section className="pt-40 pb-24 px-8">
           <div className="max-w-5xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#D4AF37" }}>Insights</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#1E40AF" }}>Insights</p>
             <h1
               style={{
                 fontFamily: "'EB Garamond', Georgia, serif",
@@ -111,7 +111,7 @@ export default function BlogPage() {
                   <p className="text-sm" style={{ color: "#4c4546", lineHeight: 1.7 }}>{post.excerpt}</p>
                   <div className="flex items-center justify-between pt-4 mt-auto" style={{ borderTop: "0.5px solid rgba(0,0,0,0.07)" }}>
                     <span className="text-xs" style={{ color: "#7e7576" }}>{post.date}</span>
-                    <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>
+                    <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>
                       Coming Soon
                     </span>
                   </div>

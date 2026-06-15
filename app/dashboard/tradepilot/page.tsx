@@ -4,11 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const kpis = [
-  { label: "Active Shipments", value: "0", icon: "local_shipping", color: "#0D9488", bg: "#CCFBF1" },
+  { label: "Active Shipments", value: "0", icon: "local_shipping", color: "#1E40AF", bg: "#CCFBF1" },
   { label: "Imports This Month", value: "0", icon: "download", color: "#1D4ED8", bg: "#DBEAFE" },
   { label: "Exports This Month", value: "0", icon: "upload", color: "#059669", bg: "#DCFCE7" },
-  { label: "Total Duty Paid", value: "₹0", icon: "account_balance", color: "#D97706", bg: "#FEF3C7" },
-  { label: "RoDTEP Credits Earned", value: "₹0", icon: "savings", color: "#0D9488", bg: "#CCFBF1" },
+  { label: "Total Duty Paid", value: "₹0", icon: "account_balance", color: "#1E40AF", bg: "#FEF3C7" },
+  { label: "RoDTEP Credits Earned", value: "₹0", icon: "savings", color: "#1E40AF", bg: "#CCFBF1" },
   { label: "FTA Savings This Year", value: "₹0", icon: "percent", color: "#059669", bg: "#DCFCE7" },
 ];
 
@@ -64,7 +64,7 @@ export default function TradePilotDashboard() {
           <Link
             href="/dashboard/tradepilot/shipments"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-            style={{ background: "#0D9488" }}
+            style={{ background: "#1E40AF" }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
             New Shipment
@@ -100,7 +100,7 @@ export default function TradePilotDashboard() {
       <div className="rounded-xl border p-5 mb-6" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold" style={{ color: "#111827" }}>Recent Shipments</h2>
-          <Link href="/dashboard/tradepilot/shipments" className="text-[11px] font-medium" style={{ color: "#0D9488" }}>
+          <Link href="/dashboard/tradepilot/shipments" className="text-[11px] font-medium" style={{ color: "#1E40AF" }}>
             View all →
           </Link>
         </div>
@@ -124,7 +124,7 @@ export default function TradePilotDashboard() {
               </tr>
             ) : recentShipments.map((s) => (
               <tr key={s.id} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#0D9488" }}>{s.id}</td>
+                <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#1E40AF" }}>{s.id}</td>
                 <td className="py-2.5 px-2">
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{
                     background: s.type === "Import" ? "#DBEAFE" : "#DCFCE7",
@@ -160,8 +160,8 @@ export default function TradePilotDashboard() {
                 className="flex flex-col p-5 rounded-xl border transition-all group"
                 style={{ background: "#fff", borderColor: "#E5E7EB" }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "#0D9488";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 3px rgba(13,148,136,0.08)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "#1E40AF";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 3px rgba(30,64,175,0.08)";
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = "#E5E7EB";
@@ -169,11 +169,11 @@ export default function TradePilotDashboard() {
                 }}
               >
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style={{ background: "#CCFBF1" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#0D9488", fontVariationSettings: "'FILL' 1" }}>{card.icon}</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}>{card.icon}</span>
                 </div>
                 <div className="text-sm font-semibold mb-1" style={{ color: "#111827" }}>{card.title}</div>
                 <div className="text-[11px] leading-relaxed" style={{ color: "#6B7280" }}>{card.description}</div>
-                <div className="mt-3 text-[11px] font-semibold flex items-center gap-1" style={{ color: "#0D9488" }}>
+                <div className="mt-3 text-[11px] font-semibold flex items-center gap-1" style={{ color: "#1E40AF" }}>
                   Open tool
                   <span className="material-symbols-outlined" style={{ fontSize: 13 }}>arrow_forward</span>
                 </div>

@@ -11,7 +11,7 @@ function InfoRow({ label, value, mono }: { label: string; value?: string | null;
       </span>
       <span
         className={mono ? "font-mono font-black text-sm" : "text-sm font-semibold"}
-        style={{ color: mono ? "#D4AF37" : "#1a1c1c" }}
+        style={{ color: mono ? "#1E40AF" : "#1a1c1c" }}
       >
         {value || "—"}
       </span>
@@ -67,7 +67,7 @@ export default function ClientProfilePage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div
           className="w-8 h-8 rounded-full border-2 animate-spin"
-          style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
+          style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }}
         />
       </div>
     );
@@ -98,16 +98,16 @@ export default function ClientProfilePage() {
             {/* Gold accent top */}
             <div
               className="h-2 w-full"
-              style={{ background: "linear-gradient(90deg, #D4AF37 0%, #c9a227 100%)" }}
+              style={{ background: "linear-gradient(90deg, #1E40AF 0%, #c9a227 100%)" }}
             />
             <div className="p-6 flex flex-col items-center text-center">
               {/* Avatar */}
               <div
                 className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-black mb-4"
                 style={{
-                  background: "rgba(212,175,55,0.12)",
-                  color: "#D4AF37",
-                  border: "2px solid rgba(212,175,55,0.25)",
+                  background: "rgba(30,64,175,0.12)",
+                  color: "#1E40AF",
+                  border: "2px solid rgba(30,64,175,0.25)",
                 }}
               >
                 {(user?.name || user?.email || "U").charAt(0).toUpperCase()}
@@ -125,17 +125,17 @@ export default function ClientProfilePage() {
                 <div
                   className="w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg mb-2"
                   style={{
-                    background: "rgba(212,175,55,0.07)",
-                    border: "1px solid rgba(212,175,55,0.2)",
+                    background: "rgba(30,64,175,0.07)",
+                    border: "1px solid rgba(30,64,175,0.2)",
                   }}
                 >
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#D4AF37" }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#1E40AF" }}>
                       badge
                     </span>
                     <span
                       className="font-mono font-black text-sm truncate"
-                      style={{ color: "#D4AF37" }}
+                      style={{ color: "#1E40AF" }}
                     >
                       {user.clientId}
                     </span>
@@ -143,7 +143,7 @@ export default function ClientProfilePage() {
                   <button
                     onClick={handleCopyId}
                     className="flex items-center gap-1 text-xs font-semibold uppercase tracking-widest flex-shrink-0 transition-opacity hover:opacity-70"
-                    style={{ color: copied ? "#16a34a" : "#D4AF37" }}
+                    style={{ color: copied ? "#16a34a" : "#1E40AF" }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
                       {copied ? "check" : "content_copy"}
@@ -160,8 +160,8 @@ export default function ClientProfilePage() {
                   background:
                     user?.status === "ACTIVE"
                       ? "rgba(34,197,94,0.1)"
-                      : "rgba(212,175,55,0.12)",
-                  color: user?.status === "ACTIVE" ? "#16a34a" : "#D4AF37",
+                      : "rgba(30,64,175,0.12)",
+                  color: user?.status === "ACTIVE" ? "#16a34a" : "#1E40AF",
                 }}
               >
                 {user?.status === "ACTIVE" ? "Verified" : user?.status || "Pending"}
@@ -181,7 +181,7 @@ export default function ClientProfilePage() {
               className="px-6 py-4 border-b flex items-center gap-2"
               style={{ background: "#f9f9fa", borderColor: "#E5E7EB" }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D4AF37" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#1E40AF" }}>
                 person
               </span>
               <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>
@@ -213,7 +213,7 @@ export default function ClientProfilePage() {
               className="px-6 py-4 border-b flex items-center gap-2"
               style={{ background: "#f9f9fa", borderColor: "#E5E7EB" }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D4AF37" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#1E40AF" }}>
                 lock
               </span>
               <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>
@@ -277,7 +277,7 @@ export default function ClientProfilePage() {
                         background: "#f9f9fa",
                         fontFamily: "Inter, sans-serif",
                       }}
-                      onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                     />
                   </div>
@@ -286,7 +286,7 @@ export default function ClientProfilePage() {
                 <button
                   type="submit"
                   className="flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90 w-fit px-6"
-                  style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                  style={{ background: "#1a1c1c", color: "#1E40AF" }}
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: 15 }}>
                     save

@@ -40,7 +40,7 @@ function VehicleCard({ vehicle, index }: { vehicle: Vehicle; index: number }) {
         </div>
         <span
           className="material-symbols-outlined"
-          style={{ fontSize: 28, color: "#7C3AED", fontVariationSettings: "'FILL' 1" }}
+          style={{ fontSize: 28, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}
         >
           directions_truck
         </span>
@@ -85,7 +85,7 @@ export default function VehiclesPage() {
         </div>
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#7C3AED" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
           Add Vehicle
@@ -111,7 +111,7 @@ export default function VehiclesPage() {
           </p>
           <button
             className="mt-4 px-4 py-2 rounded-lg text-[13px] text-white font-medium"
-            style={{ background: "#7C3AED" }}
+            style={{ background: "#1E40AF" }}
           >
             + Add Vehicle
           </button>

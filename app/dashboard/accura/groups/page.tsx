@@ -20,7 +20,7 @@ const natureColors: Record<Nature, { text: string; bg: string; border: string }>
   ASSETS: { text: "#059669", bg: "#ECFDF5", border: "#A7F3D0" },
   LIABILITIES: { text: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
   INCOME: { text: "#0E7490", bg: "#ECFEFF", border: "#A5F3FC" },
-  EXPENSE: { text: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
+  EXPENSE: { text: "#1E40AF", bg: "#FFFBEB", border: "#FDE68A" },
 };
 
 const emptyForm = {
@@ -440,7 +440,7 @@ export default function GroupsPage() {
                 Delete <strong style={{ color: "#111827" }}>{deleteTarget.name}</strong>? This cannot be undone.
               </p>
               {deleteTarget._count.ledgers > 0 && (
-                <p className="text-[12px] px-3 py-2 rounded-md mb-3" style={{ background: "#FFFBEB", color: "#D97706", border: "1px solid #FDE68A" }}>
+                <p className="text-[12px] px-3 py-2 rounded-md mb-3" style={{ background: "#FFFBEB", color: "#1E40AF", border: "1px solid #FDE68A" }}>
                   This group has {deleteTarget._count.ledgers} linked ledger(s) and cannot be deleted.
                 </p>
               )}

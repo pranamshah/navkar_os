@@ -34,15 +34,15 @@ export default function BeyondBorders() {
           <div
             className="absolute inset-0 opacity-10"
             style={{
-              backgroundImage: "linear-gradient(rgba(212,175,55,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.4) 1px, transparent 1px)",
+              backgroundImage: "linear-gradient(rgba(30,64,175,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(30,64,175,0.4) 1px, transparent 1px)",
               backgroundSize: "80px 80px",
             }}
           />
 
           {/* Static gold ribbons */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.2 }}>
-            <path d="M-100,260 Q360,200 720,260 Q1080,320 1540,260" stroke="#D4AF37" strokeWidth="0.8" fill="none" />
-            <path d="M-100,290 Q400,235 760,290 Q1100,345 1540,290" stroke="#D4AF37" strokeWidth="0.4" fill="none" />
+            <path d="M-100,260 Q360,200 720,260 Q1080,320 1540,260" stroke="#1E40AF" strokeWidth="0.8" fill="none" />
+            <path d="M-100,290 Q400,235 760,290 Q1100,345 1540,290" stroke="#1E40AF" strokeWidth="0.4" fill="none" />
           </svg>
 
           {/* Content */}
@@ -63,7 +63,7 @@ export default function BeyondBorders() {
             >
               Beyond Borders.
             </motion.h2>
-            <div className="w-12 mt-6" style={{ height: "0.5px", background: "#D4AF37" }} />
+            <div className="w-12 mt-6" style={{ height: "0.5px", background: "#1E40AF" }} />
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -83,13 +83,13 @@ export default function BeyondBorders() {
               viewport={{ once: true }}
               transition={{ delay: 0.7 }}
               className="mt-10 px-10 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 inline-block"
-              style={{ background: "#D4AF37", color: "#1a1c1c" }}
+              style={{ background: "#1E40AF", color: "#ffffff" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#fff";
                 e.currentTarget.style.transform = "scale(1.03)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#D4AF37";
+                e.currentTarget.style.background = "#1E40AF";
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >

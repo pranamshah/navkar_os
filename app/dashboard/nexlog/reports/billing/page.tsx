@@ -28,7 +28,7 @@ export default function BillingPage() {
             {[
               { l: "0–30 Days", v: aging.reduce((s, a) => s + a.b0, 0), c: "#059669" },
               { l: "31–60 Days", v: aging.reduce((s, a) => s + a.b30, 0), c: "#1565C0" },
-              { l: "61–90 Days", v: aging.reduce((s, a) => s + a.b60, 0), c: "#D97706" },
+              { l: "61–90 Days", v: aging.reduce((s, a) => s + a.b60, 0), c: "#1E40AF" },
               { l: "90+ Days", v: aging.reduce((s, a) => s + a.b90, 0), c: "#DC2626" },
             ].map((b) => (
               <div key={b.l} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
@@ -49,7 +49,7 @@ export default function BillingPage() {
                     <td className="py-2.5 px-3 font-semibold" style={{ color: "#111827" }}>{a.client}</td>
                     <td className="py-2.5 px-3" style={{ color: "#059669" }}>{a.b0 ? `₹${a.b0.toLocaleString("en-IN")}` : "—"}</td>
                     <td className="py-2.5 px-3" style={{ color: "#1565C0" }}>{a.b30 ? `₹${a.b30.toLocaleString("en-IN")}` : "—"}</td>
-                    <td className="py-2.5 px-3" style={{ color: "#D97706" }}>{a.b60 ? `₹${a.b60.toLocaleString("en-IN")}` : "—"}</td>
+                    <td className="py-2.5 px-3" style={{ color: "#1E40AF" }}>{a.b60 ? `₹${a.b60.toLocaleString("en-IN")}` : "—"}</td>
                     <td className="py-2.5 px-3" style={{ color: "#DC2626" }}>{a.b90 ? `₹${a.b90.toLocaleString("en-IN")}` : "—"}</td>
                     <td className="py-2.5 px-3 font-bold" style={{ color: "#111827" }}>₹{(a.b0 + a.b30 + a.b60 + a.b90).toLocaleString("en-IN")}</td>
                   </tr>

@@ -14,7 +14,7 @@ const services = [
     badge: "● Live",
     badgeColor: "#16A34A",
     rows: [
-      { a: "NXL/2026/0142", b: "INNSA → DEHAM", c: "Under Exam", cv: "#D4AF37" },
+      { a: "NXL/2026/0142", b: "INNSA → DEHAM", c: "Under Exam", cv: "#1E40AF" },
       { a: "NXL/2026/0141", b: "INMAA → SGSIN", c: "OOC Cleared", cv: "#16A34A" },
       { a: "NXL/2026/0139", b: "INCCU → USLAX", c: "On Vessel",   cv: "#3B82F6" },
     ],
@@ -42,7 +42,7 @@ const services = [
     badge: "Gate-In",
     badgeColor: "#0D7057",
     rows: [
-      { a: "MSCU341829",    b: "Bay 04 · Slot 12", c: "Day 3",    cv: "#D4AF37" },
+      { a: "MSCU341829",    b: "Bay 04 · Slot 12", c: "Day 3",    cv: "#1E40AF" },
       { a: "Storage Slab",  b: "₹450/day",         c: "₹1,350",  cv: "#1a1c1c" },
       { a: "Importer Notif",b: "Auto-sent",         c: "Viewed",  cv: "#16A34A" },
     ],
@@ -56,7 +56,7 @@ const services = [
     badge: "GPS Live",
     badgeColor: "#92400E",
     rows: [
-      { a: "LR/26/00891",  b: "JNPT → Bhiwandi", c: "In Transit", cv: "#D4AF37" },
+      { a: "LR/26/00891",  b: "JNPT → Bhiwandi", c: "In Transit", cv: "#1E40AF" },
       { a: "MH04 BX 7792", b: "45 km left",       c: "On Track",  cv: "#16A34A" },
       { a: "E-Way Bill",   b: "Auto-generated",   c: "Valid 2d",  cv: "#3B82F6" },
     ],
@@ -68,10 +68,10 @@ const services = [
     tagline: "Freight Accounting",
     color: "#1A237E",
     badge: "GST Ready",
-    badgeColor: "#D4AF37",
+    badgeColor: "#1E40AF",
     rows: [
       { a: "Ocean Freight",  b: "FCL 20'",     c: "₹78,500",     cv: "#1a1c1c" },
-      { a: "IGST @ 18%",     b: "Auto-split",  c: "₹17,136",     cv: "#D4AF37" },
+      { a: "IGST @ 18%",     b: "Auto-split",  c: "₹17,136",     cv: "#1E40AF" },
       { a: "GSTR-1 June",    b: "14 invoices", c: "Export Ready", cv: "#16A34A" },
     ],
     footer: "₹8.4L billed · ₹6.3L collected",
@@ -86,7 +86,7 @@ const services = [
     rows: [
       { a: "Landed Cost",   b: "CIF+Duty+CFS",  c: "₹5,42,000", cv: "#1a1c1c" },
       { a: "FTA India–UAE", b: "CEPA Check",    c: "Eligible",  cv: "#16A34A" },
-      { a: "RoDTEP Credit", b: "Export benefit",c: "₹4,200",    cv: "#D4AF37" },
+      { a: "RoDTEP Credit", b: "Export benefit",c: "₹4,200",    cv: "#1E40AF" },
     ],
     footer: "2 active shipments · 1 FTA applied",
   },
@@ -212,7 +212,7 @@ function ServiceDemo() {
               <Link
                 href={`/demo/${svc.id}`}
                 className="text-xs font-semibold uppercase tracking-widest"
-                style={{ color: "#D4AF37" }}
+                style={{ color: "#1E40AF" }}
               >
                 Full Demo →
               </Link>
@@ -241,7 +241,7 @@ export default function ServicePreview() {
       <ContainerScroll
         titleComponent={
           <div className="mb-2">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#1E40AF" }}>
               See it in action
             </p>
             <h2
@@ -256,7 +256,7 @@ export default function ServicePreview() {
             >
               Live Previews.
               <br />
-              <span style={{ color: "#D4AF37" }}>Every Product.</span>
+              <span style={{ color: "#1E40AF" }}>Every Product.</span>
             </h2>
             <p className="mt-4 max-w-lg mx-auto text-sm" style={{ color: "#4c4546", lineHeight: 1.7 }}>
               Click any product to see real workflows — freight jobs, customs filing, CFS tracking, and more.

@@ -2,26 +2,13 @@
 
 import { useState } from "react";
 
-const series = [
-  { code: "IMP/2526", preview: "IMP/2526/090", desc: "Import jobs", count: 89 },
-  { code: "EXP/2526", preview: "EXP/2526/045", desc: "Export jobs", count: 44 },
-  { code: "AIR/2526", preview: "AIR/2526/033", desc: "Air freight", count: 32 },
-  { code: "INV-2026", preview: "INV-2026-0143", desc: "Tax Invoices", count: 142 },
-];
+type SeriesEntry = { code: string; preview: string; desc: string; count: number };
+type RateCard = { partner: string; lane: string; rate: string; from: string; to: string; status: string };
+type UserEntry = { name: string; email: string; role: string; perms: string[] };
 
-const rateCards = [
-  { partner: "Hapag-Lloyd", lane: "Shanghai → JNPT", rate: "$1,850", from: "01 Mar 2026", to: "31 May 2026", status: "EXPIRED" },
-  { partner: "CMA CGM", lane: "Shanghai → JNPT", rate: "$1,795", from: "01 Jun 2026", to: "31 Aug 2026", status: "ACTIVE" },
-  { partner: "Maersk", lane: "Chennai → Hamburg", rate: "$2,420", from: "01 May 2026", to: "31 Jul 2026", status: "ACTIVE" },
-  { partner: "MSC", lane: "Mumbai → Dubai", rate: "$890", from: "01 Apr 2026", to: "30 Jun 2026", status: "EXPIRING" },
-];
-
-const users = [
-  { name: "Priya M", email: "priya@navkarfreight.com", role: "Operations", perms: ["Jobs", "Documents", "Tracking"] },
-  { name: "Rajesh K", email: "rajesh@navkarfreight.com", role: "Senior Ops", perms: ["Jobs", "Documents", "Tracking", "Invoicing"] },
-  { name: "Anita S", email: "anita@navkarfreight.com", role: "Air Desk", perms: ["Jobs", "Documents"] },
-  { name: "Mohan Lal", email: "mohan@navkarfreight.com", role: "Admin", perms: ["All"] },
-];
+const series: SeriesEntry[] = [];
+const rateCards: RateCard[] = [];
+const users: UserEntry[] = [];
 
 export default function SettingsPage() {
   const [tab, setTab] = useState<"company" | "series" | "rates" | "users">("company");
@@ -71,7 +58,9 @@ export default function SettingsPage() {
               <tr>{["Series Code", "Description", "Next No (Preview)", "Issued This FY", ""].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
             </thead>
             <tbody>
-              {series.map((s) => (
+              {series.length === 0 ? (
+                <tr><td colSpan={5} className="py-10 text-center text-[12px]" style={{ color: "#9CA3AF" }}>No data</td></tr>
+              ) : series.map((s) => (
                 <tr key={s.code} style={{ borderTop: "1px solid #F3F4F6" }}>
                   <td className="py-3 px-3 font-mono font-bold" style={{ color: "#1565C0" }}>{s.code}</td>
                   <td className="py-3 px-3" style={{ color: "#374151" }}>{s.desc}</td>
@@ -92,14 +81,16 @@ export default function SettingsPage() {
               <tr>{["Partner", "Trade Lane", "Rate", "Valid From", "Valid To", "Status"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
             </thead>
             <tbody>
-              {rateCards.map((r, i) => (
+              {rateCards.length === 0 ? (
+                <tr><td colSpan={6} className="py-10 text-center text-[12px]" style={{ color: "#9CA3AF" }}>No data</td></tr>
+              ) : rateCards.map((r, i) => (
                 <tr key={i} style={{ borderTop: "1px solid #F3F4F6" }}>
                   <td className="py-3 px-3 font-semibold" style={{ color: "#111827" }}>{r.partner}</td>
                   <td className="py-3 px-3" style={{ color: "#374151" }}>{r.lane}</td>
                   <td className="py-3 px-3 font-bold" style={{ color: "#111827" }}>{r.rate}</td>
                   <td className="py-3 px-3" style={{ color: "#6B7280" }}>{r.from}</td>
                   <td className="py-3 px-3" style={{ color: "#6B7280" }}>{r.to}</td>
-                  <td className="py-3 px-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: r.status === "ACTIVE" ? "#ECFDF5" : r.status === "EXPIRING" ? "#FFFBEB" : "#FEF2F2", color: r.status === "ACTIVE" ? "#059669" : r.status === "EXPIRING" ? "#D97706" : "#DC2626" }}>{r.status}</span></td>
+                  <td className="py-3 px-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: r.status === "ACTIVE" ? "#ECFDF5" : r.status === "EXPIRING" ? "#FFFBEB" : "#FEF2F2", color: r.status === "ACTIVE" ? "#059669" : r.status === "EXPIRING" ? "#1E40AF" : "#DC2626" }}>{r.status}</span></td>
                 </tr>
               ))}
             </tbody>
@@ -114,7 +105,9 @@ export default function SettingsPage() {
               <tr>{["Name", "Email", "Role", "Jobs", "Documents", "Invoicing", "Settings"].map((h) => <th key={h} className="text-left py-2.5 px-3 font-semibold text-[10px] uppercase tracking-wider" style={{ color: "#6B7280" }}>{h}</th>)}</tr>
             </thead>
             <tbody>
-              {users.map((u) => (
+              {users.length === 0 ? (
+                <tr><td colSpan={7} className="py-10 text-center text-[12px]" style={{ color: "#9CA3AF" }}>No data</td></tr>
+              ) : users.map((u) => (
                 <tr key={u.email} style={{ borderTop: "1px solid #F3F4F6" }}>
                   <td className="py-3 px-3 font-semibold" style={{ color: "#111827" }}>{u.name}</td>
                   <td className="py-3 px-3" style={{ color: "#6B7280" }}>{u.email}</td>

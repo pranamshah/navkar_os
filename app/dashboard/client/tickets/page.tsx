@@ -19,7 +19,7 @@ const CLIENT_TICKETS: Ticket[] = [];
 const ALL_TICKETS: Ticket[] = [];
 
 const STATUS_STYLE: Record<Ticket["status"], { bg: string; text: string }> = {
-  Open: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37" },
+  Open: { bg: "rgba(30,64,175,0.12)", text: "#1E40AF" },
   "In Progress": { bg: "rgba(59,130,246,0.1)", text: "#2563eb" },
   Resolved: { bg: "rgba(34,197,94,0.1)", text: "#16a34a" },
 };
@@ -84,13 +84,13 @@ export default function ClientTicketsPage() {
               className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest transition-all"
               style={{
                 background: filter === f ? "#1a1c1c" : "rgba(0,0,0,0.05)",
-                color: filter === f ? "#D4AF37" : "#7e7576",
+                color: filter === f ? "#1E40AF" : "#7e7576",
               }}
             >
               {f}
               {f === "All" && (
                 <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-[9px]"
-                  style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}>
+                  style={{ background: "rgba(30,64,175,0.15)", color: "#1E40AF" }}>
                   {tickets.length}
                 </span>
               )}
@@ -109,7 +109,7 @@ export default function ClientTicketsPage() {
               </h2>
               <span
                 className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}
+                style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}
               >
                 {tickets.length} total
               </span>
@@ -129,7 +129,7 @@ export default function ClientTicketsPage() {
                   style={{ background: "#f9f9fa", borderColor: "#E5E7EB" }}
                 >
                   <div className="flex items-center gap-3 flex-wrap">
-                    <span className="font-mono text-xs font-semibold" style={{ color: "#D4AF37" }}>
+                    <span className="font-mono text-xs font-semibold" style={{ color: "#1E40AF" }}>
                       {ticket.id}
                     </span>
                     <span
@@ -183,7 +183,7 @@ export default function ClientTicketsPage() {
               className="rounded-xl border bg-white flex flex-col items-center justify-center py-16"
               style={{ borderColor: "rgba(0,0,0,0.07)" }}
             >
-              <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#D4AF37" }}>
+              <span className="material-symbols-outlined mb-3" style={{ fontSize: 40, color: "#1E40AF" }}>
                 support_agent
               </span>
               <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No tickets found</p>
@@ -201,7 +201,7 @@ export default function ClientTicketsPage() {
             style={{ borderColor: "rgba(0,0,0,0.07)" }}
           >
             <div className="flex items-center gap-2 mb-5">
-              <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#D4AF37" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#1E40AF" }}>
                 add_circle
               </span>
               <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>
@@ -235,7 +235,7 @@ export default function ClientTicketsPage() {
                   required
                   className="w-full px-3 py-2.5 rounded-lg text-sm outline-none transition-all"
                   style={{ border: "1px solid #E5E7EB", color: "#1a1c1c", background: "#f9f9fa", fontFamily: "Inter, sans-serif" }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                   onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 />
               </div>
@@ -252,7 +252,7 @@ export default function ClientTicketsPage() {
                   onChange={(e) => setCategory(e.target.value)}
                   className="w-full px-3 py-2.5 rounded-lg text-sm outline-none transition-all appearance-none"
                   style={{ border: "1px solid #E5E7EB", color: "#1a1c1c", background: "#f9f9fa", fontFamily: "Inter, sans-serif" }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                   onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 >
                   <option value="Technical">Technical</option>
@@ -276,7 +276,7 @@ export default function ClientTicketsPage() {
                   required
                   className="w-full px-3 py-2.5 rounded-lg text-sm outline-none transition-all resize-none"
                   style={{ border: "1px solid #E5E7EB", color: "#1a1c1c", background: "#f9f9fa", fontFamily: "Inter, sans-serif" }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                   onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                 />
               </div>
@@ -284,7 +284,7 @@ export default function ClientTicketsPage() {
               <button
                 type="submit"
                 className="flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90"
-                style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                style={{ background: "#1a1c1c", color: "#1E40AF" }}
               >
                 <span className="material-symbols-outlined" style={{ fontSize: 15 }}>send</span>
                 Submit Ticket

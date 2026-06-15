@@ -104,7 +104,7 @@ export default function RefundPage() {
         {/* Header */}
         <section className="pt-40 pb-16 px-8 border-b" style={{ borderColor: "rgba(0,0,0,0.07)" }}>
           <div className="max-w-3xl mx-auto">
-            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-6" style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}>
+            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-6" style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}>
               Legal
             </span>
             <h1
@@ -125,10 +125,10 @@ export default function RefundPage() {
             </p>
 
             {/* Highlight box */}
-            <div className="mt-6 p-5" style={{ background: "rgba(212,175,55,0.07)", border: "0.5px solid rgba(212,175,55,0.3)" }}>
+            <div className="mt-6 p-5" style={{ background: "rgba(30,64,175,0.07)", border: "0.5px solid rgba(30,64,175,0.3)" }}>
               <p className="text-sm font-semibold mb-1" style={{ color: "#1a1c1c" }}>30-Day Money-Back Guarantee</p>
               <p className="text-sm" style={{ color: "#4c4546", lineHeight: 1.7 }}>
-                Not happy in the first 30 days of your paid subscription? Get a full refund — no questions asked. Email us at <a href="mailto:navkaros.co@gmail.com" style={{ color: "#D4AF37" }}>navkaros.co@gmail.com</a>.
+                Not happy in the first 30 days of your paid subscription? Get a full refund — no questions asked. Email us at <a href="mailto:navkaros.co@gmail.com" style={{ color: "#1E40AF" }}>navkaros.co@gmail.com</a>.
               </p>
             </div>
           </div>
@@ -151,8 +151,8 @@ export default function RefundPage() {
             </div>
 
             <div className="mt-16 pt-10 border-t flex flex-wrap gap-6" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
-              <Link href="/privacy" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>Privacy Policy →</Link>
-              <Link href="/terms" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>Terms of Service →</Link>
+              <Link href="/privacy" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>Privacy Policy →</Link>
+              <Link href="/terms" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>Terms of Service →</Link>
               <Link href="/" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>← Back to Home</Link>
             </div>
           </div>

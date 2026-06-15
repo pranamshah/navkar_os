@@ -30,14 +30,14 @@ export default async function DemoPage({ params }: Props) {
           <div className="hidden sm:flex items-center gap-2">
             <span className="w-1 h-1 rounded-full" style={{ background: "rgba(255,255,255,0.3)" }} />
             <span className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)" }}>Live Demo</span>
-            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>— {mod.name}</span>
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>— {mod.name}</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/signup"
             className="px-4 py-2 text-xs font-semibold uppercase tracking-widest"
-            style={{ background: "#D4AF37", color: "#1a1c1c" }}
+            style={{ background: "#1E40AF", color: "#1a1c1c" }}
           >
             Start Free →
           </Link>
@@ -58,7 +58,7 @@ export default async function DemoPage({ params }: Props) {
               borderColor: "rgba(0,0,0,0.06)",
               background: m.id === moduleId ? "#1a1c1c" : "transparent",
               color: m.id === moduleId ? "#fff" : "#7e7576",
-              borderBottom: m.id === moduleId ? "2px solid #D4AF37" : "2px solid transparent",
+              borderBottom: m.id === moduleId ? "2px solid #1E40AF" : "2px solid transparent",
             }}
           >
             {m.name}

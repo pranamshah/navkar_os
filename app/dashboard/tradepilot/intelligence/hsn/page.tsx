@@ -108,16 +108,16 @@ export default function HsnScoutPage() {
               placeholder="e.g. 'stainless steel wire rods' or 'polyester fabric for garments'"
               className="w-full pl-9 pr-4 py-3 rounded-lg border text-[13px] outline-none transition-all"
               style={{ borderColor: "#E5E7EB", color: "#111827" }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = "#0D9488")}
+              onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
               onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
             />
           </div>
           <button
             onClick={() => handleSearch()}
             className="flex items-center gap-2 px-5 py-3 rounded-lg text-sm font-semibold text-white transition-colors"
-            style={{ background: "#0D9488" }}
+            style={{ background: "#1E40AF" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#0F766E")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#0D9488")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#1E40AF")}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>search</span>
             Search
@@ -135,7 +135,7 @@ export default function HsnScoutPage() {
                 handleSearch(chip);
               }}
               className="px-3 py-1 rounded-full text-[11px] font-medium border transition-all"
-              style={{ borderColor: "#0D9488", color: "#0D9488", background: "#F0FDFA" }}
+              style={{ borderColor: "#1E40AF", color: "#1E40AF", background: "#F0FDFA" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#CCFBF1")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#F0FDFA")}
             >
@@ -186,10 +186,10 @@ export default function HsnScoutPage() {
             className="space-y-4"
           >
             {/* Main code card */}
-            <div className="rounded-xl border p-6" style={{ background: "#fff", borderColor: "#0D9488" }}>
+            <div className="rounded-xl border p-6" style={{ background: "#fff", borderColor: "#1E40AF" }}>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{ color: "#0D9488" }}>ITC-HS Code</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{ color: "#1E40AF" }}>ITC-HS Code</div>
                   <div className="text-5xl font-bold tracking-tight mb-2" style={{ fontFamily: "monospace", color: "#111827" }}>{result.code}</div>
                   <div className="text-[13px]" style={{ color: "#374151" }}>{result.description}</div>
                 </div>
@@ -206,8 +206,8 @@ export default function HsnScoutPage() {
             {/* Duty rates */}
             <div className="grid grid-cols-3 gap-4">
               {[
-                { label: "Basic Customs Duty (BCD)", value: result.bcd, icon: "receipt_long", color: "#D97706", bg: "#FEF3C7" },
-                { label: "IGST Rate", value: result.igst, icon: "percent", color: "#7C3AED", bg: "#F5F3FF" },
+                { label: "Basic Customs Duty (BCD)", value: result.bcd, icon: "receipt_long", color: "#1E40AF", bg: "#FEF3C7" },
+                { label: "IGST Rate", value: result.igst, icon: "percent", color: "#1E40AF", bg: "#F5F3FF" },
                 { label: "Social Welfare Surcharge", value: result.sws, icon: "volunteer_activism", color: "#1D4ED8", bg: "#DBEAFE" },
               ].map((item) => (
                 <div key={item.label} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
@@ -226,7 +226,7 @@ export default function HsnScoutPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#0D9488" }}>policy</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#1E40AF" }}>policy</span>
                   <span className="text-[11px] font-semibold" style={{ color: "#374151" }}>Import Policy</span>
                 </div>
                 <p className="text-[12px]" style={{ color: "#6B7280" }}>
@@ -235,7 +235,7 @@ export default function HsnScoutPage() {
               </div>
               <div className="rounded-xl border p-4" style={{ background: result.antiDumping.includes("applicable") ? "#FFFBEB" : "#fff", borderColor: result.antiDumping.includes("applicable") ? "#FCD34D" : "#E5E7EB" }}>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#D97706" }}>warning</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#1E40AF" }}>warning</span>
                   <span className="text-[11px] font-semibold" style={{ color: "#374151" }}>Anti-Dumping Notes</span>
                 </div>
                 <p className="text-[12px]" style={{ color: "#6B7280" }}>{result.antiDumping}</p>
@@ -245,13 +245,13 @@ export default function HsnScoutPage() {
             {/* Related HS codes */}
             <div className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
               <div className="flex items-center gap-2 mb-3">
-                <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#0D9488" }}>account_tree</span>
+                <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#1E40AF" }}>account_tree</span>
                 <span className="text-[12px] font-semibold" style={{ color: "#374151" }}>Related HS Codes</span>
               </div>
               <div className="space-y-1.5">
                 {result.related.map((r) => (
                   <div key={r.code} className="flex items-center gap-3 py-1.5 px-2 rounded-lg" style={{ background: "#F9FAFB" }}>
-                    <span className="font-mono text-[11px] font-bold" style={{ color: "#0D9488" }}>{r.code}</span>
+                    <span className="font-mono text-[11px] font-bold" style={{ color: "#1E40AF" }}>{r.code}</span>
                     <span className="text-[11px]" style={{ color: "#6B7280" }}>{r.description}</span>
                   </div>
                 ))}

@@ -55,7 +55,7 @@ const BAY_CONTAINERS = [
 const BAY_COLORS: Record<number, string> = {
   0: "#1E3A2F",
   1: "#0D7057",
-  2: "#D97706",
+  2: "#1E40AF",
   3: "#DC2626",
 };
 
@@ -91,7 +91,7 @@ function YardViewScreen() {
       <div className="flex gap-4 px-4 pt-3 pb-1">
         {[
           { color: "#0D7057", label: "Occupied (Normal)" },
-          { color: "#D97706", label: "Detention Alert" },
+          { color: "#1E40AF", label: "Detention Alert" },
           { color: "#DC2626", label: "Examination Hold" },
           { color: "#1E3A2F", label: "Empty Bay" },
         ].map((l) => (
@@ -152,7 +152,7 @@ function YardViewScreen() {
                   )}
                   {type === 2 && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#D97706" }} />
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#1E40AF" }} />
                     </div>
                   )}
                   {type === 3 && (
@@ -172,7 +172,7 @@ function YardViewScreen() {
         {[
           { label: "Total Bays",              val: "40",  color: "rgba(255,255,255,0.7)" },
           { label: "Occupied (70%)",          val: "28",  color: ACCENT },
-          { label: "Free Days Expiring Today", val: "4",   color: "#D97706" },
+          { label: "Free Days Expiring Today", val: "4",   color: "#1E40AF" },
           { label: "Under Examination",       val: "2",   color: "#DC2626" },
         ].map((s) => (
           <div
@@ -293,7 +293,7 @@ function ContainersScreen() {
   ];
 
   const statusColor: Record<string, string> = {
-    "Invoice Due":     "#D97706",
+    "Invoice Due":     "#1E40AF",
     "Normal":          LIGHT,
     "Detention Alert": "#ef4444",
     "In Free Days":    "#60a5fa",
@@ -360,7 +360,7 @@ function ContainersScreen() {
                 <td className="px-3 py-2.5 text-center" style={{ color: "rgba(255,255,255,0.5)" }}>{c.freeDays}</td>
                 <td
                   className="px-3 py-2.5 text-center font-bold"
-                  style={{ color: c.dwell > 20 ? "#D97706" : "rgba(255,255,255,0.7)" }}
+                  style={{ color: c.dwell > 20 ? "#1E40AF" : "rgba(255,255,255,0.7)" }}
                 >
                   {c.dwell}
                 </td>
@@ -544,7 +544,7 @@ function InvoiceScreen() {
                 )}
               </div>
               <div className="text-right ml-4">
-                <p style={{ fontSize: "10px", fontWeight: 600, color: row.igst !== "—" ? "#D97706" : "rgba(255,255,255,0.7)" }}>
+                <p style={{ fontSize: "10px", fontWeight: 600, color: row.igst !== "—" ? "#1E40AF" : "rgba(255,255,255,0.7)" }}>
                   {row.igst !== "—" ? row.igst : row.total}
                 </p>
               </div>

@@ -20,7 +20,7 @@ export default function PricingPage() {
     <div className="p-6 lg:p-10 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-10">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D4AF37" }}>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#1E40AF" }}>
           Plans & Billing
         </p>
         <h1
@@ -51,7 +51,7 @@ export default function PricingPage() {
               className="px-5 py-2 text-xs font-semibold uppercase tracking-widest transition-all"
               style={{
                 background: tab === t ? "#1a1c1c" : "#fff",
-                color: tab === t ? "#D4AF37" : "#7e7576",
+                color: tab === t ? "#1E40AF" : "#7e7576",
               }}
             >
               {t === "products" ? "Individual Products" : "Bundle Plans"}
@@ -75,7 +75,7 @@ export default function PricingPage() {
               {cycleSave[c] && (
                 <span
                   className="px-1.5 py-0.5 rounded-full text-[9px] font-black"
-                  style={{ background: "#D4AF37", color: "#1a1c1c" }}
+                  style={{ background: "#1E40AF", color: "#1a1c1c" }}
                 >
                   {cycleSave[c]}
                 </span>
@@ -156,7 +156,7 @@ export default function PricingPage() {
                         className="w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all rounded-lg"
                         style={{
                           background: loading ? "#ccc" : "#1a1c1c",
-                          color: "#D4AF37",
+                          color: "#1E40AF",
                         }}
                       >
                         {loading ? "Processing…" : `Get ${product.name}`}
@@ -186,18 +186,18 @@ export default function PricingPage() {
                 className="rounded-xl border flex flex-col overflow-hidden"
                 style={{
                   background: isFullSuite ? "#1a1c1c" : "#fff",
-                  borderColor: isFullSuite ? "rgba(212,175,55,0.25)" : "rgba(0,0,0,0.08)",
+                  borderColor: isFullSuite ? "rgba(30,64,175,0.25)" : "rgba(0,0,0,0.08)",
                   boxShadow: isFullSuite ? "0 20px 60px rgba(0,0,0,0.12)" : undefined,
                 }}
               >
                 <div
                   className="px-5 py-4"
-                  style={{ borderBottom: isFullSuite ? "1px solid rgba(212,175,55,0.12)" : "1px solid rgba(0,0,0,0.06)" }}
+                  style={{ borderBottom: isFullSuite ? "1px solid rgba(30,64,175,0.12)" : "1px solid rgba(0,0,0,0.06)" }}
                 >
                   {isFullSuite && (
                     <span
                       className="inline-block text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full mb-2"
-                      style={{ background: "#D4AF37", color: "#1a1c1c" }}
+                      style={{ background: "#1E40AF", color: "#1a1c1c" }}
                     >
                       Best Value
                     </span>
@@ -212,7 +212,7 @@ export default function PricingPage() {
 
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex items-end gap-1 mb-1">
-                    <span className="font-black text-3xl" style={{ color: isFullSuite ? "#D4AF37" : "#1a1c1c" }}>
+                    <span className="font-black text-3xl" style={{ color: isFullSuite ? "#1E40AF" : "#1a1c1c" }}>
                       ₹{monthly.toLocaleString()}
                     </span>
                     <span className="text-xs mb-1" style={{ color: isFullSuite ? "rgba(255,255,255,0.4)" : "#7e7576" }}>
@@ -228,7 +228,7 @@ export default function PricingPage() {
                       const p = PRICING[productId as keyof typeof PRICING];
                       return p ? (
                         <li key={productId} className="flex items-center gap-2">
-                          <Check size={12} className="flex-shrink-0" style={{ color: isFullSuite ? "#D4AF37" : "#16A34A" }} />
+                          <Check size={12} className="flex-shrink-0" style={{ color: isFullSuite ? "#1E40AF" : "#16A34A" }} />
                           <span className="text-xs font-semibold" style={{ color: isFullSuite ? "rgba(255,255,255,0.75)" : "#1a1c1c" }}>
                             {p.name}
                           </span>
@@ -254,8 +254,8 @@ export default function PricingPage() {
                         disabled={loading}
                         className="w-full py-3 text-xs font-semibold uppercase tracking-widest transition-all rounded-lg"
                         style={{
-                          background: loading ? "#ccc" : isFullSuite ? "#D4AF37" : "#1a1c1c",
-                          color: isFullSuite ? "#1a1c1c" : "#D4AF37",
+                          background: loading ? "#ccc" : isFullSuite ? "#1E40AF" : "#1a1c1c",
+                          color: isFullSuite ? "#1a1c1c" : "#1E40AF",
                         }}
                       >
                         {loading ? "Processing…" : `Get ${bundle.name}`}

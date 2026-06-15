@@ -81,14 +81,14 @@ function AdminDeviceContent() {
 
         {status === "checking" && (
           <div className="flex flex-col items-center gap-4 py-8">
-            <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+            <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#1E40AF" }} />
             <p className="text-sm" style={{ color: "#7e7576" }}>Checking device status…</p>
           </div>
         )}
 
         {status === "registering" && (
           <>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D4AF37" }}>New Device</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#1E40AF" }}>New Device</p>
             <h1 className="mb-2" style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "28px", color: "#1a1c1c", fontWeight: 400 }}>
               Register this device
             </h1>
@@ -105,7 +105,7 @@ function AdminDeviceContent() {
                 onChange={(e) => setDeviceName(e.target.value)}
                 className="outline-none bg-transparent pb-2 w-full"
                 style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                 onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                 onKeyDown={(e) => e.key === "Enter" && register()}
               />
@@ -122,8 +122,8 @@ function AdminDeviceContent() {
 
         {status === "pending" && (
           <div className="flex flex-col items-center text-center gap-5 py-6">
-            <div className="w-14 h-14 flex items-center justify-center rounded-full" style={{ background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.3)" }}>
-              <span className="material-symbols-outlined" style={{ fontSize: 28, color: "#D4AF37" }}>hourglass_top</span>
+            <div className="w-14 h-14 flex items-center justify-center rounded-full" style={{ background: "rgba(30,64,175,0.1)", border: "1px solid rgba(30,64,175,0.3)" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 28, color: "#1E40AF" }}>hourglass_top</span>
             </div>
             <h2 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "26px", color: "#1a1c1c", fontWeight: 400 }}>
               Awaiting Approval
@@ -134,7 +134,7 @@ function AdminDeviceContent() {
             <button
               onClick={() => checkStatus(deviceToken)}
               className="text-xs px-4 py-2 font-semibold uppercase tracking-widest"
-              style={{ background: "rgba(212,175,55,0.1)", color: "#92660a", border: "0.5px solid rgba(212,175,55,0.3)" }}
+              style={{ background: "rgba(30,64,175,0.1)", color: "#92660a", border: "0.5px solid rgba(30,64,175,0.3)" }}
             >
               Refresh Status
             </button>
@@ -172,7 +172,7 @@ export default function AdminDevicePage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#fafafa" }}>
-        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#D4AF37" }} />
+        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(0,0,0,0.1)", borderTopColor: "#1E40AF" }} />
       </div>
     }>
       <AdminDeviceContent />

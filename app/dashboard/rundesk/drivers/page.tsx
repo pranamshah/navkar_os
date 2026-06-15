@@ -19,7 +19,7 @@ function getLicenceBadge(daysUntilExpiry: number) {
     return { label: "Expired", color: "#DC2626", bg: "#FEF2F2" };
   }
   if (daysUntilExpiry <= 30) {
-    return { label: `${daysUntilExpiry}d left`, color: "#D97706", bg: "#FFFBEB" };
+    return { label: `${daysUntilExpiry}d left`, color: "#1E40AF", bg: "#FFFBEB" };
   }
   return { label: "Valid", color: "#059669", bg: "#ECFDF5" };
 }
@@ -27,7 +27,7 @@ function getLicenceBadge(daysUntilExpiry: number) {
 const STATUS_STYLES: Record<string, { color: string; bg: string }> = {
   Active: { color: "#059669", bg: "#ECFDF5" },
   Inactive: { color: "#6B7280", bg: "#F3F4F6" },
-  "On Trip": { color: "#7C3AED", bg: "#F5F3FF" },
+  "On Trip": { color: "#1E40AF", bg: "#F5F3FF" },
 };
 
 export default function DriversPage() {
@@ -47,7 +47,7 @@ export default function DriversPage() {
         </div>
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#7C3AED" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
           Add Driver
@@ -87,7 +87,7 @@ export default function DriversPage() {
                     </p>
                     <button
                       className="mt-2 px-4 py-1.5 rounded-md text-[13px] text-white"
-                      style={{ background: "#7C3AED" }}
+                      style={{ background: "#1E40AF" }}
                     >
                       + Add Driver
                     </button>

@@ -154,7 +154,7 @@ export default function LoginPage() {
           type="button"
           onClick={() => { setForgotStep("enter"); setForgotIdentifier(tab === "email" ? email : clientId); setError(""); }}
           className="text-xs font-semibold"
-          style={{ color: "#D4AF37" }}
+          style={{ color: "#1E40AF" }}
         >
           Forgot password?
         </button>
@@ -177,7 +177,7 @@ export default function LoginPage() {
               onChange={(e) => setForgotIdentifier(e.target.value)}
               className="outline-none bg-transparent pb-2 w-full"
               style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-              onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+              onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
               onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
             />
           </div>
@@ -217,7 +217,7 @@ export default function LoginPage() {
                 onChange={(e) => handleOtpChange(i, e.target.value)}
                 onKeyDown={(e) => handleOtpKeyDown(i, e)}
                 className="flex-1 text-center text-lg font-bold outline-none border py-3 transition-all duration-200"
-                style={{ borderColor: digit ? "#D4AF37" : "rgba(0,0,0,0.15)", color: "#1a1c1c", borderWidth: "0.5px", background: "#fff" }}
+                style={{ borderColor: digit ? "#1E40AF" : "rgba(0,0,0,0.15)", color: "#1a1c1c", borderWidth: "0.5px", background: "#fff" }}
               />
             ))}
           </div>
@@ -235,7 +235,7 @@ export default function LoginPage() {
             onClick={countdown > 0 ? undefined : handleSendOtp}
             disabled={countdown > 0}
             className="text-xs text-center"
-            style={{ color: countdown > 0 ? "#7e7576" : "#D4AF37" }}
+            style={{ color: countdown > 0 ? "#7e7576" : "#1E40AF" }}
           >
             {countdown > 0 ? `Resend in ${countdown}s` : "Resend OTP"}
           </button>
@@ -248,12 +248,12 @@ export default function LoginPage() {
     <div className="w-full min-h-screen grid lg:grid-cols-2">
       {/* ── Left brand panel ─────────────────────────────────────── */}
       <div className="hidden lg:flex flex-col justify-between p-16 relative overflow-hidden" style={{ background: "#1a1c1c" }}>
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(212,175,55,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(rgba(30,64,175,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(30,64,175,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="absolute pointer-events-none" style={{ width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(14,116,144,0.15) 0%, transparent 70%)", top: "30%", left: "20%", transform: "translate(-50%, -50%)" }} />
         <div className="relative z-10"><LogoBrand height={120} onDark href="/" /></div>
         <div className="relative z-10">
           <h2 className="mb-6" style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "44px", fontWeight: 400, color: "#fff", letterSpacing: "-0.02em", lineHeight: 1.15 }}>
-            Welcome back to<br /><span style={{ color: "#D4AF37" }}>NavkarOS.</span>
+            Welcome back to<br /><span style={{ color: "#1E40AF" }}>NavkarOS.</span>
           </h2>
           <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>
             India&apos;s complete logistics operating system — freight forwarding, customs, CFS, transport, and accounting in one platform.
@@ -267,7 +267,7 @@ export default function LoginPage() {
         <div className="max-w-sm w-full mx-auto">
           <div className="lg:hidden mb-12"><LogoBrand height={120} href="/" /></div>
 
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>Welcome back</p>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#1E40AF" }}>Welcome back</p>
           <h1 className="mb-8" style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "36px", fontWeight: 400, color: "#1a1c1c", letterSpacing: "-0.02em" }}>
             Sign in to your account
           </h1>
@@ -279,7 +279,7 @@ export default function LoginPage() {
                 className="flex-1 pb-3 text-xs font-semibold uppercase tracking-widest transition-all duration-200 relative"
                 style={{ color: tab === t.id ? "#1a1c1c" : "rgba(0,0,0,0.35)" }}>
                 {t.label}
-                {tab === t.id && <span className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: "#D4AF37" }} />}
+                {tab === t.id && <span className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: "#1E40AF" }} />}
               </button>
             ))}
           </div>
@@ -301,7 +301,7 @@ export default function LoginPage() {
                     <input required type="email" placeholder="you@company.com" value={email} onChange={(e) => setEmail(e.target.value)}
                       className="outline-none bg-transparent pb-2 w-full"
                       style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")} />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -310,7 +310,7 @@ export default function LoginPage() {
                       <input required type={showPass ? "text" : "password"} placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)}
                         className="outline-none bg-transparent pb-2 w-full pr-8"
                         style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")} />
                       <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-0 bottom-2" style={{ color: "#7e7576" }}>
                         {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -337,7 +337,7 @@ export default function LoginPage() {
                     <input required type="text" placeholder="e.g. RAJ12345" value={clientId} onChange={(e) => setClientId(e.target.value)}
                       className="outline-none bg-transparent pb-2 w-full"
                       style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px", fontFamily: "monospace" }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")} />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -346,7 +346,7 @@ export default function LoginPage() {
                       <input required type={showClientPass ? "text" : "password"} placeholder="••••••••" value={clientPassword} onChange={(e) => setClientPassword(e.target.value)}
                         className="outline-none bg-transparent pb-2 w-full pr-8"
                         style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")} />
                       <button type="button" onClick={() => setShowClientPass(!showClientPass)} className="absolute right-0 bottom-2" style={{ color: "#7e7576" }}>
                         {showClientPass ? <EyeOff size={14} /> : <Eye size={14} />}

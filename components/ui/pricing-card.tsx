@@ -49,12 +49,12 @@ export function PricingCardGroup({ plans, isYearly }: PricingCardGroupProps) {
           transition={{ duration: 1.4, type: "spring", stiffness: 100, damping: 28, delay: index * 0.1 }}
           className={cn(
             "rounded-2xl border p-6 flex flex-col relative bg-white",
-            plan.isPopular ? "border-[#D4AF37] border-2 shadow-lg shadow-[#D4AF3720]" : "border-gray-200",
+            plan.isPopular ? "border-[#1E40AF] border-2 shadow-lg shadow-[#1E40AF20]" : "border-gray-200",
             !plan.isPopular && "mt-4"
           )}
         >
           {plan.isPopular && (
-            <div className="absolute -top-px right-4 bg-[#D4AF37] px-3 py-1 rounded-b-xl flex items-center gap-1.5">
+            <div className="absolute -top-px right-4 bg-[#1E40AF] px-3 py-1 rounded-b-xl flex items-center gap-1.5">
               <Star className="h-3 w-3 fill-white text-white" />
               <span className="text-white text-xs font-bold uppercase tracking-wider">Most Popular</span>
             </div>
@@ -109,8 +109,8 @@ export function PricingCardGroup({ plans, isYearly }: PricingCardGroupProps) {
             className={cn(
               "mt-4 w-full py-3 rounded-xl text-sm font-bold uppercase tracking-wider text-center transition-all duration-200 block",
               plan.isPopular
-                ? "bg-[#1a1c1c] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#1a1c1c]"
-                : "bg-gray-50 text-gray-800 border border-gray-200 hover:border-[#D4AF37] hover:text-[#D4AF37]"
+                ? "bg-[#1a1c1c] text-[#1E40AF] hover:bg-[#1E40AF] hover:text-[#1a1c1c]"
+                : "bg-gray-50 text-gray-800 border border-gray-200 hover:border-[#1E40AF] hover:text-[#1E40AF]"
             )}
           >
             {plan.buttonText}

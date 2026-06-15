@@ -5,7 +5,7 @@ export default function ExplorePage() {
   return (
     <div className="p-8 lg:p-12">
       <div className="mb-10">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#D4AF37" }}>All Modules</p>
+        <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#1E40AF" }}>All Modules</p>
         <h1 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "clamp(28px, 3vw, 40px)", fontWeight: 400, color: "#1a1c1c", letterSpacing: "-0.02em" }}>
           Explore the Full Platform
         </h1>
@@ -25,7 +25,7 @@ export default function ExplorePage() {
             {/* Accent bar */}
             <div className="w-8 h-1 mb-6" style={{ background: mod.color }} />
 
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#D4AF37" }}>{mod.tagline}</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#1E40AF" }}>{mod.tagline}</p>
             <h3 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "22px", color: "#1a1c1c" }} className="mb-3">{mod.name}</h3>
             <p className="text-sm flex-1" style={{ color: "#4c4546", lineHeight: 1.65 }}>{mod.desc}</p>
 

@@ -4,12 +4,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const kpis = [
-  { label: "Containers in Yard", value: "0", icon: "warehouse", color: "#D97706", bg: "#FFFBEB" },
+  { label: "Containers in Yard", value: "0", icon: "warehouse", color: "#1E40AF", bg: "#FFFBEB" },
   { label: "Gate-In Today", value: "0", icon: "login", color: "#1D4ED8", bg: "#DBEAFE" },
   { label: "Pending OOC", value: "0", icon: "pending_actions", color: "#EA580C", bg: "#FFF7ED" },
   { label: "Free Days Expiring Soon", value: "0", icon: "timer", color: "#DC2626", bg: "#FEF2F2" },
   { label: "Storage Revenue This Month", value: "₹0", icon: "payments", color: "#059669", bg: "#ECFDF5" },
-  { label: "Pending Invoices", value: "0", icon: "receipt", color: "#D97706", bg: "#FFFBEB" },
+  { label: "Pending Invoices", value: "0", icon: "receipt", color: "#1E40AF", bg: "#FFFBEB" },
 ];
 
 const recentContainers: {
@@ -45,7 +45,7 @@ export default function DockIQDashboard() {
           <Link
             href="/dashboard/dockiq/gate/in"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-            style={{ background: "#D97706" }}
+            style={{ background: "#1E40AF" }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 15 }}>login</span>
             Gate In
@@ -97,7 +97,7 @@ export default function DockIQDashboard() {
             <Link
               href="/dashboard/dockiq/storage"
               className="text-[11px] font-medium"
-              style={{ color: "#D97706" }}
+              style={{ color: "#1E40AF" }}
             >
               View all →
             </Link>
@@ -136,7 +136,7 @@ export default function DockIQDashboard() {
               ) : (
                 recentContainers.map((c) => (
                   <tr key={c.containerNo} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                    <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#D97706" }}>
+                    <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#1E40AF" }}>
                       {c.containerNo}
                     </td>
                     <td className="py-2.5 px-2 font-mono text-[11px]" style={{ color: "#6B7280" }}>
@@ -229,7 +229,7 @@ export default function DockIQDashboard() {
                   key={link.href}
                   href={link.href}
                   className="flex items-center gap-2 px-2 py-1.5 rounded text-[12px] transition-colors"
-                  style={{ color: "#D97706" }}
+                  style={{ color: "#1E40AF" }}
                   onMouseEnter={(e) =>
                     ((e.currentTarget as HTMLElement).style.background = "#FFFBEB")
                   }

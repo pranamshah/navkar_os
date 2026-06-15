@@ -115,7 +115,7 @@ export default function ReferralsPage() {
                   className="px-4 py-2 rounded-lg text-sm font-bold border transition-all"
                   style={{
                     background: discount === v ? "#1a1c1c" : "#f9f9f9",
-                    color: discount === v ? "#D4AF37" : "#7e7576",
+                    color: discount === v ? "#1E40AF" : "#7e7576",
                     borderColor: discount === v ? "#1a1c1c" : "rgba(0,0,0,0.08)",
                   }}
                 >
@@ -160,7 +160,7 @@ export default function ReferralsPage() {
             onClick={create}
             disabled={creating}
             className="px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all disabled:opacity-50 flex items-center gap-2"
-            style={{ background: "#D4AF37", color: "#1a1c1c" }}
+            style={{ background: "#1E40AF", color: "#1a1c1c" }}
           >
             {creating ? (
               <>
@@ -200,7 +200,7 @@ export default function ReferralsPage() {
                   {/* Code */}
                   <div
                     className="font-mono text-lg font-black tracking-widest px-4 py-2 rounded-lg select-all"
-                    style={{ background: "#1a1c1c", color: "#D4AF37", letterSpacing: "0.12em" }}
+                    style={{ background: "#1a1c1c", color: "#1E40AF", letterSpacing: "0.12em" }}
                   >
                     {c.code}
                   </div>
@@ -208,7 +208,7 @@ export default function ReferralsPage() {
                   {/* Discount badge */}
                   <div
                     className="px-3 py-1 rounded-full text-sm font-black"
-                    style={{ background: "rgba(212,175,55,0.12)", color: "#92660a" }}
+                    style={{ background: "rgba(30,64,175,0.12)", color: "#92660a" }}
                   >
                     {c.discountPercent}% OFF
                   </div>
@@ -230,9 +230,9 @@ export default function ReferralsPage() {
                     onClick={() => copy(c.code)}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all"
                     style={{
-                      background: copied === c.code ? "rgba(34,197,94,0.1)" : "rgba(212,175,55,0.1)",
+                      background: copied === c.code ? "rgba(34,197,94,0.1)" : "rgba(30,64,175,0.1)",
                       color: copied === c.code ? "#16a34a" : "#92660a",
-                      border: `1px solid ${copied === c.code ? "rgba(34,197,94,0.3)" : "rgba(212,175,55,0.3)"}`,
+                      border: `1px solid ${copied === c.code ? "rgba(34,197,94,0.3)" : "rgba(30,64,175,0.3)"}`,
                     }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 13 }}>
@@ -260,7 +260,7 @@ export default function ReferralsPage() {
       {/* Loading */}
       {loading && (
         <div className="flex items-center justify-center py-16">
-          <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }} />
+          <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }} />
         </div>
       )}
 

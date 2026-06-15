@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const ACCENT = "#15803D";
+const ACCENT = "#1E40AF";
 
 type TabId = "docai" | "duty" | "fta";
 
@@ -286,9 +286,9 @@ export default function EntryXAiPage() {
               </div>
               <div
                 className="rounded-lg p-3 text-[12px]"
-                style={{ background: "#F0FDF4", borderLeft: "3px solid #15803D" }}
+                style={{ background: "#F0FDF4", borderLeft: "3px solid #1E40AF" }}
               >
-                <div className="font-semibold mb-1" style={{ color: "#15803D" }}>Active FTAs with India</div>
+                <div className="font-semibold mb-1" style={{ color: "#1E40AF" }}>Active FTAs with India</div>
                 <div style={{ color: "#374151" }}>ASEAN, SAFTA, Japan CEPA, South Korea CEPA, Singapore CECA, UAE CEPA, Mauritius CECPA</div>
               </div>
               <button

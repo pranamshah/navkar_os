@@ -10,7 +10,7 @@ const tracking = {
 
 const delayColors: Record<string, { bg: string; fg: string }> = {
   "On Time": { bg: "#ECFDF5", fg: "#059669" },
-  "Delayed": { bg: "#FFFBEB", fg: "#D97706" },
+  "Delayed": { bg: "#FFFBEB", fg: "#1E40AF" },
   "Critical": { bg: "#FEF2F2", fg: "#DC2626" },
 };
 

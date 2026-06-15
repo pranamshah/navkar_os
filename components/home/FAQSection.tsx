@@ -48,7 +48,7 @@ export default function FAQSection() {
                   animate={{ rotate: open === i ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
                   className="material-symbols-outlined flex-shrink-0 ml-4"
-                  style={{ fontSize: "20px", color: open === i ? "#D4AF37" : "#7e7576", fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24" }}
+                  style={{ fontSize: "20px", color: open === i ? "#1E40AF" : "#7e7576", fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24" }}
                 >
                   expand_more
                 </motion.span>

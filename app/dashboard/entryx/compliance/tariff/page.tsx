@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const ACCENT = "#15803D";
+const ACCENT = "#1E40AF";
 
 export default function TariffMasterPage() {
   const [search, setSearch] = useState("");

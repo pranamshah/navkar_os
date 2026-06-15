@@ -82,7 +82,7 @@ export default function GateInPage() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           className="fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg"
-          style={{ background: "#D97706", color: "#fff", maxWidth: 360 }}
+          style={{ background: "#1E40AF", color: "#fff", maxWidth: 360 }}
         >
           {toast}
         </motion.div>
@@ -108,7 +108,7 @@ export default function GateInPage() {
         >
           <span
             className="material-symbols-outlined"
-            style={{ fontSize: 18, color: "#D97706", fontVariationSettings: "'FILL' 1" }}
+            style={{ fontSize: 18, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}
           >
             schedule
           </span>
@@ -334,9 +334,9 @@ export default function GateInPage() {
                   type="button"
                   className="px-4 py-1.5 rounded-lg text-sm font-medium border transition-all"
                   style={{
-                    background: form.sealIntact ? "#D97706" : "#fff",
+                    background: form.sealIntact ? "#1E40AF" : "#fff",
                     color: form.sealIntact ? "#fff" : "#6B7280",
-                    borderColor: form.sealIntact ? "#D97706" : "#E5E7EB",
+                    borderColor: form.sealIntact ? "#1E40AF" : "#E5E7EB",
                   }}
                   onClick={() => handleChange("sealIntact", true)}
                 >
@@ -364,7 +364,7 @@ export default function GateInPage() {
                     key={c}
                     label={c}
                     active={form.condition === c}
-                    activeColor={c === "Damaged" ? "#EF4444" : "#D97706"}
+                    activeColor={c === "Damaged" ? "#EF4444" : "#1E40AF"}
                     onClick={() => handleChange("condition", c)}
                   />
                 ))}
@@ -385,9 +385,9 @@ export default function GateInPage() {
           <button
             type="submit"
             className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white transition-all"
-            style={{ background: "#D97706" }}
+            style={{ background: "#1E40AF" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#B45309")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#D97706")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#1E40AF")}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>login</span>
             Record Gate In
@@ -412,7 +412,7 @@ function Section({
       <div className="flex items-center gap-2 mb-4">
         <span
           className="material-symbols-outlined"
-          style={{ fontSize: 16, color: "#D97706", fontVariationSettings: "'FILL' 1" }}
+          style={{ fontSize: 16, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}
         >
           {icon}
         </span>
@@ -436,7 +436,7 @@ function Label({ children }: { children: React.ReactNode }) {
 function RadioChip({
   label,
   active,
-  activeColor = "#D97706",
+  activeColor = "#1E40AF",
   onClick,
 }: {
   label: string;

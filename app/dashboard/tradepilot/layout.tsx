@@ -107,7 +107,7 @@ export default function TradePilotLayout({ children }: { children: React.ReactNo
   if (status === "loading" || !hasAccess) {
     return (
       <div className="flex h-screen items-center justify-center" style={{ background: "#F8FAFC" }}>
-        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#0D9488", borderTopColor: "transparent" }} />
+        <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }} />
       </div>
     );
   }
@@ -121,15 +121,15 @@ export default function TradePilotLayout({ children }: { children: React.ReactNo
     <div className="flex h-screen overflow-hidden" style={{ fontFamily: "Inter, sans-serif" }}>
       <aside
         className="flex flex-col h-full overflow-y-auto flex-shrink-0 w-56"
-        style={{ background: "#0A1628", minWidth: 224 }}
+        style={{ background: "#FFFFFF", borderRight: "1px solid #E2E8F0", minWidth: 224 }}
       >
-        <div className="px-4 py-3 border-b border-white/10">
-          <LogoBrand height={120} onDark href="/dashboard/client" />
+        <div className="px-4 py-3 border-b border-slate-100">
+          <LogoBrand height={120} href="/dashboard/client" />
           <div className="flex items-center gap-1.5 mt-2">
-            <span className="material-symbols-outlined text-[#0D9488]" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>
+            <span className="material-symbols-outlined text-[#1E40AF]" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>
               navigation
             </span>
-            <span className="text-white/60 text-xs font-semibold tracking-wide">TradePilot</span>
+            <span className="text-xs font-semibold tracking-wide" style={{ color: "#64748B" }}>TradePilot</span>
           </div>
         </div>
 
@@ -140,10 +140,10 @@ export default function TradePilotLayout({ children }: { children: React.ReactNo
                 onClick={() => toggleSection(section.title)}
                 className="w-full flex items-center justify-between px-2 py-1 mb-0.5"
               >
-                <span className="text-[10px] font-semibold tracking-widest text-white/30">
+                <span className="text-[10px] font-semibold tracking-widest" style={{ color: "#94A3B8" }}>
                   {section.title}
                 </span>
-                <span className="material-symbols-outlined text-white/20" style={{ fontSize: 14 }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#CBD5E1" }}>
                   {collapsed[section.title] ? "expand_more" : "expand_less"}
                 </span>
               </button>
@@ -163,19 +163,19 @@ export default function TradePilotLayout({ children }: { children: React.ReactNo
                         href={item.href}
                         className="flex items-center gap-2 px-2 py-1.5 rounded-md mb-0.5 group transition-all"
                         style={{
-                          background: isActive(item.href) ? "#0D9488" : "transparent",
-                          color: isActive(item.href) ? "#fff" : "rgba(255,255,255,0.6)",
+                          background: isActive(item.href) ? "#1E40AF" : "transparent",
+                          color: isActive(item.href) ? "#fff" : "#64748B",
                         }}
                         onMouseEnter={(e) => {
                           if (!isActive(item.href)) {
-                            (e.currentTarget as HTMLElement).style.background = "rgba(13,148,136,0.15)";
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.9)";
+                            (e.currentTarget as HTMLElement).style.background = "rgba(30,64,175,0.08)";
+                            (e.currentTarget as HTMLElement).style.color = "#1E40AF";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!isActive(item.href)) {
                             (e.currentTarget as HTMLElement).style.background = "transparent";
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
+                            (e.currentTarget as HTMLElement).style.color = "#64748B";
                           }
                         }}
                       >
@@ -195,17 +195,17 @@ export default function TradePilotLayout({ children }: { children: React.ReactNo
           ))}
         </nav>
 
-        <div className="px-4 py-3 border-t border-white/10">
-          <div className="text-[10px] text-white/30 leading-relaxed mb-3">
-            <div className="font-medium text-white/50">Navkar Freight Co.</div>
+        <div className="px-4 py-3 border-t border-slate-100">
+          <div className="text-[10px] leading-relaxed mb-3" style={{ color: "#94A3B8" }}>
+            <div className="font-medium" style={{ color: "#64748B" }}>Navkar Freight Co.</div>
             <div>FY 2025–26</div>
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="flex items-center gap-2 w-full px-3 py-2 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-            style={{ color: "rgba(255,255,255,0.35)" }}
+            style={{ color: "#94A3B8" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#EF4444")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#94A3B8")}
           >
             <LogOut size={13} strokeWidth={1.8} />
             Sign Out

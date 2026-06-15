@@ -21,7 +21,7 @@ const MOCK_SUBSCRIPTIONS: {
 
 const SUB_STATUS_STYLE: Record<string, { bg: string; text: string }> = {
   ACTIVE: { bg: "rgba(34,197,94,0.1)", text: "#16a34a" },
-  TRIAL: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37" },
+  TRIAL: { bg: "rgba(30,64,175,0.12)", text: "#1E40AF" },
   CANCELLED: { bg: "rgba(239,68,68,0.1)", text: "#dc2626" },
   SUSPENDED: { bg: "rgba(156,163,175,0.15)", text: "#6b7280" },
 };
@@ -92,7 +92,7 @@ export default function AdminBillingPage() {
             style={{ background: "#f9f9fa", borderColor: "#E5E7EB" }}
           >
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D4AF37" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#1E40AF" }}>
                 receipt_long
               </span>
               <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>
@@ -101,7 +101,7 @@ export default function AdminBillingPage() {
             </div>
             <span
               className="text-xs font-semibold px-2 py-0.5 rounded-full"
-              style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}
+              style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}
             >
               {MOCK_SUBSCRIPTIONS.length} events
             </span>
@@ -139,7 +139,7 @@ export default function AdminBillingPage() {
                         className="transition-colors hover:bg-[#fafafa]"
                         style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
                       >
-                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#D4AF37" }}>
+                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#1E40AF" }}>
                           {sub.clientId}
                         </td>
                         <td className="px-4 py-3 font-semibold whitespace-nowrap" style={{ color: "#1a1c1c" }}>
@@ -188,7 +188,7 @@ export default function AdminBillingPage() {
             className="px-6 py-4 border-b flex items-center gap-2"
             style={{ background: "#f9f9fa", borderColor: "#E5E7EB" }}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D4AF37" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#1E40AF" }}>
               bar_chart
             </span>
             <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1a1c1c" }}>
@@ -243,7 +243,7 @@ export default function AdminBillingPage() {
               <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
                 Total MRR
               </span>
-              <span className="text-sm font-black" style={{ color: "#D4AF37" }}>
+              <span className="text-sm font-black" style={{ color: "#1E40AF" }}>
                 ₹{PRODUCTS.reduce((acc, p) => acc + p.revenue, 0).toLocaleString("en-IN")}
               </span>
             </div>
@@ -254,18 +254,18 @@ export default function AdminBillingPage() {
       {/* Empty state hint */}
       <div
         className="rounded-xl border p-6 flex items-center gap-4"
-        style={{ background: "#1a1c1c", borderColor: "rgba(212,175,55,0.15)" }}
+        style={{ background: "#1a1c1c", borderColor: "rgba(30,64,175,0.15)" }}
       >
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ background: "rgba(212,175,55,0.12)" }}
+          style={{ background: "rgba(30,64,175,0.12)" }}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#D4AF37" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 20, color: "#1E40AF" }}>
             info
           </span>
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "rgba(212,175,55,0.7)" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "rgba(30,64,175,0.7)" }}>
             Beta Phase
           </p>
           <p className="text-sm font-semibold" style={{ color: "#ffffff" }}>

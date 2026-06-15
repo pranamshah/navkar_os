@@ -66,7 +66,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#D4AF37" }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "#1E40AF" }}>
               Get in Touch
             </p>
             <h2
@@ -95,9 +95,9 @@ export default function ContactSection() {
                 <div key={label} className="flex items-start gap-4">
                   <div
                     className="flex-shrink-0 w-9 h-9 flex items-center justify-center mt-0.5"
-                    style={{ background: "rgba(212,175,55,0.1)", border: "0.5px solid rgba(212,175,55,0.25)" }}
+                    style={{ background: "rgba(30,64,175,0.1)", border: "0.5px solid rgba(30,64,175,0.25)" }}
                   >
-                    <Icon size={15} style={{ color: "#D4AF37" }} strokeWidth={1.5} />
+                    <Icon size={15} style={{ color: "#1E40AF" }} strokeWidth={1.5} />
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "#7e7576" }}>
@@ -153,9 +153,9 @@ export default function ContactSection() {
               <div className="flex flex-col items-center justify-center py-20 text-center gap-5">
                 <div
                   className="w-14 h-14 flex items-center justify-center"
-                  style={{ background: "rgba(212,175,55,0.12)", border: "0.5px solid rgba(212,175,55,0.4)" }}
+                  style={{ background: "rgba(30,64,175,0.12)", border: "0.5px solid rgba(30,64,175,0.4)" }}
                 >
-                  <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="#D4AF37" strokeWidth="1.5">
+                  <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="#1E40AF" strokeWidth="1.5">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
@@ -207,7 +207,7 @@ export default function ContactSection() {
                           color: "#1a1c1c",
                           fontSize: "15px",
                         }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                       />
                     </div>
@@ -236,7 +236,7 @@ export default function ContactSection() {
                           color: "#1a1c1c",
                           fontSize: "15px",
                         }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                       />
                     </div>
@@ -261,7 +261,7 @@ export default function ContactSection() {
                       color: "#1a1c1c",
                       fontSize: "15px",
                     }}
-                    onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                    onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                     onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                   />
                 </div>
@@ -274,15 +274,14 @@ export default function ContactSection() {
                   type="submit"
                   disabled={sending}
                   className="w-full py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200 disabled:opacity-60"
-                  style={{ background: "#1a1c1c", color: "#fff" }}
+                  style={{ background: "#1E40AF", color: "#fff" }}
                   onMouseEnter={(e) => {
                     if (!sending) {
-                      e.currentTarget.style.background = "#D4AF37";
-                      e.currentTarget.style.color = "#1a1c1c";
+                      e.currentTarget.style.background = "#1565C0";
                     }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#1a1c1c";
+                    e.currentTarget.style.background = "#1E40AF";
                     e.currentTarget.style.color = "#fff";
                   }}
                 >

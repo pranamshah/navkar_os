@@ -16,7 +16,7 @@ interface User {
 
 const STATUS_STYLE: Record<string, { bg: string; text: string; label: string }> = {
   ACTIVE: { bg: "rgba(34,197,94,0.1)", text: "#16a34a", label: "Active" },
-  PENDING_VERIFICATION: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37", label: "Pending" },
+  PENDING_VERIFICATION: { bg: "rgba(30,64,175,0.12)", text: "#1E40AF", label: "Pending" },
   REJECTED: { bg: "rgba(239,68,68,0.1)", text: "#dc2626", label: "Rejected" },
   SUSPENDED: { bg: "rgba(156,163,175,0.15)", text: "#6b7280", label: "Suspended" },
 };
@@ -72,7 +72,7 @@ export default function AdminUsersPage() {
           {!loading && (
             <span
               className="text-xs font-semibold px-3 py-1.5 rounded-full flex-shrink-0"
-              style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}
+              style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}
             >
               {filtered.length} {filtered.length === 1 ? "user" : "users"}
             </span>
@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
           <div className="flex flex-col items-center justify-center py-24 gap-3">
             <div
               className="w-8 h-8 rounded-full border-2 animate-spin"
-              style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
+              style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }}
             />
             <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
               Loading users…
@@ -159,7 +159,7 @@ export default function AdminUsersPage() {
                         className="transition-colors hover:bg-[#fafafa]"
                         style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
                       >
-                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#D4AF37" }}>
+                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#1E40AF" }}>
                           {user.clientId}
                         </td>
                         <td className="px-4 py-3 font-semibold whitespace-nowrap" style={{ color: "#1a1c1c" }}>

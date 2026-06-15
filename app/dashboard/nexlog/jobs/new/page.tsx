@@ -57,8 +57,8 @@ export default function NewJobPage() {
         <div className="grid grid-cols-3 gap-4">
           <Field label="Job Type *"><select className={inputCls} style={{ borderColor: "#E5E7EB" }}><option>Import</option><option>Export</option><option>Cross Trade</option></select></Field>
           <Field label="Mode *"><select className={inputCls} style={{ borderColor: "#E5E7EB" }}><option>Sea FCL</option><option>Sea LCL</option><option>Air</option><option>Surface</option></select></Field>
-          <Field label="Job No (auto)"><input className={inputCls} style={{ borderColor: "#E5E7EB", background: "#F9FAFB" }} value="IMP/2526/090" disabled /></Field>
-          <Field label="Client *"><select className={inputCls} style={{ borderColor: "#E5E7EB" }}><option>Ravi Exports Pvt Ltd</option><option>HDFC Traders</option><option>Global Impex</option></select></Field>
+          <Field label="Job No (auto)"><input className={inputCls} style={{ borderColor: "#E5E7EB", background: "#F9FAFB" }} disabled /></Field>
+          <Field label="Client *"><select className={inputCls} style={{ borderColor: "#E5E7EB" }}><option value="">Select client...</option>{/* clients loaded from API */}</select></Field>
           <Field label="Client Reference"><input className={inputCls} style={{ borderColor: "#E5E7EB" }} placeholder="PO / Order No" /></Field>
           <Field label="Handler"><select className={inputCls} style={{ borderColor: "#E5E7EB" }}><option>Priya M</option><option>Rajesh K</option><option>Anita S</option></select></Field>
         </div>

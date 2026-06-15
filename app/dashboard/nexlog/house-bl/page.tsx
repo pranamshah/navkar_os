@@ -24,26 +24,26 @@ export default function HouseBlPage() {
           <h3 className="text-sm font-semibold mb-4" style={{ color: "#111827" }}>{tab === "hbl" ? "FIATA House Bill of Lading" : "IATA House Air Waybill"}</h3>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Shipper</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="Shanghai Electronics Ltd&#10;12 Nanjing Road, Shanghai&#10;China — 200001" /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Consignee</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="Ravi Exports Pvt Ltd&#10;Plot 42, MIDC Pune&#10;India — 411019" /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Notify Party</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="Apollo World Connect (CHA)&#10;JNPT Customs House Area&#10;Nhava Sheva" /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Issuing Agent</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="Navkar Freight Co.&#10;CFS Road, Mumbai&#10;IATA: 14-3-4567" /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Shipper</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Consignee</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Notify Party</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Issuing Agent</label><textarea rows={3} className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
             </div>
             <div className="grid grid-cols-4 gap-3">
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>{tab === "hbl" ? "Port of Loading" : "Airport of Departure"}</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue={tab === "hbl" ? "CNSHA Shanghai" : "PVG Shanghai"} /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>{tab === "hbl" ? "Port of Discharge" : "Airport of Destination"}</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue={tab === "hbl" ? "INNSA JNPT" : "BOM Mumbai"} /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>{tab === "hbl" ? "Vessel & Voyage" : "Flight No"}</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue={tab === "hbl" ? "MV Pacific Ace V.2614E" : "AI 2814"} /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Place of Receipt</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="Shanghai CY" /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>{tab === "hbl" ? "Port of Loading" : "Airport of Departure"}</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>{tab === "hbl" ? "Port of Discharge" : "Airport of Destination"}</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>{tab === "hbl" ? "Vessel & Voyage" : "Flight No"}</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Place of Receipt</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
             </div>
             <div>
               <label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Marks & Numbers / Cargo Description</label>
-              <textarea rows={4} className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="120 Cartons of Electronic Mobile Accessories&#10;HS Code: 85176290&#10;Net Wt: 11,800 kg / Gross Wt: 12,500 kg&#10;CBM: 28.500 / 1 × 40HC TCNU8456731 SEAL SL789432" />
+              <textarea rows={4} className={inputCls} style={{ borderColor: "#E5E7EB" }} />
             </div>
             <div className="grid grid-cols-4 gap-3">
               <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Freight Terms</label><select className={inputCls} style={{ borderColor: "#E5E7EB" }}><option>FREIGHT PREPAID</option><option>FREIGHT COLLECT</option></select></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Originals</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="3" /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Place of Issue</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="Mumbai" /></div>
-              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Date of Issue</label><input type="date" className={inputCls} style={{ borderColor: "#E5E7EB" }} defaultValue="2026-05-15" /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Originals</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Place of Issue</label><input className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
+              <div><label className="text-[11px] font-medium block mb-1" style={{ color: "#374151" }}>Date of Issue</label><input type="date" className={inputCls} style={{ borderColor: "#E5E7EB" }} /></div>
             </div>
             <div className="flex gap-2 pt-2">
               <button className="flex-1 px-4 py-2 rounded-md text-[13px] font-semibold text-white" style={{ background: "#1565C0" }}>Generate PDF</button>

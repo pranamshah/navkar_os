@@ -106,13 +106,13 @@ function DropZone({
         <div
           className="flex items-center gap-3 px-4 py-3 border"
           style={{
-            borderColor: value.error ? "#FCA5A5" : value.url ? "rgba(16,185,129,0.3)" : "rgba(212,175,55,0.3)",
+            borderColor: value.error ? "#FCA5A5" : value.url ? "rgba(16,185,129,0.3)" : "rgba(30,64,175,0.3)",
             borderWidth: "0.5px",
-            background: value.error ? "#FEF2F2" : value.url ? "rgba(16,185,129,0.04)" : "rgba(212,175,55,0.04)",
+            background: value.error ? "#FEF2F2" : value.url ? "rgba(16,185,129,0.04)" : "rgba(30,64,175,0.04)",
           }}
         >
           {value.uploading && !value.url && !value.error && (
-            <div className="w-4 h-4 border-2 rounded-full animate-spin" style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }} />
+            <div className="w-4 h-4 border-2 rounded-full animate-spin" style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }} />
           )}
           {value.url && <Check size={14} style={{ color: "#10B981" }} />}
           {value.error && <X size={14} style={{ color: "#EF4444" }} />}
@@ -134,13 +134,13 @@ function DropZone({
           onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
           className="w-full border-2 border-dashed py-8 text-center transition-all duration-200"
           style={{ borderColor: "rgba(0,0,0,0.12)" }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#D4AF37"; }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#1E40AF"; }}
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)"; }}
         >
           <Upload size={20} style={{ color: "#7e7576", margin: "0 auto 8px" }} />
           <p className="text-sm" style={{ color: "#7e7576" }}>Drag & drop or click to upload</p>
           <p className="text-xs mt-1" style={{ color: "rgba(0,0,0,0.3)" }}>PDF, JPG, PNG — max 5MB</p>
-          {hint && <p className="text-xs mt-1" style={{ color: "#D4AF37" }}>{hint}</p>}
+          {hint && <p className="text-xs mt-1" style={{ color: "#1E40AF" }}>{hint}</p>}
         </button>
       )}
       <input
@@ -252,7 +252,7 @@ export default function OnboardingPage() {
           className="absolute inset-0 opacity-5"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(212,175,55,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.5) 1px, transparent 1px)",
+              "linear-gradient(rgba(30,64,175,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(30,64,175,0.5) 1px, transparent 1px)",
             backgroundSize: "50px 50px",
           }}
         />
@@ -272,14 +272,14 @@ export default function OnboardingPage() {
             <div
               key={s.n}
               className="flex items-center gap-4 py-4 px-3 rounded-lg transition-all duration-200"
-              style={{ background: step === s.n ? "rgba(212,175,55,0.1)" : "transparent" }}
+              style={{ background: step === s.n ? "rgba(30,64,175,0.1)" : "transparent" }}
             >
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
                 style={{
-                  background: step > s.n ? "#D4AF37" : step === s.n ? "rgba(212,175,55,0.2)" : "rgba(255,255,255,0.08)",
-                  color: step > s.n ? "#1a1c1c" : step === s.n ? "#D4AF37" : "rgba(255,255,255,0.3)",
-                  border: step === s.n ? "1px solid rgba(212,175,55,0.4)" : "none",
+                  background: step > s.n ? "#1E40AF" : step === s.n ? "rgba(30,64,175,0.2)" : "rgba(255,255,255,0.08)",
+                  color: step > s.n ? "#1a1c1c" : step === s.n ? "#1E40AF" : "rgba(255,255,255,0.3)",
+                  border: step === s.n ? "1px solid rgba(30,64,175,0.4)" : "none",
                 }}
               >
                 {step > s.n ? <Check size={12} /> : s.n}
@@ -303,7 +303,7 @@ export default function OnboardingPage() {
           {/* Mobile progress bar */}
           <div className="lg:hidden flex gap-2 mb-8">
             {[1, 2, 3].map((s) => (
-              <div key={s} className="flex-1 h-1 rounded-full" style={{ background: step >= s ? "#D4AF37" : "rgba(0,0,0,0.1)" }} />
+              <div key={s} className="flex-1 h-1 rounded-full" style={{ background: step >= s ? "#1E40AF" : "rgba(0,0,0,0.1)" }} />
             ))}
           </div>
 
@@ -317,7 +317,7 @@ export default function OnboardingPage() {
             {/* ── STEP 1 ───────────────────────────────────────── */}
             {step === 1 && (
               <motion.div key="s1" {...slideVariants}>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D4AF37" }}>Step 1 of 3</p>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#1E40AF" }}>Step 1 of 3</p>
                 <h1 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "34px", fontWeight: 400, color: "#1a1c1c", letterSpacing: "-0.02em" }} className="mb-2">
                   Tell us about your business
                 </h1>
@@ -337,7 +337,7 @@ export default function OnboardingPage() {
                       onChange={(e) => setBusinessName(e.target.value)}
                       className="outline-none bg-transparent pb-2 w-full"
                       style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                     />
                   </div>
@@ -353,9 +353,9 @@ export default function OnboardingPage() {
                           onClick={() => setBusinessType(bt.id)}
                           className="flex items-center gap-2 p-3 text-left border transition-all duration-200"
                           style={{
-                            borderColor: businessType === bt.id ? "#D4AF37" : "rgba(0,0,0,0.1)",
+                            borderColor: businessType === bt.id ? "#1E40AF" : "rgba(0,0,0,0.1)",
                             borderWidth: "0.5px",
-                            background: businessType === bt.id ? "rgba(212,175,55,0.06)" : "#fff",
+                            background: businessType === bt.id ? "rgba(30,64,175,0.06)" : "#fff",
                           }}
                         >
                           <span>{bt.icon}</span>
@@ -391,7 +391,7 @@ export default function OnboardingPage() {
                       onChange={(e) => setWhatsapp(e.target.value)}
                       className="outline-none bg-transparent pb-2 w-full"
                       style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                     />
                     <p className="text-xs" style={{ color: "#7e7576" }}>Used for shipment and invoice notifications</p>
@@ -416,7 +416,7 @@ export default function OnboardingPage() {
             {/* ── STEP 2 ───────────────────────────────────────── */}
             {step === 2 && (
               <motion.div key="s2" {...slideVariants}>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D4AF37" }}>Step 2 of 3</p>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#1E40AF" }}>Step 2 of 3</p>
                 <h1 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "34px", fontWeight: 400, color: "#1a1c1c", letterSpacing: "-0.02em" }} className="mb-2">
                   Registration details
                 </h1>
@@ -443,7 +443,7 @@ export default function OnboardingPage() {
                           fontFamily: "monospace",
                           textTransform: "uppercase",
                         }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => {
                           e.currentTarget.style.borderBottomColor = gstinValid === false ? "#EF4444" : gstinValid === true ? "#10B981" : "rgba(0,0,0,0.2)";
                         }}
@@ -472,7 +472,7 @@ export default function OnboardingPage() {
                       maxLength={10}
                       className="outline-none bg-transparent pb-2 w-full"
                       style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px", fontFamily: "monospace", textTransform: "uppercase" }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                     />
                   </div>
@@ -488,7 +488,7 @@ export default function OnboardingPage() {
                         onChange={(e) => setIecCode(e.target.value.toUpperCase())}
                         className="outline-none bg-transparent pb-2 w-full"
                         style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px", fontFamily: "monospace" }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                       />
                     </div>
@@ -505,7 +505,7 @@ export default function OnboardingPage() {
                         onChange={(e) => setChaLicenceNo(e.target.value)}
                         className="outline-none bg-transparent pb-2 w-full"
                         style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                       />
                     </div>
@@ -521,7 +521,7 @@ export default function OnboardingPage() {
                       onChange={(e) => setBusinessAddress(e.target.value)}
                       className="outline-none bg-transparent pb-2 w-full"
                       style={{ borderBottom: "0.5px solid rgba(0,0,0,0.2)", color: "#1a1c1c", fontSize: "15px" }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                     />
                   </div>
@@ -591,7 +591,7 @@ export default function OnboardingPage() {
             {/* ── STEP 3 ───────────────────────────────────────── */}
             {step === 3 && (
               <motion.div key="s3" {...slideVariants}>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#D4AF37" }}>Step 3 of 3</p>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#1E40AF" }}>Step 3 of 3</p>
                 <h1 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "34px", fontWeight: 400, color: "#1a1c1c", letterSpacing: "-0.02em" }} className="mb-2">
                   Upload verification documents
                 </h1>
@@ -642,7 +642,7 @@ export default function OnboardingPage() {
                       onClick={handleSubmit}
                       disabled={loading}
                       className="flex-[2] py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-                      style={{ background: loading ? "#ccc" : "#D4AF37", color: "#1a1c1c" }}
+                      style={{ background: loading ? "#ccc" : "#1E40AF", color: "#1a1c1c" }}
                     >
                       {loading ? "Submitting…" : "Submit Application →"}
                     </button>

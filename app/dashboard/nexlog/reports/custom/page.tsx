@@ -10,11 +10,7 @@ export default function CustomReportPage() {
 
   const toggle = (f: string) => setSelected(selected.includes(f) ? selected.filter((x) => x !== f) : [...selected, f]);
 
-  const sampleData = [
-    { "Job No": "IMP/2526/089", "Client": "Ravi Exports", "Mode": "SEA", "Revenue": "₹3.48L", "GP %": "18.8%" },
-    { "Job No": "EXP/2526/044", "Client": "HDFC Traders", "Mode": "SEA", "Revenue": "₹4.12L", "GP %": "22.8%" },
-    { "Job No": "AIR/2526/032", "Client": "Global Impex", "Mode": "AIR", "Revenue": "₹68K", "GP %": "38.2%" },
-  ];
+  const sampleData: Record<string, string>[] = [];
 
   return (
     <div className="p-6" style={{ fontFamily: "Inter, sans-serif" }}>

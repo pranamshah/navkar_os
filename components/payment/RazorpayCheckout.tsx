@@ -107,7 +107,7 @@ export default function RazorpayCheckout({
       description: `${productName} Plan${appliedCode ? ` (${discountPct}% off)` : ""}`,
       order_id: orderId,
       prefill: { name: session.user.name ?? "", email: session.user.email ?? "" },
-      theme: { color: "#D4AF37" },
+      theme: { color: "#1E40AF" },
       modal: { ondismiss: () => setLoading(false) },
       handler: async (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
         const verifyRes = await fetch("/api/payment/verify", {
@@ -167,7 +167,7 @@ export default function RazorpayCheckout({
                 onClick={applyCode}
                 disabled={validating || !codeInput.trim()}
                 className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest disabled:opacity-50 transition-all"
-                style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                style={{ background: "#1a1c1c", color: "#1E40AF" }}
               >
                 {validating ? "…" : "Apply"}
               </button>
@@ -208,7 +208,7 @@ export default function RazorpayCheckout({
           </span>
           <span
             className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase"
-            style={{ background: "rgba(212,175,55,0.15)", color: "#92660a" }}
+            style={{ background: "rgba(30,64,175,0.15)", color: "#92660a" }}
           >
             Save ₹{(displayAmount - finalAmount).toLocaleString("en-IN")}
           </span>

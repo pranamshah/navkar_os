@@ -31,7 +31,7 @@ interface RecentUser {
 
 const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }> = {
   ACTIVE: { bg: "rgba(34,197,94,0.1)", text: "#16a34a", label: "Active" },
-  PENDING_VERIFICATION: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37", label: "Pending" },
+  PENDING_VERIFICATION: { bg: "rgba(30,64,175,0.12)", text: "#1E40AF", label: "Pending" },
   REJECTED: { bg: "rgba(239,68,68,0.1)", text: "#dc2626", label: "Rejected" },
   SUSPENDED: { bg: "rgba(156,163,175,0.15)", text: "#6b7280", label: "Suspended" },
 };
@@ -44,7 +44,7 @@ function KPICard({ label, value, icon, sub, accent }: {
       className="rounded-xl p-5 flex flex-col gap-3 border"
       style={{
         background: accent ? "#1a1c1c" : "#ffffff",
-        borderColor: accent ? "rgba(212,175,55,0.25)" : "rgba(0,0,0,0.07)",
+        borderColor: accent ? "rgba(30,64,175,0.25)" : "rgba(0,0,0,0.07)",
       }}
     >
       <div className="flex items-center justify-between">
@@ -53,13 +53,13 @@ function KPICard({ label, value, icon, sub, accent }: {
         </span>
         <span
           className="material-symbols-outlined"
-          style={{ fontSize: 18, color: accent ? "#D4AF37" : "#b0a8a9" }}
+          style={{ fontSize: 18, color: accent ? "#1E40AF" : "#b0a8a9" }}
         >
           {icon}
         </span>
       </div>
       <div>
-        <p className="text-2xl font-black" style={{ color: accent ? "#D4AF37" : "#1a1c1c" }}>
+        <p className="text-2xl font-black" style={{ color: accent ? "#1E40AF" : "#1a1c1c" }}>
           {value}
         </p>
         {sub && (
@@ -77,12 +77,12 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return (
       <div
         className="rounded-lg px-4 py-3 border"
-        style={{ background: "#1a1c1c", borderColor: "rgba(212,175,55,0.25)" }}
+        style={{ background: "#1a1c1c", borderColor: "rgba(30,64,175,0.25)" }}
       >
         <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
           {label}
         </p>
-        <p className="text-sm font-black" style={{ color: "#D4AF37" }}>
+        <p className="text-sm font-black" style={{ color: "#1E40AF" }}>
           ₹{Number(payload[0].value).toLocaleString("en-IN")}
         </p>
       </div>
@@ -204,7 +204,7 @@ export default function AdminOverviewPage() {
         {/* Section header */}
         <div className="flex items-center justify-between mb-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "#D4AF37" }}>Admin Access</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: "#1E40AF" }}>Admin Access</p>
             <h2 className="text-lg font-black uppercase tracking-widest" style={{ color: "#1a1c1c" }}>All Products</h2>
             <p className="text-sm mt-0.5" style={{ color: "#7e7576" }}>Full access to all 6 products — no subscription required.</p>
           </div>
@@ -310,7 +310,7 @@ export default function AdminOverviewPage() {
                 <a
                   href={p.href}
                   className="flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90 no-underline"
-                  style={{ background: "#1a1c1c", color: "#D4AF37", textDecoration: "none" }}
+                  style={{ background: "#1a1c1c", color: "#1E40AF", textDecoration: "none" }}
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
                   Open {p.name}
@@ -347,10 +347,10 @@ export default function AdminOverviewPage() {
                   tickLine={false}
                   tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`}
                 />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(212,175,55,0.06)" }} />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(30,64,175,0.06)" }} />
                 <Bar
                   dataKey="revenue"
-                  fill="#D4AF37"
+                  fill="#1E40AF"
                   radius={[4, 4, 0, 0]}
                 />
               </BarChart>
@@ -374,7 +374,7 @@ export default function AdminOverviewPage() {
             <a
               href="/dashboard/admin/verifications"
               className="text-xs font-semibold uppercase tracking-widest transition-opacity hover:opacity-70"
-              style={{ color: "#D4AF37" }}
+              style={{ color: "#1E40AF" }}
             >
               View All →
             </a>
@@ -410,7 +410,7 @@ export default function AdminOverviewPage() {
                         className="transition-colors"
                         style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
                       >
-                        <td className="px-4 py-3 font-mono font-semibold" style={{ color: "#D4AF37" }}>
+                        <td className="px-4 py-3 font-mono font-semibold" style={{ color: "#1E40AF" }}>
                           {u.clientId}
                         </td>
                         <td className="px-4 py-3 font-semibold" style={{ color: "#1a1c1c" }}>

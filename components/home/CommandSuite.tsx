@@ -82,7 +82,7 @@ export default function CommandSuite() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-16 reveal">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#1E40AF" }}>
             The NavkarOS Suite
           </p>
           <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
@@ -109,7 +109,7 @@ export default function CommandSuite() {
                 href="#whoisfor"
                 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest border-b transition-colors duration-200"
                 style={{ borderColor: "#1a1c1c", color: "#1a1c1c", paddingBottom: "2px" }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = "#D4AF37"; e.currentTarget.style.borderColor = "#D4AF37"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "#1E40AF"; e.currentTarget.style.borderColor = "#1E40AF"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = "#1a1c1c"; e.currentTarget.style.borderColor = "#1a1c1c"; }}
               >
                 Who uses each product →
@@ -162,9 +162,9 @@ export default function CommandSuite() {
                 <a
                   href={`/demo/${mod.id}`}
                   className="text-xs font-semibold uppercase tracking-widest transition-colors duration-200"
-                  style={{ color: "#D4AF37" }}
+                  style={{ color: "#1E40AF" }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = "#1a1c1c"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = "#D4AF37"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = "#1E40AF"; }}
                 >
                   View Demo →
                 </a>

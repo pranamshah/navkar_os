@@ -38,7 +38,7 @@ export default function TripsPage() {
         </div>
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#7C3AED" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
           New Trip
@@ -55,7 +55,7 @@ export default function TripsPage() {
               className="px-3 py-1.5 rounded-md text-[12px] font-medium transition-all"
               style={{
                 background: activeFilter === f ? "#fff" : "transparent",
-                color: activeFilter === f ? "#7C3AED" : "#6B7280",
+                color: activeFilter === f ? "#1E40AF" : "#6B7280",
                 boxShadow: activeFilter === f ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
               }}
             >
@@ -117,7 +117,7 @@ export default function TripsPage() {
             ) : (
               trips.map((t) => (
                 <tr key={t.tripNo} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                  <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#7C3AED" }}>{t.tripNo}</td>
+                  <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#1E40AF" }}>{t.tripNo}</td>
                   <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#374151" }}>{t.vehicleNo}</td>
                   <td className="py-3 px-4 font-medium" style={{ color: "#111827" }}>{t.driver}</td>
                   <td className="py-3 px-4" style={{ color: "#6B7280" }}>{t.route}</td>

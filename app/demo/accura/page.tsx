@@ -51,13 +51,13 @@ function DashboardScreen() {
     { label: "Net Profit",             value: "₹5,24,300",  icon: "account_balance",      color: "#059669", bg: "#ECFDF5" },
     { label: "GST Payable",            value: "₹62,140",    icon: "gavel",                color: "#DC2626", bg: "#FEF2F2" },
     { label: "Outstanding Receivables",value: "₹1,94,000",  icon: "arrow_outward",        color: "#0E7490", bg: "#ECFEFF" },
-    { label: "Cash Position",          value: "₹12,30,800", icon: "savings",              color: "#7C3AED", bg: "#F5F3FF" },
+    { label: "Cash Position",          value: "₹12,30,800", icon: "savings",              color: "#1E40AF", bg: "#F5F3FF" },
   ];
   const quickActions = [
     { label: "New Payment",      shortcut: "F5", icon: "payments",     color: "#0E7490" },
     { label: "New Receipt",      shortcut: "F6", icon: "receipt",      color: "#059669" },
-    { label: "New Sales Invoice",shortcut: "F8", icon: "description",  color: "#7C3AED" },
-    { label: "Run Payroll",      shortcut: "",   icon: "paid",         color: "#D97706" },
+    { label: "New Sales Invoice",shortcut: "F8", icon: "description",  color: "#1E40AF" },
+    { label: "Run Payroll",      shortcut: "",   icon: "paid",         color: "#1E40AF" },
   ];
   const txns = [
     { date: "05 Jul", type: "Sales Invoice", party: "Ravi Exports",      amount: "₹78,500",  bal: "₹78,500",  tc: { text: "#0E7490", bg: "#ECFEFF", border: "#A5F3FC" } },
@@ -162,14 +162,14 @@ function IncomeScreen() {
           <p className="font-semibold" style={{ color: "#111827", fontSize: "13px" }}>Sales Vouchers</p>
           <p style={{ color: "#6B7280", fontSize: "10px" }}>July 2026</p>
         </div>
-        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#7C3AED", fontSize: "10px", fontWeight: 600 }}>
+        <button className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white" style={{ background: "#1E40AF", fontSize: "10px", fontWeight: 600 }}>
           <span className="material-symbols-outlined" style={{ fontSize: 13 }}>add</span>+ New Sales Invoice
         </button>
       </div>
 
       {/* Totals strip */}
       <div className="grid grid-cols-3 gap-2 px-4 mb-3">
-        {[["Total Sales","₹18.5L","#7C3AED","#F5F3FF"],["IGST Collected","₹2.22L","#0E7490","#ECFEFF"],["Net Receivable","₹20.72L","#059669","#ECFDF5"]].map(([l,v,c,bg]) => (
+        {[["Total Sales","₹18.5L","#1E40AF","#F5F3FF"],["IGST Collected","₹2.22L","#0E7490","#ECFEFF"],["Net Receivable","₹20.72L","#059669","#ECFDF5"]].map(([l,v,c,bg]) => (
           <div key={l} className="rounded-xl border p-2.5" style={{ background: bg as string, borderColor: "#E5E7EB" }}>
             <p style={{ color: "#6B7280", fontSize: "9px" }}>{l}</p>
             <p className="font-bold mt-0.5" style={{ color: c as string, fontSize: "13px" }}>{v}</p>
@@ -254,7 +254,7 @@ function ExpensesScreen() {
               <tr key={r.vendor} className="border-b" style={{ borderColor: "#F3F4F6" }}>
                 <td className="px-3 py-2.5 font-medium" style={{ color: "#111827" }}>{r.vendor}</td>
                 <td className="px-3 py-2.5">
-                  <span className="px-2 py-0.5 rounded-full" style={{ background: "#FFFBEB", color: "#D97706", border: "1px solid #FDE68A", fontSize: "9px" }}>{r.category}</span>
+                  <span className="px-2 py-0.5 rounded-full" style={{ background: "#FFFBEB", color: "#1E40AF", border: "1px solid #FDE68A", fontSize: "9px" }}>{r.category}</span>
                 </td>
                 <td className="px-3 py-2.5" style={{ color: "#6B7280" }}>{r.date}</td>
                 <td className="px-3 py-2.5 font-mono font-semibold" style={{ color: "#DC2626" }}>{r.amount}</td>
@@ -317,7 +317,7 @@ function GstScreen() {
               { label: "Total Outward Supplies", val: "₹8,42,500",   sub: "Sales this period",    color: "#0E7490", bg: "#ECFEFF" },
               { label: "ITC Available",          val: "₹69,560",     sub: "Input Tax Credit",      color: "#059669", bg: "#ECFDF5" },
               { label: "GST Payable",            val: "₹62,540",     sub: "IGST after setoff",     color: "#DC2626", bg: "#FEF2F2" },
-              { label: "Filing Due",             val: "20 Jul 2026", sub: "GSTR-3B deadline",      color: "#D97706", bg: "#FFFBEB" },
+              { label: "Filing Due",             val: "20 Jul 2026", sub: "GSTR-3B deadline",      color: "#1E40AF", bg: "#FFFBEB" },
             ].map((kpi) => (
               <div key={kpi.label} className="rounded-xl border p-2.5" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
                 <p style={{ color: "#6B7280", fontSize: "9px", fontWeight: 500 }}>{kpi.label}</p>
@@ -346,7 +346,7 @@ function GstScreen() {
                   <td className="px-3 py-2 text-right font-mono">₹8,42,500</td>
                   <td className="px-3 py-2 text-right font-mono" style={{ color: "#0E7490" }}>₹24,820</td>
                   <td className="px-3 py-2 text-right font-mono" style={{ color: "#0E7490" }}>₹24,820</td>
-                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#7C3AED" }}>₹82,460</td>
+                  <td className="px-3 py-2 text-right font-mono" style={{ color: "#1E40AF" }}>₹82,460</td>
                   <td className="px-3 py-2 text-right font-mono font-semibold">₹1,32,100</td>
                 </tr>
                 <tr className="border-b" style={{ borderColor: "#F3F4F6" }}>
@@ -360,8 +360,8 @@ function GstScreen() {
                 <tr style={{ background: "#FFFBEB" }}>
                   <td className="px-3 py-2.5 font-bold" style={{ color: "#111827" }}>Net GST Payable</td>
                   <td />
-                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#D97706" }}>₹12,420</td>
-                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#D97706" }}>₹12,420</td>
+                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#1E40AF" }}>₹12,420</td>
+                  <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#1E40AF" }}>₹12,420</td>
                   <td className="px-3 py-2.5 text-right font-mono font-bold" style={{ color: "#DC2626" }}>₹37,700</td>
                   <td className="px-3 py-2.5 text-right font-mono font-bold text-[12px]" style={{ color: "#DC2626" }}>₹62,540</td>
                 </tr>
@@ -458,12 +458,12 @@ function PnlScreen() {
         {/* Indirect Expenses */}
         <div className="rounded-xl border overflow-hidden" style={{ borderColor: "#E5E7EB", background: "#fff" }}>
           <div className="px-3 py-2 border-b" style={{ borderColor: "#E5E7EB", background: "#FFFBEB" }}>
-            <p className="font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#D97706" }}>Indirect Expenses</p>
+            <p className="font-semibold text-[10px] uppercase tracking-wide" style={{ color: "#1E40AF" }}>Indirect Expenses</p>
           </div>
           {indirectExp.map(r => (
             <div key={r.label} className="flex justify-between px-3 py-2 border-b" style={{ borderColor: "#F3F4F6" }}>
               <span style={{ color: "#374151", fontSize: "11px" }}>{r.label}</span>
-              <span className="font-mono" style={{ color: "#D97706", fontSize: "11px" }}>{r.val}</span>
+              <span className="font-mono" style={{ color: "#1E40AF", fontSize: "11px" }}>{r.val}</span>
             </div>
           ))}
           <div className="flex justify-between items-center px-3 py-3" style={{ background: "#F0FDF4", borderTop: "2px solid #A7F3D0" }}>
@@ -490,7 +490,7 @@ function BankScreen() {
   ];
   const statusConfig: Record<string, { text: string; bg: string; border: string; icon: string; label: string }> = {
     matched:   { text: "#059669", bg: "#ECFDF5", border: "#A7F3D0", icon: "check_circle", label: "Matched"   },
-    possible:  { text: "#D97706", bg: "#FFFBEB", border: "#FDE68A", icon: "help",         label: "Possible"  },
+    possible:  { text: "#1E40AF", bg: "#FFFBEB", border: "#FDE68A", icon: "help",         label: "Possible"  },
     unmatched: { text: "#DC2626", bg: "#FEF2F2", border: "#FECACA", icon: "cancel",       label: "Unmatched" },
   };
 
@@ -623,28 +623,28 @@ export default function AccuraPage() {
       >
         {/* Gold grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{ backgroundImage: "linear-gradient(rgba(212,175,55,1) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+          style={{ backgroundImage: "linear-gradient(rgba(30,64,175,1) 1px,transparent 1px),linear-gradient(90deg,rgba(30,64,175,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
         <div className="max-w-5xl mx-auto text-center relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 border"
-              style={{ background: "rgba(212,175,55,0.1)", borderColor: "rgba(212,175,55,0.25)", color: "#D4AF37" }}>
+              style={{ background: "rgba(30,64,175,0.1)", borderColor: "rgba(30,64,175,0.25)", color: "#1E40AF" }}>
               <span className="material-symbols-outlined" style={{ fontSize: 12 }}>account_balance</span>
               Freight Accounting · Built for Indian Logistics
             </span>
             <h1 className="text-5xl md:text-6xl font-black text-white mb-5 leading-tight">
               Your CA will love you<br />
-              <span style={{ color: "#D4AF37" }}>for switching to Accura.</span>
+              <span style={{ color: "#1E40AF" }}>for switching to Accura.</span>
             </h1>
             <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.75 }}>
               Freight-specific accounting that auto-posts from every NavkarOS invoice, generates GSTR-1 in one click, and shows real-time per-job profitability — built exclusively for Indian logistics.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mb-14">
               <Link href={ctaHref} className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
-                style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+                style={{ background: "#1E40AF", color: "#1a1c1c" }}>
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
-              <a href="#demo" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider border transition-all duration-200 hover:border-[#D4AF37] hover:text-[#D4AF37]"
+              <a href="#demo" className="inline-flex items-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider border transition-all duration-200 hover:border-[#1E40AF] hover:text-[#1E40AF]"
                 style={{ borderColor: "rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}>
                 See Live Demo ↓
               </a>
@@ -660,7 +660,7 @@ export default function AccuraPage() {
               { val: "100%",    sub: "GST & TDS compliant" },
             ].map((s) => (
               <div key={s.sub} className="rounded-2xl p-5 text-center" style={{ background: "rgba(255,255,255,0.04)", border: "0.5px solid rgba(255,255,255,0.08)" }}>
-                <p className="text-3xl font-black" style={{ color: "#D4AF37" }}>{s.val}</p>
+                <p className="text-3xl font-black" style={{ color: "#1E40AF" }}>{s.val}</p>
                 <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.4)" }}>{s.sub}</p>
               </div>
             ))}
@@ -686,8 +686,8 @@ export default function AccuraPage() {
               { icon: "receipt_long", title: "WhatsApp payment reminders", desc: "One click to send a polite WhatsApp reminder with outstanding invoice details. Collections made effortless." },
             ].map((f) => (
               <div key={f.title} className="flex gap-4 p-5 rounded-2xl bg-white border" style={{ borderColor: "#f0f0f0" }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.1)" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D4AF37" }}>{f.icon}</span>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(30,64,175,0.1)" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#1E40AF" }}>{f.icon}</span>
                 </div>
                 <div>
                   <p className="font-bold text-sm text-gray-900">{f.title}</p>
@@ -703,7 +703,7 @@ export default function AccuraPage() {
       <section id="demo" className="py-20 px-6" style={{ background: "#111213" }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(212,175,55,0.7)" }}>Interactive demo</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(30,64,175,0.7)" }}>Interactive demo</span>
             <h2 className="text-3xl font-black text-white mt-2">See every module live</h2>
             <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Click any tab to preview the real interface with sample data.</p>
           </div>
@@ -716,7 +716,7 @@ export default function AccuraPage() {
                 onClick={() => setActiveModule(m.id)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200"
                 style={{
-                  background: activeModule === m.id ? "#D4AF37" : "rgba(255,255,255,0.06)",
+                  background: activeModule === m.id ? "#1E40AF" : "rgba(255,255,255,0.06)",
                   color: activeModule === m.id ? "#1a1c1c" : "rgba(255,255,255,0.5)",
                   border: activeModule === m.id ? "none" : "0.5px solid rgba(255,255,255,0.08)",
                 }}
@@ -823,7 +823,7 @@ export default function AccuraPage() {
       <section className="py-20 px-6" style={{ background: "#1a1c1c" }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(212,175,55,0.7)" }}>Zero learning curve</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(30,64,175,0.7)" }}>Zero learning curve</span>
             <h2 className="text-3xl font-black text-white mt-2">How Accura works</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -834,10 +834,10 @@ export default function AccuraPage() {
             ].map((s) => (
               <div key={s.step} className="flex flex-col items-center text-center">
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ background: "rgba(212,175,55,0.12)", border: "1.5px solid rgba(212,175,55,0.25)" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 24, color: "#D4AF37" }}>{s.icon}</span>
+                  style={{ background: "rgba(30,64,175,0.12)", border: "1.5px solid rgba(30,64,175,0.25)" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 24, color: "#1E40AF" }}>{s.icon}</span>
                 </div>
-                <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(212,175,55,0.5)" }}>Step {s.step}</p>
+                <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(30,64,175,0.5)" }}>Step {s.step}</p>
                 <p className="font-black text-white text-base mb-3">{s.title}</p>
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>{s.desc}</p>
               </div>
@@ -854,23 +854,23 @@ export default function AccuraPage() {
             <h2 className="text-3xl font-black text-gray-900 mt-2">One plan. Everything included.</h2>
             <p className="text-sm text-gray-500 mt-2">No tiers, no hidden add-ons. Every feature from day one.</p>
           </div>
-          <div className="rounded-2xl border-2 p-8 flex flex-col md:flex-row gap-8 items-center" style={{ background: "#1a1c1c", borderColor: "#D4AF37" }}>
+          <div className="rounded-2xl border-2 p-8 flex flex-col md:flex-row gap-8 items-center" style={{ background: "#1a1c1c", borderColor: "#1E40AF" }}>
             <div className="flex-1">
-              <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(212,175,55,0.7)" }}>Accura</p>
+              <p className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: "rgba(30,64,175,0.7)" }}>Accura</p>
               <div className="flex items-end gap-1 mb-1">
-                <span className="text-5xl font-black" style={{ color: "#D4AF37" }}>₹1,499</span>
+                <span className="text-5xl font-black" style={{ color: "#1E40AF" }}>₹1,499</span>
                 <span className="text-base mb-2" style={{ color: "rgba(255,255,255,0.4)" }}>/mo</span>
               </div>
               <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.4)" }}>14-day free trial · No credit card required</p>
               <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-200"
-                style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+                style={{ background: "#1E40AF", color: "#1a1c1c" }}>
                 Start Free Trial →
               </Link>
             </div>
             <ul className="flex flex-col gap-3 flex-1">
               {["Unlimited invoices & entries","All 13 accounting modules","AI receipt scanner","Per-job profitability","CA collaboration login","GSTR-1 & GSTR-3B export","Bank reconciliation","WhatsApp payment reminders","Multi-currency support","Tally XML export"].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm">
-                  <Check className="h-4 w-4 flex-shrink-0" style={{ color: "#D4AF37" }} />
+                  <Check className="h-4 w-4 flex-shrink-0" style={{ color: "#1E40AF" }} />
                   <span style={{ color: "rgba(255,255,255,0.75)" }}>{f}</span>
                 </li>
               ))}
@@ -885,10 +885,10 @@ export default function AccuraPage() {
           <h2 className="text-2xl font-black text-gray-900 text-center mb-8">Questions about Accura</h2>
           <div className="flex flex-col gap-2">
             {FAQS.map((f, i) => (
-              <div key={i} className="rounded-xl border bg-white overflow-hidden" style={{ borderColor: openFaq === i ? "rgba(212,175,55,0.4)" : "#e5e7eb" }}>
+              <div key={i} className="rounded-xl border bg-white overflow-hidden" style={{ borderColor: openFaq === i ? "rgba(30,64,175,0.4)" : "#e5e7eb" }}>
                 <button className="w-full px-5 py-4 flex items-center justify-between text-left" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                   <span className="font-semibold text-sm text-gray-800">{f.q}</span>
-                  {openFaq === i ? <ChevronUp className="h-4 w-4 text-[#D4AF37] flex-shrink-0" /> : <ChevronDown className="h-4 w-4 text-gray-400 flex-shrink-0" />}
+                  {openFaq === i ? <ChevronUp className="h-4 w-4 text-[#1E40AF] flex-shrink-0" /> : <ChevronDown className="h-4 w-4 text-gray-400 flex-shrink-0" />}
                 </button>
                 {openFaq === i && <div className="px-5 pb-4"><p className="text-sm text-gray-600 leading-relaxed">{f.a}</p></div>}
               </div>
@@ -900,17 +900,17 @@ export default function AccuraPage() {
       {/* ── BOTTOM CTA ───────────────────────────────────── */}
       <section className="py-20 px-6" style={{ background: "#1a1c1c" }}>
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(212,175,55,0.6)" }}>Ready to get started?</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(30,64,175,0.6)" }}>Ready to get started?</p>
           <h2 className="text-4xl font-black text-white mb-4 leading-tight">
             Accounting built for<br />
-            <span style={{ color: "#D4AF37" }}>Indian logistics.</span>
+            <span style={{ color: "#1E40AF" }}>Indian logistics.</span>
           </h2>
           <p className="mb-10 text-base" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
             14-day free trial. No credit card. No setup fee. Your existing data stays yours.
           </p>
           <Link href={ctaHref}
             className="inline-flex items-center gap-3 px-10 py-4 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:opacity-90"
-            style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+            style={{ background: "#1E40AF", color: "#1a1c1c" }}>
             {ctaLabel} <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>

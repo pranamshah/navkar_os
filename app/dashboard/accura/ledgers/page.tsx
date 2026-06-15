@@ -30,7 +30,7 @@ const natureColors: Record<Nature, { text: string; bg: string; border: string }>
   ASSETS: { text: "#059669", bg: "#ECFDF5", border: "#A7F3D0" },
   LIABILITIES: { text: "#DC2626", bg: "#FEF2F2", border: "#FECACA" },
   INCOME: { text: "#0E7490", bg: "#ECFEFF", border: "#A5F3FC" },
-  EXPENSE: { text: "#D97706", bg: "#FFFBEB", border: "#FDE68A" },
+  EXPENSE: { text: "#1E40AF", bg: "#FFFBEB", border: "#FDE68A" },
 };
 
 const natureIcon: Record<Nature, string> = {

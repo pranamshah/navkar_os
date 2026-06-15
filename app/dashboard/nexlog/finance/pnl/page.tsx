@@ -27,9 +27,9 @@ export default function PnlPage() {
       <div className="grid grid-cols-4 gap-4 mb-5">
         {[
           { l: "Total Revenue", v: `₹${(totals.rev / 100000).toFixed(2)} L`, c: "#1565C0", bg: "#E3F2FD" },
-          { l: "Total Cost", v: `₹${(totals.cost / 100000).toFixed(2)} L`, c: "#D97706", bg: "#FFFBEB" },
+          { l: "Total Cost", v: `₹${(totals.cost / 100000).toFixed(2)} L`, c: "#1E40AF", bg: "#FFFBEB" },
           { l: "Gross Profit", v: `₹${(totals.gp / 100000).toFixed(2)} L`, c: "#059669", bg: "#ECFDF5" },
-          { l: "Avg GP %", v: `${avgGp}%`, c: "#7C3AED", bg: "#F5F3FF" },
+          { l: "Avg GP %", v: `${avgGp}%`, c: "#1E40AF", bg: "#F5F3FF" },
         ].map((k) => (
           <div key={k.l} className="rounded-xl border p-4" style={{ background: "#fff", borderColor: "#E5E7EB" }}>
             <div className="text-[11px] font-medium" style={{ color: "#6B7280" }}>{k.l}</div>

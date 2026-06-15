@@ -35,7 +35,7 @@ function DashHeader({ title, badge, action }: { title: string; badge?: string; a
         <h1 style={{ fontFamily: "'EB Garamond', Georgia, serif", fontSize: "32px", fontWeight: 400, color: "#1a1c1c", letterSpacing: "-0.02em" }}>
           {title}
         </h1>
-        {badge && <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>{badge}</span>}
+        {badge && <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>{badge}</span>}
       </div>
       {action && (
         <Link href={action.href} className="px-5 py-2.5 text-xs font-semibold uppercase tracking-widest" style={{ background: "#1a1c1c", color: "#fff" }}>
@@ -51,7 +51,7 @@ function StatCard({ val, label, sub }: { val: string; label: string; sub?: strin
     <div className="p-6" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
       <p className="text-3xl font-semibold mb-1" style={{ color: "#1a1c1c", letterSpacing: "-0.02em" }}>{val}</p>
       <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>{label}</p>
-      {sub && <p className="text-xs mt-1" style={{ color: "#D4AF37" }}>{sub}</p>}
+      {sub && <p className="text-xs mt-1" style={{ color: "#1E40AF" }}>{sub}</p>}
     </div>
   );
 }
@@ -154,7 +154,7 @@ function DocAIDash() {
 
 function BillGenDash() {
   const invoices: { no: string; client: string; amount: string; gst: string; status: string; date: string }[] = [];
-  const statusColor: Record<string, string> = { Sent: "#3B82F6", Paid: "#16A34A", Draft: "#D4AF37" };
+  const statusColor: Record<string, string> = { Sent: "#3B82F6", Paid: "#16A34A", Draft: "#1E40AF" };
   return (
     <div>
       <DashHeader title="BillGen" badge="GST-Native Invoicing" action={{ label: "+ New Invoice", href: "#" }} />
@@ -222,7 +222,7 @@ function ClientHubDash() {
               <tr key={c.name} style={{ borderBottom: "0.5px solid rgba(0,0,0,0.04)", background: i % 2 === 0 ? "#fafafa" : "#fff" }}>
                 <td className="px-6 py-3 font-semibold" style={{ color: "#1a1c1c" }}>{c.name}</td>
                 <td className="px-6 py-3" style={{ color: "#4c4546" }}>{c.jobs}</td>
-                <td className="px-6 py-3 font-semibold" style={{ color: c.portal === "Active" ? "#16A34A" : "#D4AF37" }}>{c.portal}</td>
+                <td className="px-6 py-3 font-semibold" style={{ color: c.portal === "Active" ? "#16A34A" : "#1E40AF" }}>{c.portal}</td>
                 <td className="px-6 py-3" style={{ color: "#7e7576" }}>{c.tracking}</td>
                 <td className="px-6 py-3" style={{ color: "#7e7576" }}>{c.lastSeen}</td>
               </tr>
@@ -247,7 +247,7 @@ function AccountsOSDash() {
       <div className="flex flex-col items-center justify-center py-16" style={{ background: "#fff", border: "0.5px solid rgba(0,0,0,0.08)" }}>
         <p className="text-sm font-semibold" style={{ color: "#1a1c1c" }}>No accounting data yet</p>
         <p className="text-xs mt-1" style={{ color: "#7e7576" }}>Add ledgers and vouchers in Accura to see your P&L and GST summary here.</p>
-        <Link href="/dashboard/accura" className="mt-4 px-4 py-2 text-xs font-semibold uppercase tracking-widest" style={{ background: "#1a1c1c", color: "#D4AF37" }}>
+        <Link href="/dashboard/accura" className="mt-4 px-4 py-2 text-xs font-semibold uppercase tracking-widest" style={{ background: "#1a1c1c", color: "#1E40AF" }}>
           Open Accura →
         </Link>
       </div>
@@ -286,7 +286,7 @@ function RateDeskDash() {
                 <td className="px-6 py-3 font-semibold" style={{ color: "#1a1c1c" }}>{r.teu}</td>
                 <td className="px-6 py-3" style={{ color: "#7e7576" }}>{r.cbm}</td>
                 <td className="px-6 py-3" style={{ color: "#7e7576" }}>{r.valid}</td>
-                <td className="px-6 py-3 font-semibold" style={{ color: r.status === "Active" ? "#16A34A" : "#D4AF37" }}>{r.status}</td>
+                <td className="px-6 py-3 font-semibold" style={{ color: r.status === "Active" ? "#16A34A" : "#1E40AF" }}>{r.status}</td>
               </tr>
             ))}
           </tbody>

@@ -21,8 +21,8 @@ const lrRecords: {
 }[] = [];
 
 const STATUS_STYLES: Record<string, { color: string; bg: string }> = {
-  Pending: { color: "#D97706", bg: "#FFFBEB" },
-  "In Transit": { color: "#7C3AED", bg: "#F5F3FF" },
+  Pending: { color: "#1E40AF", bg: "#FFFBEB" },
+  "In Transit": { color: "#1E40AF", bg: "#F5F3FF" },
   Delivered: { color: "#059669", bg: "#ECFDF5" },
   Billed: { color: "#1565C0", bg: "#E3F2FD" },
 };
@@ -56,7 +56,7 @@ export default function LRRegisterPage() {
         <Link
           href="/dashboard/rundesk/lr/new"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#7C3AED" }}
+          style={{ background: "#1E40AF" }}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>post_add</span>
           Generate LR
@@ -71,14 +71,14 @@ export default function LRRegisterPage() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className="px-3 py-2 text-[12px] font-medium transition-colors relative"
-              style={{ color: activeTab === tab ? "#7C3AED" : "#6B7280" }}
+              style={{ color: activeTab === tab ? "#1E40AF" : "#6B7280" }}
             >
               {tab}
               {activeTab === tab && (
                 <motion.div
                   layoutId="lr-tab-underline"
                   className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                  style={{ background: "#7C3AED" }}
+                  style={{ background: "#1E40AF" }}
                 />
               )}
             </button>
@@ -135,7 +135,7 @@ export default function LRRegisterPage() {
                     <Link
                       href="/dashboard/rundesk/lr/new"
                       className="mt-2 px-4 py-1.5 rounded-md text-[13px] text-white"
-                      style={{ background: "#7C3AED" }}
+                      style={{ background: "#1E40AF" }}
                     >
                       Generate LR
                     </Link>
@@ -147,7 +147,7 @@ export default function LRRegisterPage() {
                 const style = STATUS_STYLES[r.status] ?? { color: "#6B7280", bg: "#F3F4F6" };
                 return (
                   <tr key={r.lrNo} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                    <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#7C3AED" }}>{r.lrNo}</td>
+                    <td className="py-3 px-4 font-mono text-[11px]" style={{ color: "#1E40AF" }}>{r.lrNo}</td>
                     <td className="py-3 px-4" style={{ color: "#6B7280" }}>{r.date}</td>
                     <td className="py-3 px-4 font-medium" style={{ color: "#111827" }}>{r.consignor}</td>
                     <td className="py-3 px-4" style={{ color: "#6B7280" }}>{r.consignee}</td>

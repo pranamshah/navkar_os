@@ -11,9 +11,9 @@ export default function StakeholdersBento() {
           <span
             className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
             style={{
-              background: "rgba(246,190,57,0.12)",
-              color: "#B8860B",
-              border: "1px solid rgba(212,160,23,0.25)",
+              background: "rgba(30,64,175,0.12)",
+              color: "#1565C0",
+              border: "1px solid rgba(30,64,175,0.25)",
             }}
           >
             Built for Every Player
@@ -23,7 +23,7 @@ export default function StakeholdersBento() {
             style={{ fontSize: "clamp(32px, 4vw, 48px)", color: "#1a1c1d", letterSpacing: "-0.03em" }}
           >
             Every Stakeholder.{" "}
-            <span style={{ color: "#D4A017" }}>One OS.</span>
+            <span style={{ color: "#1E40AF" }}>One OS.</span>
           </h2>
           <p className="text-lg max-w-xl" style={{ color: "#5d5f5f" }}>
             From independent C&F agents to large freight forwarding companies —
@@ -66,7 +66,7 @@ export default function StakeholdersBento() {
                   <span
                     key={tag}
                     className="text-xs px-3 py-1 rounded-full font-semibold"
-                    style={{ background: "rgba(246,190,57,0.2)", color: "#f6be39" }}
+                    style={{ background: "rgba(30,64,175,0.2)", color: "#60A5FA" }}
                   >
                     {tag}
                   </span>
@@ -103,7 +103,7 @@ export default function StakeholdersBento() {
             </div>
             <span
               className="mt-5 text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "#D4A017" }}
+              style={{ color: "#1E40AF" }}
             >
               DocAI + ConnectLayer →
             </span>
@@ -119,8 +119,8 @@ export default function StakeholdersBento() {
               transition={{ duration: 0.5, delay: (i + 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="glass rounded-3xl p-7 group transition-all duration-300"
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#f6be39";
-                e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,160,23,0.12)";
+                e.currentTarget.style.borderColor = "#60A5FA";
+                e.currentTarget.style.boxShadow = "0 8px 30px rgba(30,64,175,0.12)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "rgba(196,199,200,0.35)";

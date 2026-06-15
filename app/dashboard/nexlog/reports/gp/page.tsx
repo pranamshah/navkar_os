@@ -9,7 +9,7 @@ export default function GpReportPage() {
     name: m,
     value: jobs.filter((j) => j.mode === m).reduce((s, j) => s + j.gp, 0),
   }));
-  const colors = ["#1565C0", "#D97706", "#7C3AED"];
+  const colors = ["#1565C0", "#1E40AF", "#1E40AF"];
 
   return (
     <div className="p-6" style={{ fontFamily: "Inter, sans-serif" }}>

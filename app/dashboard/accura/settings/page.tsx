@@ -179,7 +179,7 @@ export default function SettingsPage() {
                 <h2 className="text-sm font-semibold mb-2" style={{ color: "#111827" }}>Opening Balances</h2>
                 <p className="text-[12px] mb-4" style={{ color: "#6B7280" }}>Enter opening balances as on 01 April 2025 (start of FY 2025-26).</p>
                 <div className="rounded-lg border p-4 flex items-center gap-3" style={{ background: "#FFFBEB", borderColor: "#FDE68A" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#D97706" }}>info</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#1E40AF" }}>info</span>
                   <div className="text-[12px]" style={{ color: "#374151" }}>
                     Opening balances are set at the time of company creation. To modify, go to each ledger and update the opening balance directly.
                   </div>
@@ -215,7 +215,7 @@ export default function SettingsPage() {
                   <button onClick={handleBackup} disabled={backupLoading}
                     className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors disabled:opacity-60"
                     style={{ borderColor: "#E5E7EB" }}>
-                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#7C3AED" }}>backup</span>
+                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#1E40AF" }}>backup</span>
                     <div>
                       <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>
                         {backupLoading ? "Exporting..." : "Download Full Backup"}
@@ -252,7 +252,7 @@ export default function SettingsPage() {
                   />
 
                   <button className="flex items-start gap-3 p-4 rounded-lg border text-left hover:bg-gray-50 transition-colors" style={{ borderColor: "#E5E7EB" }}>
-                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#D97706" }}>receipt_long</span>
+                    <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 20, color: "#1E40AF" }}>receipt_long</span>
                     <div>
                       <div className="text-[13px] font-semibold" style={{ color: "#111827" }}>Export GST Data</div>
                       <div className="text-[11px] mt-0.5" style={{ color: "#9CA3AF" }}>GSTR-1 / GSTR-3B JSON</div>

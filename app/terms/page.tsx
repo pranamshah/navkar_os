@@ -138,7 +138,7 @@ export default function TermsPage() {
         {/* Header */}
         <section className="pt-40 pb-16 px-8 border-b" style={{ borderColor: "rgba(0,0,0,0.07)" }}>
           <div className="max-w-3xl mx-auto">
-            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-6" style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}>
+            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-6" style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}>
               Legal
             </span>
             <h1
@@ -180,8 +180,8 @@ export default function TermsPage() {
             </div>
 
             <div className="mt-16 pt-10 border-t flex flex-wrap gap-6" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
-              <Link href="/privacy" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>Privacy Policy →</Link>
-              <Link href="/refund" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>Refund Policy →</Link>
+              <Link href="/privacy" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>Privacy Policy →</Link>
+              <Link href="/refund" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>Refund Policy →</Link>
               <Link href="/" className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>← Back to Home</Link>
             </div>
           </div>

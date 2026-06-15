@@ -90,7 +90,7 @@ export default function AIPage() {
   return (
     <div className="p-6" style={{ fontFamily: "Inter, sans-serif" }}>
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #0E7490, #7C3AED)" }}>
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #0E7490, #1E40AF)" }}>
           <span className="material-symbols-outlined text-white" style={{ fontSize: 20, fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
         </div>
         <div>
@@ -128,7 +128,7 @@ export default function AIPage() {
                 />
                 <button onClick={handleParse} disabled={!nlpQuery.trim() || loading}
                   className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-medium text-white disabled:opacity-60 transition-opacity self-start"
-                  style={{ background: "linear-gradient(135deg, #0E7490, #7C3AED)" }}>
+                  style={{ background: "linear-gradient(135deg, #0E7490, #1E40AF)" }}>
                   {loading ? (
                     <span className="material-symbols-outlined animate-spin" style={{ fontSize: 16 }}>refresh</span>
                   ) : (
@@ -228,7 +228,7 @@ export default function AIPage() {
           <div className="max-w-xl">
             <div className="rounded-xl border p-10 text-center" style={{ background: "#fff", borderColor: "#E5E7EB", borderStyle: "dashed" }}>
               <div className="flex justify-center mb-3">
-                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-widest" style={{ background: "#FEF3C7", color: "#D97706" }}>Coming Soon</span>
+                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-widest" style={{ background: "#FEF3C7", color: "#1E40AF" }}>Coming Soon</span>
               </div>
               <span className="material-symbols-outlined mb-3 block" style={{ fontSize: 48, color: "#9CA3AF" }}>document_scanner</span>
               <h3 className="text-base font-semibold mb-2" style={{ color: "#111827" }}>Upload Invoice / Bill</h3>
@@ -245,9 +245,9 @@ export default function AIPage() {
         {tab === "anomaly" && (
           <div className="max-w-2xl">
             <div className="rounded-xl border p-4 mb-4 flex items-start gap-3" style={{ background: "#F5F3FF", borderColor: "#DDD6FE" }}>
-              <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 18, color: "#7C3AED", fontVariationSettings: "'FILL' 1" }}>info</span>
+              <span className="material-symbols-outlined mt-0.5" style={{ fontSize: 18, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}>info</span>
               <div>
-                <div className="text-[13px] font-semibold" style={{ color: "#7C3AED" }}>Anomaly Detection</div>
+                <div className="text-[13px] font-semibold" style={{ color: "#1E40AF" }}>Anomaly Detection</div>
                 <div className="text-[12px] mt-0.5" style={{ color: "#6B7280" }}>Anomaly detection runs on your voucher data. Currently shows duplicate detection.</div>
               </div>
             </div>

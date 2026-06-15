@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 const kpis = [
   { label: "Active Jobs", value: "0", icon: "work", color: "#1565C0", bg: "#E3F2FD" },
   { label: "Import Jobs", value: "0", icon: "download", color: "#0D47A1", bg: "#E3F2FD" },
-  { label: "Export Jobs", value: "0", icon: "upload", color: "#7C3AED", bg: "#F5F3FF" },
+  { label: "Export Jobs", value: "0", icon: "upload", color: "#1E40AF", bg: "#F5F3FF" },
   { label: "Pending Customs", value: "0", icon: "gavel", color: "#DC2626", bg: "#FEF2F2" },
   { label: "Revenue This Month", value: "₹0", icon: "trending_up", color: "#059669", bg: "#ECFDF5" },
-  { label: "Outstanding", value: "₹0", icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
+  { label: "Outstanding", value: "₹0", icon: "pending_actions", color: "#1E40AF", bg: "#FFFBEB" },
 ];
 
 const recentJobs: { no: string; client: string; route: string; mode: string; stage: string; eta: string; stageColor: string; stageBg: string }[] = [];

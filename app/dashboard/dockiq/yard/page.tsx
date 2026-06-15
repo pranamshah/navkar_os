@@ -28,7 +28,7 @@ const statusConfig: Record<
   },
   UNDER_EXAM: {
     label: "Under Exam",
-    color: "#D97706",
+    color: "#1E40AF",
     bg: "#FFFBEB",
     border: "#FDE68A",
     headerBg: "#FEF3C7",

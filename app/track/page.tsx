@@ -115,20 +115,20 @@ function StageTimeline({ currentStage, updates }: { currentStage: string; update
               <div
                 className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 z-10"
                 style={{
-                  background: isDone ? "#D4AF37" : isCurrent ? "rgba(212,175,55,0.15)" : "rgba(0,0,0,0.05)",
-                  border: isCurrent ? "1.5px solid #D4AF37" : "none",
+                  background: isDone ? "#1E40AF" : isCurrent ? "rgba(30,64,175,0.15)" : "rgba(0,0,0,0.05)",
+                  border: isCurrent ? "1.5px solid #1E40AF" : "none",
                 }}
               >
                 {isDone ? (
                   <CheckCircle size={13} style={{ color: "#1a1c1c" }} />
                 ) : isCurrent ? (
-                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#D4AF37" }} />
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#1E40AF" }} />
                 ) : (
                   <div className="w-1.5 h-1.5 rounded-full" style={{ background: "rgba(0,0,0,0.15)" }} />
                 )}
               </div>
               {i < ORDERED_STAGES.length - 1 && (
-                <div className="w-px flex-1 my-0.5" style={{ background: isDone ? "#D4AF37" : "rgba(0,0,0,0.08)", minHeight: "20px" }} />
+                <div className="w-px flex-1 my-0.5" style={{ background: isDone ? "#1E40AF" : "rgba(0,0,0,0.08)", minHeight: "20px" }} />
               )}
             </div>
             <div className="pb-4 pt-0.5 flex-1">
@@ -217,8 +217,8 @@ export default function TrackPage() {
             <motion.div key="form" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
 
               <div className="text-center mb-10">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5" style={{ background: "rgba(212,175,55,0.1)" }}>
-                  <Search size={22} style={{ color: "#D4AF37" }} />
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5" style={{ background: "rgba(30,64,175,0.1)" }}>
+                  <Search size={22} style={{ color: "#1E40AF" }} />
                 </div>
                 <h1
                   className="mb-2"
@@ -260,7 +260,7 @@ export default function TrackPage() {
                         fontFamily: "monospace",
                         letterSpacing: "0.05em",
                       }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                     />
                   </div>
@@ -282,7 +282,7 @@ export default function TrackPage() {
                         fontFamily: "monospace",
                         letterSpacing: "0.1em",
                       }}
-                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#D4AF37")}
+                      onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E40AF")}
                       onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.2)")}
                     />
                     <p className="text-xs" style={{ color: "#aaa" }}>
@@ -294,7 +294,7 @@ export default function TrackPage() {
                     type="submit"
                     disabled={loading}
                     className="w-full py-4 rounded-xl text-xs font-semibold uppercase tracking-widest transition-all"
-                    style={{ background: loading ? "#ccc" : "#1a1c1c", color: loading ? "#fff" : "#D4AF37" }}
+                    style={{ background: loading ? "#ccc" : "#1a1c1c", color: loading ? "#fff" : "#1E40AF" }}
                   >
                     {loading ? "Searching…" : "Track Shipment →"}
                   </button>
@@ -323,11 +323,11 @@ export default function TrackPage() {
               {/* Header card */}
               <div
                 className="p-6 rounded-2xl border mb-5"
-                style={{ background: "#1a1c1c", borderColor: "rgba(212,175,55,0.2)" }}
+                style={{ background: "#1a1c1c", borderColor: "rgba(30,64,175,0.2)" }}
               >
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "rgba(212,175,55,0.6)" }}>
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "rgba(30,64,175,0.6)" }}>
                       {job.jobType} · {job.mode}
                     </p>
                     <p className="font-black text-xl" style={{ color: "#fff", fontFamily: "monospace" }}>{job.jobNo}</p>
@@ -337,15 +337,15 @@ export default function TrackPage() {
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {isAir ? (
-                      <Plane size={16} style={{ color: "#D4AF37" }} />
+                      <Plane size={16} style={{ color: "#1E40AF" }} />
                     ) : (
-                      <Ship size={16} style={{ color: "#D4AF37" }} />
+                      <Ship size={16} style={{ color: "#1E40AF" }} />
                     )}
                     <span
                       className="text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
                       style={{
-                        background: job.status === "ACTIVE" ? "rgba(16,185,129,0.15)" : "rgba(212,175,55,0.12)",
-                        color: job.status === "ACTIVE" ? "#10B981" : "#D4AF37",
+                        background: job.status === "ACTIVE" ? "rgba(16,185,129,0.15)" : "rgba(30,64,175,0.12)",
+                        color: job.status === "ACTIVE" ? "#10B981" : "#1E40AF",
                       }}
                     >
                       {job.status}
@@ -372,11 +372,11 @@ export default function TrackPage() {
               {/* Current stage */}
               <div
                 className="px-5 py-4 rounded-xl border mb-5 flex items-center gap-3"
-                style={{ background: "rgba(212,175,55,0.05)", borderColor: "rgba(212,175,55,0.25)" }}
+                style={{ background: "rgba(30,64,175,0.05)", borderColor: "rgba(30,64,175,0.25)" }}
               >
-                <Clock size={16} style={{ color: "#D4AF37", flexShrink: 0 }} />
+                <Clock size={16} style={{ color: "#1E40AF", flexShrink: 0 }} />
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#D4AF37" }}>Current Stage</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#1E40AF" }}>Current Stage</p>
                   <p className="text-sm font-semibold mt-0.5" style={{ color: "#1a1c1c" }}>
                     {STAGE_LABELS[job.stage] ?? job.stage.replace(/_/g, " ")}
                   </p>
@@ -431,7 +431,7 @@ export default function TrackPage() {
                         style={{ background: "#f9f9f9" }}
                       >
                         <div className="flex items-center gap-2">
-                          <Package size={13} style={{ color: "#D4AF37" }} />
+                          <Package size={13} style={{ color: "#1E40AF" }} />
                           <span className="text-xs font-semibold font-mono" style={{ color: "#1a1c1c" }}>{c.containerNo}</span>
                         </div>
                         <span className="text-xs" style={{ color: "#7e7576" }}>{c.size} {c.type}</span>
@@ -459,19 +459,19 @@ export default function TrackPage() {
                         rel="noopener noreferrer"
                         className="flex items-center justify-between px-3 py-3 rounded-lg border transition-all duration-200"
                         style={{ borderColor: "rgba(0,0,0,0.07)", textDecoration: "none" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#D4AF37"; e.currentTarget.style.background = "rgba(212,175,55,0.04)"; }}
+                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#1E40AF"; e.currentTarget.style.background = "rgba(30,64,175,0.04)"; }}
                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.07)"; e.currentTarget.style.background = "transparent"; }}
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(212,175,55,0.1)" }}>
-                            <FileText size={14} style={{ color: "#D4AF37" }} />
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(30,64,175,0.1)" }}>
+                            <FileText size={14} style={{ color: "#1E40AF" }} />
                           </div>
                           <div>
                             <p className="text-xs font-semibold" style={{ color: "#1a1c1c" }}>{doc.label || doc.type}</p>
                             <p className="text-xs mt-0.5" style={{ color: "#aaa" }}>{doc.type} · {fmt(doc.createdAt)}</p>
                           </div>
                         </div>
-                        <Download size={14} style={{ color: "#D4AF37", flexShrink: 0 }} />
+                        <Download size={14} style={{ color: "#1E40AF", flexShrink: 0 }} />
                       </a>
                     ))}
                   </div>

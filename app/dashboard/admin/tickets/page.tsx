@@ -17,7 +17,7 @@ interface AdminTicket {
 const MOCK_TICKETS: AdminTicket[] = [];
 
 const STATUS_STYLE: Record<TicketStatus, { bg: string; text: string }> = {
-  Open: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37" },
+  Open: { bg: "rgba(30,64,175,0.12)", text: "#1E40AF" },
   "In Progress": { bg: "rgba(59,130,246,0.1)", text: "#2563eb" },
   Resolved: { bg: "rgba(34,197,94,0.1)", text: "#16a34a" },
 };
@@ -88,8 +88,8 @@ export default function AdminTicketsPage() {
               <span
                 className="px-1.5 py-0.5 rounded text-xs font-semibold"
                 style={{
-                  background: active ? "rgba(212,175,55,0.12)" : "rgba(0,0,0,0.04)",
-                  color: active ? "#D4AF37" : "#b0a8a9",
+                  background: active ? "rgba(30,64,175,0.12)" : "rgba(0,0,0,0.04)",
+                  color: active ? "#1E40AF" : "#b0a8a9",
                 }}
               >
                 {counts[value]}
@@ -97,7 +97,7 @@ export default function AdminTicketsPage() {
               {active && (
                 <div
                   className="absolute bottom-0 left-0 right-0 h-0.5 rounded-t"
-                  style={{ background: "#D4AF37" }}
+                  style={{ background: "#1E40AF" }}
                 />
               )}
             </button>
@@ -147,7 +147,7 @@ export default function AdminTicketsPage() {
                         className="transition-colors hover:bg-[#fafafa]"
                         style={{ borderBottom: isReplying ? "none" : "1px solid rgba(0,0,0,0.04)" }}
                       >
-                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#D4AF37" }}>
+                        <td className="px-4 py-3 font-mono font-semibold whitespace-nowrap" style={{ color: "#1E40AF" }}>
                           {ticket.id}
                         </td>
                         <td className="px-4 py-3 font-semibold" style={{ color: "#1a1c1c", maxWidth: 260 }}>
@@ -158,7 +158,7 @@ export default function AdminTicketsPage() {
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <div style={{ color: "#1a1c1c" }}>{ticket.client}</div>
-                          <div className="font-mono text-xs" style={{ color: "#D4AF37" }}>
+                          <div className="font-mono text-xs" style={{ color: "#1E40AF" }}>
                             {ticket.clientId}
                           </div>
                         </td>
@@ -178,8 +178,8 @@ export default function AdminTicketsPage() {
                             onClick={() => handleReply(ticket.id)}
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-80"
                             style={{
-                              background: isReplying ? "#1a1c1c" : "rgba(212,175,55,0.1)",
-                              color: isReplying ? "#D4AF37" : "#D4AF37",
+                              background: isReplying ? "#1a1c1c" : "rgba(30,64,175,0.1)",
+                              color: isReplying ? "#1E40AF" : "#1E40AF",
                             }}
                           >
                             <span className="material-symbols-outlined" style={{ fontSize: 13 }}>
@@ -197,7 +197,7 @@ export default function AdminTicketsPage() {
                           <td colSpan={COLUMNS.length} className="px-4 pb-4 pt-1">
                             <div
                               className="rounded-lg p-4 flex flex-col gap-3"
-                              style={{ background: "rgba(212,175,55,0.04)", border: "1px solid rgba(212,175,55,0.15)" }}
+                              style={{ background: "rgba(30,64,175,0.04)", border: "1px solid rgba(30,64,175,0.15)" }}
                             >
                               <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#7e7576" }}>
                                 Replying to {ticket.id}: {ticket.subject}
@@ -214,7 +214,7 @@ export default function AdminTicketsPage() {
                                   background: "#ffffff",
                                   fontFamily: "Inter, sans-serif",
                                 }}
-                                onFocus={(e) => (e.currentTarget.style.borderColor = "#D4AF37")}
+                                onFocus={(e) => (e.currentTarget.style.borderColor = "#1E40AF")}
                                 onBlur={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
                               />
                               <div className="flex gap-2">
@@ -224,7 +224,7 @@ export default function AdminTicketsPage() {
                                     setReplyText("");
                                   }}
                                   className="flex items-center gap-1.5 px-4 py-2 rounded text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-90"
-                                  style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                                  style={{ background: "#1a1c1c", color: "#1E40AF" }}
                                 >
                                   <span className="material-symbols-outlined" style={{ fontSize: 13 }}>
                                     send

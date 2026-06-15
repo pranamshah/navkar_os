@@ -24,9 +24,9 @@ export default function SuppliersPage() {
         </div>
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] text-white transition-colors"
-          style={{ background: "#0D9488" }}
+          style={{ background: "#1E40AF" }}
           onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#0F766E")}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#0D9488")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#1E40AF")}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 15 }}>add</span>
           Add Supplier
@@ -61,7 +61,7 @@ export default function SuppliersPage() {
                     </div>
                     <button
                       className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[12px] font-semibold text-white"
-                      style={{ background: "#0D9488" }}
+                      style={{ background: "#1E40AF" }}
                     >
                       <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>
                       Add Supplier
@@ -76,12 +76,12 @@ export default function SuppliersPage() {
                 <td className="py-3 px-5" style={{ color: "#6B7280" }}>{s.products}</td>
                 <td className="py-3 px-5" style={{ color: "#374151" }}>{s.paymentTerms}</td>
                 <td className="py-3 px-5">
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: s.activeShipments > 0 ? "#CCFBF1" : "#F3F4F6", color: s.activeShipments > 0 ? "#0D9488" : "#6B7280" }}>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: s.activeShipments > 0 ? "#CCFBF1" : "#F3F4F6", color: s.activeShipments > 0 ? "#1E40AF" : "#6B7280" }}>
                     {s.activeShipments} active
                   </span>
                 </td>
                 <td className="py-3 px-5 text-right">
-                  <button className="text-[11px] font-semibold px-2 py-1 rounded" style={{ color: "#0D9488", background: "#F0FDFA" }}>
+                  <button className="text-[11px] font-semibold px-2 py-1 rounded" style={{ color: "#1E40AF", background: "#F0FDFA" }}>
                     View
                   </button>
                 </td>

@@ -49,9 +49,9 @@ export default function HeroSection() {
               <span
                 className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
                 style={{
-                  background: "rgba(212,175,55,0.1)",
-                  color: "#B8860B",
-                  border: "0.5px solid rgba(212,175,55,0.3)",
+                  background: "rgba(30,64,175,0.1)",
+                  color: "#1565C0",
+                  border: "0.5px solid rgba(30,64,175,0.3)",
                 }}
               >
                 Free Beta — 6 Products, One Login
@@ -74,7 +74,7 @@ export default function HeroSection() {
               <br />
               for Modern
               <br />
-              <span style={{ color: "#D4AF37" }}>Logistics.</span>
+              <span style={{ color: "#1E40AF" }}>Logistics.</span>
             </motion.h1>
 
             <motion.p
@@ -97,9 +97,9 @@ export default function HeroSection() {
               <Link
                 href="/signup"
                 className="inline-flex items-center gap-2 px-8 py-4 text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-                style={{ background: "#1a1c1c", color: "#fff" }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "#D4AF37"; e.currentTarget.style.color = "#1a1c1c"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1c"; e.currentTarget.style.color = "#fff"; }}
+                style={{ background: "#1E40AF", color: "#fff" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#1565C0"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "#1E40AF"; e.currentTarget.style.color = "#fff"; }}
               >
                 Start Free Trial →
               </Link>
@@ -171,14 +171,14 @@ export default function HeroSection() {
               className="absolute inset-0 rounded-full pointer-events-none"
               style={{
                 inset: "-6%",
-                border: "0.5px solid rgba(212,175,55,0.1)",
+                border: "0.5px solid rgba(30,64,175,0.1)",
               }}
             />
             <div
               className="absolute rounded-full pointer-events-none"
               style={{
                 inset: "-3%",
-                border: "0.5px solid rgba(212,175,55,0.18)",
+                border: "0.5px solid rgba(30,64,175,0.18)",
               }}
             />
 
@@ -186,8 +186,8 @@ export default function HeroSection() {
             <div
               className="w-full h-full overflow-hidden rounded-full"
               style={{
-                border: "1px solid rgba(212,175,55,0.28)",
-                boxShadow: "0 0 80px rgba(212,175,55,0.12), 0 30px 80px rgba(0,0,0,0.08)",
+                border: "1px solid rgba(30,64,175,0.28)",
+                boxShadow: "0 0 80px rgba(30,64,175,0.12), 0 30px 80px rgba(0,0,0,0.08)",
               }}
             >
               <video
@@ -218,8 +218,8 @@ export default function HeroSection() {
               width: "82vw",
               maxWidth: 360,
               aspectRatio: "1 / 1",
-              border: "1px solid rgba(212,175,55,0.3)",
-              boxShadow: "0 0 40px rgba(212,175,55,0.1)",
+              border: "1px solid rgba(30,64,175,0.3)",
+              boxShadow: "0 0 40px rgba(30,64,175,0.1)",
             }}
           >
             <video

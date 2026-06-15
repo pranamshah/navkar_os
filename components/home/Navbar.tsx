@@ -92,7 +92,7 @@ export default function Navbar() {
                 onClick={(e) => handleAnchorLink(e, l.href)}
                 className="text-sm transition-colors duration-200"
                 style={{ color: "#444748", textDecoration: "none" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#D4A017")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#1E40AF")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#444748")}
               >
                 {l.label}
@@ -108,11 +108,11 @@ export default function Navbar() {
                 <button
                   onClick={() => setDropdownOpen((v) => !v)}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-200"
-                  style={{ background: "rgba(212,175,55,0.08)", border: "0.5px solid rgba(212,175,55,0.25)" }}
+                  style={{ background: "rgba(30,64,175,0.08)", border: "0.5px solid rgba(30,64,175,0.25)" }}
                 >
                   <div
                     className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
-                    style={{ background: "rgba(212,175,55,0.2)", color: "#D4AF37" }}
+                    style={{ background: "rgba(30,64,175,0.2)", color: "#1E40AF" }}
                   >
                     {(user?.name || user?.email || "U").charAt(0).toUpperCase()}
                   </div>
@@ -149,7 +149,7 @@ export default function Navbar() {
                         onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-4 py-3 text-xs font-semibold uppercase tracking-widest transition-colors duration-150"
                         style={{ color: "#1a1c1c" }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(212,175,55,0.08)")}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(30,64,175,0.08)")}
                         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                       >
                         <LayoutDashboard size={13} />
@@ -184,9 +184,9 @@ export default function Navbar() {
                 <Link
                   href="/signup"
                   className="text-xs font-semibold px-5 py-2 rounded-full uppercase tracking-wider transition-all duration-200"
-                  style={{ background: "#1a1c1d", color: "#fff" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "#D4A017"; e.currentTarget.style.color = "#1a1c1d"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "#1a1c1d"; e.currentTarget.style.color = "#fff"; }}
+                  style={{ background: "#1E40AF", color: "#fff" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#1565C0"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "#1E40AF"; e.currentTarget.style.color = "#fff"; }}
                 >
                   Start Free
                 </Link>
@@ -210,7 +210,7 @@ export default function Navbar() {
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="fixed inset-0 z-50 flex flex-col"
-            style={{ background: "#1a1c1d" }}
+            style={{ background: "#1E40AF" }}
           >
             <div className="flex items-center justify-between px-6 h-20">
               <LogoBrand height={120} onDark />
@@ -236,7 +236,7 @@ export default function Navbar() {
                   <Link
                     href="/dashboard"
                     className="w-full py-4 rounded-2xl font-semibold text-black text-center block"
-                    style={{ background: "#f6be39" }}
+                    style={{ background: "#60A5FA" }}
                     onClick={() => setMobileOpen(false)}
                   >
                     My Dashboard
@@ -251,7 +251,7 @@ export default function Navbar() {
               ) : (
                 <>
                   <Link href="/login" className="w-full py-4 rounded-2xl font-semibold border border-white/20 text-white text-center block" onClick={() => setMobileOpen(false)}>Login</Link>
-                  <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#f6be39" }} onClick={() => setMobileOpen(false)}>Start Free Trial</Link>
+                  <Link href="/signup" className="w-full py-4 rounded-2xl font-semibold text-black text-center block" style={{ background: "#60A5FA" }} onClick={() => setMobileOpen(false)}>Start Free Trial</Link>
                 </>
               )}
             </div>

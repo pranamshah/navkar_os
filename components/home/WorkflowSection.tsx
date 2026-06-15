@@ -15,7 +15,7 @@ export default function WorkflowSection() {
     <section className="px-8 lg:px-16 py-32">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 reveal">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#D4AF37" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#1E40AF" }}>
             Connected Workflow
           </p>
           <h2
@@ -34,7 +34,7 @@ export default function WorkflowSection() {
           <p className="mt-5 max-w-lg mx-auto" style={{ fontSize: "15px", color: "#4c4546", lineHeight: 1.7 }}>
             When your CHA, freight forwarder, CFS, and accounts team all use NavkarOS — data flows automatically. No calls, no re-entry, no gaps.
           </p>
-          <div className="w-16 mx-auto mt-6" style={{ height: "0.5px", background: "#D4AF37" }} />
+          <div className="w-16 mx-auto mt-6" style={{ height: "0.5px", background: "#1E40AF" }} />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
@@ -57,8 +57,8 @@ export default function WorkflowSection() {
                 className="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-xs font-semibold uppercase tracking-widest transition-all duration-300"
                 style={{ border: "0.5px solid #1a1c1c", background: "#f9f9f9", color: "#1a1c1c" }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#D4AF37";
-                  e.currentTarget.style.borderColor = "#D4AF37";
+                  e.currentTarget.style.background = "#1E40AF";
+                  e.currentTarget.style.borderColor = "#1E40AF";
                   e.currentTarget.style.color = "#fff";
                 }}
                 onMouseLeave={(e) => {
@@ -71,7 +71,7 @@ export default function WorkflowSection() {
               </div>
               <span
                 className="text-xs font-semibold uppercase tracking-widest mb-3 px-2.5 py-1 rounded-full"
-                style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}
+                style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}
               >
                 {productBadges[step.step]}
               </span>

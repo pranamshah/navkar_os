@@ -217,7 +217,7 @@ function renderContent(text: string) {
   return text.split("\n").map((line, i, arr) => {
     const parts = line.split(/\*\*(.*?)\*\*/g);
     const rendered = parts.map((p, j) =>
-      j % 2 === 1 ? <strong key={j} style={{ color: "#D4AF37" }}>{p}</strong> : p
+      j % 2 === 1 ? <strong key={j} style={{ color: "#1E40AF" }}>{p}</strong> : p
     );
     return <span key={i}>{rendered}{i < arr.length - 1 && <br />}</span>;
   });
@@ -270,7 +270,7 @@ export default function ChatWidget() {
         {!open && !hasOpened && (
           <motion.div
             className="absolute bottom-0 right-0 w-14 h-14 rounded-full"
-            style={{ background: "rgba(212,175,55,0.25)" }}
+            style={{ background: "rgba(30,64,175,0.25)" }}
             animate={{ scale: [1, 1.6, 1], opacity: [0.6, 0, 0.6] }}
             transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -281,7 +281,7 @@ export default function ChatWidget() {
               initial={{ opacity: 0, x: 10, scale: 0.92 }} animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.92 }} transition={{ delay: 1.8, duration: 0.3 }}
               className="px-3 py-1.5 rounded-xl text-xs font-semibold text-white shadow-md whitespace-nowrap"
-              style={{ background: "#1a1c1c", border: "1px solid rgba(212,175,55,0.2)" }}
+              style={{ background: "#1E40AF", border: "1px solid rgba(30,64,175,0.3)" }}
             >
               Ask NavkarBot ✦
             </motion.div>
@@ -290,13 +290,13 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen(v => !v)}
           className="relative w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform duration-200 hover:scale-105 active:scale-95"
-          style={{ background: open ? "#1a1c1c" : "#D4AF37" }}
+          style={{ background: "#1E40AF" }}
           aria-label="Open NavkarBot" type="button"
         >
           <AnimatePresence mode="wait">
             {open
-              ? <motion.span key="c" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}><Minimize2 className="h-5 w-5 text-[#D4AF37]" /></motion.span>
-              : <motion.span key="o" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}><Bot className="h-6 w-6 text-[#1a1c1c]" /></motion.span>
+              ? <motion.span key="c" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}><Minimize2 className="h-5 w-5 text-white" /></motion.span>
+              : <motion.span key="o" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}><Bot className="h-6 w-6 text-white" /></motion.span>
             }
           </AnimatePresence>
         </button>
@@ -309,22 +309,22 @@ export default function ChatWidget() {
             initial={{ opacity: 0, y: 24, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="fixed bottom-24 right-6 z-50 flex flex-col rounded-2xl shadow-2xl overflow-hidden"
-            style={{ width: "min(380px, calc(100vw - 2rem))", height: "560px", background: "#fff", border: "1.5px solid rgba(212,175,55,0.25)" }}
+            style={{ width: "min(380px, calc(100vw - 2rem))", height: "560px", background: "#fff", border: "1.5px solid rgba(30,64,175,0.25)" }}
           >
             {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3 flex-shrink-0" style={{ background: "#1a1c1c", borderBottom: "1px solid rgba(212,175,55,0.12)" }}>
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)" }}>
-                <Bot className="h-4 w-4" style={{ color: "#D4AF37" }} />
+            <div className="flex items-center gap-3 px-4 py-3 flex-shrink-0" style={{ background: "#1E40AF", borderBottom: "1px solid rgba(30,64,175,0.3)" }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(30,64,175,0.15)", border: "1px solid rgba(30,64,175,0.3)" }}>
+                <Bot className="h-4 w-4" style={{ color: "#1E40AF" }} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white text-sm font-bold leading-tight">NavkarBot</p>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>Always online · Instant answers</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.8)" }}>Always online · Instant answers</p>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-white/10">
-                <X className="h-4 w-4" style={{ color: "rgba(255,255,255,0.45)" }} />
+                <X className="h-4 w-4 text-white/70" />
               </button>
             </div>
 
@@ -335,7 +335,7 @@ export default function ChatWidget() {
                   <div className="flex gap-2.5 items-start">
                     <BotAvatar />
                     <Bubble role="assistant">
-                      👋 Hi! I&apos;m <strong style={{ color: "#D4AF37" }}>NavkarBot</strong>. I can answer anything about NavkarOS — products, pricing, features, and more. What would you like to know?
+                      👋 Hi! I&apos;m <strong>NavkarBot</strong>. I can answer anything about NavkarOS — products, pricing, features, and more. What would you like to know?
                     </Bubble>
                   </div>
                   <div className="flex flex-col gap-1.5 pl-9">
@@ -357,7 +357,7 @@ export default function ChatWidget() {
                         <Link
                           href="/dashboard/client/tickets"
                           className="flex items-center gap-2 text-xs px-3 py-2 rounded-xl border font-semibold transition-all"
-                          style={{ background: "rgba(212,175,55,0.08)", borderColor: "rgba(212,175,55,0.3)", color: "#92660a" }}
+                          style={{ background: "rgba(30,64,175,0.08)", borderColor: "rgba(30,64,175,0.3)", color: "#1E40AF" }}
                         >
                           <HeadphonesIcon className="h-3.5 w-3.5" />
                           Raise a Support Ticket →
@@ -378,18 +378,18 @@ export default function ChatWidget() {
             </div>
 
             {/* Input */}
-            <form onSubmit={e => { e.preventDefault(); sendMessage(input); }} className="flex items-center gap-2 px-3 py-3 flex-shrink-0 border-t" style={{ background: "#fff", borderColor: "rgba(212,175,55,0.12)" }}>
+            <form onSubmit={e => { e.preventDefault(); sendMessage(input); }} className="flex items-center gap-2 px-3 py-3 flex-shrink-0 border-t" style={{ background: "#fff", borderColor: "rgba(30,64,175,0.12)" }}>
               <input
                 ref={inputRef} value={input} onChange={e => setInput(e.target.value)}
                 placeholder="Ask anything about NavkarOS..."
                 disabled={thinking}
                 className="flex-1 text-sm px-3.5 py-2.5 rounded-xl outline-none disabled:opacity-60"
                 style={{ background: "#f9f9f9", border: "1.5px solid #e5e7eb", color: "#1a1c1c" }}
-                onFocus={e => (e.target.style.borderColor = "rgba(212,175,55,0.5)")}
+                onFocus={e => (e.target.style.borderColor = "rgba(30,64,175,0.5)")}
                 onBlur={e => (e.target.style.borderColor = "#e5e7eb")}
               />
-              <button type="submit" disabled={thinking || !input.trim()} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 disabled:opacity-40" style={{ background: "#D4AF37" }}>
-                <Send className="h-4 w-4 text-[#1a1c1c]" />
+              <button type="submit" disabled={thinking || !input.trim()} className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 disabled:opacity-40" style={{ background: "#1E40AF" }}>
+                <Send className="h-4 w-4 text-white" />
               </button>
             </form>
           </motion.div>
@@ -401,8 +401,8 @@ export default function ChatWidget() {
 
 function BotAvatar() {
   return (
-    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "#1a1c1c" }}>
-      <Bot className="h-3.5 w-3.5" style={{ color: "#D4AF37" }} />
+    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "#1E40AF" }}>
+      <Bot className="h-3.5 w-3.5 text-white" />
     </div>
   );
 }
@@ -412,8 +412,8 @@ function Bubble({ role, children }: { role: "user" | "assistant"; children: Reac
   return (
     <div className="text-sm leading-relaxed px-3.5 py-2.5" style={{
       maxWidth: "85%", whiteSpace: "pre-wrap", wordBreak: "break-word",
-      background: isUser ? "#D4AF37" : "#1a1c1c",
-      color: isUser ? "#1a1c1c" : "rgba(255,255,255,0.88)",
+      background: isUser ? "#1E40AF" : "#EFF6FF",
+      color: isUser ? "#ffffff" : "#1a1c1c",
       borderRadius: isUser ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
       fontWeight: isUser ? 600 : 400,
     }}>
@@ -427,7 +427,7 @@ function Chip({ text, onClick, disabled }: { text: string; onClick: () => void; 
     <button onClick={onClick} disabled={disabled} type="button"
       className="text-left text-xs px-3 py-2 rounded-xl border font-medium disabled:opacity-50 transition-all duration-150"
       style={{ background: "#fff", borderColor: "#e5e7eb", color: "#4b5563" }}
-      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#D4AF37"; (e.currentTarget as HTMLElement).style.color = "#1a1c1c"; }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#1E40AF"; (e.currentTarget as HTMLElement).style.color = "#1a1c1c"; }}
       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e5e7eb"; (e.currentTarget as HTMLElement).style.color = "#4b5563"; }}
     >
       {text}
@@ -439,7 +439,7 @@ function TypingDots() {
   return (
     <span className="flex items-center gap-1">
       {[0, 1, 2].map(i => (
-        <motion.span key={i} className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: "#D4AF37" }}
+        <motion.span key={i} className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: "#1E40AF" }}
           animate={{ opacity: [0.3, 1, 0.3], y: [0, -3, 0] }} transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.18 }} />
       ))}
     </span>

@@ -6,10 +6,10 @@ import Link from "next/link";
 const jobs: { no: string; client: string; route: string; mode: string; type: string; stage: string; eta: string; handler: string }[] = [];
 
 const stageColors: Record<string, { bg: string; fg: string }> = {
-  "At Customs": { bg: "#FFFBEB", fg: "#D97706" },
+  "At Customs": { bg: "#FFFBEB", fg: "#1E40AF" },
   "Vessel Sailed": { bg: "#E3F2FD", fg: "#1565C0" },
   "Delivered": { bg: "#ECFDF5", fg: "#059669" },
-  "CFS Destuffed": { bg: "#F5F3FF", fg: "#7C3AED" },
+  "CFS Destuffed": { bg: "#F5F3FF", fg: "#1E40AF" },
   "In Transit": { bg: "#E3F2FD", fg: "#1565C0" },
   "Booking Confirmed": { bg: "#F3F4F6", fg: "#374151" },
   "Arrived Port": { bg: "#FEF3C7", fg: "#92400E" },
@@ -90,7 +90,7 @@ export default function JobsList() {
                 <td className="py-3 px-3 font-mono text-[11px]" style={{ color: "#1565C0" }}>{j.no}</td>
                 <td className="py-3 px-3 font-medium" style={{ color: "#111827" }}>{j.client}</td>
                 <td className="py-3 px-3" style={{ color: "#6B7280" }}>{j.route}</td>
-                <td className="py-3 px-3"><span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{ background: j.type === "IMPORT" ? "#E3F2FD" : "#F5F3FF", color: j.type === "IMPORT" ? "#1565C0" : "#7C3AED" }}>{j.type}</span></td>
+                <td className="py-3 px-3"><span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{ background: j.type === "IMPORT" ? "#E3F2FD" : "#F5F3FF", color: j.type === "IMPORT" ? "#1565C0" : "#1E40AF" }}>{j.type}</span></td>
                 <td className="py-3 px-3"><span className="px-1.5 py-0.5 rounded text-[10px] font-bold" style={{ background: j.mode === "SEA" ? "#DBEAFE" : "#FEF3C7", color: j.mode === "SEA" ? "#1E40AF" : "#92400E" }}>{j.mode}</span></td>
                 <td className="py-3 px-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: stageColors[j.stage]?.bg, color: stageColors[j.stage]?.fg }}>{j.stage}</span></td>
                 <td className="py-3 px-3 text-[11px]" style={{ color: "#6B7280" }}>{j.eta}</td>

@@ -39,7 +39,7 @@ const TABS: { label: string; value: StatusFilter; icon: string }[] = [
 
 const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }> = {
   ACTIVE: { bg: "rgba(34,197,94,0.1)", text: "#16a34a", label: "Active" },
-  PENDING_VERIFICATION: { bg: "rgba(212,175,55,0.12)", text: "#D4AF37", label: "Pending" },
+  PENDING_VERIFICATION: { bg: "rgba(30,64,175,0.12)", text: "#1E40AF", label: "Pending" },
   REJECTED: { bg: "rgba(239,68,68,0.1)", text: "#dc2626", label: "Rejected" },
   SUSPENDED: { bg: "rgba(156,163,175,0.15)", text: "#6b7280", label: "Suspended" },
 };
@@ -78,14 +78,14 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-          <span className="text-sm font-semibold" style={{ color: "#D4AF37" }}>{label}</span>
+          <span className="text-sm font-semibold" style={{ color: "#1E40AF" }}>{label}</span>
           <div className="flex items-center gap-3">
             <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs px-3 py-1.5 rounded font-semibold"
-              style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}
+              style={{ background: "rgba(30,64,175,0.15)", color: "#1E40AF" }}
             >
               Open in new tab ↗
             </a>
@@ -98,7 +98,7 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
         <div className="flex-1 overflow-auto flex items-center justify-center p-4">
           {!blobUrl ? (
             <div className="flex flex-col items-center gap-3">
-              <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(255,255,255,0.1)", borderTopColor: "#D4AF37" }} />
+              <div className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "rgba(255,255,255,0.1)", borderTopColor: "#1E40AF" }} />
               <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</p>
             </div>
           ) : isPdf ? (
@@ -107,12 +107,12 @@ function DocViewer({ label, url, onClose }: { label: string; url: string; onClos
               <iframe src={blobUrl} className="w-full h-full rounded" style={{ border: "none", minHeight: "600px", background: "#fff" }} title={label} />
             ) : (
               <div className="flex flex-col items-center gap-5 text-center">
-                <span className="material-symbols-outlined" style={{ fontSize: 48, color: "rgba(212,175,55,0.5)" }}>picture_as_pdf</span>
-                <p className="text-sm font-semibold" style={{ color: "#D4AF37" }}>{label}</p>
+                <span className="material-symbols-outlined" style={{ fontSize: 48, color: "rgba(30,64,175,0.5)" }}>picture_as_pdf</span>
+                <p className="text-sm font-semibold" style={{ color: "#1E40AF" }}>{label}</p>
                 <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>PDF preview unavailable in this browser</p>
                 <a href={url} target="_blank" rel="noopener noreferrer"
                   className="px-5 py-2.5 rounded text-xs font-semibold uppercase tracking-widest"
-                  style={{ background: "#D4AF37", color: "#1a1c1c" }}>
+                  style={{ background: "#1E40AF", color: "#1a1c1c" }}>
                   Open PDF ↗
                 </a>
               </div>
@@ -139,10 +139,10 @@ function DocLink({ label, url }: { label: string; url?: string }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="w-full flex items-center gap-2 py-2 px-3 rounded border transition-colors hover:border-[#D4AF37]"
+        className="w-full flex items-center gap-2 py-2 px-3 rounded border transition-colors hover:border-[#1E40AF]"
         style={{ borderColor: "rgba(0,0,0,0.08)", background: "#f9f9f9" }}
       >
-        <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#D4AF37" }}>description</span>
+        <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#1E40AF" }}>description</span>
         <span className="text-xs font-semibold" style={{ color: "#1a1c1c" }}>{label}</span>
         <span className="text-xs ml-auto" style={{ color: "#7e7576" }}>View →</span>
       </button>
@@ -267,7 +267,7 @@ export default function VerificationsPage() {
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-widest transition-all duration-200"
               style={{
                 background: active ? "#1a1c1c" : "transparent",
-                color: active ? "#D4AF37" : "#7e7576",
+                color: active ? "#1E40AF" : "#7e7576",
               }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 13 }}>{icon}</span>
@@ -292,7 +292,7 @@ export default function VerificationsPage() {
           <div className="flex items-center justify-center py-16">
             <div
               className="w-7 h-7 rounded-full border-2 border-t-transparent animate-spin"
-              style={{ borderColor: "#D4AF37", borderTopColor: "transparent" }}
+              style={{ borderColor: "#1E40AF", borderTopColor: "transparent" }}
             />
           </div>
         ) : users.length === 0 ? (
@@ -328,7 +328,7 @@ export default function VerificationsPage() {
                       style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}
                       onClick={() => openDrawer(u)}
                     >
-                      <td className="px-4 py-3 font-mono font-semibold" style={{ color: "#D4AF37" }}>
+                      <td className="px-4 py-3 font-mono font-semibold" style={{ color: "#1E40AF" }}>
                         {u.clientId}
                       </td>
                       <td className="px-4 py-3">
@@ -360,7 +360,7 @@ export default function VerificationsPage() {
                         <button
                           onClick={(e) => { e.stopPropagation(); openDrawer(u); }}
                           className="px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-widest transition-all hover:opacity-80"
-                          style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                          style={{ background: "#1a1c1c", color: "#1E40AF" }}
                         >
                           Review
                         </button>
@@ -425,7 +425,7 @@ export default function VerificationsPage() {
               style={{ borderColor: "rgba(0,0,0,0.07)", background: "#1a1c1c" }}
             >
               <div>
-                <p className="font-mono text-sm font-semibold" style={{ color: "#D4AF37" }}>
+                <p className="font-mono text-sm font-semibold" style={{ color: "#1E40AF" }}>
                   {selected.clientId}
                 </p>
                 <p className="text-base font-black" style={{ color: "#ffffff" }}>
@@ -438,7 +438,7 @@ export default function VerificationsPage() {
                   return (
                     <span
                       className="px-2 py-1 rounded text-xs font-semibold uppercase tracking-widest"
-                      style={{ background: "rgba(212,175,55,0.15)", color: s.text }}
+                      style={{ background: "rgba(30,64,175,0.15)", color: s.text }}
                     >
                       {s.label}
                     </span>
@@ -535,7 +535,7 @@ export default function VerificationsPage() {
                       <button
                         onClick={() => setAction("request_docs")}
                         className="flex items-center gap-2 w-full px-4 py-3 rounded-lg border text-sm font-semibold transition-all hover:opacity-90"
-                        style={{ background: "rgba(212,175,55,0.08)", borderColor: "rgba(212,175,55,0.25)", color: "#D4AF37" }}
+                        style={{ background: "rgba(30,64,175,0.08)", borderColor: "rgba(30,64,175,0.25)", color: "#1E40AF" }}
                       >
                         <span className="material-symbols-outlined" style={{ fontSize: 16 }}>description</span>
                         Request Documents
@@ -553,8 +553,8 @@ export default function VerificationsPage() {
                     <div
                       className="p-4 rounded-lg border"
                       style={{
-                        borderColor: action === "approve" ? "rgba(34,197,94,0.2)" : action === "reject" ? "rgba(239,68,68,0.2)" : "rgba(212,175,55,0.25)",
-                        background: action === "approve" ? "rgba(34,197,94,0.04)" : action === "reject" ? "rgba(239,68,68,0.04)" : "rgba(212,175,55,0.04)",
+                        borderColor: action === "approve" ? "rgba(34,197,94,0.2)" : action === "reject" ? "rgba(239,68,68,0.2)" : "rgba(30,64,175,0.25)",
+                        background: action === "approve" ? "rgba(34,197,94,0.04)" : action === "reject" ? "rgba(239,68,68,0.04)" : "rgba(30,64,175,0.04)",
                       }}
                     >
                       <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#7e7576" }}>
@@ -585,7 +585,7 @@ export default function VerificationsPage() {
                           placeholder="List the documents needed, e.g. Clear copy of GST certificate, PAN copy..."
                           rows={3}
                           className="w-full px-3 py-2 rounded border text-sm mb-3 resize-none outline-none"
-                          style={{ borderColor: "rgba(212,175,55,0.25)", background: "#ffffff", color: "#1a1c1c" }}
+                          style={{ borderColor: "rgba(30,64,175,0.25)", background: "#ffffff", color: "#1a1c1c" }}
                         />
                       )}
 
@@ -600,7 +600,7 @@ export default function VerificationsPage() {
                           onClick={handleAction}
                           disabled={actionLoading || (action === "reject" && !reason.trim()) || (action === "request_docs" && !docsNeeded.trim())}
                           className="flex-1 px-4 py-2.5 rounded text-xs font-semibold uppercase tracking-widest transition-all disabled:opacity-40"
-                          style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                          style={{ background: "#1a1c1c", color: "#1E40AF" }}
                         >
                           {actionLoading ? "Processing..." : "Confirm"}
                         </button>

@@ -25,7 +25,7 @@ const expiringCount = containers.filter(
 
 const statusColors: Record<ContainerRow["status"], { color: string; bg: string }> = {
   "Free Period": { color: "#059669", bg: "#ECFDF5" },
-  "Slab 1": { color: "#D97706", bg: "#FFFBEB" },
+  "Slab 1": { color: "#1E40AF", bg: "#FFFBEB" },
   "Slab 2": { color: "#EA580C", bg: "#FFF7ED" },
   "Slab 3+": { color: "#DC2626", bg: "#FEF2F2" },
 };
@@ -64,7 +64,7 @@ export default function StoragePage() {
         >
           <span
             className="material-symbols-outlined"
-            style={{ fontSize: 18, color: "#D97706", fontVariationSettings: "'FILL' 1" }}
+            style={{ fontSize: 18, color: "#1E40AF", fontVariationSettings: "'FILL' 1" }}
           >
             timer
           </span>
@@ -82,9 +82,9 @@ export default function StoragePage() {
             onClick={() => setActiveTab(tab)}
             className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
             style={{
-              background: activeTab === tab ? "#D97706" : "#fff",
+              background: activeTab === tab ? "#1E40AF" : "#fff",
               color: activeTab === tab ? "#fff" : "#6B7280",
-              borderColor: activeTab === tab ? "#D97706" : "#E5E7EB",
+              borderColor: activeTab === tab ? "#1E40AF" : "#E5E7EB",
             }}
           >
             {tab}
@@ -148,7 +148,7 @@ export default function StoragePage() {
                     key={c.containerNo}
                     style={{ borderBottom: "1px solid #F3F4F6" }}
                   >
-                    <td className="py-3 px-3 font-mono font-semibold" style={{ color: "#D97706" }}>
+                    <td className="py-3 px-3 font-mono font-semibold" style={{ color: "#1E40AF" }}>
                       {c.containerNo}
                     </td>
                     <td className="py-3 px-3 font-mono text-[11px]" style={{ color: "#6B7280" }}>
@@ -167,7 +167,7 @@ export default function StoragePage() {
                           c.daysSinceGateIn > c.freeDays
                             ? "#DC2626"
                             : c.freeDays - c.daysSinceGateIn <= 3
-                            ? "#D97706"
+                            ? "#1E40AF"
                             : "#059669",
                       }}
                     >

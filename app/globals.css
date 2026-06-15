@@ -4,7 +4,7 @@
   --color-surface: #f9f9f9;
   --color-white: #ffffff;
   --color-black: #1a1c1c;
-  --color-gold: #D4AF37;
+  --color-blue: #1E40AF;
   --color-grey: #4c4546;
   --color-border: rgba(0,0,0,0.08);
 }
@@ -17,9 +17,9 @@ body {
   /* Warm white + subtle gold-tinted radial highlights — zero JS, zero GPU */
   background: #fefefe;
   background-image:
-    radial-gradient(ellipse at 12% 35%, rgba(212,175,55,0.07) 0%, transparent 52%),
-    radial-gradient(ellipse at 88% 15%, rgba(212,175,55,0.05) 0%, transparent 44%),
-    radial-gradient(ellipse at 55% 88%, rgba(212,175,55,0.06) 0%, transparent 48%);
+    radial-gradient(ellipse at 12% 35%, rgba(30,64,175,0.07) 0%, transparent 52%),
+    radial-gradient(ellipse at 88% 15%, rgba(30,64,175,0.05) 0%, transparent 44%),
+    radial-gradient(ellipse at 55% 88%, rgba(30,64,175,0.06) 0%, transparent 48%);
   color: #1a1c1c;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -82,11 +82,11 @@ body {
   --white: #ffffff;
   --black: #000000;
   --transparent: transparent;
-  --blue-500: rgb(212,175,55);
-  --indigo-300: rgb(180,140,40);
-  --blue-300: rgb(240,200,80);
-  --violet-200: rgb(255,220,100);
-  --blue-400: rgb(200,160,50);
+  --blue-500: rgb(30,64,175);
+  --indigo-300: rgb(55,96,210);
+  --blue-300: rgb(96,130,230);
+  --violet-200: rgb(130,165,245);
+  --blue-400: rgb(45,80,195);
 }
 
 @media (prefers-reduced-motion: reduce) {

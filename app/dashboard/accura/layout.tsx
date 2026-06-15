@@ -213,16 +213,16 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
       {/* Sidebar */}
       <aside
         className="flex flex-col h-full overflow-y-auto flex-shrink-0 w-56"
-        style={{ background: "#0A1628", minWidth: 224 }}
+        style={{ background: "#FFFFFF", borderRight: "1px solid #E2E8F0", minWidth: 224 }}
       >
         {/* Logo */}
-        <div className="px-4 py-3 border-b border-white/10">
-          <LogoBrand height={120} onDark href="/dashboard/client" />
+        <div className="px-4 py-3 border-b border-slate-100">
+          <LogoBrand height={120} href="/dashboard/client" />
           <div className="flex items-center gap-1.5 mt-2">
             <span className="material-symbols-outlined text-[#0E7490]" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>
               account_balance
             </span>
-            <span className="text-white/60 text-xs font-semibold tracking-wide">Accura</span>
+            <span className="text-xs font-semibold tracking-wide" style={{ color: "#64748B" }}>Accura</span>
           </div>
         </div>
 
@@ -234,10 +234,10 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
                 onClick={() => toggleSection(section.title)}
                 className="w-full flex items-center justify-between px-2 py-1 mb-0.5"
               >
-                <span className="text-[10px] font-semibold tracking-widest text-white/30">
+                <span className="text-[10px] font-semibold tracking-widest" style={{ color: "#94A3B8" }}>
                   {section.title}
                 </span>
-                <span className="material-symbols-outlined text-white/20" style={{ fontSize: 14 }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#CBD5E1" }}>
                   {collapsed[section.title] ? "expand_more" : "expand_less"}
                 </span>
               </button>
@@ -257,19 +257,19 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
                         href={item.href}
                         className="flex items-center gap-2 px-2 py-1.5 rounded-md mb-0.5 group transition-all"
                         style={{
-                          background: isActive(item.href) ? "#0E7490" : "transparent",
-                          color: isActive(item.href) ? "#fff" : "rgba(255,255,255,0.6)",
+                          background: isActive(item.href) ? "#1E40AF" : "transparent",
+                          color: isActive(item.href) ? "#fff" : "#64748B",
                         }}
                         onMouseEnter={(e) => {
                           if (!isActive(item.href)) {
-                            (e.currentTarget as HTMLElement).style.background = "rgba(14,116,144,0.15)";
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.9)";
+                            (e.currentTarget as HTMLElement).style.background = "rgba(30,64,175,0.08)";
+                            (e.currentTarget as HTMLElement).style.color = "#1E40AF";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!isActive(item.href)) {
                             (e.currentTarget as HTMLElement).style.background = "transparent";
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
+                            (e.currentTarget as HTMLElement).style.color = "#64748B";
                           }
                         }}
                       >
@@ -284,8 +284,8 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
                           <span
                             className="text-[9px] font-mono px-1 py-0.5 rounded"
                             style={{
-                              background: isActive(item.href) ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)",
-                              color: isActive(item.href) ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)",
+                              background: isActive(item.href) ? "rgba(255,255,255,0.2)" : "rgba(14,116,144,0.08)",
+                              color: isActive(item.href) ? "rgba(255,255,255,0.9)" : "#64748B",
                             }}
                           >
                             {item.shortcut}
@@ -301,16 +301,16 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
         </nav>
 
         {/* Bottom company info */}
-        <div className="px-4 py-3 border-t border-white/10">
-          <div className="text-[10px] text-white/30 leading-relaxed mb-3">
-            <div className="font-medium text-white/50">Navkar Freight Co.</div>
+        <div className="px-4 py-3 border-t border-slate-100">
+          <div className="text-[10px] leading-relaxed mb-3" style={{ color: "#94A3B8" }}>
+            <div className="font-medium" style={{ color: "#64748B" }}>Navkar Freight Co.</div>
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="flex items-center gap-2 w-full px-3 py-2 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-            style={{ color: "rgba(255,255,255,0.35)" }}
+            style={{ color: "#94A3B8" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#EF4444")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#94A3B8")}
           >
             <LogOut size={13} strokeWidth={1.8} />
             Sign Out
@@ -318,16 +318,16 @@ export default function AccuraLayout({ children }: { children: React.ReactNode }
         </div>
 
         {/* Financial Year selector */}
-        <div className="px-4 py-3 border-t border-white/10">
-          <div className="text-[10px] text-white/30 mb-1">Financial Year</div>
+        <div className="px-4 py-3 border-t border-slate-100">
+          <div className="text-[10px] mb-1" style={{ color: "#94A3B8" }}>Financial Year</div>
           <select
             value={selectedFY}
             onChange={(e) => setSelectedFY(e.target.value)}
             className="w-full rounded text-[11px] px-2 py-1 outline-none"
-            style={{ background: "rgba(255,255,255,0.08)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+            style={{ background: "#F8FAFC", color: "#374151", border: "1px solid #E2E8F0" }}
           >
             {getFYOptions().map(fy => (
-              <option key={fy} value={fy} style={{ background: "#0A1628" }}>FY {fy}</option>
+              <option key={fy} value={fy}>FY {fy}</option>
             ))}
           </select>
         </div>

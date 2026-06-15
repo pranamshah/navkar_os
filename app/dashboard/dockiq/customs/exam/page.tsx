@@ -20,7 +20,7 @@ const containers: ExamRow[] = [];
 
 const channelStyle: Record<ExamRow["channel"], { color: string; bg: string; label: string }> = {
   RMS: { color: "#059669", bg: "#ECFDF5", label: "RMS" },
-  Yellow: { color: "#D97706", bg: "#FFFBEB", label: "Yellow" },
+  Yellow: { color: "#1E40AF", bg: "#FFFBEB", label: "Yellow" },
   Red: { color: "#DC2626", bg: "#FEF2F2", label: "Red" },
 };
 
@@ -51,7 +51,7 @@ export default function ExamQueuePage() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-sm font-medium shadow-lg"
-          style={{ background: "#D97706", color: "#fff", maxWidth: 360 }}
+          style={{ background: "#1E40AF", color: "#fff", maxWidth: 360 }}
         >
           {toast}
         </motion.div>
@@ -79,9 +79,9 @@ export default function ExamQueuePage() {
             onClick={() => setActiveFilter(tab)}
             className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
             style={{
-              background: activeFilter === tab ? "#D97706" : "#fff",
+              background: activeFilter === tab ? "#1E40AF" : "#fff",
               color: activeFilter === tab ? "#fff" : "#6B7280",
-              borderColor: activeFilter === tab ? "#D97706" : "#E5E7EB",
+              borderColor: activeFilter === tab ? "#1E40AF" : "#E5E7EB",
             }}
           >
             {tab}
@@ -134,7 +134,7 @@ export default function ExamQueuePage() {
                 const ch = channelStyle[c.channel];
                 return (
                   <tr key={c.containerNo} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                    <td className="py-3 px-3 font-mono font-semibold" style={{ color: "#D97706" }}>
+                    <td className="py-3 px-3 font-mono font-semibold" style={{ color: "#1E40AF" }}>
                       {c.containerNo}
                     </td>
                     <td className="py-3 px-3 font-mono text-[11px]" style={{ color: "#6B7280" }}>

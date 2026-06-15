@@ -33,7 +33,7 @@ export default function StatsSection() {
       <div className="max-w-5xl mx-auto">
         <p
           className="text-center text-xs font-semibold uppercase tracking-widest mb-12"
-          style={{ color: "rgba(246,190,57,0.7)" }}
+          style={{ color: "rgba(30,64,175,0.7)" }}
         >
           What NavkarOS Delivers
         </p>
@@ -49,7 +49,7 @@ export default function StatsSection() {
             >
               <p
                 className="font-black text-4xl lg:text-5xl mb-1"
-                style={{ color: "#f6be39", letterSpacing: "-0.03em" }}
+                style={{ color: "#60A5FA", letterSpacing: "-0.03em" }}
               >
                 <CountUp value={s.value} suffix={s.suffix} />
               </p>

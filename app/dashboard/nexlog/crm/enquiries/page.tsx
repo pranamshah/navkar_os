@@ -6,7 +6,7 @@ const enquiries: { no: string; client: string; type: string; route: string; cbm:
 
 const statusColors: Record<string, { bg: string; fg: string }> = {
   Open: { bg: "#F3F4F6", fg: "#374151" },
-  Quoted: { bg: "#FFFBEB", fg: "#D97706" },
+  Quoted: { bg: "#FFFBEB", fg: "#1E40AF" },
   Won: { bg: "#ECFDF5", fg: "#059669" },
   Lost: { bg: "#FEF2F2", fg: "#DC2626" },
 };

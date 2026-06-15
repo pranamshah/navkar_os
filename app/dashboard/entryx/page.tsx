@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const ACCENT = "#15803D";
+const ACCENT = "#1E40AF";
 
 const kpis = [
-  { label: "Active Jobs", value: "0", icon: "work", color: "#15803D", bg: "#DCFCE7" },
-  { label: "Pending BE Filing", value: "0", icon: "pending_actions", color: "#D97706", bg: "#FFFBEB" },
-  { label: "OOC Granted Today", value: "0", icon: "check_circle", color: "#15803D", bg: "#DCFCE7" },
+  { label: "Active Jobs", value: "0", icon: "work", color: "#1E40AF", bg: "#DCFCE7" },
+  { label: "Pending BE Filing", value: "0", icon: "pending_actions", color: "#1E40AF", bg: "#FFFBEB" },
+  { label: "OOC Granted Today", value: "0", icon: "check_circle", color: "#1E40AF", bg: "#DCFCE7" },
   { label: "Duty Collected", value: "₹0", icon: "account_balance", color: "#1565C0", bg: "#E3F2FD" },
-  { label: "Professional Fee This Month", value: "₹0", icon: "payments", color: "#15803D", bg: "#DCFCE7" },
+  { label: "Professional Fee This Month", value: "₹0", icon: "payments", color: "#1E40AF", bg: "#DCFCE7" },
   { label: "Outstanding", value: "₹0", icon: "pending", color: "#DC2626", bg: "#FEF2F2" },
 ];
 
@@ -136,7 +136,7 @@ export default function EntryXDashboard() {
                         className="px-1.5 py-0.5 rounded text-[10px] font-bold"
                         style={{
                           background: j.type === "IMPORT" ? "#DCFCE7" : "#F5F3FF",
-                          color: j.type === "IMPORT" ? "#15803D" : "#7C3AED",
+                          color: j.type === "IMPORT" ? "#1E40AF" : "#1E40AF",
                         }}
                       >
                         {j.type}

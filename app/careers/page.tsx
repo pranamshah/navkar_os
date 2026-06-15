@@ -14,7 +14,7 @@ export default function CareersPage() {
       <main style={{ background: "#f9f9f9" }}>
         <section className="pt-40 pb-24 px-8">
           <div className="max-w-4xl mx-auto">
-            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-8" style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}>
+            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-widest mb-8" style={{ background: "rgba(30,64,175,0.1)", color: "#1E40AF" }}>
               Careers
             </span>
             <h1
@@ -30,14 +30,14 @@ export default function CareersPage() {
             >
               Build the future of
               <br />
-              <span style={{ color: "#D4AF37" }}>Indian logistics.</span>
+              <span style={{ color: "#1E40AF" }}>Indian logistics.</span>
             </h1>
             <p className="max-w-2xl text-lg mb-16" style={{ color: "#4c4546", lineHeight: 1.75, fontWeight: 300 }}>
               We&apos;re a small team in Chennai solving real problems for hundreds of freight businesses across India. We move fast, care deeply about the product, and believe the best work comes from people who understand the industry they&apos;re building for.
             </p>
 
             {/* No open roles */}
-            <div className="p-10 text-center" style={{ background: "#fff", border: "0.5px dashed rgba(212,175,55,0.4)" }}>
+            <div className="p-10 text-center" style={{ background: "#fff", border: "0.5px dashed rgba(30,64,175,0.4)" }}>
               <p className="text-sm font-semibold mb-3" style={{ color: "#1a1c1c" }}>No open roles right now</p>
               <p className="text-sm mb-6" style={{ color: "#7e7576", lineHeight: 1.7 }}>
                 We&apos;re not actively hiring at the moment, but we&apos;re always interested in talking to exceptional people who are passionate about logistics and technology.
@@ -45,7 +45,7 @@ export default function CareersPage() {
               <a
                 href="mailto:navkaros.co@gmail.com"
                 className="inline-block px-8 py-3 text-xs font-semibold uppercase tracking-widest"
-                style={{ background: "#1a1c1c", color: "#D4AF37" }}
+                style={{ background: "#1a1c1c", color: "#1E40AF" }}
               >
                 Send a Speculative Application →
               </a>
@@ -65,7 +65,7 @@ export default function CareersPage() {
                   { title: "Remote-friendly", body: "Hybrid setup — come into the office when it matters, work remotely when it doesn't." },
                 ].map((p) => (
                   <div key={p.title}>
-                    <div className="w-6 h-0.5 mb-4" style={{ background: "#D4AF37" }} />
+                    <div className="w-6 h-0.5 mb-4" style={{ background: "#1E40AF" }} />
                     <p className="text-sm font-semibold mb-2" style={{ color: "#1a1c1c" }}>{p.title}</p>
                     <p className="text-sm" style={{ color: "#7e7576", lineHeight: 1.7 }}>{p.body}</p>
                   </div>

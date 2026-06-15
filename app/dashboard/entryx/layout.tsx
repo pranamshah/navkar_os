@@ -8,8 +8,8 @@ import { useSession, signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
 import LogoBrand from "@/components/ui/LogoBrand";
 
-const ACCENT = "#15803D";
-const ACCENT_HOVER = "rgba(21,128,61,0.15)";
+const ACCENT = "#1E40AF";
+const ACCENT_HOVER = "rgba(30,64,175,0.08)";
 
 const navSections = [
   {
@@ -145,10 +145,10 @@ export default function EntryXLayout({ children }: { children: React.ReactNode }
     <div className="flex h-screen overflow-hidden" style={{ fontFamily: "Inter, sans-serif" }}>
       <aside
         className="flex flex-col h-full overflow-y-auto flex-shrink-0 w-56"
-        style={{ background: "#0A1628", minWidth: 224 }}
+        style={{ background: "#FFFFFF", borderRight: "1px solid #E2E8F0", minWidth: 224 }}
       >
-        <div className="px-4 py-3 border-b border-white/10">
-          <LogoBrand height={120} onDark href="/dashboard/client" />
+        <div className="px-4 py-3 border-b border-slate-100">
+          <LogoBrand height={120} href="/dashboard/client" />
           <div className="flex items-center gap-1.5 mt-2">
             <span
               className="material-symbols-outlined"
@@ -156,7 +156,7 @@ export default function EntryXLayout({ children }: { children: React.ReactNode }
             >
               gavel
             </span>
-            <span className="text-white/60 text-xs font-semibold tracking-wide">EntryX</span>
+            <span className="text-xs font-semibold tracking-wide" style={{ color: "#64748B" }}>EntryX</span>
           </div>
         </div>
 
@@ -167,10 +167,10 @@ export default function EntryXLayout({ children }: { children: React.ReactNode }
                 onClick={() => toggleSection(section.title)}
                 className="w-full flex items-center justify-between px-2 py-1 mb-0.5"
               >
-                <span className="text-[10px] font-semibold tracking-widest text-white/30">
+                <span className="text-[10px] font-semibold tracking-widest" style={{ color: "#94A3B8" }}>
                   {section.title}
                 </span>
-                <span className="material-symbols-outlined text-white/20" style={{ fontSize: 14 }}>
+                <span className="material-symbols-outlined text-slate-300" style={{ fontSize: 14 }}>
                   {collapsed[section.title] ? "expand_more" : "expand_less"}
                 </span>
               </button>
@@ -191,18 +191,18 @@ export default function EntryXLayout({ children }: { children: React.ReactNode }
                         className="flex items-center gap-2 px-2 py-1.5 rounded-md mb-0.5 group transition-all"
                         style={{
                           background: isActive(item.href) ? ACCENT : "transparent",
-                          color: isActive(item.href) ? "#fff" : "rgba(255,255,255,0.6)",
+                          color: isActive(item.href) ? "#fff" : "#64748B",
                         }}
                         onMouseEnter={(e) => {
                           if (!isActive(item.href)) {
                             (e.currentTarget as HTMLElement).style.background = ACCENT_HOVER;
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.9)";
+                            (e.currentTarget as HTMLElement).style.color = "#1E40AF";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!isActive(item.href)) {
                             (e.currentTarget as HTMLElement).style.background = "transparent";
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
+                            (e.currentTarget as HTMLElement).style.color = "#64748B";
                           }
                         }}
                       >
@@ -222,17 +222,17 @@ export default function EntryXLayout({ children }: { children: React.ReactNode }
           ))}
         </nav>
 
-        <div className="px-4 py-3 border-t border-white/10">
-          <div className="text-[10px] text-white/30 leading-relaxed mb-3">
-            <div className="font-medium text-white/50">Navkar Freight Co.</div>
+        <div className="px-4 py-3 border-t border-slate-100">
+          <div className="text-[10px] leading-relaxed mb-3" style={{ color: "#94A3B8" }}>
+            <div className="font-medium" style={{ color: "#64748B" }}>Navkar Freight Co.</div>
             <div>FY 2025–26</div>
           </div>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="flex items-center gap-2 w-full px-3 py-2 rounded text-xs font-semibold uppercase tracking-widest transition-all duration-200"
-            style={{ color: "rgba(255,255,255,0.35)" }}
+            style={{ color: "#94A3B8" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#EF4444")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#94A3B8")}
           >
             <LogOut size={13} strokeWidth={1.8} />
             Sign Out

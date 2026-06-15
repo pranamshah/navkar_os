@@ -33,9 +33,9 @@ export default async function ModulePage({ params }: Props) {
         <div className="max-w-md text-center">
           <div
             className="w-14 h-14 flex items-center justify-center mx-auto mb-6"
-            style={{ background: "rgba(212,175,55,0.1)", border: "0.5px solid rgba(212,175,55,0.3)" }}
+            style={{ background: "rgba(30,64,175,0.1)", border: "0.5px solid rgba(30,64,175,0.3)" }}
           >
-            <div className="w-5 h-5" style={{ color: "#D4AF37" }}>
+            <div className="w-5 h-5" style={{ color: "#1E40AF" }}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="3" y="11" width="18" height="11" rx="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />

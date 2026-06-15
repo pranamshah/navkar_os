@@ -121,20 +121,20 @@ export default function TestimonialsCarousel() {
                   style={{
                     width: i === current ? "28px" : "8px",
                     height: "8px",
-                    background: i === current ? "#D4AF37" : "rgba(0,0,0,0.15)",
+                    background: i === current ? "#1E40AF" : "rgba(0,0,0,0.15)",
                   }}
                 />
               ))}
             </div>
             <div className="flex gap-2">
               <button onClick={prev} className="w-9 h-9 border flex items-center justify-center transition-all" style={{ borderColor: "rgba(0,0,0,0.15)", borderWidth: "0.5px" }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#D4AF37"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#1E40AF"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)"; }}
               >
                 <ChevronLeft className="w-4 h-4" style={{ color: "#1a1c1c" }} />
               </button>
               <button onClick={next} className="w-9 h-9 border flex items-center justify-center transition-all" style={{ borderColor: "rgba(0,0,0,0.15)", borderWidth: "0.5px" }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#D4AF37"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#1E40AF"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)"; }}
               >
                 <ChevronRight className="w-4 h-4" style={{ color: "#1a1c1c" }} />
